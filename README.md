@@ -32,3 +32,51 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+## Model
+
+```mermaid
+classDiagram
+	class App {
+		favoriteThingIds: string[]
+		thingsTreeId: string
+		addFavorite(thingId: string)
+		removeFavorite(thingId: string)
+	}
+	
+	class Bullet {
+		id: string
+		name: string
+		note: string
+	  createNew() Bullet
+	  remove()
+	  updateName(name: string)
+	  updateNote(note: string)
+	}
+	
+	class Tree {
+		rootNodeId: string
+		createNewNode()
+		moveNode()
+		indentNode()
+		outdentNode()
+		appendNode()
+		prependChildrenNode()
+		appendChildrenNode()
+	}
+	
+	class Node {
+		id: string
+		bulletId?: string
+		parentId?: string
+		index: number
+		collapsed: boolean
+		createNew(parentId: string, index: number) Node
+		setParentId(parentId: string)
+		setIndex(index: number)
+		remove()
+		collapse()
+	}
+	
+	Tree --> Node
+	Node --> Bullet
+```
