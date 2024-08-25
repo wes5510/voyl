@@ -1,3 +1,3 @@
 export default {
-  'src/**/*.{tsx,ts}': [() => 'pnpm typecheck', 'pnpm lint']
+  'src/**/*.{tsx,ts}': ['pnpm lint', () => 'pnpm typecheck', () => 'pnpm vitest --changed --run']
 }
