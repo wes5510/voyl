@@ -77,6 +77,6 @@ classDiagram
 		collapse()
 	}
 	
-	Tree --> Node
-	Node --> Bullet
+	Tree "1" --> "1..*" Node
+	Node "1" --> "1" Bullet
 ```
