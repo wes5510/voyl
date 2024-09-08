@@ -1,36 +1,8 @@
 import ListIcon from './components/icon/ListIcon'
 import Breadcrumb from './components/Breadcrumb'
-import { center, hstack, vstack } from '@styled-system/patterns'
-import { MouseEventHandler, ReactNode } from 'react'
+import IconButton from './components/IconButton'
+import { hstack, vstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
-
-function IconButton({
-  icon,
-  active,
-  onClick
-}: {
-  icon: ReactNode
-  active?: boolean
-  onClick?: MouseEventHandler
-}): JSX.Element {
-  return (
-    <button
-      className={center({
-        w: 10,
-        h: 10,
-        cursor: 'pointer',
-        bg: active
-          ? 'zinc.200'
-          : {
-              _hover: 'zinc.100'
-            }
-      })}
-      onClick={onClick}
-    >
-      {icon}
-    </button>
-  )
-}
 
 export default function App(): JSX.Element {
   return (
