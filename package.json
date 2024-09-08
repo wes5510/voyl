@@ -29,6 +29,7 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
     "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-tooltip": "^1.1.2",
     "electron-updater": "^6.1.7",
     "zustand": "^4.5.5"
   },

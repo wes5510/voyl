@@ -37,8 +37,7 @@ export default function App(): JSX.Element {
           })}
         >
           <div className={vstack({ gap: 0 })}>
-            <IconButton active icon={<ListIcon />} />
-            <IconButton icon={<ListIcon />} />
+            <IconButton active icon={<ListIcon />} text="things" />
           </div>
         </div>
         <div className={css({ flex: 1 })}>Main</div>
