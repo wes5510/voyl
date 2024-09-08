@@ -1,6 +1,7 @@
 import ListIcon from './components/icon/ListIcon'
 import Breadcrumb from './components/Breadcrumb'
 import IconButton from './components/IconButton'
+import SideMenuDivider from './components/SideMenuDivider'
 import { hstack, vstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
 
@@ -37,7 +38,9 @@ export default function App(): JSX.Element {
           })}
         >
           <div className={vstack({ gap: 0 })}>
-            <IconButton active icon={<ListIcon />} text="things" />
+            <IconButton icon={<ListIcon />} text="things" />
+            <SideMenuDivider />
+            <IconButton icon={<ListIcon />} text="things" />
           </div>
         </div>
         <div className={css({ flex: 1 })}>Main</div>
