@@ -13,7 +13,7 @@ export default function App(): JSX.Element {
           h: 10,
           w: 'full',
           borderBottomWidth: '1px',
-          borderBottomColor: 'black',
+          borderBottomColor: 'black/50',
           justify: 'space-between'
         })}
       >
@@ -32,7 +32,7 @@ export default function App(): JSX.Element {
           className={vstack({
             h: 'full',
             borderRightWidth: '1px',
-            borderRightColor: 'black',
+            borderRightColor: 'black/50',
             justify: 'space-between'
           })}
         >
