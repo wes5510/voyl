@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { hstack } from '../../../../../styled-system/patterns/index.mjs'
+import { hstack } from '@styled-system/patterns'
 import BreadcrumbLink from './BreadcrumbLink'
 
 interface BreadcrumbItemProps {

@@ -1,5 +1,5 @@
 import * as Popover from '@radix-ui/react-popover'
-import { hstack, vstack } from '../../../../../styled-system/patterns/index.mjs'
+import { hstack, vstack } from '@styled-system/patterns'
 import BreadcrumbLink from './BreadcrumbLink'
 import { Item } from './types'
 import BreadcrumbShortenerItem from './BreadcrumbShortenerItem'

@@ -1,7 +1,7 @@
-import { css } from '../../../styled-system/css/index.mjs'
-import { vstack } from '../../../styled-system/patterns/index.mjs'
 import ListIcon from './components/icon/ListIcon'
 import Breadcrumb from './components/Breadcrumb'
+import { css } from '@styled-system/css'
+import { vstack } from '@styled-system/patterns'
 
 export default function App(): JSX.Element {
   return (

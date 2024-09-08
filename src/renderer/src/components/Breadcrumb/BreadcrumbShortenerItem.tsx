@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import { hstack } from '../../../../../styled-system/patterns/index.mjs'
-import { css } from '../../../../../styled-system/css/index.mjs'
+import { hstack } from '@styled-system/patterns'
+import { css } from '@styled-system/css'
 
 interface BreadcrumbShortenerItemProps {
   href: string

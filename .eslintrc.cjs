@@ -4,6 +4,9 @@ module.exports = {
       version: 'detect'
     },
     'import/resolver': {
+      typescript: {
+        project: ['./tsconfig.web.json', './tsconfig.node.json']
+      },
       node: {
         extensions: ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.tsx', '.d.ts']
       }

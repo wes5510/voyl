@@ -10,6 +10,9 @@
   "compilerOptions": {
     "composite": true,
     "jsx": "react-jsx",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@styled-system/*": ["styled-system/*"],
+    }
   }
 }

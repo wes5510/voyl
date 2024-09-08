@@ -1,7 +1,7 @@
-import { hstack } from '../../../../../styled-system/patterns/index.mjs'
 import BreadcrumbItem from './BreadcrumbItem'
 import { Item } from './types'
 import BreadcrumbShortener from './BreadcrumbShortener'
+import { hstack } from '@styled-system/patterns'
 
 const splitThreeParts = <T,>(
   array: T[]
