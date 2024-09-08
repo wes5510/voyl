@@ -2,6 +2,11 @@ module.exports = {
   settings: {
     react: {
       version: 'detect'
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.tsx', '.d.ts']
+      }
     }
   },
   extends: [
