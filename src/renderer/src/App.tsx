@@ -39,12 +39,28 @@ export default function App(): JSX.Element {
           })}
         >
           <div className={vstack({ gap: 0 })}>
-            <IconButton icon={<ListIcon />} text="things" />
+            <IconButton icon={<ListIcon width="20" height="20" />} text="things" />
             <SideMenuDivider />
             <CharButton text="마케팅" />
           </div>
         </div>
-        <div className={css({ flex: 1 })}>Main</div>
+        <div className={css({ flex: 1, w: 'full', h: 'full', pos: 'relative' })}>
+          <div
+            className={css({
+              pos: 'absolute',
+              top: 0,
+              left: 0,
+              w: 'full',
+              h: 'full',
+              overflowY: 'auto'
+            })}
+          >
+            <div className={vstack({ p: 6, gap: 6, w: 'full', h: 'full', alignItems: 'normal' })}>
+              <div>Header</div>
+              <div>Body</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
