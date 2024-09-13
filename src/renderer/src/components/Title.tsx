@@ -25,7 +25,8 @@ export default function Title({ icon: Icon, text }: TitleProps): JSX.Element {
       <span
         className={css({
           fontSize: '3xl',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          fontFamily: 'roboto mono, monospace'
         })}
       >
         {text}

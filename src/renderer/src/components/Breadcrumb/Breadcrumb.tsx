@@ -26,7 +26,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps): JSX.Element {
   const { first, middle, last } = splitThreeParts(items)
 
   return (
-    <div className={hstack({ gap: 1.5, fontSize: 'sm', color: 'zinc.700' })}>
+    <div className={hstack({ gap: 1.5, fontSize: 'sm', color: 'zinc.600' })}>
       {first && <BreadcrumbItem text={first.text} href={first.href} icon={first.icon} />}
       {middle && middle.length === 1 && (
         <BreadcrumbItem text={middle[0].text} href={middle[0].href} />
