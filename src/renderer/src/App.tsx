@@ -5,6 +5,7 @@ import SideMenuDivider from './components/SideMenuDivider'
 import CharButton from './components/CharButton'
 import { hstack, vstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
+import Title from './components/Title'
 
 export default function App(): JSX.Element {
   return (
@@ -56,7 +57,7 @@ export default function App(): JSX.Element {
             })}
           >
             <div className={vstack({ p: 6, gap: 6, w: 'full', h: 'full', alignItems: 'normal' })}>
-              <div>Header</div>
+              <Title icon={ListIcon} text="Things" />
               <div>Body</div>
             </div>
           </div>
