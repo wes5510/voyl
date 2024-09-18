@@ -2,36 +2,29 @@ import { ReactNode } from 'react'
 import { hstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
 
-interface BreadcrumbShortenerItemProps {
-  href: string
+interface LinkProps {
   text: string
   icon?: ReactNode
+  href?: string
 }
 
-export default function BreadcrumbShortenerItem({
-  href,
-  text,
-  icon
-}: BreadcrumbShortenerItemProps): JSX.Element {
+export default function Link({ icon, text, href }: LinkProps): JSX.Element {
   return (
     <a
+      href={href}
       className={hstack({
         gap: 1,
-        w: 'full',
-        paddingX: 3,
-        paddingY: 1,
         cursor: 'pointer',
         _hover: {
-          bg: 'zinc.100'
+          textDecoration: 'underline'
         }
       })}
-      href={href}
     >
       {icon}
       <span
         className={css({
           truncate: true,
-          flex: 1
+          maxW: 48
         })}
       >
         {text}

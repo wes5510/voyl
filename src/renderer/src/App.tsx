@@ -1,35 +1,16 @@
-import ListIcon from './components/icon/ListIcon'
-import Breadcrumb from './components/Breadcrumb'
+import ListIcon from './components/Icon/ListIcon'
 import IconButton from './components/IconButton'
 import SideMenuDivider from './components/SideMenuDivider'
 import CharButton from './components/CharButton'
 import { hstack, vstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
 import Title from './components/Title'
+import TopBar from './components/TopBar'
 
 export default function App(): JSX.Element {
   return (
     <div className={vstack({ gap: 0, h: 'full' })}>
-      <div
-        className={hstack({
-          paddingStart: 2.5,
-          h: 10,
-          w: 'full',
-          borderBottomWidth: '1px',
-          borderBottomColor: 'black/50',
-          justify: 'space-between'
-        })}
-      >
-        <Breadcrumb
-          items={[
-            {
-              icon: <ListIcon width="16" height="16" />,
-              text: 'Home',
-              href: '/'
-            }
-          ]}
-        />
-      </div>
+      <TopBar />
       <div className={hstack({ flex: 1, w: 'full', gap: 0 })}>
         <div
           className={vstack({
