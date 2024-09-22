@@ -2,11 +2,11 @@
 classDiagram
 	namespace sideBar {
 		class SideBar {
-			<<side bar 레이아웃>>
+			<<side bar layout>>
 		}
 
 		class Divider {
-			<<side bar divider UI>>
+			<<side bar divider ui>>
 		}
 
 		class OneButton
