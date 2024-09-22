@@ -1,6 +1,6 @@
 import { css } from '@styled-system/css'
 
-export default function SideMenuDivider(): JSX.Element {
+export default function Divider(): JSX.Element {
   return (
     <div
       className={css({
