@@ -8,7 +8,8 @@ export default function Content({ children }: PropsWithChildren): JSX.Element {
       <BaseContent
         side="bottom"
         align="start"
-        alignOffset={-5}
+        alignOffset={5}
+        sideOffset={5}
         className={vstack({
           w: 44,
           gap: 0,

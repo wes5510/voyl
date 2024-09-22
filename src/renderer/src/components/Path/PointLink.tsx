@@ -1,19 +1,37 @@
 import { ReactNode } from 'react'
 import { hstack } from '@styled-system/patterns'
-import Link from './Link'
-import Separator from './Separator'
+import { css } from '@styled-system/css'
 
 interface PointLinkProps {
-  icon?: ReactNode
   text: string
-  href: string
+  icon?: ReactNode
+  href?: string
 }
 
-export default function PointLink(props: PointLinkProps): JSX.Element {
+export default function PointLink({ text, icon, href }: PointLinkProps): JSX.Element {
   return (
     <div className={hstack({ gap: 2 })}>
-      <Separator />
-      <Link {...props} />
+      <span>/</span>
+      <a
+        href={href}
+        className={hstack({
+          gap: 1,
+          cursor: 'pointer',
+          _hover: {
+            textDecoration: 'underline'
+          }
+        })}
+      >
+        {icon}
+        <span
+          className={css({
+            truncate: true,
+            maxW: 48
+          })}
+        >
+          {text}
+        </span>
+      </a>
     </div>
   )
 }
