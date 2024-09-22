@@ -7,17 +7,17 @@ classDiagram
 
 		class FirstPointLink {
 			<<First Point UI>>
-			getFirstPoint()
+			getFirstPoint(points: Point[])
 		}
 
 		class MidPathSegment {
 			<<Middle Point UI>>
-			getMidPoints()
+			getMidPoints(points: Point[])
 		}
 
 		class LastPointLink {
 			<<Last Point UI>>
-			getLastPoint()
+			getLastPoint(points: Point[])
 		}
 
 		class PointLink {
