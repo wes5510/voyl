@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react'
-import OneButton from './OneButton'
+import OneButton from '../OneButton'
 
 export interface IconButtonProps {
   icon: ReactNode

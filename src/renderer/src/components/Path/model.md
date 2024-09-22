@@ -2,26 +2,26 @@
 classDiagram
 	namespace path {
 		class PathBlock {
-			<<Path Layout>>
+			<<path layout>>
 		}
 
 		class FirstPointLink {
-			<<First Point UI>>
+			<<first point layout>>
 			getFirstPoint(points: Point[])
 		}
 
 		class MidPathSegment {
-			<<Middle Point UI>>
+			<<middle point layout>>
 			getMidPoints(points: Point[])
 		}
 
 		class LastPointLink {
-			<<Last Point UI>>
+			<<last point layout>>
 			getLastPoint(points: Point[])
 		}
 
 		class PointLink {
-			<<Point UI>>
+			<<point ui>>
 			icon?: Icon
 			text: string
 			link: string
@@ -44,13 +44,13 @@ classDiagram
 
 	namespace pathStore {
 		class Path {
-			<<Path Data Structure>>
+			<<path data structure>>
 			points: Point[]
 			set(points: Point[])
 		}
 
 		class Point {
-			<<Point Data Structure>>
+			<<point data structure>>
 			icon?: Icon
 			text: string
 			url: string
@@ -61,16 +61,16 @@ classDiagram
 
 	namespace ellipsisMenu {
 		class EllipsisMenu {
-			<<Path Ellipsis UI>>
+			<<path ellipsis ui>>
 			points: Points[]
 		}
 
 		class MenuButton {
-			<<Path Ellipsis Button UI>>
+			<<path ellipsis button ui>>
 		}
 
 		class Popover {
-			<<Path Ellipsis Popover UI>>
+			<<path ellipsis popover ui>>
 		}
 	}
 

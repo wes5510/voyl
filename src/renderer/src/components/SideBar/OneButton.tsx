@@ -1,6 +1,6 @@
 import { MouseEventHandler, PropsWithChildren } from 'react'
 import { center } from '@styled-system/patterns'
-import Tooltip from './Tooltip'
+import Tooltip from '../Tooltip'
 
 export interface OneButtonProps extends PropsWithChildren {
   text: string

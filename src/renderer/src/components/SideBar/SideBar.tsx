@@ -1,8 +1,7 @@
 import { vstack } from '@styled-system/patterns'
-import IconButton from '../IconButton'
 import Divider from './Divider'
-import CharButton from '../CharButton'
-import ListIcon from '../Icon/ListIcon'
+import { FavoriteMenu } from './FavoriteMenu'
+import { AppMenu } from './AppMenu'
 
 export default function SideBar(): JSX.Element {
   return (
@@ -15,9 +14,9 @@ export default function SideBar(): JSX.Element {
       })}
     >
       <div className={vstack({ gap: 0 })}>
-        <IconButton icon={<ListIcon width="20" height="20" />} text="things" />
+        <AppMenu />
         <Divider />
-        <CharButton text="마케팅" />
+        <FavoriteMenu />
       </div>
     </div>
   )

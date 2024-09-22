@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react'
-import OneButton from './OneButton'
+import OneButton from '../OneButton'
 import { css } from '@styled-system/css'
 
 export interface CharButtonProps {
