@@ -40,7 +40,8 @@ classDiagram
 	pathStore --> FirstPointLink
 	pathStore --> MidPathSegment
 	pathStore --> LastPointLink
-	EllipsisMenu --> MidPathSegment: Export
+	EllipsisMenu --> MidPathSegment: export
+  PathBlock --> TopBar: export
 
 	namespace pathStore {
 		class Path {
