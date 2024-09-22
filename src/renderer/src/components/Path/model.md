@@ -44,7 +44,7 @@ classDiagram
   PathBlock --> TopBar: export
 
 	namespace pathStore {
-		class Path {
+		class Store {
 			<<path data structure>>
 			points: Point[]
 			set(points: Point[])
