@@ -37,15 +37,15 @@ classDiagram
 	PointLink -->	FirstPointLink
 	PointLink -->	MidPathSegment
 	PointLink -->	LastPointLink
-	pathStore --> FirstPointLink
-	pathStore --> MidPathSegment
-	pathStore --> LastPointLink
+	PathStore --> FirstPointLink
+	PathStore --> MidPathSegment
+	PathStore --> LastPointLink
 	EllipsisMenu --> MidPathSegment: export
   PathBlock --> TopBar: export
 
 	namespace pathStore {
-		class Store {
-			<<path data structure>>
+		class PathStore {
+			<<path state store>>
 			points: Point[]
 			set(points: Point[])
 		}
@@ -58,7 +58,7 @@ classDiagram
 		}
 	}
 
-	Point --> Path
+	Point --> PathStore
 
 	namespace ellipsisMenu {
 		class EllipsisMenu {

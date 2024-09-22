@@ -2,18 +2,18 @@ import { MouseEventHandler, PropsWithChildren } from 'react'
 import { center } from '@styled-system/patterns'
 import Tooltip from '../Tooltip'
 
-export interface OneButtonProps extends PropsWithChildren {
+export interface TooltipButtonProps extends PropsWithChildren {
   text: string
   active?: boolean
   onClick?: MouseEventHandler
 }
 
-export default function OneButton({
+export default function TooltipButton({
   children,
   text,
   active,
   onClick
-}: OneButtonProps): JSX.Element {
+}: TooltipButtonProps): JSX.Element {
   return (
     <Tooltip text={text}>
       <button

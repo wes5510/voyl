@@ -9,7 +9,9 @@ classDiagram
 			<<side bar divider ui>>
 		}
 
-		class OneButton
+		class TooltipButton {
+      <<tooltip button ui>>
+    }
     class appMenu
     class favoriteMenu
 	}
@@ -22,12 +24,12 @@ classDiagram
 		}
 
 		class CharButton {
-      <<favorite button>>
+      <<favorite button ui>>
     }
   }
 
 	CharButton --> FavoritesMenu
-	OneButton --> CharButton
+	TooltipButton --> CharButton
 	FavoritesMenu --> SideBar: export
 	favoriteStore -->	FavoritesMenu: export
 
@@ -37,12 +39,12 @@ classDiagram
 		}
 
 		class IconButton {
-      <<app(system) button UI>>
+      <<app(system) button ui>>
     }
 
   }
 
   IconButton --> AppMenu
-	OneButton --> IconButton
+	TooltipButton --> IconButton
 	AppMenu --> SideBar: export
 ```

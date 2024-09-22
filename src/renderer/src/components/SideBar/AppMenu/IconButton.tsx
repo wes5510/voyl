@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react'
-import OneButton from '../OneButton'
+import TooltipButton from '../TooltipButton'
 
 export interface IconButtonProps {
   icon: ReactNode
@@ -10,8 +10,8 @@ export interface IconButtonProps {
 
 export default function IconButton({ icon, text, active, onClick }: IconButtonProps): JSX.Element {
   return (
-    <OneButton text={text} active={active} onClick={onClick}>
+    <TooltipButton text={text} active={active} onClick={onClick}>
       {icon}
-    </OneButton>
+    </TooltipButton>
   )
 }
