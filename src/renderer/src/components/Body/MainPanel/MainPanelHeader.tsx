@@ -1,5 +1,5 @@
-import Title from './Title'
+import Header from './Header'
 
 export default function MainPanelHeader(): JSX.Element {
-  return <Title text="Title" />
+  return <Header text="Title" />
 }

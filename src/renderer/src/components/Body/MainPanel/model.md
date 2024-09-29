@@ -7,7 +7,7 @@ classDiagram
       <<main panel layout>>
     }
 
-    class Title {
+    class Header {
       <<title ui>>
       icon: string
       name: string
@@ -27,8 +27,8 @@ classDiagram
     class mainPanelStore
   }
 
-  Title --> MainPanelHeader
-Scroller --> MainPanel
+  Header --> MainPanelHeader
+  Scroller --> MainPanel
   MainPanelHeader --> MainPanel
   MainPanelBody --> MainPanel
   TreeView --> MainPanelBody: export
@@ -47,6 +47,5 @@ Scroller --> MainPanel
     }
   }
 
-  Header --> MainPanelStore
   MainPanelStore --> MainPanelHeader
 ```
