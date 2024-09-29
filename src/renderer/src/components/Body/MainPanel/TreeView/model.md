@@ -4,9 +4,15 @@ classDiagram
 
   namespace treeView {
     class TreeView {
+      <<tree layout>>
+    }
+
+    class AddButton {
+      <<add button ui>>
     }
 
     class AddTreeViewItemButton {
+      <<connected AddButton with treeStore for add tree view item>>
     }
 
     class treeViewItem
