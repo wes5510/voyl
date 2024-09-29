@@ -12,6 +12,7 @@ export default function AddButton({ onClick, text }: AddButtonProps): JSX.Elemen
     <button
       onClick={onClick}
       className={hstack({
+        width: 'fit-content',
         gap: 1,
         cursor: 'pointer',
         _hover: {
