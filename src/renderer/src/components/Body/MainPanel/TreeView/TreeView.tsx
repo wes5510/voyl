@@ -1,6 +1,6 @@
 import { vstack } from '@styled-system/patterns'
 import AddTreeViewItemButton from './AddTreeViewItemButton'
-import TreeViewItem from './TreeViewItem'
+import { TreeViewItem } from './TreeViewItem'
 
 export default function TreeView(): JSX.Element {
   return (

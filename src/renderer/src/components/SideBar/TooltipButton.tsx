@@ -24,7 +24,7 @@ export default function TooltipButton({
           bg: active
             ? 'zinc.200'
             : {
-                _hover: 'zinc.100'
+                _hover: 'neutral.200'
               }
         })}
         onClick={onClick}

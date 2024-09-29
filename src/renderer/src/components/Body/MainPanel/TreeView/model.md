@@ -19,21 +19,17 @@ classDiagram
     class treeStore
   }
 
+  AddButton --> AddTreeViewItemButton
   AddTreeViewItemButton --> TreeView
   TreeViewItem --> TreeView: export
   MainPanelStore --> TreeViewItem
 
   namespace treeViewItem {
     class TreeViewItem {
-      nodeId: string
-    }
-
-    class TreeViewItemName {
+      <<tree view item layout>>
       nodeId: string
     }
   }
-
-  TreeViewItemName --> TreeViewItem
 
   namespace treeStore {
     class TreeStore {
