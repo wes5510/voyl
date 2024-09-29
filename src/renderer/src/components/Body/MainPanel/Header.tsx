@@ -2,12 +2,12 @@ import { css } from '@styled-system/css'
 import { hstack } from '@styled-system/patterns'
 import { ElementType } from 'react'
 
-export interface TitleProps {
+export interface HeaderProps {
   text: string
   icon?: ElementType
 }
 
-export default function Title({ icon: Icon, text }: TitleProps): JSX.Element {
+export default function Header({ icon: Icon, text }: HeaderProps): JSX.Element {
   return (
     <div
       className={hstack({
