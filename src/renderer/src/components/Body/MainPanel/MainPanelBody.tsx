@@ -1,0 +1,30 @@
+export default function MainPanelBody(): JSX.Element {
+  return (
+    <>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+      <div>MainPanelBody</div>
+    </>
+  )
+}

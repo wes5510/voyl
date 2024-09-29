@@ -5,15 +5,18 @@ classDiagram
   namespace mainPanel {
     class MainPanel
 
-    class MainPanelHeader {
+    class Title {
       icon: string
       name: string
     }
+
+    class MainPanelHeader
 
     class MainPanelBody
     class mainPanelStore
   }
 
+  Title --> MainPanelHeader
   MainPanelHeader --> MainPanel
   MainPanelBody --> MainPanel
   TreeView --> MainPanelBody: export

@@ -15,6 +15,7 @@ export default function Body(): JSX.Element {
       <button
         onClick={handleClick}
         className={css({
+          zIndex: 100,
           position: 'absolute',
           bottom: 0,
           bg: 'blue.500'
@@ -22,15 +23,15 @@ export default function Body(): JSX.Element {
       >
         (Tester) Open Side Panel
       </button>
-      <div className={css({ flex: 1 })}>
+      <div className={css({ flex: 1, h: 'full' })}>
         <MainPanel />
       </div>
       <div
         className={css({
           w: '28rem',
           h: 'full',
-          transform: opened ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'transform',
+          mr: opened ? '0' : '-28rem',
+          transition: 'margin-right',
           transitionTimingFunction: 'ease-in-out',
           transitionDuration: 'normal'
         })}
