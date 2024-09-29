@@ -1,3 +1,5 @@
+import AddButton from './AddButton'
+
 export default function AddTreeViewItemButton(): JSX.Element {
-  return <div>AddTreeViewItemButton</div>
+  return <AddButton text="Add Thing" />
 }
