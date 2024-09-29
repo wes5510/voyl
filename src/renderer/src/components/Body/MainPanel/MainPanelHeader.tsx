@@ -7,7 +7,7 @@ export interface TitleProps {
   icon?: ElementType
 }
 
-export default function Title({ icon: Icon, text }: TitleProps): JSX.Element {
+export default function MainPanelHeader({ icon: Icon, text }: TitleProps): JSX.Element {
   return (
     <div
       className={hstack({
