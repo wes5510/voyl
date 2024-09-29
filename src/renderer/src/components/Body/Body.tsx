@@ -12,7 +12,16 @@ export default function Body(): JSX.Element {
 
   return (
     <div className={hstack({ w: 'full', h: 'full', gap: 0, overflowX: 'hidden' })}>
-      <button onClick={handleClick}>Open Side Panel</button>
+      <button
+        onClick={handleClick}
+        className={css({
+          position: 'absolute',
+          bottom: 0,
+          bg: 'blue.500'
+        })}
+      >
+        (Tester) Open Side Panel
+      </button>
       <div className={css({ flex: 1 })}>
         <MainPanel />
       </div>
