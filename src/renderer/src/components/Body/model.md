@@ -3,12 +3,16 @@ classDiagram
   namespace body {
     class Body
     class mainPanel
-    class SidePanel
+    class SidePanel {
+      <<side panel layout>>
+    }
   }
   MainPanel --> Body: export
   SidePanel --> Body: export
 
   namespace mainPanel {
-    class MainPanel
+    class MainPanel {
+      <<main panel layout>>
+    }
   }
 ```
