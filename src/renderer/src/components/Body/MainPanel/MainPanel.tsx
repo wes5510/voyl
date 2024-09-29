@@ -25,7 +25,8 @@ export default function MainPanel(): JSX.Element {
         className={vstack({
           p: 6,
           gap: 6,
-          alignItems: 'normal'
+          alignItems: 'normal',
+          overflowX: 'hidden'
         })}
       >
         <MainPanelHeader />

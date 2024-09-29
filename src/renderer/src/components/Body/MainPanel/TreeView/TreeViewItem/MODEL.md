@@ -22,7 +22,8 @@ classDiagram
       <<dot button ui>>
     }
 
-    class TreeViewItemName {
+    class TreeViewItemInput {
+      <<text view item input ui>>
       nodeId: string
     }
   }
@@ -31,6 +32,6 @@ classDiagram
   IconButton --> DotButton
   DotButton --> TreeViewItem
   CollapseButton --> TreeViewItem
-  TreeViewItemName --> TreeViewItem
+  TreeViewItemInput --> TreeViewItem
   TreeStore --> TreeViewItem
 ```
