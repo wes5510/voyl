@@ -1,17 +1,23 @@
 import { hstack } from '@styled-system/patterns'
 import CollapseButton from './CollapseButton'
 import DotButton from './DotButton'
-import { useState } from 'react'
+import { MouseEventHandler } from 'react'
 import TreeViewItemInput from './TreeViewItemInput'
 import { css } from '@styled-system/css'
 
-export default function TreeViewItem(): JSX.Element {
-  const [collapsed, setCollapsed] = useState(false)
+export interface TreeViewItemProps {
+  initialText: string
+  collapsed: boolean
+  onClickCollapseButton: MouseEventHandler
+  onChangeText: (text: string) => void
+}
 
-  const handleClick = (): void => {
-    setCollapsed(!collapsed)
-  }
-
+export default function TreeViewItem({
+  initialText,
+  collapsed,
+  onClickCollapseButton,
+  onChangeText
+}: TreeViewItemProps): JSX.Element {
   return (
     <div
       className={hstack({
@@ -19,9 +25,11 @@ export default function TreeViewItem(): JSX.Element {
         alignItems: 'flex-start'
       })}
     >
-      <CollapseButton collapsed={collapsed} onClick={handleClick} />
+      <CollapseButton collapsed={collapsed} onClick={onClickCollapseButton} />
       <DotButton />
       <TreeViewItemInput
+        initialValue={initialText}
+        onChangeValue={onChangeText}
         className={css({
           flex: 1
         })}

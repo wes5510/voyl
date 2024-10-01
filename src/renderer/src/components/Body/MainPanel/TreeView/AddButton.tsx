@@ -17,7 +17,9 @@ export default function AddButton({ onClick, text }: AddButtonProps): JSX.Elemen
         cursor: 'pointer',
         _hover: {
           fontWeight: 'semibold'
-        }
+        },
+        transitionProperty: 'font-weight',
+        transitionDuration: 'fastest'
       })}
     >
       <PlusIcon width="20" height="20" />

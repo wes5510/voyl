@@ -1,20 +1,25 @@
 import { css, cx } from '@styled-system/css'
-import { FormEventHandler } from 'react'
+import { useMemo } from 'react'
 
 export interface TreeViewItemInputProps {
-  value?: string
-  onInput?: FormEventHandler<HTMLDivElement>
+  initialValue: string
+  onChangeValue: (value: string) => void
   className?: string
 }
 export default function TreeViewItemInput({
-  value,
-  onInput,
+  initialValue,
+  onChangeValue,
   className
 }: TreeViewItemInputProps): JSX.Element {
+  const _initialValue = useMemo(() => initialValue, [])
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault()
     }
+  }
+
+  const onInput = (event: React.FormEvent<HTMLDivElement>): void => {
+    onChangeValue(event.currentTarget.textContent ?? '')
   }
 
   return (
@@ -30,7 +35,7 @@ export default function TreeViewItemInput({
         className
       )}
     >
-      {value}
+      {_initialValue}
     </div>
   )
 }

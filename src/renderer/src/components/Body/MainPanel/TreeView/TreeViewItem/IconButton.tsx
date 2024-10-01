@@ -16,7 +16,9 @@ export default function IconButton({ children, onClick }: IconButtonProps): JSX.
         cursor: 'pointer',
         bg: {
           _hover: 'neutral.200'
-        }
+        },
+        transitionProperty: 'background',
+        transitionDuration: 'slow'
       })}
       onClick={onClick}
     >

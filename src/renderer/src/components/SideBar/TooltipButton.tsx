@@ -25,7 +25,9 @@ export default function TooltipButton({
             ? 'zinc.200'
             : {
                 _hover: 'neutral.200'
-              }
+              },
+          transitionProperty: 'background',
+          transitionDuration: 'slow'
         })}
         onClick={onClick}
       >

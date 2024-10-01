@@ -1,8 +1,5 @@
 ```mermaid
 classDiagram
-  TreeViewItem --> TreeView: export
-  MainPanelStore --> TreeViewItem
-
   namespace treeViewItem {
     class TreeViewItem {
     <<tree view item layout>>
@@ -15,23 +12,40 @@ classDiagram
 
     class CollapseButton {
       <<collapse button ui>>
-      collapsed?: boolean
+      nodeId: string
     }
 
     class DotButton {
       <<dot button ui>>
+      nodeId: string
     }
 
     class TreeViewItemInput {
       <<text view item input ui>>
       nodeId: string
     }
+
+    class NodeStore {
+      node: NodeModel
+    }
+
+    class NodeModel {
+      id: string
+      depth: number
+      collapsed: boolean
+      text: string
+    }
   }
 
+  TreeViewItem --> TreeView: export
   IconButton --> CollapseButton
   IconButton --> DotButton
-  DotButton --> TreeViewItem
-  CollapseButton --> TreeViewItem
   TreeViewItemInput --> TreeViewItem
-  TreeStore --> TreeViewItem
+  MainPanelStore --> DotButton
+  NodeModel --> NodeStore
+  CollapseButton --> TreeViewItem
+  DotButton --> TreeViewItem
+  NodeStore --> CollapseButton
+  NodeStore --> DotButton
+  NodeStore --> TreeViewItemInput
 ```

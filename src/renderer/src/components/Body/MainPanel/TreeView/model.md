@@ -1,7 +1,5 @@
 ```mermaid
 classDiagram
-  TreeView --> MainPanelBody: export
-
   namespace treeView {
     class TreeView {
       <<tree layout>>
@@ -15,26 +13,14 @@ classDiagram
       <<connected AddButton with treeStore for add tree view item>>
     }
 
-    class treeViewItem
-    class treeStore
-  }
-
-  AddButton --> AddTreeViewItemButton
-  AddTreeViewItemButton --> TreeView
-  TreeViewItem --> TreeView: export
-  MainPanelStore --> TreeViewItem
-
-  namespace treeViewItem {
-    class TreeViewItem {
-      <<tree view item layout>>
-      nodeId: string
-    }
-  }
-
-  namespace treeStore {
     class TreeStore {
-      rootNodeId: string
-      nodeMap: Map<string, Node>
+      <<tree state store>>
+      nodes: NodeModel[]
+    }
+
+    class TreeModel {
+      <<tree domain model>>
+      nodes: NodeModel[]
       createNewNode()
       moveNode()
       indentNode()
@@ -44,23 +30,28 @@ classDiagram
       appendChildrenNode()
     }
 
-    class Node {
-      id: string
-      text: string
-      parentId?: string
-      index: number
-      collapsed: boolean
-      createNew(parentId: string, index: number) Node
-      setParentId(parentId: string)
-      setIndex(index: number)
-      remove()
-      collapse()
-      updateText()
+    class treeViewItem
+  }
+
+  TreeView --> MainPanelBody: export
+  AddButton --> AddTreeViewItemButton
+  AddTreeViewItemButton --> TreeView
+  TreeStore --> TreeView
+  TreeStore --> AddTreeViewItemButton
+  TreeModel --> TreeStore
+
+  namespace treeViewItem {
+    class TreeViewItem {
+      <<tree view item layout>>
+      nodeId: string
+    }
+
+    class NodeStore {
+      <<node state store>>
     }
   }
 
-  Node --> TreeStore
-  TreeStore --> TreeViewItem
-  TreeStore --> TreeView
-  TreeStore --> AddTreeViewItemButton
+  TreeViewItem --> TreeView: export
+  NodeStore --> TreeStore: export
+
 ```
