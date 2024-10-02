@@ -1,17 +1,18 @@
 import { css, cx } from '@styled-system/css'
+import { useAtom } from 'jotai'
 import { useMemo } from 'react'
+import { textAtom } from './store'
 
 export interface TreeViewItemInputProps {
-  initialValue: string
-  onChangeValue: (value: string) => void
+  nodeId: string
   className?: string
 }
 export default function TreeViewItemInput({
-  initialValue,
-  onChangeValue,
+  nodeId,
   className
 }: TreeViewItemInputProps): JSX.Element {
-  const _initialValue = useMemo(() => initialValue, [])
+  const [text, setText] = useAtom(textAtom(nodeId))
+  const initialValue = useMemo(() => text, [])
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault()
@@ -19,7 +20,7 @@ export default function TreeViewItemInput({
   }
 
   const onInput = (event: React.FormEvent<HTMLDivElement>): void => {
-    onChangeValue(event.currentTarget.textContent ?? '')
+    setText(event.currentTarget.textContent ?? '')
   }
 
   return (
@@ -35,7 +36,7 @@ export default function TreeViewItemInput({
         className
       )}
     >
-      {_initialValue}
+      {initialValue}
     </div>
   )
 }
