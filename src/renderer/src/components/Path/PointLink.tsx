@@ -1,14 +1,14 @@
-import { ReactNode } from 'react'
+import { ElementType } from 'react'
 import { hstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
 
 interface PointLinkProps {
   text: string
-  icon?: ReactNode
+  icon?: ElementType
   href?: string
 }
 
-export default function PointLink({ text, icon, href }: PointLinkProps): JSX.Element {
+export default function PointLink({ text, icon: Icon, href }: PointLinkProps): JSX.Element {
   return (
     <div className={hstack({ gap: 2 })}>
       <span>/</span>
@@ -22,7 +22,14 @@ export default function PointLink({ text, icon, href }: PointLinkProps): JSX.Ele
           }
         })}
       >
-        {icon}
+        {Icon && (
+          <Icon
+            className={css({
+              w: 4,
+              h: 4
+            })}
+          />
+        )}
         <span
           className={css({
             truncate: true,

@@ -1,11 +1,11 @@
 import { hstack } from '@styled-system/patterns'
-import { Point } from '../store'
+import { PointModel } from '../model'
 import { Popover, PopoverContent, PopoverTrigger } from './Popover'
 import MenuButton from './MenuButton'
 import PointLink from '../PointLink'
 
 export interface EllipsisMenuProps {
-  points: Point[]
+  points: PointModel[]
 }
 
 export default function EllipsisMenu({ points }: EllipsisMenuProps): JSX.Element {

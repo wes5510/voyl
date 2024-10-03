@@ -39,5 +39,6 @@ classDiagram
     }
   }
 
+  TitleModel --> MainPanelStore
   MainPanelStore --> MainPanelHeader
 ```

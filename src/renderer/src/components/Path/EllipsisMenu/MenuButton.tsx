@@ -1,14 +1,14 @@
-import { ReactNode } from 'react'
+import { ElementType } from 'react'
 import { hstack } from '@styled-system/patterns'
 import { css } from '@styled-system/css'
 
 interface MenuButtonProps {
   href: string
   text: string
-  icon?: ReactNode
+  icon?: ElementType
 }
 
-export default function MenuButton({ href, text, icon }: MenuButtonProps): JSX.Element {
+export default function MenuButton({ href, text, icon: Icon }: MenuButtonProps): JSX.Element {
   return (
     <a
       className={hstack({
@@ -23,7 +23,14 @@ export default function MenuButton({ href, text, icon }: MenuButtonProps): JSX.E
       })}
       href={href}
     >
-      {icon}
+      {Icon && (
+        <Icon
+          className={css({
+            w: 4,
+            h: 4
+          })}
+        />
+      )}
       <span
         className={css({
           truncate: true,
