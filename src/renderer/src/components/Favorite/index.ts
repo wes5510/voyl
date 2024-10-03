@@ -1,1 +1,1 @@
-export { default as useFavoriteStore } from './store'
+export { favoritesAtom } from './store'
