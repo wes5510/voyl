@@ -1,3 +1,5 @@
 export default {
-  'src/**/*.{tsx,ts}': ['pnpm lint', () => 'pnpm typecheck', () => 'pnpm vitest --changed --run']
+  'src/**/*.{tsx,ts,forLint}': 'pnpm --parallel lint',
+  'src/**/*.{tsx,ts,forTypecheck}': () => 'pnpm typecheck',
+  'src/**/*.{tsx,ts,forUnitTest}': () => 'pnpm vitest --changed --run'
 }
