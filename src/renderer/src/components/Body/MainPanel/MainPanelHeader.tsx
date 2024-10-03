@@ -1,8 +1,34 @@
-import Header from './Header'
-import useMainPanelStore from './store'
+import { css } from '@styled-system/css'
+import { hstack } from '@styled-system/patterns'
+import { titleAtom } from './store'
+import { useAtomValue } from 'jotai'
 
 export default function MainPanelHeader(): JSX.Element {
-  const title = useMainPanelStore((state) => state.title)
+  const { icon: Icon, text } = useAtomValue(titleAtom)
 
-  return <Header text={title?.text ?? ''} icon={title?.icon} />
+  return (
+    <div
+      className={hstack({
+        gap: 3
+      })}
+    >
+      {Icon && (
+        <Icon
+          className={css({
+            width: 9,
+            height: 9
+          })}
+        />
+      )}
+      <span
+        className={css({
+          fontSize: '3xl',
+          fontWeight: 'bold',
+          fontFamily: 'roboto mono, monospace'
+        })}
+      >
+        {text}
+      </span>
+    </div>
+  )
 }

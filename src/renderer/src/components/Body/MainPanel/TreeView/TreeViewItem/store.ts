@@ -1,8 +1,9 @@
 import { atom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
+import { NodeModel } from './model'
 
 const nodeAtom = atomFamily((id: string) =>
-  atom({
+  atom<NodeModel>({
     id,
     depth: 1,
     collapsed: false,

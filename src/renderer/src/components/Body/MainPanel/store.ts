@@ -1,19 +1,8 @@
-import { ElementType } from 'react'
-import { create } from 'zustand'
+import { atom } from 'jotai'
+import { TitleModel } from './model'
+import ListIcon from '../../Icon/ListIcon'
 
-export type Title = {
-  icon?: ElementType
-  text: string
-}
-
-interface MainPanelStore {
-  title?: Title
-  setTitle(title: Title): void
-}
-
-const useMainPanelStore = create<MainPanelStore>((set) => ({
-  title: undefined,
-  setTitle: (title): void => set({ title })
-}))
-
-export default useMainPanelStore
+export const titleAtom = atom<TitleModel>({
+  icon: ListIcon,
+  text: 'Things'
+})

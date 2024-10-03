@@ -7,14 +7,8 @@ classDiagram
       <<main panel layout>>
     }
 
-    class Header {
-      <<title ui>>
-      icon: string
-      name: string
-    }
-
     class MainPanelHeader {
-      <<connected title ui with store>>
+      <<main header ui>>
     }
 
     class MainPanelBody {
@@ -27,7 +21,6 @@ classDiagram
     class mainPanelStore
   }
 
-  Header --> MainPanelHeader
   Scroller --> MainPanel
   MainPanelHeader --> MainPanel
   MainPanelBody --> MainPanel
@@ -36,11 +29,10 @@ classDiagram
   namespace mainPanelStore {
     class MainPanelStore {
       <<main panel state store>>
-      title: Title
-      setHeader(header: Header)
+      title: TitleModel
     }
 
-    class Title {
+    class TitleModel {
       <<title data>>
       icon: string
       name: string
