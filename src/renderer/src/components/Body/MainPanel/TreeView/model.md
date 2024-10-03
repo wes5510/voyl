@@ -9,10 +9,6 @@ classDiagram
       <<add button ui>>
     }
 
-    class AddTreeViewItemButton {
-      <<connected AddButton with treeStore for add tree view item>>
-    }
-
     class TreeStore {
       <<tree state store>>
       nodes: NodeModel[]
@@ -34,8 +30,7 @@ classDiagram
   }
 
   TreeView --> MainPanelBody: export
-  AddButton --> AddTreeViewItemButton
-  AddTreeViewItemButton --> TreeView
+  AddButton --> TreeView
   TreeStore --> TreeView
   TreeStore --> AddTreeViewItemButton
   TreeModel --> TreeStore
