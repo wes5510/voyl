@@ -1,33 +1,38 @@
+import { useHotkeys } from 'react-hotkeys-hook'
 import { css, cx } from '@styled-system/css'
 import { useAtom } from 'jotai'
-import { useMemo } from 'react'
 import { textAtom } from './store'
+import useHandleEnterInNode from './useHandleEnterInNode'
+import ContentEditable, { ContentEditableEvent } from 'react-contenteditable'
+import { mergeRefs } from 'react-merge-refs'
+import useSyncFocus from './useSyncFocus'
 
 export interface TreeViewItemInputProps {
   nodeId: string
   className?: string
 }
+
 export default function TreeViewItemInput({
   nodeId,
   className
 }: TreeViewItemInputProps): JSX.Element {
   const [text, setText] = useAtom(textAtom(nodeId))
-  const initialValue = useMemo(() => text, [])
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-    }
-  }
+  const handleEnter = useHandleEnterInNode({ nodeId })
+  const hotkeyRef = useHotkeys<HTMLDivElement>('enter', handleEnter, {
+    enableOnContentEditable: true,
+    preventDefault: true
+  })
+  const syncFocusRef = useSyncFocus<HTMLDivElement>({ nodeId })
 
-  const onInput = (event: React.FormEvent<HTMLDivElement>): void => {
-    setText(event.currentTarget.textContent ?? '')
+  const handleChange = (ev: ContentEditableEvent): void => {
+    setText(ev.target.value)
   }
 
   return (
-    <div
-      contentEditable="true"
-      onInput={onInput}
-      onKeyDown={handleKeyDown}
+    <ContentEditable
+      innerRef={mergeRefs([hotkeyRef, syncFocusRef])}
+      html={text}
+      onChange={handleChange}
       className={cx(
         css({
           wordBreak: 'break-word',
@@ -35,8 +40,6 @@ export default function TreeViewItemInput({
         }),
         className
       )}
-    >
-      {initialValue}
-    </div>
+    />
   )
 }

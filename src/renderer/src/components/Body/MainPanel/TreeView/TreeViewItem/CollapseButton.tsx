@@ -21,7 +21,7 @@ export default function CollapseButton({ nodeId }: CollapseButtonProps): JSX.Ele
         className={css({
           w: 4,
           h: 4,
-          transform: collapsed ? 'rotate(90deg)' : 'rotate(0deg)',
+          transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
           translate: 'transform',
           transitionDuration: 'normal'
         })}
