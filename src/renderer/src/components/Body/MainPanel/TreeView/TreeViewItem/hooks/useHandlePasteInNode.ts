@@ -1,6 +1,8 @@
 import { ClipboardEventHandler, useCallback } from 'react'
 import { isHTMLTextAreaElement } from '../util'
 
+const BREAK_LINE = '\n'
+
 export default function useHandlePasteInNode({
   setText
 }: {
@@ -8,16 +10,18 @@ export default function useHandlePasteInNode({
 }): ClipboardEventHandler<HTMLTextAreaElement> {
   return useCallback(
     (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-      e.preventDefault()
+      if (!e.clipboardData.getData('text/plain').includes(BREAK_LINE)) {
+        return
+      }
+
       const { target } = e
       if (!isHTMLTextAreaElement(target)) {
         return
       }
 
+      e.preventDefault()
       const { value, selectionStart, selectionEnd } = target
-      const clipboardText = e.clipboardData.getData('text/plain')
-      const newText = clipboardText.replaceAll('\n', ' ')
-
+      const newText = e.clipboardData.getData('text/plain').replaceAll(BREAK_LINE, ' ')
       setText(value.slice(0, selectionStart) + newText + value.slice(selectionEnd))
 
       setTimeout(() => {
