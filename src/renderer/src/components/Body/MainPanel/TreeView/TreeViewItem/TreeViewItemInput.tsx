@@ -3,9 +3,10 @@ import { css, cx } from '@styled-system/css'
 import { useAtom } from 'jotai'
 import { textAtom } from './store'
 import useHandleEnterInNode from './useHandleEnterInNode'
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable'
-import { mergeRefs } from 'react-merge-refs'
+import mergeRefs from 'merge-refs'
 import useSyncFocus from './useSyncFocus'
+import { ChangeEvent, useRef } from 'react'
+import useAutoResize from './useAutoResize'
 
 export interface TreeViewItemInputProps {
   nodeId: string
@@ -16,27 +17,31 @@ export default function TreeViewItemInput({
   nodeId,
   className
 }: TreeViewItemInputProps): JSX.Element {
+  const elemRef = useRef<HTMLTextAreaElement>(null)
   const [text, setText] = useAtom(textAtom(nodeId))
   const handleEnter = useHandleEnterInNode({ nodeId })
-  const hotkeyRef = useHotkeys<HTMLDivElement>('enter', handleEnter, {
-    enableOnContentEditable: true,
-    preventDefault: true
+  const hotkeyRef = useHotkeys<HTMLTextAreaElement>('enter', handleEnter, {
+    preventDefault: true,
+    enableOnFormTags: ['textarea']
   })
-  const syncFocusRef = useSyncFocus<HTMLDivElement>({ nodeId })
+  useSyncFocus({ nodeId, ref: elemRef })
+  useAutoResize({ ref: elemRef })
 
-  const handleChange = (ev: ContentEditableEvent): void => {
-    setText(ev.target.value)
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+    setText(e.target.value)
   }
 
   return (
-    <ContentEditable
-      innerRef={mergeRefs([hotkeyRef, syncFocusRef])}
-      html={text}
+    <textarea
+      ref={mergeRefs(hotkeyRef, elemRef)}
+      value={text}
       onChange={handleChange}
+      rows={1}
       className={cx(
         css({
           wordBreak: 'break-word',
-          outline: 'none'
+          outline: 'none',
+          resize: 'none'
         }),
         className
       )}
