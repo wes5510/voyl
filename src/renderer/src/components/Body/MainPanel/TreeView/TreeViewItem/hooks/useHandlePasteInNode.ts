@@ -3,6 +3,11 @@ import { isHTMLTextAreaElement } from '../util'
 
 const BREAK_LINE = '\n'
 
+const removeNewLine = (text: string): string => text.replaceAll(BREAK_LINE, ' ')
+
+const insertText = ({ sourceText, newText, selection }): string =>
+  `${sourceText.slice(0, selection.start)}${newText}${sourceText.slice(selection.end)}`
+
 export default function useHandlePasteInNode({
   setText
 }: {
@@ -21,8 +26,14 @@ export default function useHandlePasteInNode({
 
       e.preventDefault()
       const { value, selectionStart, selectionEnd } = target
-      const newText = e.clipboardData.getData('text/plain').replaceAll(BREAK_LINE, ' ')
-      setText(value.slice(0, selectionStart) + newText + value.slice(selectionEnd))
+      const newText = removeNewLine(e.clipboardData.getData('text/plain'))
+      setText(
+        insertText({
+          newText,
+          sourceText: value,
+          selection: { start: selectionStart, end: selectionEnd }
+        })
+      )
 
       setTimeout(() => {
         const newCaretPosition = selectionStart + newText.length
