@@ -1,6 +1,6 @@
 import { atom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { NodeModel } from './model'
+import { createNewNode, getDepthBySourceNode, NodeModel } from './model'
 
 interface NodeAtom {
   id: NodeModel['id']
@@ -41,3 +41,20 @@ export const textAtom = atomFamily((id: string) =>
 )
 
 export const depthAtom = atomFamily((id: string) => atom((get) => get(nodeAtom({ id })).depth))
+
+export const createNewNodeFromSourceNodeAtom = atom(
+  null,
+  (get, _set, { sourceNodeId, newNodeText }: { sourceNodeId: string; newNodeText: string }) => {
+    const __new = createNewNode({
+      depth: getDepthBySourceNode({
+        collapsed: get(collapsedAtom(sourceNodeId)),
+        depth: get(depthAtom(sourceNodeId))
+      }),
+      text: newNodeText
+    })
+
+    nodeAtom(__new)
+
+    return __new
+  }
+)

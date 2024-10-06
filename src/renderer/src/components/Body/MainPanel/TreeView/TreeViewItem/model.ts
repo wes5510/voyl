@@ -6,11 +6,19 @@ export interface NodeModel {
   text: string
 }
 
-export const createNewNode = ({ depth, text }: { depth: number; text: string }): NodeModel => ({
+export const createNewNode = ({
+  depth,
+  text,
+  collapsed
+}: {
+  depth: number
+  text?: string
+  collapsed?: boolean
+}): NodeModel => ({
   id: uuid(),
   depth,
-  collapsed: true,
-  text
+  collapsed: collapsed ?? true,
+  text: text ?? ''
 })
 
 export const getDepthBySourceNode = ({

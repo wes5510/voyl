@@ -5,17 +5,17 @@ export interface TreeModel {
 export const insertAfter = ({
   nodeIds,
   sourceNodeId,
-  targetNodeId
+  newNodeId
 }: {
   nodeIds: string[]
   sourceNodeId: string
-  targetNodeId: string
+  newNodeId: string
 }): string[] => {
   const __new = [...nodeIds]
   const srcIdx = __new.indexOf(sourceNodeId)
 
   if (srcIdx >= 0) {
-    __new.splice(srcIdx + 1, 0, targetNodeId)
+    __new.splice(srcIdx + 1, 0, newNodeId)
   }
 
   return __new
