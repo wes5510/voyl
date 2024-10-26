@@ -1,7 +1,7 @@
 import { hstack } from '@styled-system/patterns'
 import { useAtomValue } from 'jotai'
 import { PropsWithChildren } from 'react'
-import { depthAtom } from '../../../../../state/node.state'
+import { depthAtom } from 'src/renderer/src/state/node.state'
 
 export interface TreeViewItemWrapperProps extends PropsWithChildren {
   nodeId: string

@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai'
 import PointLink from './EllipsisMenu/PointLink'
-import { lastPointAtom } from '../../../state/path.state'
+import { lastPointAtom } from 'src/renderer/src/state/path.state'
 
 export default function FirstPointLink(): JSX.Element | undefined {
   const point = useAtomValue(lastPointAtom)

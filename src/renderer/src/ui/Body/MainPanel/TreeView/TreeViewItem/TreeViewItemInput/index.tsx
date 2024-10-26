@@ -3,11 +3,11 @@ import { css, cx } from '@styled-system/css'
 import { useAtom } from 'jotai'
 import { ChangeEvent, useRef } from 'react'
 import mergeRefs from 'merge-refs'
-import { textAtom } from '../../../../../../state/node.state'
 import useHandleEnterInNode from './useHandleEnterInNode'
 import useSyncFocus from './useSyncFocus'
 import useAutoResize from './useAutoResize'
 import useHandlePasteInNode from './useHandlePasteInNode'
+import { textAtom } from 'src/renderer/src/state/node.state'
 
 export interface TreeViewItemInputProps {
   nodeId: string

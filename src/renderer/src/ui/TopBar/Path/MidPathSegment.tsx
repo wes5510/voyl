@@ -1,18 +1,18 @@
 import { useAtomValue } from 'jotai'
 import EllipsisMenu from './EllipsisMenu'
-import PointLink from './EllipsisMenu/PointLink'
-import { midPointsAtom } from '../../../state/path.state'
+import MidPointLink from './MidPointLink'
+import { midPointLengthAtom } from 'src/renderer/src/state/path.state'
 
 export default function MidPathSegment(): JSX.Element | undefined {
-  const points = useAtomValue(midPointsAtom)
+  const length = useAtomValue(midPointLengthAtom)
 
-  if (points.length === 0) {
+  if (length === 0) {
     return undefined
   }
 
-  if (points.length === 1) {
-    return <PointLink icon={points[0].icon} text={points[0].text} href={points[0].url} />
+  if (length === 1) {
+    return <MidPointLink />
   }
 
-  return <EllipsisMenu points={points} />
+  return <EllipsisMenu />
 }

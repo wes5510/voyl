@@ -18,3 +18,10 @@ export const getLastPoint = ({ points }: PathModel): PointModel | undefined =>
 
 export const getMidPoints = ({ points }: PathModel): PointModel[] =>
   points.length > 2 ? points.slice(1, points.length - 1) : []
+
+export const getMidPoint = ({ points }: PathModel): PointModel | undefined => {
+  const midPoints = getMidPoints({ points })
+  return midPoints.length > 0 ? midPoints[0] : undefined
+}
+
+export const getMidPointLength = ({ points }: PathModel): number => getMidPoints({ points }).length

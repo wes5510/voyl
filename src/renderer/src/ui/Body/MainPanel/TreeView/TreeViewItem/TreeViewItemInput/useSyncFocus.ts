@@ -1,6 +1,6 @@
 import { atom, useAtomValue } from 'jotai'
 import { RefObject, useEffect, useMemo } from 'react'
-import { focusedNodeIdAtom } from '../../../../../../state/tree.state'
+import { focusedNodeIdAtom } from 'src/renderer/src/state/tree.state'
 
 export default function useSyncFocus<T extends HTMLElement = HTMLElement>({
   nodeId,
