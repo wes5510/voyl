@@ -1,7 +1,7 @@
 import './index.css'
 import { createRoot } from 'react-dom/client'
 import '@fontsource/roboto-mono/700.css'
-import App from './App'
+import App from './ui/App'
 import { StrictMode } from 'react'
 
 createRoot(document.getElementById('root') as HTMLElement).render(

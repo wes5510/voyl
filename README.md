@@ -32,51 +32,32 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+
 ## Model
 
 ```mermaid
 classDiagram
 	class App {
-		favoriteThingIds: string[]
-		thingsTreeId: string
+		favoriteIds: string[]
+		treeId: string
 		addFavorite(thingId: string)
 		removeFavorite(thingId: string)
 	}
-	
-	class Bullet {
-		id: string
-		name: string
-		note: string
-	  createNew() Bullet
-	  remove()
-	  updateName(name: string)
-	  updateNote(note: string)
-	}
-	
+
 	class Tree {
 		rootNodeId: string
-		createNewNode()
-		moveNode()
-		indentNode()
-		outdentNode()
-		appendNode()
-		prependChildrenNode()
-		appendChildrenNode()
+    insertAfter(nodeIds: string[], sourceNodeId: string, newNodeId: string)
 	}
-	
+
 	class Node {
 		id: string
-		bulletId?: string
-		parentId?: string
-		index: number
+    depth: number
+    name: string
+    note: string
 		collapsed: boolean
-		createNew(parentId: string, index: number) Node
-		setParentId(parentId: string)
-		setIndex(index: number)
-		remove()
-		collapse()
+    createNewNode(depth: number, text?: string, collapsed?: boolean)
+    getDepthBySourceNode(collapsed: boolean, depth: number)
 	}
-	
+
 	Tree "1" --> "1..*" Node
-	Node "1" --> "1" Bullet
 ```

@@ -1,1 +1,0 @@
-export { favoritesAtom } from './store'
