@@ -1,9 +1,7 @@
 import { hstack } from '@styled-system/patterns'
-import PopoverRoot from './Popover/PopoverRoot'
-import PopoverContent from './Popover/PopoverContent'
-import PopoverTrigger from './Popover/PopoverTrigger'
+import Popover from './Popover'
 import MenuButton from './MenuButton'
-import PointLink from './PointLink'
+import PointLink from '../PointLink'
 import { useAtomValue } from 'jotai'
 import { midPointsAtom } from 'src/renderer/src/state/path.state'
 
@@ -12,16 +10,16 @@ export default function EllipsisMenu(): JSX.Element {
 
   return (
     <div className={hstack({ gap: 2 })}>
-      <PopoverRoot>
-        <PopoverTrigger>
+      <Popover.Root>
+        <Popover.Trigger>
           <PointLink text="..." />
-        </PopoverTrigger>
-        <PopoverContent>
+        </Popover.Trigger>
+        <Popover.Content>
           {points.map((point) => (
             <MenuButton key={point.url} icon={point.icon} href={point.url} text={point.text} />
           ))}
-        </PopoverContent>
-      </PopoverRoot>
+        </Popover.Content>
+      </Popover.Root>
     </div>
   )
 }

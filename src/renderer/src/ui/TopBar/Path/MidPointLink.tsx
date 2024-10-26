@@ -1,5 +1,5 @@
 import { midPointAtom } from 'src/renderer/src/state/path.state'
-import PointLink from './EllipsisMenu/PointLink'
+import PointLink from './PointLink'
 import { useAtomValue } from 'jotai'
 
 export default function MidPointLink(): JSX.Element | undefined {

@@ -2,7 +2,7 @@ import { vstack } from '@styled-system/patterns'
 import { Content as BaseContent, Portal } from '@radix-ui/react-popover'
 import { PropsWithChildren } from 'react'
 
-export default function PopoverContent({ children }: PropsWithChildren): JSX.Element {
+export default function Content({ children }: PropsWithChildren): JSX.Element {
   return (
     <Portal>
       <BaseContent
