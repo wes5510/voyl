@@ -2,12 +2,12 @@ import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
-import { textAtom } from 'src/renderer/src/state/node.state'
-import { insertAfterNewNodeInTreeAtom } from 'src/renderer/src/state/tree.state'
+import { textAtom } from '@/src/renderer/src/state/node.state'
+import { insertAfterNewNodeInTreeAtom } from '@/src/renderer/src/state/tree.state'
 
 const getSourceNodeText = ({
   text,
-  selectionStart
+  selectionStart,
 }: {
   text: string
   selectionStart?: number
@@ -31,18 +31,18 @@ export default function useHandleEnterInNode({ nodeId }: { nodeId: string }): Ho
       setText(
         getSourceNodeText({
           text: value,
-          selectionStart
-        })
+          selectionStart,
+        }),
       )
 
       insertAfterNewNodeInTree({
         sourceNodeId: nodeId,
         newNodeText: getNewNodeText({
           text: value,
-          selectionEnd
-        })
+          selectionEnd,
+        }),
       })
     },
-    [insertAfterNewNodeInTree, nodeId, setText]
+    [insertAfterNewNodeInTree, nodeId, setText],
   )
 }

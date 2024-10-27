@@ -1,6 +1,6 @@
 import { ElementType } from 'react'
-import { hstack } from '@styled-system/patterns'
-import { css } from '@styled-system/css'
+import { hstack } from '@/styled-system/patterns'
+import { css } from '@/styled-system/css'
 
 interface PointLinkProps {
   text: string
@@ -18,22 +18,22 @@ export default function PointLink({ text, icon: Icon, href }: PointLinkProps): J
           gap: 1,
           cursor: 'pointer',
           _hover: {
-            textDecoration: 'underline'
-          }
+            textDecoration: 'underline',
+          },
         })}
       >
         {Icon && (
           <Icon
             className={css({
               w: 4,
-              h: 4
+              h: 4,
             })}
           />
         )}
         <span
           className={css({
             truncate: true,
-            maxW: 48
+            maxW: 48,
           })}
         >
           {text}

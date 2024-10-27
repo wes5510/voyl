@@ -1,5 +1,5 @@
 import * as BaseTooltip from '@radix-ui/react-tooltip'
-import { css } from '@styled-system/css'
+import { css } from '@/styled-system/css'
 import { PropsWithChildren } from 'react'
 
 export interface TooltipProps extends PropsWithChildren {
@@ -33,24 +33,24 @@ export default function Tooltip({ children, text }: TooltipProps): JSX.Element {
               '&[data-state=closed]': {
                 animateOut: true,
                 fadeOut: 0,
-                zoomOut: 95
+                zoomOut: 95,
               },
 
               '&[data-side=top]': {
-                slideInFromBottom: '2'
+                slideInFromBottom: '2',
               },
 
               '&[data-side=bottom]': {
-                slideInFromTop: '2'
+                slideInFromTop: '2',
               },
 
               '&[data-side=left]': {
-                slideInFromRight: '2'
+                slideInFromRight: '2',
               },
 
               '&[data-side=right]': {
-                slideInFromLeft: '2'
-              }
+                slideInFromLeft: '2',
+              },
             })}
           >
             {text}

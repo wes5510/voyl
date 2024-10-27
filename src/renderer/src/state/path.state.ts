@@ -1,12 +1,12 @@
 import { atom } from 'jotai'
-import ListIcon from '../components/Icon/ListIcon'
+import ListIcon from '../shared-components/Icon/ListIcon'
 import {
   getFirstPoint,
   getLastPoint,
   getMidPoint,
   getMidPointLength,
   getMidPoints,
-  PathModel
+  PathModel,
 } from '../model/path.model'
 
 const pathAtom = atom<PathModel>({
@@ -14,9 +14,9 @@ const pathAtom = atom<PathModel>({
     {
       icon: ListIcon,
       text: 'Things',
-      url: '/'
-    }
-  ]
+      url: '/',
+    },
+  ],
 })
 
 export const firstPointAtom = atom((get) => getFirstPoint(get(pathAtom)))

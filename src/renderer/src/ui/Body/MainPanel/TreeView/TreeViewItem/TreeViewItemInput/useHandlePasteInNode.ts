@@ -9,7 +9,7 @@ const insertText = ({ sourceText, newText, selection }): string =>
   `${sourceText.slice(0, selection.start)}${newText}${sourceText.slice(selection.end)}`
 
 export default function useHandlePasteInNode({
-  setText
+  setText,
 }: {
   setText: (text: string) => void
 }): ClipboardEventHandler<HTMLTextAreaElement> {
@@ -31,8 +31,8 @@ export default function useHandlePasteInNode({
         insertText({
           newText,
           sourceText: value,
-          selection: { start: selectionStart, end: selectionEnd }
-        })
+          selection: { start: selectionStart, end: selectionEnd },
+        }),
       )
 
       setTimeout(() => {
@@ -42,6 +42,6 @@ export default function useHandlePasteInNode({
         target.focus()
       }, 0)
     },
-    [setText]
+    [setText],
   )
 }

@@ -1,8 +1,8 @@
-import ChevronRightIcon from '../../../../../components/Icon/ChevronRightIcon'
-import { css } from '@styled-system/css'
+import ChevronRightIcon from '../../../../../shared-components/Icon/ChevronRightIcon'
+import { css } from '@/styled-system/css'
 import IconButton from './IconButton'
 import { useAtom } from 'jotai'
-import { collapsedAtom } from 'src/renderer/src/state/node.state'
+import { collapsedAtom } from '@/src/renderer/src/state/node.state'
 
 export interface CollapseButtonProps {
   nodeId: string
@@ -23,7 +23,7 @@ export default function CollapseButton({ nodeId }: CollapseButtonProps): JSX.Ele
           h: 4,
           transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
           translate: 'transform',
-          transitionDuration: 'normal'
+          transitionDuration: 'normal',
         })}
       />
     </IconButton>

@@ -5,7 +5,7 @@ export interface FavoriteModel {
 
 export const addFavorite = ({
   favorites,
-  newFavorite
+  newFavorite,
 }: {
   favorites: FavoriteModel[]
   newFavorite: FavoriteModel
@@ -13,7 +13,7 @@ export const addFavorite = ({
 
 export const removeFavorite = ({
   favorites,
-  id
+  id,
 }: {
   favorites: FavoriteModel[]
   id: string
@@ -22,7 +22,7 @@ export const removeFavorite = ({
 export const updateFavoriteName = ({
   favorites,
   id,
-  newText
+  newText,
 }: {
   favorites: FavoriteModel[]
   id: string

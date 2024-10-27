@@ -1,5 +1,5 @@
-import { css } from '@styled-system/css'
-import { hstack } from '@styled-system/patterns'
+import { css } from '@/styled-system/css'
+import { hstack } from '@/styled-system/patterns'
 import { useState } from 'react'
 import MainPanel from './MainPanel'
 
@@ -18,7 +18,7 @@ export default function Body(): JSX.Element {
           zIndex: 100,
           position: 'absolute',
           bottom: 0,
-          bg: 'blue.500'
+          bg: 'blue.500',
         })}
       >
         (Tester) Open Side Panel
@@ -33,7 +33,7 @@ export default function Body(): JSX.Element {
           mr: opened ? '0' : '-28rem',
           transition: 'margin-right',
           transitionTimingFunction: 'ease-in-out',
-          transitionDuration: 'normal'
+          transitionDuration: 'normal',
         })}
       >
         <div
@@ -41,7 +41,7 @@ export default function Body(): JSX.Element {
             h: 'full',
             borderLeftWidth: '1px',
             borderLeftColor: 'zinc.300',
-            borderLeftStyle: 'solid'
+            borderLeftStyle: 'solid',
           })}
         >
           Side Panel

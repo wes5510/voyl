@@ -5,7 +5,7 @@ export interface TreeModel {
 export const insertAfter = ({
   nodeIds,
   sourceNodeId,
-  newNodeId
+  newNodeId,
 }: {
   nodeIds: string[]
   sourceNodeId: string

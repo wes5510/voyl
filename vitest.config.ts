@@ -5,7 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     alias: {
-      '@styled-system': new URL('./styled-system', import.meta.url).pathname
-    }
-  }
+      '@': new URL('./', import.meta.url).pathname,
+    },
+  },
 })

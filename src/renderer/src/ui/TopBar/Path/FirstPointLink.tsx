@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai'
-import PointLink from '../../../components/PointLink'
-import { firstPointAtom } from 'src/renderer/src/state/path.state'
+import PointLink from '../../../shared-components/PointLink'
+import { firstPointAtom } from '@/src/renderer/src/state/path.state'
 
 export default function FirstPointLink(): JSX.Element | undefined {
   const point = useAtomValue(firstPointAtom)

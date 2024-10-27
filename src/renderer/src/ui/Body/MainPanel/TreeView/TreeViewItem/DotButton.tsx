@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 import IconButton from './IconButton'
-import CircleIcon from '../../../../../components/Icon/CircleIcon'
-import { css } from '@styled-system/css'
+import CircleIcon from '../../../../../shared-components/Icon/CircleIcon'
+import { css } from '@/styled-system/css'
 
 export interface DotButtonProps {
   onClick?: MouseEventHandler
@@ -13,7 +13,7 @@ export default function DotButton({ onClick }: DotButtonProps): JSX.Element {
       <CircleIcon
         className={css({
           w: 1.5,
-          h: 1.5
+          h: 1.5,
         })}
       />
     </IconButton>

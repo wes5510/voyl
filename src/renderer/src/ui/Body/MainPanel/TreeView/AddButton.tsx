@@ -1,5 +1,5 @@
-import { hstack } from '@styled-system/patterns'
-import PlusIcon from '../../../../components/Icon/PlusIcon'
+import { hstack } from '@/styled-system/patterns'
+import PlusIcon from '@/src/renderer/src/shared-components/Icon/PlusIcon'
 
 export default function AddButton(): JSX.Element {
   const handleClick = (): void => {
@@ -14,10 +14,10 @@ export default function AddButton(): JSX.Element {
         gap: 1,
         cursor: 'pointer',
         _hover: {
-          fontWeight: 'semibold'
+          fontWeight: 'semibold',
         },
         transitionProperty: 'font-weight',
-        transitionDuration: 'fastest'
+        transitionDuration: 'fastest',
       })}
     >
       <PlusIcon width="20" height="20" />

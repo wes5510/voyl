@@ -1,7 +1,7 @@
-import { css } from '@styled-system/css'
-import { hstack } from '@styled-system/patterns'
+import { css } from '@/styled-system/css'
+import { hstack } from '@/styled-system/patterns'
 import { useAtomValue } from 'jotai'
-import { titleAtom } from 'src/renderer/src/state/title.state'
+import { titleAtom } from '@/src/renderer/src/state/title.state'
 
 export default function MainPanelHeader(): JSX.Element {
   const { icon: Icon, text } = useAtomValue(titleAtom)
@@ -9,14 +9,14 @@ export default function MainPanelHeader(): JSX.Element {
   return (
     <div
       className={hstack({
-        gap: 3
+        gap: 3,
       })}
     >
       {Icon && (
         <Icon
           className={css({
             width: 9,
-            height: 9
+            height: 9,
           })}
         />
       )}
@@ -24,7 +24,7 @@ export default function MainPanelHeader(): JSX.Element {
         className={css({
           fontSize: '3xl',
           fontWeight: 'bold',
-          fontFamily: 'roboto mono, monospace'
+          fontFamily: 'roboto mono, monospace',
         })}
       >
         {text}

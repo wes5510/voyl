@@ -5,5 +5,5 @@ import Trigger from './Trigger'
 export default {
   Content,
   Trigger,
-  Root
+  Root,
 }

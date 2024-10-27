@@ -1,4 +1,4 @@
-import { vstack } from '@styled-system/patterns'
+import { vstack } from '@/styled-system/patterns'
 import MainPanelBody from './MainPanelBody'
 import Scroller from './Scroller'
 import MainPanelHeader from './MainPanelHeader'
@@ -11,7 +11,7 @@ export default function MainPanel(): JSX.Element {
           p: 6,
           gap: 6,
           alignItems: 'normal',
-          overflowX: 'hidden'
+          overflowX: 'hidden',
         })}
       >
         <MainPanelHeader />

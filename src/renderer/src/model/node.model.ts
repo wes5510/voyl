@@ -9,7 +9,7 @@ export interface NodeModel {
 export const createNewNode = ({
   depth,
   text,
-  collapsed
+  collapsed,
 }: {
   depth: number
   text?: string
@@ -18,12 +18,12 @@ export const createNewNode = ({
   id: uuid(),
   depth,
   collapsed: collapsed ?? true,
-  text: text ?? ''
+  text: text ?? '',
 })
 
 export const getDepthBySourceNode = ({
   collapsed,
-  depth
+  depth,
 }: {
   collapsed: boolean
   depth: number

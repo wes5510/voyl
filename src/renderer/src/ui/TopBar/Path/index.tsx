@@ -1,4 +1,4 @@
-import { hstack } from '@styled-system/patterns'
+import { hstack } from '@/styled-system/patterns'
 import FirstPointLink from './FirstPointLink'
 import LastPointLink from './LastPointLink'
 import MidPathSegment from './MidPathSegment'

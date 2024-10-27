@@ -1,7 +1,7 @@
-import { hstack, vstack } from '@styled-system/patterns'
 import TopBar from './TopBar'
 import SideBar from './SideBar'
 import Body from './Body'
+import { hstack, vstack } from '@/styled-system/patterns'
 
 export default function App(): JSX.Element {
   return (

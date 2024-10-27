@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react'
-import TooltipButton from '../../../components/TooltipButton'
+import TooltipButton from '../../../shared-components/TooltipButton'
 
 export interface IconButtonProps {
   icon: ReactNode

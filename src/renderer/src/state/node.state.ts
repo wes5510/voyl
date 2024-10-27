@@ -15,9 +15,9 @@ export const nodeAtom = atomFamily(
       id,
       depth: depth ?? 0,
       text: text ?? '',
-      collapsed: collapsed ?? true
+      collapsed: collapsed ?? true,
     }),
-  (a, b) => a.id === b.id
+  (a, b) => a.id === b.id,
 )
 
 export const collapsedAtom = atomFamily((id: string) =>
@@ -26,8 +26,8 @@ export const collapsedAtom = atomFamily((id: string) =>
     (get, set, value: boolean) => {
       const prev = get(nodeAtom({ id }))
       set(nodeAtom({ id }), { ...prev, collapsed: value })
-    }
-  )
+    },
+  ),
 )
 
 export const textAtom = atomFamily((id: string) =>
@@ -36,8 +36,8 @@ export const textAtom = atomFamily((id: string) =>
     (get, set, value: string) => {
       const prev = get(nodeAtom({ id }))
       set(nodeAtom({ id }), { ...prev, text: value })
-    }
-  )
+    },
+  ),
 )
 
 export const depthAtom = atomFamily((id: string) => atom((get) => get(nodeAtom({ id })).depth))
@@ -48,13 +48,13 @@ export const createNewNodeFromSourceNodeAtom = atom(
     const __new = createNewNode({
       depth: getDepthBySourceNode({
         collapsed: get(collapsedAtom(sourceNodeId)),
-        depth: get(depthAtom(sourceNodeId))
+        depth: get(depthAtom(sourceNodeId)),
       }),
-      text: newNodeText
+      text: newNodeText,
     })
 
     nodeAtom(__new)
 
     return __new
-  }
+  },
 )

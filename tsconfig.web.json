@@ -12,7 +12,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@styled-system/*": ["styled-system/*"],
+      "@/*": ["./*"],
     }
   }
 }

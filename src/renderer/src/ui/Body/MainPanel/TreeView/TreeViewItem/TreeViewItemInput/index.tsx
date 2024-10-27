@@ -1,5 +1,5 @@
 import { useHotkeys } from 'react-hotkeys-hook'
-import { css, cx } from '@styled-system/css'
+import { css, cx } from '@/styled-system/css'
 import { useAtom } from 'jotai'
 import { ChangeEvent, useRef } from 'react'
 import mergeRefs from 'merge-refs'
@@ -7,7 +7,7 @@ import useHandleEnterInNode from './useHandleEnterInNode'
 import useSyncFocus from './useSyncFocus'
 import useAutoResize from './useAutoResize'
 import useHandlePasteInNode from './useHandlePasteInNode'
-import { textAtom } from 'src/renderer/src/state/node.state'
+import { textAtom } from '@/src/renderer/src/state/node.state'
 
 export interface TreeViewItemInputProps {
   nodeId: string
@@ -16,13 +16,13 @@ export interface TreeViewItemInputProps {
 
 export default function TreeViewItemInput({
   nodeId,
-  className
+  className,
 }: TreeViewItemInputProps): JSX.Element {
   const elemRef = useRef<HTMLTextAreaElement>(null)
   const [text, setText] = useAtom(textAtom(nodeId))
   const hotkeyRef = useHotkeys<HTMLTextAreaElement>('enter', useHandleEnterInNode({ nodeId }), {
     preventDefault: true,
-    enableOnFormTags: ['textarea']
+    enableOnFormTags: ['textarea'],
   })
   useSyncFocus({ nodeId, ref: elemRef })
   useAutoResize({ ref: elemRef })
@@ -42,9 +42,9 @@ export default function TreeViewItemInput({
         css({
           wordBreak: 'break-word',
           outline: 'none',
-          resize: 'none'
+          resize: 'none',
         }),
-        className
+        className,
       )}
     />
   )

@@ -1,5 +1,5 @@
 import { MouseEventHandler, PropsWithChildren } from 'react'
-import { center } from '@styled-system/patterns'
+import { center } from '@/styled-system/patterns'
 import Tooltip from './Tooltip'
 
 export interface TooltipButtonProps extends PropsWithChildren {
@@ -12,7 +12,7 @@ export default function TooltipButton({
   children,
   text,
   active,
-  onClick
+  onClick,
 }: TooltipButtonProps): JSX.Element {
   return (
     <Tooltip text={text}>
@@ -24,10 +24,10 @@ export default function TooltipButton({
           bg: active
             ? 'zinc.200'
             : {
-                _hover: 'neutral.200'
+                _hover: 'neutral.200',
               },
           transitionProperty: 'background',
-          transitionDuration: 'slow'
+          transitionDuration: 'slow',
         })}
         onClick={onClick}
       >

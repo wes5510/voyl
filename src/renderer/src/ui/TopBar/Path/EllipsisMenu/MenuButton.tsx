@@ -1,6 +1,6 @@
 import { ElementType } from 'react'
-import { hstack } from '@styled-system/patterns'
-import { css } from '@styled-system/css'
+import { hstack } from '@/styled-system/patterns'
+import { css } from '@/styled-system/css'
 
 interface MenuButtonProps {
   href: string
@@ -18,8 +18,8 @@ export default function MenuButton({ href, text, icon: Icon }: MenuButtonProps):
         paddingY: 1,
         cursor: 'pointer',
         _hover: {
-          bg: 'zinc.100'
-        }
+          bg: 'zinc.100',
+        },
       })}
       href={href}
     >
@@ -27,14 +27,14 @@ export default function MenuButton({ href, text, icon: Icon }: MenuButtonProps):
         <Icon
           className={css({
             w: 4,
-            h: 4
+            h: 4,
           })}
         />
       )}
       <span
         className={css({
           truncate: true,
-          flex: 1
+          flex: 1,
         })}
       >
         {text}

@@ -1,7 +1,7 @@
-import { hstack } from '@styled-system/patterns'
+import { hstack } from '@/styled-system/patterns'
 import { useAtomValue } from 'jotai'
 import { PropsWithChildren } from 'react'
-import { depthAtom } from 'src/renderer/src/state/node.state'
+import { depthAtom } from '@/src/renderer/src/state/node.state'
 
 export interface TreeViewItemWrapperProps extends PropsWithChildren {
   nodeId: string
@@ -9,7 +9,7 @@ export interface TreeViewItemWrapperProps extends PropsWithChildren {
 
 export default function TreeViewItemWrapper({
   nodeId,
-  children
+  children,
 }: TreeViewItemWrapperProps): JSX.Element {
   const depth = useAtomValue(depthAtom(nodeId))
 
@@ -17,10 +17,10 @@ export default function TreeViewItemWrapper({
     <div
       className={hstack({
         gap: 1.5,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
       })}
       style={{
-        paddingLeft: `${depth * 1.5}rem`
+        paddingLeft: `${depth * 1.5}rem`,
       }}
     >
       {children}

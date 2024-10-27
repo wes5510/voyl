@@ -1,4 +1,4 @@
-import { center } from '@styled-system/patterns'
+import { center } from '@/styled-system/patterns'
 import { MouseEventHandler, PropsWithChildren } from 'react'
 
 export interface IconButtonProps extends PropsWithChildren {
@@ -15,10 +15,10 @@ export default function IconButton({ children, onClick }: IconButtonProps): JSX.
         rounded: 'full',
         cursor: 'pointer',
         bg: {
-          _hover: 'neutral.200'
+          _hover: 'neutral.200',
         },
         transitionProperty: 'background',
-        transitionDuration: 'slow'
+        transitionDuration: 'slow',
       })}
       onClick={onClick}
     >

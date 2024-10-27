@@ -3,5 +3,5 @@ import { FavoriteModel } from '../model/favorite.model'
 
 export const favoritesAtom = atom<FavoriteModel[]>([
   { id: '1', text: 'One' },
-  { id: '2', text: 'Two' }
+  { id: '2', text: 'Two' },
 ])

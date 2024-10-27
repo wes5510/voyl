@@ -1,5 +1,5 @@
 import Path from './Path'
-import { hstack } from '@styled-system/patterns'
+import { hstack } from '@/styled-system/patterns'
 
 export default function TopBar(): JSX.Element {
   return (
@@ -10,7 +10,7 @@ export default function TopBar(): JSX.Element {
         w: 'full',
         borderBottomWidth: '1px',
         borderBottomColor: 'black/50',
-        justify: 'space-between'
+        justify: 'space-between',
       })}
     >
       <Path />

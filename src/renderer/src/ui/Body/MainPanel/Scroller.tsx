@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import { css } from '@/styled-system/css'
 import { PropsWithChildren } from 'react'
 
 export default function Scroller({ children }: PropsWithChildren): JSX.Element {
@@ -7,7 +7,7 @@ export default function Scroller({ children }: PropsWithChildren): JSX.Element {
       className={css({
         position: 'relative',
         h: 'full',
-        w: 'full'
+        w: 'full',
       })}
     >
       <div
@@ -17,7 +17,7 @@ export default function Scroller({ children }: PropsWithChildren): JSX.Element {
           left: 0,
           w: 'full',
           h: 'full',
-          overflowY: 'auto'
+          overflowY: 'auto',
         })}
       >
         {children}

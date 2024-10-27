@@ -1,7 +1,7 @@
 import CollapseButton from './CollapseButton'
 import DotButton from './DotButton'
 import TreeViewItemInput from './TreeViewItemInput'
-import { css } from '@styled-system/css'
+import { css } from '@/styled-system/css'
 import TreeViewItemWrapper from './TreeViewItemWrapper'
 
 export interface TreeViewItemProps {
@@ -16,7 +16,7 @@ export default function TreeViewItem({ nodeId }: TreeViewItemProps): JSX.Element
       <TreeViewItemInput
         nodeId={nodeId}
         className={css({
-          flex: 1
+          flex: 1,
         })}
       />
     </TreeViewItemWrapper>

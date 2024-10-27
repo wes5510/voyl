@@ -1,4 +1,4 @@
-import { css } from '@styled-system/css'
+import { css } from '@/styled-system/css'
 
 export default function Divider(): JSX.Element {
   return (
@@ -6,14 +6,14 @@ export default function Divider(): JSX.Element {
       className={css({
         paddingX: 2,
         width: 'full',
-        height: '0.5px'
+        height: '0.5px',
       })}
     >
       <div
         className={css({
           bg: 'zinc.300',
           width: 'full',
-          height: 'full'
+          height: 'full',
         })}
       />
     </div>

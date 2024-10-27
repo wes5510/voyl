@@ -1,4 +1,4 @@
-import { vstack } from '@styled-system/patterns'
+import { vstack } from '@/styled-system/patterns'
 import Divider from './Divider'
 import FavoriteMenu from './FavoriteMenu'
 import AppMenu from './AppMenu'
@@ -10,7 +10,7 @@ export default function SideBar(): JSX.Element {
         h: 'full',
         borderRightWidth: '1px',
         borderRightColor: 'black/50',
-        justify: 'space-between'
+        justify: 'space-between',
       })}
     >
       <div className={vstack({ gap: 0 })}>

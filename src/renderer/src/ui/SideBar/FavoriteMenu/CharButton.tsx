@@ -1,6 +1,6 @@
 import { MouseEventHandler } from 'react'
-import TooltipButton from '../../../components/TooltipButton'
-import { css } from '@styled-system/css'
+import TooltipButton from '../../../shared-components/TooltipButton'
+import { css } from '@/styled-system/css'
 
 export interface CharButtonProps {
   text: string
@@ -13,7 +13,7 @@ export default function CharButton({ text, active, onClick }: CharButtonProps): 
     <TooltipButton text={text} active={active} onClick={onClick}>
       <span
         className={css({
-          fontSize: 'xl'
+          fontSize: 'xl',
         })}
       >
         {text.charAt(0)}
