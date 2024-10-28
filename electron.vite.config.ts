@@ -12,6 +12,9 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
   },
   renderer: {
-    plugins: [react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }), tsconfigPaths()],
+    plugins: [
+      react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh, 'jotai/babel/preset'] } }),
+      tsconfigPaths(),
+    ],
   },
 })
