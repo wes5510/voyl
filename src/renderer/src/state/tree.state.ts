@@ -26,14 +26,33 @@ export const insertAfterNewNodeInTreeAtom = atom(
   },
 )
 
-const updateFocusToPrevNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string }) => {
+const focusedNodeIndexAtom = atom((get) => {
+  const nodeId = get(focusedNodeIdAtom)
+  if (!nodeId) {
+    return -1
+  }
+
+  return get(treeAtom).nodeIds.indexOf(nodeId)
+})
+
+export const updateFocusToNextNodeAtom = atom(null, (get, set) => {
   const { nodeIds } = get(treeAtom)
-  const srcIdx = nodeIds.indexOf(nodeId)
-  if (srcIdx <= 0) {
+  const idx = get(focusedNodeIndexAtom)
+  if (idx === -1 || idx === nodeIds.length - 1) {
     return
   }
 
-  set(focusedNodeIdAtom, nodeIds[srcIdx - 1])
+  set(focusedNodeIdAtom, nodeIds[idx + 1])
+})
+
+export const updateFocusToPrevNodeAtom = atom(null, (get, set) => {
+  const idx = get(focusedNodeIndexAtom)
+  if (idx <= 0) {
+    return
+  }
+
+  const { nodeIds } = get(treeAtom)
+  set(focusedNodeIdAtom, nodeIds[idx - 1])
 })
 
 const removeNodeIdAtom = atom(null, (get, set, { nodeId }: { nodeId: string }) => {
@@ -41,7 +60,7 @@ const removeNodeIdAtom = atom(null, (get, set, { nodeId }: { nodeId: string }) =
 })
 
 export const removeNodeInTreeAtom = atom(null, (_get, set, { nodeId }: { nodeId: string }) => {
-  set(updateFocusToPrevNodeAtom, { nodeId })
+  set(updateFocusToPrevNodeAtom)
   set(removeNodeIdAtom, { nodeId })
   nodeAtom.remove({ id: nodeId })
 })

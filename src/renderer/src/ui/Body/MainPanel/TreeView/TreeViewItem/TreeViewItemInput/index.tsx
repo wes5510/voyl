@@ -3,12 +3,11 @@ import { css, cx } from '@/styled-system/css'
 import { useAtom } from 'jotai'
 import { ChangeEvent, useRef } from 'react'
 import mergeRefs from 'merge-refs'
-import useHandleEnterInNode from './useHandleEnterInNode'
 import useSyncFocus from './useSyncFocus'
 import useAutoResize from './useAutoResize'
 import useHandlePasteInNode from './useHandlePasteInNode'
 import { textAtom } from '@/src/renderer/src/state/node.state'
-import useHandleBackspaceInNode from './useHandleBackspaceInNode'
+import useHandleKey from './useHandleKey'
 
 export interface TreeViewItemInputProps {
   nodeId: string
@@ -21,15 +20,15 @@ export default function TreeViewItemInput({
 }: TreeViewItemInputProps): JSX.Element {
   const elemRef = useRef<HTMLTextAreaElement>(null)
   const [text, setText] = useAtom(textAtom(nodeId))
-  const enterKeyRef = useHotkeys<HTMLTextAreaElement>('enter', useHandleEnterInNode({ nodeId }), {
-    preventDefault: true,
-    enableOnFormTags: ['textarea'],
-  })
-  const backspaceKeyRef = useHotkeys<HTMLTextAreaElement>(
-    'backspace',
-    useHandleBackspaceInNode({ nodeId }),
+  const keyRef = useHotkeys<HTMLTextAreaElement>(
+    ['enter', 'backspace', 'up', 'down'],
+    useHandleKey({ nodeId }),
     {
       enableOnFormTags: ['textarea'],
+      preventDefault: (_e, hotKeyEvent) => {
+        const keys = hotKeyEvent.keys?.join('')
+        return keys === 'enter' || keys === 'up'
+      },
     },
   )
   const handleFocus = useSyncFocus({ nodeId, ref: elemRef })
@@ -41,7 +40,7 @@ export default function TreeViewItemInput({
 
   return (
     <textarea
-      ref={mergeRefs(enterKeyRef, backspaceKeyRef, elemRef)}
+      ref={mergeRefs(keyRef, elemRef)}
       value={text}
       onChange={handleChange}
       onPaste={useHandlePasteInNode({ setText })}
