@@ -1,7 +1,7 @@
 import { css } from '@/styled-system/css'
 import { hstack } from '@/styled-system/patterns'
 import { useAtomValue } from 'jotai'
-import { titleAtom } from '@/src/renderer/src/state/title.state'
+import { titleAtom } from '@/state/title.state'
 
 export default function MainPanelHeader(): JSX.Element {
   const { icon: Icon, text } = useAtomValue(titleAtom)

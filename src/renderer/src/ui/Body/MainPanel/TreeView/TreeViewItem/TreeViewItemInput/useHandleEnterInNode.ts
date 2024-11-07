@@ -2,8 +2,8 @@ import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
-import { textAtom } from '@/src/renderer/src/state/node.state'
-import { insertAfterNewNodeInTreeAtom } from '@/src/renderer/src/state/tree.state'
+import { textAtom } from '@/state/node.state'
+import { insertAfterNewNodeInTreeAtom } from '@/state/tree.state'
 
 const getSourceNodeText = ({
   text,

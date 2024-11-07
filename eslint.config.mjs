@@ -59,15 +59,15 @@ export default [
                 './src/renderer/src/state',
                 './src/renderer/src/model',
                 './src/renderer/src/api',
-                './src/renderer/src/shared-components',
+                './src/renderer/src/component',
                 './node_modules',
               ],
-              message: 'Only import from model, api and shared-components in state directory.',
+              message: 'Only import from model, api and component in state directory.',
             },
             {
-              target: './src/renderer/src/shared-components',
+              target: './src/renderer/src/component',
               from: ['./src/renderer/src/api', './src/renderer/src/model'],
-              message: 'Do not import from api and model in shared-components directory.',
+              message: 'Do not import from api and model in component directory.',
             },
             {
               target: './src/renderer/src/ui',
@@ -81,14 +81,31 @@ export default [
   },
   {
     files: ['src/renderer/src/ui/**/*'],
+    ignores: ['**/index.tsx'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
-              regex: '^(?!.*shared-components)(../).*',
-              message: 'Do not import from parent directory.',
+              regex: '^(?!.*component)(../).*',
+              message: 'Do not import from parent components',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/renderer/src/ui/**/index.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^((\\.\\.\\/){2,})(?!component\\/).*',
+              message: 'Do not import from higher-level directories in index files',
             },
           ],
         },

@@ -3,7 +3,7 @@ import { useAtomValue } from 'jotai'
 import TreeViewItem from './TreeViewItem'
 import { memo } from 'react'
 import AddButton from './AddButton'
-import { nodeIdsAtom } from '@/src/renderer/src/state/tree.state'
+import { nodeIdsAtom } from '@/state/tree.state'
 
 const MTreeViewItem = memo(TreeViewItem)
 

@@ -6,7 +6,7 @@ import mergeRefs from 'merge-refs'
 import useSyncFocus from './useSyncFocus'
 import useAutoResize from './useAutoResize'
 import useHandlePasteInNode from './useHandlePasteInNode'
-import { textAtom } from '@/src/renderer/src/state/node.state'
+import { textAtom } from '@/state/node.state'
 import useHandleKey from './useHandleKey'
 
 export interface TreeViewItemInputProps {
