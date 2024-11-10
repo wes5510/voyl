@@ -1,25 +1,29 @@
 import { useCallback } from 'react'
-import useHandleBackspaceInNode from './useHandleBackspaceInNode'
-import useHandleEnterInNode from './useHandleEnterInNode'
+import useHandleBackspaceKey from './useHandleBackspaceKey'
+import useHandleEnterKey from './useHandleEnterKey'
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useSetAtom } from 'jotai'
 import { updateFocusToNextNodeAtom, updateFocusToPrevNodeAtom } from '@/state/tree.state'
+import useHandleTabKey from './useHandleTabKey'
+import useHandleShiftTabKey from './useHandleShiftTabKey'
 
 export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCallback {
-  const handelEnter = useHandleEnterInNode({ nodeId })
-  const handleBackspace = useHandleBackspaceInNode({ nodeId })
+  const handelEnterKey = useHandleEnterKey({ nodeId })
+  const handleBackspaceKey = useHandleBackspaceKey({ nodeId })
   const updateFocusToPrevNode = useSetAtom(updateFocusToPrevNodeAtom)
   const updateFocusToNextNode = useSetAtom(updateFocusToNextNodeAtom)
+  const handleTabKey = useHandleTabKey({ nodeId })
+  const handleShiftTabKey = useHandleShiftTabKey({ nodeId })
 
   return useCallback(
     (keyEvent, hotKeyEvent) => {
       switch (hotKeyEvent.keys?.join('')) {
         case 'enter': {
-          handelEnter(keyEvent, hotKeyEvent)
+          handelEnterKey(keyEvent, hotKeyEvent)
           break
         }
         case 'backspace': {
-          handleBackspace(keyEvent, hotKeyEvent)
+          handleBackspaceKey(keyEvent, hotKeyEvent)
           break
         }
         case 'up': {
@@ -30,8 +34,23 @@ export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCall
           updateFocusToNextNode()
           break
         }
+        case 'tab': {
+          handleTabKey(keyEvent, hotKeyEvent)
+          break
+        }
+        case 'shift+tab': {
+          handleShiftTabKey(keyEvent, hotKeyEvent)
+          break
+        }
       }
     },
-    [handelEnter, handleBackspace, updateFocusToNextNode, updateFocusToPrevNode],
+    [
+      handelEnterKey,
+      handleBackspaceKey,
+      handleShiftTabKey,
+      handleTabKey,
+      updateFocusToNextNode,
+      updateFocusToPrevNode,
+    ],
   )
 }

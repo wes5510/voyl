@@ -2,8 +2,8 @@ import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
-import { textAtom } from '@/state/node.state'
-import { insertAfterNewNodeInTreeAtom } from '@/state/tree.state'
+import { titleAtom } from '@/state/node.state'
+import { insertNewNodeAfterAtom } from '@/state/tree.state'
 
 const getSourceNodeText = ({
   text,
@@ -16,9 +16,9 @@ const getSourceNodeText = ({
 const getNewNodeText = ({ text, selectionEnd }: { text: string; selectionEnd?: number }): string =>
   selectionEnd ? text.slice(selectionEnd) : ''
 
-export default function useHandleEnterInNode({ nodeId }: { nodeId: string }): HotkeyCallback {
-  const setText = useSetAtom(textAtom(nodeId))
-  const insertAfterNewNodeInTree = useSetAtom(insertAfterNewNodeInTreeAtom)
+export default function useHandleEnterKey({ nodeId }: { nodeId: string }): HotkeyCallback {
+  const setTitle = useSetAtom(titleAtom(nodeId))
+  const insertNewNodeAfter = useSetAtom(insertNewNodeAfterAtom)
 
   return useCallback(
     (e: KeyboardEvent) => {
@@ -28,21 +28,21 @@ export default function useHandleEnterInNode({ nodeId }: { nodeId: string }): Ho
 
       const { value, selectionStart, selectionEnd } = e.target
 
-      setText(
+      setTitle(
         getSourceNodeText({
           text: value,
           selectionStart,
         }),
       )
 
-      insertAfterNewNodeInTree({
-        sourceNodeId: nodeId,
-        newNodeText: getNewNodeText({
+      insertNewNodeAfter({
+        refNodeId: nodeId,
+        newNodeTitle: getNewNodeText({
           text: value,
           selectionEnd,
         }),
       })
     },
-    [insertAfterNewNodeInTree, nodeId, setText],
+    [insertNewNodeAfter, nodeId, setTitle],
   )
 }

@@ -1,5 +1,7 @@
 import { ClipboardEventHandler, useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
+import { titleAtom } from '@/state/node.state'
+import { useSetAtom } from 'jotai'
 
 const BREAK_LINE = '\n'
 
@@ -8,11 +10,13 @@ const removeNewLine = (text: string): string => text.replaceAll(BREAK_LINE, ' ')
 const insertText = ({ sourceText, newText, selection }): string =>
   `${sourceText.slice(0, selection.start)}${newText}${sourceText.slice(selection.end)}`
 
-export default function useHandlePasteInNode({
-  setText,
+export default function useHandlePaste({
+  nodeId,
 }: {
-  setText: (text: string) => void
+  nodeId: string
 }): ClipboardEventHandler<HTMLTextAreaElement> {
+  const setTitle = useSetAtom(titleAtom(nodeId))
+
   return useCallback(
     (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
       if (!e.clipboardData.getData('text/plain').includes(BREAK_LINE)) {
@@ -27,7 +31,7 @@ export default function useHandlePasteInNode({
       e.preventDefault()
       const { value, selectionStart, selectionEnd } = target
       const newText = removeNewLine(e.clipboardData.getData('text/plain'))
-      setText(
+      setTitle(
         insertText({
           newText,
           sourceText: value,
@@ -42,6 +46,6 @@ export default function useHandlePasteInNode({
         target.focus()
       }, 0)
     },
-    [setText],
+    [setTitle],
   )
 }

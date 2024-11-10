@@ -3,28 +3,22 @@ export interface NodeModel {
   id: string
   depth: number
   collapsed: boolean
-  text: string
+  title: string
 }
 
 export const createNewNode = ({
-  depth,
-  text,
-  collapsed,
+  depth = 0,
+  id = uuid(),
+  title = '',
+  collapsed = true,
 }: {
-  depth: number
-  text?: string
+  depth?: number
+  id?: string
+  title?: string
   collapsed?: boolean
 }): NodeModel => ({
-  id: uuid(),
+  id,
   depth,
-  collapsed: collapsed ?? true,
-  text: text ?? '',
-})
-
-export const getDepthBySourceNode = ({
   collapsed,
-  depth,
-}: {
-  collapsed: boolean
-  depth: number
-}): number => (collapsed ? depth : depth + 1)
+  title,
+})

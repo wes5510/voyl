@@ -5,8 +5,8 @@ import { ChangeEvent, useRef } from 'react'
 import mergeRefs from 'merge-refs'
 import useSyncFocus from './useSyncFocus'
 import useAutoResize from './useAutoResize'
-import useHandlePasteInNode from './useHandlePasteInNode'
-import { textAtom } from '@/state/node.state'
+import useHandlePaste from './useHandlePaste'
+import { titleAtom } from '@/state/node.state'
 import useHandleKey from './useHandleKey'
 
 export interface TreeViewItemInputProps {
@@ -19,9 +19,9 @@ export default function TreeViewItemInput({
   className,
 }: TreeViewItemInputProps): JSX.Element {
   const elemRef = useRef<HTMLTextAreaElement>(null)
-  const [text, setText] = useAtom(textAtom(nodeId))
+  const [title, setTitle] = useAtom(titleAtom(nodeId))
   const keyRef = useHotkeys<HTMLTextAreaElement>(
-    ['enter', 'backspace', 'up', 'down'],
+    ['enter', 'backspace', 'up', 'down', 'tab', 'shift+tab'],
     useHandleKey({ nodeId }),
     {
       enableOnFormTags: ['textarea'],
@@ -31,19 +31,20 @@ export default function TreeViewItemInput({
       },
     },
   )
-  const handleFocus = useSyncFocus({ nodeId, ref: elemRef })
   useAutoResize({ ref: elemRef })
+  const handleFocus = useSyncFocus({ nodeId, ref: elemRef })
+  const handlePaste = useHandlePaste({ nodeId: nodeId })
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setText(e.target.value)
+    setTitle(e.target.value)
   }
 
   return (
     <textarea
       ref={mergeRefs(keyRef, elemRef)}
-      value={text}
+      value={title}
       onChange={handleChange}
-      onPaste={useHandlePasteInNode({ setText })}
+      onPaste={handlePaste}
       rows={1}
       onFocus={handleFocus}
       className={cx(
