@@ -108,7 +108,7 @@ export const indentNode = (
       targetNode: NodeModel
     }
   | undefined => {
-  const prevSiblingNode = __getPrevSiblingNode(nodes, targetNode)
+  const prevSiblingNode = __getPrevSiblingNode({ nodes, targetNode })
   if (!prevSiblingNode) {
     return undefined
   }
@@ -125,19 +125,94 @@ export const indentNode = (
   }
 }
 
-const __getPrevSiblingNode = (nodes: NodeModel[], targetNode: NodeModel): NodeModel | undefined => {
+const __getPrevSiblingNode = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): NodeModel | undefined => {
   const targetNodeIdx = nodes.indexOf(targetNode)
-
   if (targetNodeIdx < 0) {
     throw new Error('targetNode not found')
   }
 
   for (let i = targetNodeIdx - 1; i >= 0; i--) {
     const __node = nodes[i]
-    if (__node.depth === targetNode.depth) {
+    if (__isSiblingNode({ refNode: __node, targetNode: targetNode })) {
       return __node
     }
   }
 
   return undefined
 }
+
+const __isSiblingNode = ({
+  refNode,
+  targetNode,
+}: {
+  refNode: NodeModel
+  targetNode: NodeModel
+}): boolean => refNode.depth === targetNode.depth
+
+export const outdentNode = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): NodeModel | undefined => {
+  if (!__hasParentNode({ nodes, targetNode })) {
+    return undefined
+  }
+
+  return {
+    ...targetNode,
+    depth: targetNode.depth - 1,
+  }
+}
+
+const __hasParentNode = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): boolean => __getParentNode({ nodes, targetNode }) !== undefined
+
+const __getParentNode = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): NodeModel | undefined => {
+  const targetNodeIdx = nodes.indexOf(targetNode)
+  if (targetNodeIdx < 0) {
+    throw new Error('targetNode not found')
+  }
+
+  if (!__canHaveParentNode({ targetNode })) {
+    return undefined
+  }
+
+  for (let i = targetNodeIdx - 1; i >= 0; i--) {
+    const __node = nodes[i]
+    if (__isParentNode({ refNode: __node, targetNode: targetNode })) {
+      return __node
+    }
+  }
+
+  return undefined
+}
+
+const __canHaveParentNode = ({ targetNode }: { targetNode: NodeModel }): boolean =>
+  targetNode.depth >= 1
+
+const __isParentNode = ({
+  refNode,
+  targetNode,
+}: {
+  refNode: NodeModel
+  targetNode: NodeModel
+}): boolean => refNode.depth === targetNode.depth - 1

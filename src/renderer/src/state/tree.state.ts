@@ -5,6 +5,7 @@ import {
   getPrevNodeIdFromFocusedNodeId,
   indentNode,
   insertNewNodeAfter,
+  outdentNode,
   removeNodeId,
 } from '@/model/tree.model'
 import { nodeAtom } from './node.state'
@@ -67,3 +68,16 @@ export const indentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string
 })
 
 const __getNodesAtom = atom((get) => get(nodeIdsAtom).map((id) => get(nodeAtom({ id }))))
+
+export const outdentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string }) => {
+  const targetNode = outdentNode({
+    nodes: get(__getNodesAtom),
+    targetNode: get(nodeAtom({ id: nodeId })),
+  })
+
+  if (!targetNode) {
+    return
+  }
+
+  set(nodeAtom({ id: targetNode.id }), targetNode)
+})

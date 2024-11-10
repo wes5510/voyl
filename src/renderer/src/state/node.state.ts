@@ -24,9 +24,8 @@ export const nodeAtom = atomFamily(
 export const collapsedAtom = atomFamily((id: string) =>
   atom(
     (get) => get(nodeAtom({ id })).collapsed,
-    (get, set, value: boolean) => {
-      const prev = get(nodeAtom({ id }))
-      set(nodeAtom({ id }), { ...prev, collapsed: value })
+    (_get, set, value: boolean) => {
+      set(nodeAtom({ id }), (prev) => ({ ...prev, collapsed: value }))
     },
   ),
 )

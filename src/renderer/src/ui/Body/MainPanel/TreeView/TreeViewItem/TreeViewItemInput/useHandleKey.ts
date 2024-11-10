@@ -35,11 +35,11 @@ export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCall
           break
         }
         case 'tab': {
-          handleTabKey(keyEvent, hotKeyEvent)
-          break
-        }
-        case 'shift+tab': {
-          handleShiftTabKey(keyEvent, hotKeyEvent)
+          if (hotKeyEvent.shift) {
+            handleShiftTabKey(keyEvent, hotKeyEvent)
+          } else {
+            handleTabKey(keyEvent, hotKeyEvent)
+          }
           break
         }
       }
