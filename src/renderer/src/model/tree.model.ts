@@ -121,7 +121,7 @@ export const indentNode = (
     },
     prevSiblingNode: {
       ...prevSiblingNode,
-      collapsed: true,
+      collapsed: false,
     },
     childNodes: __incrementChildNodesDepth({ parentNode: targetNode, nodes }),
   }
@@ -196,6 +196,7 @@ export const outdentNode = ({
   | {
       targetNode: NodeModel
       childNodes: NodeModel[]
+      nodeIds: string[]
     }
   | undefined => {
   if (!__hasParentNode({ nodes, targetNode })) {
@@ -208,8 +209,79 @@ export const outdentNode = ({
       depth: targetNode.depth - 1,
     },
     childNodes: __decrementChildNodesDepth({ parentNode: targetNode, nodes }),
+    nodeIds: __moveAfterLastSiblingNode({ nodes, targetNode }).map((node) => node.id),
   }
 }
+
+const __moveAfterLastSiblingNode = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): NodeModel[] => {
+  const targetNodeIdx = nodes.indexOf(targetNode)
+  if (targetNodeIdx < 0) {
+    throw new Error('targetNode not found')
+  }
+
+  const nextLowerDepthNodeIdx = __getNextLowerDepthNodeIndx({ nodes, targetNode })
+
+  return nextLowerDepthNodeIdx === targetNodeIdx
+    ? nodes
+    : __moveByIndex({
+        nodes,
+        from: targetNodeIdx,
+        to: nextLowerDepthNodeIdx - 1,
+      })
+}
+
+const __moveByIndex = ({
+  nodes,
+  from,
+  to,
+}: {
+  nodes: NodeModel[]
+  from: number
+  to: number
+}): NodeModel[] => {
+  const __new = [...nodes]
+
+  __new.splice(from, 1)
+  __new.splice(to, 0, nodes[from])
+
+  return __new
+}
+
+const __getNextLowerDepthNodeIndx = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): number => {
+  const targetNodeIdx = nodes.indexOf(targetNode)
+  if (targetNodeIdx < 0) {
+    throw new Error('targetNode not found')
+  }
+
+  for (let i = targetNodeIdx + 1; i < nodes.length; i++) {
+    const __node = nodes[i]
+    if (__hasLowerDepth({ comparedNode: __node, baseNode: targetNode })) {
+      return i
+    }
+  }
+
+  return nodes.length
+}
+
+const __hasLowerDepth = ({
+  comparedNode,
+  baseNode,
+}: {
+  comparedNode: NodeModel
+  baseNode: NodeModel
+}): boolean => comparedNode.depth < baseNode.depth
 
 const __decrementChildNodesDepth = ({
   parentNode,

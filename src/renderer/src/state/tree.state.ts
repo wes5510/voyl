@@ -83,8 +83,9 @@ export const outdentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: strin
     return
   }
 
-  const { targetNode, childNodes } = ret
+  const { targetNode, childNodes, nodeIds } = ret
 
+  set(nodeIdsAtom, nodeIds)
   set(nodeAtom({ id: targetNode.id }), targetNode)
   childNodes.forEach((node) => {
     set(nodeAtom({ id: node.id }), node)
