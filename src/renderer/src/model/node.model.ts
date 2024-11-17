@@ -47,3 +47,8 @@ export const updateCollapsed = ({
   node: NodeModel
   collapsed: boolean
 }): NodeModel => ({ ...node, collapsed })
+
+export const updateTitle = ({ node, title }: { node: NodeModel; title: string }): NodeModel => ({
+  ...node,
+  title,
+})

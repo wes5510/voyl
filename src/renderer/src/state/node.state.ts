@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { createNewNode, NodeModel } from '@/model/node.model'
+import { createNewNode, NodeModel, updateCollapsed, updateTitle } from '@/model/node.model'
+
 interface NodeAtom {
   id: NodeModel['id']
   depth?: NodeModel['depth']
@@ -25,7 +26,7 @@ export const collapsedAtom = atomFamily((id: string) =>
   atom(
     (get) => get(nodeAtom({ id })).collapsed,
     (_get, set, value: boolean) => {
-      set(nodeAtom({ id }), (prev) => ({ ...prev, collapsed: value }))
+      set(nodeAtom({ id }), (prev) => updateCollapsed({ node: prev, collapsed: value }))
     },
   ),
 )
@@ -34,7 +35,7 @@ export const titleAtom = atomFamily((id: string) =>
   atom(
     (get) => get(nodeAtom({ id })).title,
     (_get, set, value: string) => {
-      set(nodeAtom({ id }), (prev) => ({ ...prev, title: value }))
+      set(nodeAtom({ id }), (prev) => updateTitle({ node: prev, title: value }))
     },
   ),
 )
