@@ -133,44 +133,12 @@ const __incrementChildNodesDepth = ({
 }: {
   parentNode: NodeModel
   nodes: NodeModel[]
-}): NodeModel[] => {
-  const childNodes = __getChildNodes({ parentNode, nodes })
-  return childNodes.map((node) => ({
-    ...node,
-    depth: node.depth + 1,
-  }))
-}
-
-const __getChildNodes = ({
-  parentNode,
-  nodes,
-}: {
-  parentNode: NodeModel
-  nodes: NodeModel[]
-}): NodeModel[] => {
-  const parentNodeIdx = nodes.indexOf(parentNode)
-  if (parentNodeIdx < 0) {
-    throw new Error('parentNode not found')
-  }
-
-  const slicedNodes = nodes.slice(parentNodeIdx + 1)
-  const childNodes: NodeModel[] = []
-
-  for (const node of slicedNodes) {
-    if (!__isChildNode({ parentNode, childNode: node })) break
-    childNodes.push(node)
-  }
-
-  return childNodes
-}
-
-const __isChildNode = ({
-  parentNode,
-  childNode,
-}: {
-  parentNode: NodeModel
-  childNode: NodeModel
-}): boolean => parentNode.depth < childNode.depth
+}): NodeModel[] =>
+  __updateChildNodesDepth({
+    parentNode,
+    nodes,
+    depthDelta: 1,
+  })
 
 const __getPrevSiblingNode = ({
   nodes,
@@ -224,16 +192,84 @@ export const outdentNode = ({
 }: {
   nodes: NodeModel[]
   targetNode: NodeModel
-}): NodeModel | undefined => {
+}):
+  | {
+      targetNode: NodeModel
+      childNodes: NodeModel[]
+    }
+  | undefined => {
   if (!__hasParentNode({ nodes, targetNode })) {
     return undefined
   }
 
   return {
-    ...targetNode,
-    depth: targetNode.depth - 1,
+    targetNode: {
+      ...targetNode,
+      depth: targetNode.depth - 1,
+    },
+    childNodes: __decrementChildNodesDepth({ parentNode: targetNode, nodes }),
   }
 }
+
+const __decrementChildNodesDepth = ({
+  parentNode,
+  nodes,
+}: {
+  parentNode: NodeModel
+  nodes: NodeModel[]
+}): NodeModel[] =>
+  __updateChildNodesDepth({
+    parentNode,
+    nodes,
+    depthDelta: -1,
+  })
+
+const __updateChildNodesDepth = ({
+  parentNode,
+  nodes,
+  depthDelta,
+}: {
+  parentNode: NodeModel
+  nodes: NodeModel[]
+  depthDelta: number
+}): NodeModel[] => {
+  const childNodes = __getChildNodes({ parentNode, nodes })
+  return childNodes.map((node) => ({
+    ...node,
+    depth: node.depth + depthDelta,
+  }))
+}
+
+const __getChildNodes = ({
+  parentNode,
+  nodes,
+}: {
+  parentNode: NodeModel
+  nodes: NodeModel[]
+}): NodeModel[] => {
+  const parentNodeIdx = nodes.indexOf(parentNode)
+  if (parentNodeIdx < 0) {
+    throw new Error('parentNode not found')
+  }
+
+  const slicedNodes = nodes.slice(parentNodeIdx + 1)
+  const childNodes: NodeModel[] = []
+
+  for (const node of slicedNodes) {
+    if (!__isChildNode({ parentNode, childNode: node })) break
+    childNodes.push(node)
+  }
+
+  return childNodes
+}
+
+const __isChildNode = ({
+  parentNode,
+  childNode,
+}: {
+  parentNode: NodeModel
+  childNode: NodeModel
+}): boolean => parentNode.depth < childNode.depth
 
 const __hasParentNode = ({
   nodes,

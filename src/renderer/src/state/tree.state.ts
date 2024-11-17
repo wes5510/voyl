@@ -63,6 +63,7 @@ export const indentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string
   }
 
   const { targetNode, prevSiblingNode, childNodes } = ret
+
   set(nodeAtom({ id: targetNode.id }), targetNode)
   set(nodeAtom({ id: prevSiblingNode.id }), prevSiblingNode)
   childNodes.forEach((node) => {
@@ -73,14 +74,19 @@ export const indentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string
 const __getNodesAtom = atom((get) => get(nodeIdsAtom).map((id) => get(nodeAtom({ id }))))
 
 export const outdentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string }) => {
-  const targetNode = outdentNode({
+  const ret = outdentNode({
     nodes: get(__getNodesAtom),
     targetNode: get(nodeAtom({ id: nodeId })),
   })
 
-  if (!targetNode) {
+  if (!ret) {
     return
   }
 
+  const { targetNode, childNodes } = ret
+
   set(nodeAtom({ id: targetNode.id }), targetNode)
+  childNodes.forEach((node) => {
+    set(nodeAtom({ id: node.id }), node)
+  })
 })
