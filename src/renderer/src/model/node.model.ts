@@ -22,3 +22,28 @@ export const createNewNode = ({
   collapsed,
   title,
 })
+
+export const incrementDepth = ({ node }: { node: NodeModel }): NodeModel =>
+  updateDepth({ node, depthDelta: 1 })
+
+export const decrementDepth = ({ node }: { node: NodeModel }): NodeModel =>
+  updateDepth({ node, depthDelta: -1 })
+
+export const updateDepth = ({
+  node,
+  depthDelta,
+}: {
+  node: NodeModel
+  depthDelta: number
+}): NodeModel => ({
+  ...node,
+  depth: node.depth + depthDelta,
+})
+
+export const updateCollapsed = ({
+  node,
+  collapsed,
+}: {
+  node: NodeModel
+  collapsed: boolean
+}): NodeModel => ({ ...node, collapsed })

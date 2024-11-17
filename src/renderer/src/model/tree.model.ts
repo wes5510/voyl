@@ -1,4 +1,11 @@
-import { createNewNode, NodeModel } from './node.model'
+import {
+  createNewNode,
+  decrementDepth,
+  incrementDepth,
+  updateCollapsed,
+  updateDepth,
+  NodeModel,
+} from './node.model'
 
 export interface TreeModel {
   nodeIds: string[]
@@ -19,9 +26,8 @@ export const insertNewNodeAfter = ({
   newNode: NodeModel
 } => {
   const newNode = createNewNode({
-    depth: getDepthByRefNode({
-      collapsed: refNode.collapsed,
-      depth: refNode.depth,
+    depth: __getDepthByNode({
+      node: refNode,
     }),
     title: newNodeTitle,
   })
@@ -37,8 +43,8 @@ export const insertNewNodeAfter = ({
   }
 }
 
-const getDepthByRefNode = ({ collapsed, depth }: { collapsed: boolean; depth: number }): number =>
-  collapsed ? depth : depth + 1
+const __getDepthByNode = ({ node }: { node: NodeModel }): number =>
+  node.collapsed ? node.depth : node.depth + 1
 
 const __insertAfter = ({
   nodeIds,
@@ -115,14 +121,8 @@ export const indentNode = (
   }
 
   return {
-    targetNode: {
-      ...targetNode,
-      depth: targetNode.depth + 1,
-    },
-    prevSiblingNode: {
-      ...prevSiblingNode,
-      collapsed: false,
-    },
+    targetNode: incrementDepth({ node: targetNode }),
+    prevSiblingNode: updateCollapsed({ node: prevSiblingNode, collapsed: false }),
     childNodes: __incrementChildNodesDepth({ parentNode: targetNode, nodes }),
   }
 }
@@ -204,10 +204,7 @@ export const outdentNode = ({
   }
 
   return {
-    targetNode: {
-      ...targetNode,
-      depth: targetNode.depth - 1,
-    },
+    targetNode: decrementDepth({ node: targetNode }),
     childNodes: __decrementChildNodesDepth({ parentNode: targetNode, nodes }),
     nodeIds: __moveBeforeNextLowerDepthNode({ nodes, targetNode }).map((node) => node.id),
   }
@@ -266,8 +263,7 @@ const __getNextLowerDepthNodeIndx = ({
   }
 
   for (let i = targetNodeIdx + 1; i < nodes.length; i++) {
-    const __node = nodes[i]
-    if (__hasLowerDepth({ comparedNode: __node, baseNode: targetNode })) {
+    if (__hasLowerDepth({ comparedNode: nodes[i], baseNode: targetNode })) {
       return i
     }
   }
@@ -306,10 +302,7 @@ const __updateChildNodesDepth = ({
   depthDelta: number
 }): NodeModel[] => {
   const childNodes = __getChildNodes({ parentNode, nodes })
-  return childNodes.map((node) => ({
-    ...node,
-    depth: node.depth + depthDelta,
-  }))
+  return childNodes.map((node) => updateDepth({ node, depthDelta }))
 }
 
 const __getChildNodes = ({
