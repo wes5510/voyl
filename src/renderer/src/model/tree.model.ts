@@ -209,11 +209,11 @@ export const outdentNode = ({
       depth: targetNode.depth - 1,
     },
     childNodes: __decrementChildNodesDepth({ parentNode: targetNode, nodes }),
-    nodeIds: __moveAfterLastSiblingNode({ nodes, targetNode }).map((node) => node.id),
+    nodeIds: __moveBeforeNextLowerDepthNode({ nodes, targetNode }).map((node) => node.id),
   }
 }
 
-const __moveAfterLastSiblingNode = ({
+const __moveBeforeNextLowerDepthNode = ({
   nodes,
   targetNode,
 }: {
