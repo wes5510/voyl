@@ -106,6 +106,7 @@ export const indentNode = (
   | {
       prevSiblingNode: NodeModel
       targetNode: NodeModel
+      childNodes: NodeModel[]
     }
   | undefined => {
   const prevSiblingNode = __getPrevSiblingNode({ nodes, targetNode })
@@ -122,8 +123,54 @@ export const indentNode = (
       ...prevSiblingNode,
       collapsed: true,
     },
+    childNodes: __incrementChildNodesDepth({ parentNode: targetNode, nodes }),
   }
 }
+
+const __incrementChildNodesDepth = ({
+  parentNode,
+  nodes,
+}: {
+  parentNode: NodeModel
+  nodes: NodeModel[]
+}): NodeModel[] => {
+  const childNodes = __getChildNodes({ parentNode, nodes })
+  return childNodes.map((node) => ({
+    ...node,
+    depth: node.depth + 1,
+  }))
+}
+
+const __getChildNodes = ({
+  parentNode,
+  nodes,
+}: {
+  parentNode: NodeModel
+  nodes: NodeModel[]
+}): NodeModel[] => {
+  const parentNodeIdx = nodes.indexOf(parentNode)
+  if (parentNodeIdx < 0) {
+    throw new Error('parentNode not found')
+  }
+
+  const slicedNodes = nodes.slice(parentNodeIdx + 1)
+  const childNodes: NodeModel[] = []
+
+  for (const node of slicedNodes) {
+    if (!__isChildNode({ parentNode, childNode: node })) break
+    childNodes.push(node)
+  }
+
+  return childNodes
+}
+
+const __isChildNode = ({
+  parentNode,
+  childNode,
+}: {
+  parentNode: NodeModel
+  childNode: NodeModel
+}): boolean => parentNode.depth < childNode.depth
 
 const __getPrevSiblingNode = ({
   nodes,

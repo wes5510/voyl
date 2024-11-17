@@ -62,9 +62,12 @@ export const indentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: string
     return
   }
 
-  const { targetNode, prevSiblingNode } = ret
+  const { targetNode, prevSiblingNode, childNodes } = ret
   set(nodeAtom({ id: targetNode.id }), targetNode)
   set(nodeAtom({ id: prevSiblingNode.id }), prevSiblingNode)
+  childNodes.forEach((node) => {
+    set(nodeAtom({ id: node.id }), node)
+  })
 })
 
 const __getNodesAtom = atom((get) => get(nodeIdsAtom).map((id) => get(nodeAtom({ id }))))
