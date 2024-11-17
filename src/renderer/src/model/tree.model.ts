@@ -136,8 +136,9 @@ const __getPrevSiblingNode = ({
   if (targetNodeIdx < 0) {
     throw new Error('targetNode not found')
   }
+  const parentNodeIdx = __getParentNodeIndex({ nodes, targetNode })
 
-  for (let i = targetNodeIdx - 1; i >= 0; i--) {
+  for (let i = targetNodeIdx - 1; i >= parentNodeIdx + 1; i--) {
     const __node = nodes[i]
     if (__isSiblingNode({ refNode: __node, targetNode: targetNode })) {
       return __node
@@ -154,6 +155,21 @@ const __isSiblingNode = ({
   refNode: NodeModel
   targetNode: NodeModel
 }): boolean => refNode.depth === targetNode.depth
+
+const __getParentNodeIndex = ({
+  nodes,
+  targetNode,
+}: {
+  nodes: NodeModel[]
+  targetNode: NodeModel
+}): number => {
+  const parentNode = __getParentNode({ nodes, targetNode })
+  if (!parentNode) {
+    return -1
+  }
+
+  return nodes.indexOf(parentNode)
+}
 
 export const outdentNode = ({
   nodes,
