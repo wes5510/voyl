@@ -1,18 +1,18 @@
 import { css } from '@/styled-system/css'
 import IconButton from './IconButton'
 import { useAtom } from 'jotai'
-import { collapsedAtom } from '@/state/node.state'
 import ChevronRightIcon from '@/component/Icon/ChevronRightIcon'
+import { collapsedNodeAtom } from '@/state/tree.state'
 
 export interface CollapseButtonProps {
   nodeId: string
 }
 
 export default function CollapseButton({ nodeId }: CollapseButtonProps): JSX.Element {
-  const [collapsed, setCollapsed] = useAtom(collapsedAtom(nodeId))
+  const [collapsed, setCollapsed] = useAtom(collapsedNodeAtom(nodeId))
 
   const handleClick = (): void => {
-    setCollapsed(!collapsed)
+    setCollapsed({ collapsed: !collapsed })
   }
 
   return (

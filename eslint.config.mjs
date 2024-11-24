@@ -88,8 +88,8 @@ export default [
         {
           patterns: [
             {
-              regex: '^(?!.*component)(../).*',
-              message: 'Do not import from parent components',
+              regex: '^(?!.*(component|const))(../).*',
+              message: 'Do not import from higher-level directories',
             },
           ],
         },
@@ -104,7 +104,7 @@ export default [
         {
           patterns: [
             {
-              regex: '^((\\.\\.\\/){2,})(?!component\\/).*',
+              regex: '^((\\.\\.\\/){2,})?!(component\\/).*',
               message: 'Do not import from higher-level directories in index files',
             },
           ],

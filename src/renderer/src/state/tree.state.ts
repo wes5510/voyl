@@ -3,23 +3,29 @@ import {
   TreeModel,
   getNextNodeIdFromFocusedNodeId,
   getPrevNodeIdFromFocusedNodeId,
+  getValidDepth,
   indentNode,
   insertNewNodeAfter,
+  moveNodeIdsByRefNode,
   outdentNode,
+  removeChildNodes,
   removeNodeId,
 } from '@/model/tree.model'
-import { nodeAtom } from './node.state'
+import { collapsedAtom, depthAtom, nodeAtom } from './node.state'
+import { atomFamily } from 'jotai/vanilla/utils'
 
 const treeAtom = atom<TreeModel>({
   nodeIds: ['1'],
   focusedNodeId: '1',
 })
+
 export const nodeIdsAtom = atom(
   (get) => get(treeAtom).nodeIds,
   (_get, set, nodeIds: string[]) => {
     set(treeAtom, (prev) => ({ ...prev, nodeIds }))
   },
 )
+
 export const focusedNodeIdAtom = atom(
   (get) => get(treeAtom).focusedNodeId,
   (_get, set, focusedNodeId?: string) => {
@@ -91,3 +97,55 @@ export const outdentNodeAtom = atom(null, (get, set, { nodeId }: { nodeId: strin
     set(nodeAtom({ id: node.id }), node)
   })
 })
+
+export const moveNodeAtom = atom(
+  null,
+  (
+    get,
+    set,
+    {
+      refNodeId,
+      targetNodeId,
+      deltaDepth,
+    }: { refNodeId: string; targetNodeId: string; deltaDepth: number },
+  ) => {
+    set(
+      depthAtom(targetNodeId),
+      getValidDepth({
+        nodes: get(__getNodesAtom),
+        refNode: get(nodeAtom({ id: refNodeId })),
+        targetNode: get(nodeAtom({ id: targetNodeId })),
+        deltaDepth,
+      }),
+    )
+    set(
+      nodeIdsAtom,
+      moveNodeIdsByRefNode({ nodeIds: get(treeAtom).nodeIds, refNodeId, targetNodeId }),
+    )
+  },
+)
+
+export const collapsedNodeAtom = atomFamily((nodeId: string) =>
+  atom(
+    (get) => get(collapsedAtom(nodeId)),
+    (get, set, { collapsed }: { collapsed: boolean }) => {
+      set(collapsedAtom(nodeId), collapsed)
+      if (collapsed) {
+        set(
+          nodeIdsAtom,
+          removeChildNodes({
+            nodes: get(__getNodesAtom),
+            parentNode: get(nodeAtom({ id: nodeId })),
+          }).map((node) => node.id),
+        )
+      }
+    },
+  ),
+)
+
+export const setCollapsedNodeByNodeIdAtom = atom(
+  null,
+  (_get, set, { nodeId, collapsed }: { nodeId: string; collapsed: boolean }) => {
+    set(collapsedNodeAtom(nodeId), { collapsed })
+  },
+)

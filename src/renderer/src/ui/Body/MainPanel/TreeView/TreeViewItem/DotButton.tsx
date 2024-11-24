@@ -7,9 +7,9 @@ export interface DotButtonProps {
   onClick?: MouseEventHandler
 }
 
-export default function DotButton({ onClick }: DotButtonProps): JSX.Element {
+export default function DotButton({ onClick, ...props }: DotButtonProps): JSX.Element {
   return (
-    <IconButton onClick={onClick}>
+    <IconButton onClick={onClick} {...props}>
       <CircleIcon
         className={css({
           w: 1.5,

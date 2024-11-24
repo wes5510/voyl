@@ -24,21 +24,22 @@ export const createNewNode = ({
 })
 
 export const incrementDepth = ({ node }: { node: NodeModel }): NodeModel =>
-  updateDepth({ node, depthDelta: 1 })
+  updateDepthByDelta({ node, depthDelta: 1 })
 
 export const decrementDepth = ({ node }: { node: NodeModel }): NodeModel =>
-  updateDepth({ node, depthDelta: -1 })
+  updateDepthByDelta({ node, depthDelta: -1 })
 
-export const updateDepth = ({
+export const updateDepthByDelta = ({
   node,
   depthDelta,
 }: {
   node: NodeModel
   depthDelta: number
-}): NodeModel => ({
-  ...node,
-  depth: node.depth + depthDelta,
-})
+}): NodeModel =>
+  updateDepth({
+    node,
+    depth: node.depth + depthDelta,
+  })
 
 export const updateCollapsed = ({
   node,
@@ -51,4 +52,9 @@ export const updateCollapsed = ({
 export const updateTitle = ({ node, title }: { node: NodeModel; title: string }): NodeModel => ({
   ...node,
   title,
+})
+
+export const updateDepth = ({ node, depth }: { node: NodeModel; depth: number }): NodeModel => ({
+  ...node,
+  depth,
 })

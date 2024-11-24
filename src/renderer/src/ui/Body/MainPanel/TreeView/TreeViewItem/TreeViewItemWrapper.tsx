@@ -1,29 +1,35 @@
 import { hstack } from '@/styled-system/patterns'
 import { useAtomValue } from 'jotai'
-import { PropsWithChildren } from 'react'
+import { ForwardedRef, forwardRef, PropsWithChildren } from 'react'
 import { depthAtom } from '@/state/node.state'
+import { INDENT_WIDTH } from '../const'
 
 export interface TreeViewItemWrapperProps extends PropsWithChildren {
   nodeId: string
+  style?: React.CSSProperties
 }
 
-export default function TreeViewItemWrapper({
-  nodeId,
-  children,
-}: TreeViewItemWrapperProps): JSX.Element {
+function TreeViewItemWrapper(
+  { nodeId, style, children }: TreeViewItemWrapperProps,
+  ref: ForwardedRef<HTMLDivElement>,
+): JSX.Element {
   const depth = useAtomValue(depthAtom(nodeId))
 
   return (
     <div
+      ref={ref}
       className={hstack({
         gap: 1.5,
         alignItems: 'flex-start',
       })}
       style={{
-        paddingLeft: `${depth * 1.5}rem`,
+        paddingLeft: `${depth * INDENT_WIDTH}px`,
+        ...style,
       }}
     >
       {children}
     </div>
   )
 }
+
+export default forwardRef(TreeViewItemWrapper)

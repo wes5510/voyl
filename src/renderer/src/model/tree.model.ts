@@ -3,8 +3,8 @@ import {
   decrementDepth,
   incrementDepth,
   updateCollapsed,
-  updateDepth,
   NodeModel,
+  updateDepthByDelta,
 } from './node.model'
 
 export interface TreeModel {
@@ -87,9 +87,15 @@ const __getNextNodeId = (nodeIds: string[], nodeId?: string): string | undefined
 export const getPrevNodeIdFromFocusedNodeId = (
   nodeIds: string[],
   focusedNodeId?: string,
-): string | undefined => __getPrevNodeId(nodeIds, focusedNodeId) ?? focusedNodeId
+): string | undefined => __getPrevNodeId({ nodeIds, nodeId: focusedNodeId }) ?? focusedNodeId
 
-const __getPrevNodeId = (nodeIds: string[], nodeId?: string): string | undefined => {
+const __getPrevNodeId = ({
+  nodeIds,
+  nodeId,
+}: {
+  nodeIds: string[]
+  nodeId?: string
+}): string | undefined => {
   if (!nodeId) {
     return
   }
@@ -302,7 +308,7 @@ const __updateChildNodesDepth = ({
   depthDelta: number
 }): NodeModel[] => {
   const childNodes = __getChildNodes({ parentNode, nodes })
-  return childNodes.map((node) => updateDepth({ node, depthDelta }))
+  return childNodes.map((node) => updateDepthByDelta({ node, depthDelta }))
 }
 
 const __getChildNodes = ({
@@ -312,7 +318,7 @@ const __getChildNodes = ({
   parentNode: NodeModel
   nodes: NodeModel[]
 }): NodeModel[] => {
-  const parentNodeIdx = nodes.indexOf(parentNode)
+  const parentNodeIdx = nodes.findIndex((node) => node.id === parentNode.id)
   if (parentNodeIdx < 0) {
     throw new Error('parentNode not found')
   }
@@ -380,3 +386,124 @@ const __isParentNode = ({
   refNode: NodeModel
   targetNode: NodeModel
 }): boolean => refNode.depth === targetNode.depth - 1
+
+export const getValidDepth = ({
+  nodes,
+  refNode,
+  targetNode,
+  deltaDepth,
+}: {
+  nodes: NodeModel[]
+  refNode: NodeModel
+  targetNode: NodeModel
+  deltaDepth: number
+}): number => {
+  const depth = targetNode.depth + deltaDepth
+  const maxDepth = __getMaxDepth({ nodes, nodeId: refNode.id })
+  const minDepth = __getMinDepth({ nodes, nodeId: refNode.id })
+
+  return Math.min(Math.max(depth, minDepth), maxDepth)
+}
+
+const __getMaxDepth = ({ nodes, nodeId }: { nodes: NodeModel[]; nodeId: string }): number => {
+  const prevNode = __getPrevNode({ nodes, nodeId })
+  if (!prevNode) {
+    return 0
+  }
+
+  return prevNode.depth + 1
+}
+
+const __getPrevNode = ({
+  nodes,
+  nodeId,
+}: {
+  nodes: NodeModel[]
+  nodeId?: string
+}): NodeModel | undefined => {
+  if (!nodeId) {
+    return
+  }
+
+  const idx = nodes.findIndex((node) => node.id === nodeId)
+  if (idx <= 0) {
+    return
+  }
+
+  return nodes[idx - 1]
+}
+
+const __getMinDepth = ({ nodes, nodeId }: { nodes: NodeModel[]; nodeId: string }): number => {
+  const nextNode = __getNextNode({ nodes, nodeId })
+  if (!nextNode) {
+    return 0
+  }
+
+  return nextNode.depth
+}
+
+const __getNextNode = ({
+  nodes,
+  nodeId,
+}: {
+  nodes: NodeModel[]
+  nodeId?: string
+}): NodeModel | undefined => {
+  const idx = nodes.findIndex((node) => node.id === nodeId)
+  if (idx < 0 || idx === nodes.length - 1) {
+    return
+  }
+
+  return nodes[idx + 1]
+}
+
+export const moveNodeIdsByRefNode = ({
+  nodeIds,
+  refNodeId,
+  targetNodeId,
+}: {
+  nodeIds: string[]
+  refNodeId: string
+  targetNodeId: string
+}): string[] => {
+  const refNodeIdx = nodeIds.indexOf(refNodeId)
+  const targetNodeIdx = nodeIds.indexOf(targetNodeId)
+
+  if (refNodeIdx < 0 || targetNodeIdx < 0) {
+    throw new Error('refNode or targetNode not found')
+  }
+
+  return __moveIdsByIndex({
+    nodeIds,
+    from: refNodeIdx,
+    to: targetNodeIdx,
+  })
+}
+
+const __moveIdsByIndex = ({
+  nodeIds,
+  from,
+  to,
+}: {
+  nodeIds: string[]
+  from: number
+  to: number
+}): string[] => {
+  const __new = [...nodeIds]
+
+  __new.splice(from, 1)
+  __new.splice(to, 0, nodeIds[from])
+
+  return __new
+}
+
+export const removeChildNodes = ({
+  nodes,
+  parentNode,
+}: {
+  nodes: NodeModel[]
+  parentNode: NodeModel
+}): NodeModel[] => {
+  const childNodes: NodeModel[] = __getChildNodes({ parentNode, nodes })
+  return nodes.filter((node) => !childNodes.includes(node))
+}

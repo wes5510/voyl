@@ -6,7 +6,7 @@ export interface IconButtonProps extends PropsWithChildren {
   onClick?: MouseEventHandler
 }
 
-export default function IconButton({ children, onClick }: IconButtonProps): JSX.Element {
+export default function IconButton({ children, onClick, ...props }: IconButtonProps): JSX.Element {
   return (
     <button
       className={center({
@@ -21,6 +21,7 @@ export default function IconButton({ children, onClick }: IconButtonProps): JSX.
         transitionDuration: 'slow',
       })}
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>
