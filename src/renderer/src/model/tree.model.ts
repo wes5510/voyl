@@ -402,16 +402,17 @@ export const getValidDepth = ({
   const maxDepth = __getMaxDepth({ nodes, nodeId: refNode.id })
   const minDepth = __getMinDepth({ nodes, nodeId: refNode.id })
 
-  return Math.min(Math.max(depth, minDepth), maxDepth)
+  if (depth >= maxDepth) {
+    return maxDepth
+  } else if (depth < minDepth) {
+    return minDepth
+  }
+  return depth
 }
 
 const __getMaxDepth = ({ nodes, nodeId }: { nodes: NodeModel[]; nodeId: string }): number => {
   const prevNode = __getPrevNode({ nodes, nodeId })
-  if (!prevNode) {
-    return 0
-  }
-
-  return prevNode.depth + 1
+  return prevNode ? prevNode.depth + 1 : 0
 }
 
 const __getPrevNode = ({
@@ -435,11 +436,7 @@ const __getPrevNode = ({
 
 const __getMinDepth = ({ nodes, nodeId }: { nodes: NodeModel[]; nodeId: string }): number => {
   const nextNode = __getNextNode({ nodes, nodeId })
-  if (!nextNode) {
-    return 0
-  }
-
-  return nextNode.depth
+  return nextNode ? nextNode.depth : 0
 }
 
 const __getNextNode = ({

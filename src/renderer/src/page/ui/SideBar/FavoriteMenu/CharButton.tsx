@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react'
-import TooltipButton from '../../../component/TooltipButton'
+import TooltipButton from '../../../../shared/component/TooltipButton'
 import { css } from '@/styled-system/css'
 
 export interface CharButtonProps {

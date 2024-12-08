@@ -1,9 +1,9 @@
-import TopBar from './TopBar'
-import SideBar from './SideBar'
-import Body from './Body'
 import { hstack, vstack } from '@/styled-system/patterns'
+import Body from './ui/Body'
+import TopBar from './ui/TopBar'
+import SideBar from './ui/SideBar'
 
-export default function App(): JSX.Element {
+export default function IndexPage(): JSX.Element {
   return (
     <div className={vstack({ gap: 0, h: 'full' })}>
       <TopBar />

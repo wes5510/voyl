@@ -13,6 +13,7 @@ import {
 } from '@/model/tree.model'
 import { collapsedAtom, depthAtom, nodeAtom } from './node.state'
 import { atomFamily } from 'jotai/vanilla/utils'
+import { NodeModel } from '@/model/node.model'
 
 const treeAtom = atom<TreeModel>({
   nodeIds: ['1'],
@@ -105,22 +106,26 @@ export const moveNodeAtom = atom(
     set,
     {
       refNodeId,
-      targetNodeId,
+      targetNode,
       deltaDepth,
-    }: { refNodeId: string; targetNodeId: string; deltaDepth: number },
+    }: { refNodeId: string; targetNode: NodeModel; deltaDepth: number },
   ) => {
     set(
-      depthAtom(targetNodeId),
+      depthAtom(targetNode.id),
       getValidDepth({
         nodes: get(__getNodesAtom),
         refNode: get(nodeAtom({ id: refNodeId })),
-        targetNode: get(nodeAtom({ id: targetNodeId })),
+        targetNode,
         deltaDepth,
       }),
     )
     set(
       nodeIdsAtom,
-      moveNodeIdsByRefNode({ nodeIds: get(treeAtom).nodeIds, refNodeId, targetNodeId }),
+      moveNodeIdsByRefNode({
+        nodeIds: get(treeAtom).nodeIds,
+        refNodeId,
+        targetNodeId: targetNode.id,
+      }),
     )
   },
 )
@@ -143,9 +148,17 @@ export const collapsedNodeAtom = atomFamily((nodeId: string) =>
   ),
 )
 
-export const setCollapsedNodeByNodeIdAtom = atom(
+export const draggingNodeAtom = atom<NodeModel | undefined>(undefined)
+
+export const setDraggingNodeByNodeIdAtom = atom(
   null,
-  (_get, set, { nodeId, collapsed }: { nodeId: string; collapsed: boolean }) => {
-    set(collapsedNodeAtom(nodeId), { collapsed })
+  (get, set, { nodeId }: { nodeId?: string }) => {
+    set(
+      draggingNodeAtom,
+      nodeId ? JSON.parse(JSON.stringify(get(nodeAtom({ id: nodeId })))) : undefined,
+    )
+    if (nodeId) {
+      set(collapsedNodeAtom(nodeId), { collapsed: true })
+    }
   },
 )

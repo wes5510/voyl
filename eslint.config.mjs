@@ -48,68 +48,6 @@ export default [
       'import/no-cycle': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
       'react-hooks/rules-of-hooks': 'error',
-      'import/no-restricted-paths': [
-        'error',
-        {
-          zones: [
-            {
-              target: './src/renderer/src/state',
-              from: './',
-              except: [
-                './src/renderer/src/state',
-                './src/renderer/src/model',
-                './src/renderer/src/api',
-                './src/renderer/src/component',
-                './node_modules',
-              ],
-              message: 'Only import from model, api and component in state directory.',
-            },
-            {
-              target: './src/renderer/src/component',
-              from: ['./src/renderer/src/api', './src/renderer/src/model'],
-              message: 'Do not import from api and model in component directory.',
-            },
-            {
-              target: './src/renderer/src/ui',
-              from: ['./src/renderer/src/api', './src/renderer/src/model'],
-              message: 'Do not import from api and model in ui directory.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: ['src/renderer/src/ui/**/*'],
-    ignores: ['**/index.tsx'],
-    rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              regex: '^(?!.*(component|const))(../).*',
-              message: 'Do not import from higher-level directories',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: ['src/renderer/src/ui/**/index.tsx'],
-    rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              regex: '^((\\.\\.\\/){2,})?!(component\\/).*',
-              message: 'Do not import from higher-level directories in index files',
-            },
-          ],
-        },
-      ],
     },
   },
 ]

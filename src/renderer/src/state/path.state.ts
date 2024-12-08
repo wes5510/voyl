@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import ListIcon from '../component/Icon/ListIcon'
+import ListIcon from '../shared/component/ListIcon'
 import {
   getFirstPoint,
   getLastPoint,
