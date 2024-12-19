@@ -13,9 +13,9 @@
     "baseUrl": ".",
     "paths": {
       "@/styled-system/*": ["styled-system/*"],
-      "@/feature/*": ["src/renderer/src/feature/*"],
-      "@/shared/*": ["src/renderer/src/shared/*"],
-      "@/page/*": ["src/renderer/src/page/*"],
+      "@/features/*": ["src/renderer/src/features/*"],
+      "@/common/*": ["src/renderer/src/common/*"],
+      "@/pages/*": ["src/renderer/src/pages/*"],
     }
   }
 }

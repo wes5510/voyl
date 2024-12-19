@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
+import voylPlugin from './eslint/index.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -48,6 +49,19 @@ export default [
       'import/no-cycle': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
       'react-hooks/rules-of-hooks': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+  {
+    files: ['src/renderer/src/pages/**'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/dependency-direction': 'error',
+      'voyl/import-path-format': 'error',
+      'voyl/component-location': 'error',
+      'voyl/module-type-control': 'error',
     },
   },
 ]
