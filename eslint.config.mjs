@@ -58,10 +58,7 @@ export default [
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/dependency-direction': 'error',
       'voyl/import-path-format': 'error',
-      'voyl/component-location': 'error',
-      'voyl/module-type-control': 'error',
     },
   },
 ]

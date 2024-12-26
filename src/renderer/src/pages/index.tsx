@@ -1,7 +1,7 @@
 import { hstack, vstack } from '@/styled-system/patterns'
-import NodesPage from './nodes/page'
-import TopBar from './components/TopBar'
-import SideBar from './components/SideBar'
+import NodesPage from './nodes'
+import TopBar from './TopBar'
+import SideBar from './SideBar'
 import { Route, Routes } from 'react-router'
 
 export default function IndexPage(): JSX.Element {

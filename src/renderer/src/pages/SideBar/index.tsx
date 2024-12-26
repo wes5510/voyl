@@ -2,7 +2,6 @@ import { vstack } from '@/styled-system/patterns'
 import Divider from './Divider'
 import FavoriteMenu from './FavoriteMenu'
 import AppMenu from './AppMenu'
-import CharButton from './FavoriteMenu/CharButton'
 
 export default function SideBar(): JSX.Element {
   return (
@@ -18,7 +17,6 @@ export default function SideBar(): JSX.Element {
         <AppMenu />
         <Divider />
         <FavoriteMenu />
-        <CharButton text="A" />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import { css } from '@/styled-system/css'
 import IconButton from './IconButton'
 import { useAtom } from 'jotai'
-import ChevronRightIcon from 'src/renderer/src/common/ChevronRightIcon'
+import ChevronRightIcon from 'src/renderer/src/shared/ChevronRightIcon'
 import { collapsedNodeAtom } from '@/features/tree/model/tree'
 
 export interface CollapseButtonProps {

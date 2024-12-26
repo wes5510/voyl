@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client'
 import { StrictMode } from 'react'
 import { DevTools } from 'jotai-devtools'
 import { BrowserRouter } from 'react-router'
-import IndexPage from './pages/page'
+import IndexPage from './pages'
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
