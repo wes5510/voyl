@@ -1,9 +1,8 @@
-import { useAtomValue } from 'jotai'
 import CharButton from './CharButton'
-import { favoritesAtom } from '@/features/favorite/model'
+import { useFavoriteManagerStore } from '@/features/favoriteManager/model'
 
 export default function FavoriteMenu(): JSX.Element {
-  const favorites = useAtomValue(favoritesAtom)
+  const favorites = useFavoriteManagerStore((state) => state.favorites)
 
   return (
     <>
