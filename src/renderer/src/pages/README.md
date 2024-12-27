@@ -2,86 +2,102 @@
 
 _Read this in other languages: [한국어](README.ko.md)_
 
-This document explains the structure and rules of the `pages/` directory.
+## Overview
 
-## Directory Structure Example
+This document explains the structure and rules of the `pages/` directory. We pursue two core principles:
+
+- **High Cohesion**: Related files are managed together in a single directory
+- **Low Coupling**: Component dependencies are minimized through clear interfaces
+
+To achieve these principles, we use the following structure and rules:
+
+- Hierarchical directory structure clarifies each component's responsibility and scope
+- Import rules control the direction of component dependencies
+
+## Directory Structure
+
+### Basic Structure
+
+The project follows this hierarchical structure:
 
 ```
 pages/
-├── shared/                 # Elements available at all hierarchy levels
-│   ├── Button/
-│   │   ├── index.tsx       # Button component
-│   │   ├── types.ts        # Type definitions
-│   │   ├── utils.ts        # Utility functions
-│   │   └── const.ts        # Constants
-│   ├── Input/
-│   │   ├── index.tsx
-│   │   └── types.ts
-│   └── Header/
-│       ├── index.tsx
-│       └── const.ts
-├── products/               # Product related pages
-│   ├── ProductList/        # Product list component
-│   │   ├── index.tsx
-│   │   ├── types.ts
-│   │   └── utils.ts
-│   ├── ProductDetail/      # Product detail component
-│   │   ├── index.tsx
-│   │   └── const.ts
-│   ├── [id]/               # Dynamic routing
-│   │   ├── Detail/         # ID specific page component
-│   │   │   └── index.tsx
-│   │   └── index.tsx       # /products/:id page
-│   └── index.tsx           # /products page
-└── index.tsx               # Root page
+├── shared/              # Top-level shared components
+├── products/           # /products page
+│   ├── shared/        # Products page shared components
+│   ├── list/          # /products/list page
+│   │   ├── shared/   # List page shared components
+│   │   └── index.tsx
+│   └── [id]/          # /products/:id page
+└── index.tsx          # Root page (/)
 ```
 
-## Core Rules
+### Main Directories
 
-### 1. Hierarchical Structure
-- Components are organized in a hierarchical folder structure
-- Related files (components, types, utilities, etc.) are located in the same folder
-- All folders use `index.tsx` as their entry point
+#### 1. shared/
 
-### 2. Import Restrictions
-- Imports are only allowed between files at the same hierarchy level
-- Direct children of `shared/` are an exception, allowing imports from same and lower hierarchy levels
+- Contains shared components, types, utility functions, and constants
+- Access restricted to same and lower hierarchies only
+- Can be placed in any page or component folder
 
-#### Import Examples
-```typescript
-// File: pages/products/ProductList/index.tsx
-// 1. Same hierarchy level imports
-import SubList from './SubList'                         // ✅ component in same directory
-import { ProductListType } from './types'               // ✅ types in same directory
-import { formatProduct } from './utils'                 // ✅ utilities in same directory
-import { PRODUCT_STATUS } from './const'                // ✅ constants in same directory
+#### 2. Page Directory
 
-// 2. shared imports (exception allowing imports from same and lower hierarchy levels)
-import { Button } from '@/pages/shared/Button.tsx'      // ✅ direct child of shared can be imported
+- Directory structure maps 1:1 with URL structure
+- Each page contains an `index.tsx` handling its view and logic
+- Dynamic routing expressed in `[parameter]` format
+
+### Component Structure
+
+Each component groups related files together to increase cohesion:
+
+```
+ComponentName/
+├── shared/         # Component's internal shared elements
+├── index.tsx      # Component implementation
+├── types.ts       # Type definitions
+├── utils.ts       # Utility functions
+└── const.ts       # Constants
 ```
 
-#### Prohibited Imports
-```typescript
-// File: pages/products/ProductList/index.tsx
-// 1. Cross-hierarchy component references
-import { OrderList } from '@/pages/orders/OrderList'          // ❌ component from different hierarchy
-import { ProductDetail } from '../ProductDetail'              // ❌ component from upper hierarchy
+## Import Rules
 
-// 2. shared directory references
-// File: pages/products/ProductList/index.tsx
-import { SubButton } from '@/pages/shared/Button/SubButton'   // ❌ cannot import from shared subdirectories
-import { SubButton } from './SubButton/shared/Button'         // ❌ cannot import from shared in lower hierarchy
+We follow these rules for clear dependency management:
+
+### Allowed Imports
+
+```typescript
+// 1. Same Directory Imports
+import SubList from './SubList' // ✅ Component in same directory
+import { ProductListType } from './types' // ✅ Types in same directory
+
+// 2. shared Directory Imports
+import Button from '@/pages/shared/Button' // ✅ Higher hierarchy shared
+import ListItem from './shared/ListItem' // ✅ Same hierarchy shared
+```
+
+### Forbidden Imports
+
+The following imports are forbidden for dependency management and maintainability:
+
+```typescript
+// 1. Different Hierarchy Component Imports
+import OrderList from '@/pages/orders/OrderList' // ❌ Different hierarchy
+import ProductDetail from '../ProductDetail' // ❌ Higher hierarchy
+
+// 2. shared Directory Import Restrictions
+import SubButton from '@/pages/shared/Button/SubButton' // ❌ shared subdirectory
+import ProductCard from '@/pages/orders/shared/ProductCard' // ❌ Different hierarchy shared
+import Button from './products/shared/Button' // ❌ Lower hierarchy shared
 ```
 
 ## ESLint Rules
 
-The project includes ESLint rules to enforce this structure:
+These rules are automatically checked with the following ESLint configuration:
 
 ```javascript
 {
   "rules": {
-    "voyl/import-path-format": "error",    // Check import path rules
-    "voyl/component-structure": "error"    // Check component structure rules
+    "voyl/import-path-format": "error",    // Only allow permitted import paths
   }
 }
 ```
