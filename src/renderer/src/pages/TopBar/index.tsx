@@ -1,4 +1,4 @@
-import Path from './Path'
+import Path from '@/features/path/ui/Path'
 import { hstack } from '@/styled-system/patterns'
 
 export default function TopBar(): JSX.Element {
