@@ -84,33 +84,6 @@ const __getNextNodeId = (nodeIds: string[], nodeId?: string): string | undefined
   return nodeIds[idx + 1]
 }
 
-export const getPrevNodeIdFromFocusedNodeId = (
-  nodeIds: string[],
-  focusedNodeId?: string,
-): string | undefined => __getPrevNodeId({ nodeIds, nodeId: focusedNodeId }) ?? focusedNodeId
-
-const __getPrevNodeId = ({
-  nodeIds,
-  nodeId,
-}: {
-  nodeIds: string[]
-  nodeId?: string
-}): string | undefined => {
-  if (!nodeId) {
-    return
-  }
-
-  const idx = nodeIds.indexOf(nodeId)
-  if (idx <= 0) {
-    return
-  }
-
-  return nodeIds[idx - 1]
-}
-
-export const removeNodeId = (nodeIds: string[], nodeId: string): string[] =>
-  nodeIds.filter((id) => id !== nodeId)
-
 export const indentNode = (
   nodes: NodeModel[],
   targetNode: NodeModel,

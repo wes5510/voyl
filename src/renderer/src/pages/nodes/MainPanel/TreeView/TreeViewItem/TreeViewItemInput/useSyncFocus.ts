@@ -1,6 +1,6 @@
-import { atom, useAtomValue, useSetAtom } from 'jotai'
-import { RefObject, useCallback, useEffect, useMemo } from 'react'
-import { focusedNodeIdAtom } from '@/features/tree/model/tree'
+import useTreeStore from '@/features/tree/model'
+import { isFocused } from '@/features/tree/model/tree/new_index'
+import { RefObject, useCallback, useEffect } from 'react'
 
 export default function useSyncFocus<T extends HTMLElement = HTMLElement>({
   nodeId,
@@ -9,10 +9,8 @@ export default function useSyncFocus<T extends HTMLElement = HTMLElement>({
   nodeId: string
   ref: RefObject<T>
 }): () => void {
-  const focused = useAtomValue(
-    useMemo(() => atom((get) => get(focusedNodeIdAtom) === nodeId), [nodeId]),
-  )
-  const setFocusedNodeId = useSetAtom(focusedNodeIdAtom)
+  const focused = useTreeStore((state) => isFocused({ entity: state, nodeId }))
+  const setFocusedNodeId = useTreeStore((state) => state.setFocusedNodeId)
 
   useEffect(() => {
     if (focused) {

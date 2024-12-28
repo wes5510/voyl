@@ -1,11 +1,10 @@
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import { useSetAtom } from 'jotai'
-import { removeNodeAtom } from '@/features/tree/model/tree'
+import useTreeStore from '@/features/tree/model'
 
 export default function useHandleBackspaceKey({ nodeId }: { nodeId: string }): HotkeyCallback {
-  const removeNode = useSetAtom(removeNodeAtom)
+  const removeNode = useTreeStore((state) => state.removeNode)
 
   return useCallback(
     (e: KeyboardEvent) => {

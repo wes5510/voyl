@@ -15,6 +15,7 @@
     "Scroller",
     "typecheck",
     "voyl",
-    "vstack"
+    "vstack",
+    "zustand"
   ]
 }

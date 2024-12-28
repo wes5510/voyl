@@ -1,11 +1,10 @@
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import { useSetAtom } from 'jotai'
-import { outdentNodeAtom } from '@/features/tree/model/tree'
+import useTreeStore from '@/features/tree/model'
 
 export default function useHandleShiftTabKey({ nodeId }: { nodeId: string }): HotkeyCallback {
-  const outdentNode = useSetAtom(outdentNodeAtom)
+  const outdentNode = useTreeStore((state) => state.outdentNode)
 
   return useCallback(
     (e: KeyboardEvent) => {

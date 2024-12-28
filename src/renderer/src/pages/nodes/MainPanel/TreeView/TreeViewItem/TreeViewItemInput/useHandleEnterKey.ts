@@ -3,7 +3,7 @@ import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
 import { titleAtom } from '@/features/tree/model/node'
-import { insertNewNodeAfterAtom } from '@/features/tree/model/tree'
+import useTreeStore from '@/features/tree/model'
 
 const getSourceNodeText = ({
   text,
@@ -18,7 +18,7 @@ const getNewNodeText = ({ text, selectionEnd }: { text: string; selectionEnd?: n
 
 export default function useHandleEnterKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const setTitle = useSetAtom(titleAtom(nodeId))
-  const insertNewNodeAfter = useSetAtom(insertNewNodeAfterAtom)
+  const insertNewNodeAfter = useTreeStore((state) => state.insertNewNodeAfter)
 
   return useCallback(
     (e: KeyboardEvent) => {

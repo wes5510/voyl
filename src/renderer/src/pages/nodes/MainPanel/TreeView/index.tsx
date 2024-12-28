@@ -25,8 +25,9 @@ import { INDENT_WIDTH } from './shared/const'
 import { createPortal } from 'react-dom'
 import DraggingTreeviewItem from './DraggingTreeviewItem'
 import { nodeAtom } from '@/features/tree/model/node'
-import { moveNodeAtom, nodeIdsAtom } from '@/features/tree/model/tree'
+import { nodeIdsAtom } from '@/features/tree/model/tree'
 import { NodeModel } from '@/features/tree/model/node/node.model'
+import useTreeStore from '@/features/tree/model'
 
 const measuring = {
   droppable: {
@@ -37,7 +38,7 @@ const MTreeViewItem = memo(TreeViewItem)
 
 export default function TreeView(): JSX.Element {
   const [nodeIds, setNodeIds] = useAtom(nodeIdsAtom)
-  const moveNode = useSetAtom(moveNodeAtom)
+  const moveNode = useTreeStore((state) => state.moveNode)
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

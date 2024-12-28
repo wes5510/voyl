@@ -2,16 +2,17 @@ import { useCallback } from 'react'
 import useHandleBackspaceKey from './useHandleBackspaceKey'
 import useHandleEnterKey from './useHandleEnterKey'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import { useSetAtom } from 'jotai'
-import { updateFocusToNextNodeAtom, updateFocusToPrevNodeAtom } from '@/features/tree/model/tree'
 import useHandleTabKey from './useHandleTabKey'
 import useHandleShiftTabKey from './useHandleShiftTabKey'
+import useTreeStore from '@/features/tree/model'
+import { pick } from 'es-toolkit'
 
 export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const handelEnterKey = useHandleEnterKey({ nodeId })
   const handleBackspaceKey = useHandleBackspaceKey({ nodeId })
-  const updateFocusToPrevNode = useSetAtom(updateFocusToPrevNodeAtom)
-  const updateFocusToNextNode = useSetAtom(updateFocusToNextNodeAtom)
+  const { updateFocusToPrevNode, updateFocusToNextNode } = useTreeStore((state) =>
+    pick(state, ['updateFocusToPrevNode', 'updateFocusToNextNode']),
+  )
   const handleTabKey = useHandleTabKey({ nodeId })
   const handleShiftTabKey = useHandleShiftTabKey({ nodeId })
 
