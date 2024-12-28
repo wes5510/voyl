@@ -1,7 +1,7 @@
 import { css } from '@/styled-system/css'
 import { hstack } from '@/styled-system/patterns'
 import { useState } from 'react'
-import MainPanel from './MainPanel'
+import MainPanel from '@/features/tree/ui/MainPanel'
 
 export default function NodesPage(): JSX.Element {
   const [opened, setOpened] = useState<boolean>(false)
