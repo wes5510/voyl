@@ -1,7 +1,6 @@
 import { ClipboardEventHandler, useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
-import { titleAtom } from '@/features/tree/model/node'
-import { useSetAtom } from 'jotai'
+import useTreeStore from '@/features/tree/model'
 
 const BREAK_LINE = '\n'
 
@@ -15,7 +14,7 @@ export default function useHandlePaste({
 }: {
   nodeId: string
 }): ClipboardEventHandler<HTMLTextAreaElement> {
-  const setTitle = useSetAtom(titleAtom(nodeId))
+  const setTitle = useTreeStore((state) => state.setNodeTitle)
 
   return useCallback(
     (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
@@ -31,13 +30,14 @@ export default function useHandlePaste({
       e.preventDefault()
       const { value, selectionStart, selectionEnd } = target
       const newText = removeNewLine(e.clipboardData.getData('text/plain'))
-      setTitle(
-        insertText({
+      setTitle({
+        nodeId,
+        title: insertText({
           newText,
           sourceText: value,
           selection: { start: selectionStart, end: selectionEnd },
         }),
-      )
+      })
 
       setTimeout(() => {
         const newCaretPosition = selectionStart + newText.length

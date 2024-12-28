@@ -10,7 +10,10 @@ import {
   TreeEntity,
   updateFocusToNextNode,
   updateFocusToPrevNode,
+  setNodeTitle,
+  setNode,
 } from './tree'
+import { NodeEntity } from './tree/node'
 
 interface TreeStore extends TreeEntity {
   setFocusedNodeId: ({ nodeId }: { nodeId: string }) => void
@@ -25,9 +28,24 @@ interface TreeStore extends TreeEntity {
   updateFocusToPrevNode: () => void
   removeNode: ({ nodeId }: { nodeId: string }) => void
   indentNode: ({ nodeId }: { nodeId: string }) => void
+  outdentNode: ({ nodeId }: { nodeId: string }) => void
+  moveNode: ({
+    refNodeId,
+    targetNodeId,
+    deltaDepth,
+  }: {
+    refNodeId: string
+    targetNodeId: string
+    deltaDepth: number
+  }) => void
+  setCollapsed: ({ nodeId, collapsed }: { nodeId: string; collapsed: boolean }) => void
+  setNodeTitle: ({ nodeId, title }: { nodeId: string; title: string }) => void
+  setNodeIds: (nodeIds: string[]) => void
+  setNode: ({ node }: { node: NodeEntity }) => void
+  getNode: ({ nodeId }: { nodeId: string }) => NodeEntity | undefined
 }
 
-const useTreeStore = create<TreeStore>((set) => ({
+const useTreeStore = create<TreeStore>((set, get) => ({
   nodeIds: ['1'],
   focusedNodeId: '1',
   nodeMap: new Map([
@@ -90,12 +108,12 @@ const useTreeStore = create<TreeStore>((set) => ({
         nodeId,
       }),
     ),
-  moveNode: ({ refNodeId, targetNode, deltaDepth }) =>
+  moveNode: ({ refNodeId, targetNodeId, deltaDepth }) =>
     set((state) =>
       moveNode({
         entity: state,
         refNodeId,
-        targetNode,
+        targetNodeId,
         deltaDepth,
       }),
     ),
@@ -107,6 +125,17 @@ const useTreeStore = create<TreeStore>((set) => ({
         collapsed,
       }),
     ),
+  setNodeTitle: ({ nodeId, title }) =>
+    set((state) =>
+      setNodeTitle({
+        entity: state,
+        nodeId,
+        title,
+      }),
+    ),
+  setNodeIds: (nodeIds) => set((state) => ({ ...state, nodeIds })),
+  setNode: ({ node }) => set((state) => setNode({ entity: state, node })),
+  getNode: ({ nodeId }) => get().nodeMap.get(nodeId),
 }))
 
 export default useTreeStore

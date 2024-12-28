@@ -1,8 +1,8 @@
 import { hstack } from '@/styled-system/patterns'
-import { useAtomValue } from 'jotai'
 import { ForwardedRef, forwardRef, PropsWithChildren } from 'react'
-import { depthAtom } from '@/features/tree/model/node'
 import { INDENT_WIDTH } from '../shared/const'
+import useTreeStore from '@/features/tree/model'
+import { getNodeDepth } from '@/features/tree/model/tree'
 
 export interface TreeViewItemWrapperProps extends PropsWithChildren {
   nodeId: string
@@ -13,7 +13,7 @@ function TreeViewItemWrapper(
   { nodeId, style, children }: TreeViewItemWrapperProps,
   ref: ForwardedRef<HTMLDivElement>,
 ): JSX.Element {
-  const depth = useAtomValue(depthAtom(nodeId))
+  const depth = useTreeStore((state) => getNodeDepth({ entity: state, nodeId }))
 
   return (
     <div

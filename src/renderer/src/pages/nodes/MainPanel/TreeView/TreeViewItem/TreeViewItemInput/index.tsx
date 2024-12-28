@@ -1,13 +1,13 @@
 import { useHotkeys } from 'react-hotkeys-hook'
 import { css, cx } from '@/styled-system/css'
-import { useAtom } from 'jotai'
 import { ChangeEvent, useRef } from 'react'
 import mergeRefs from 'merge-refs'
 import useSyncFocus from './useSyncFocus'
 import useAutoResize from './useAutoResize'
 import useHandlePaste from './useHandlePaste'
-import { titleAtom } from '@/features/tree/model/node'
 import useHandleKey from './useHandleKey'
+import useTreeStore from '@/features/tree/model'
+import { getNodeTitle } from '@/features/tree/model/tree'
 
 export interface TreeViewItemInputProps {
   nodeId: string
@@ -19,7 +19,13 @@ export default function TreeViewItemInput({
   className,
 }: TreeViewItemInputProps): JSX.Element {
   const elemRef = useRef<HTMLTextAreaElement>(null)
-  const [title, setTitle] = useAtom(titleAtom(nodeId))
+  const { title, setTitle } = useTreeStore((state) => ({
+    title: getNodeTitle({
+      entity: state,
+      nodeId,
+    }),
+    setTitle: state.setNodeTitle,
+  }))
   const keyRef = useHotkeys<HTMLTextAreaElement>(
     ['enter', 'backspace', 'up', 'down', 'tab', 'shift+tab'],
     useHandleKey({ nodeId }),
@@ -36,7 +42,7 @@ export default function TreeViewItemInput({
   const handlePaste = useHandlePaste({ nodeId: nodeId })
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setTitle(e.target.value)
+    setTitle({ nodeId, title: e.target.value })
   }
 
   return (

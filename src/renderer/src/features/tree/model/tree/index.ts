@@ -6,6 +6,7 @@ import {
   updateCollapsed,
   updateDepth,
   updateDepthByDelta,
+  updateTitle,
 } from './node'
 
 export interface TreeEntity {
@@ -533,20 +534,25 @@ const __getNextNode = ({
 export const moveNode = ({
   entity,
   refNodeId,
-  targetNode,
+  targetNodeId,
   deltaDepth,
 }: {
   entity: TreeEntity
   refNodeId: string
-  targetNode: NodeEntity
+  targetNodeId: string
   deltaDepth: number
 }): TreeEntity => {
+  const targetNode = entity.nodeMap.get(targetNodeId)
+  if (!targetNode) {
+    return entity
+  }
+
   return {
     ...entity,
     nodeIds: __moveNodeIdsByRefNode({
       nodeIds: entity.nodeIds,
       refNodeId,
-      targetNodeId: targetNode.id,
+      targetNodeId,
     }),
     nodeMap: new Map([
       ...Array.from(entity.nodeMap),
@@ -650,4 +656,51 @@ const __removeChildNodeIds = ({
 
   const childNodes: NodeEntity[] = __getChildNodes({ entity, parentNode })
   return entity.nodeIds.filter((nodeId) => !childNodes.some((node) => node.id === nodeId))
+}
+
+export const getNodeTitle = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeEntity
+  nodeId: string
+}): string => {
+  const node = entity.nodeMap.get(nodeId)
+  return node ? node.title : ''
+}
+
+export const setNodeTitle = ({
+  entity,
+  nodeId,
+  title,
+}: {
+  entity: TreeEntity
+  nodeId: string
+  title: string
+}): TreeEntity => {
+  return {
+    ...entity,
+    nodeMap: new Map([
+      ...Array.from(entity.nodeMap),
+      [nodeId, updateTitle({ node: entity.nodeMap.get(nodeId), title })],
+    ]),
+  }
+}
+
+export const setNode = ({ entity, node }: { entity: TreeEntity; node: NodeEntity }): TreeEntity => {
+  return {
+    ...entity,
+    nodeMap: new Map([...Array.from(entity.nodeMap), [node.id, node]]),
+  }
+}
+
+export const getNodeDepth = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeEntity
+  nodeId: string
+}): number => {
+  const node = entity.nodeMap.get(nodeId)
+  return node ? node.depth : 0
 }

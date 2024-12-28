@@ -1,6 +1,4 @@
 import { vstack } from '@/styled-system/patterns'
-import { useAtom, useSetAtom } from 'jotai'
-import { useAtomCallback } from 'jotai/utils'
 import TreeViewItem from './TreeViewItem'
 import { memo, useState, useCallback } from 'react'
 import AddButton from './AddButton'
@@ -24,10 +22,8 @@ import {
 import { INDENT_WIDTH } from './shared/const'
 import { createPortal } from 'react-dom'
 import DraggingTreeviewItem from './DraggingTreeviewItem'
-import { nodeAtom } from '@/features/tree/model/node'
-import { nodeIdsAtom } from '@/features/tree/model/tree'
-import { NodeModel } from '@/features/tree/model/node/node.model'
 import useTreeStore from '@/features/tree/model'
+import { NodeEntity } from '@/features/tree/model/tree/node'
 
 const measuring = {
   droppable: {
@@ -37,30 +33,22 @@ const measuring = {
 const MTreeViewItem = memo(TreeViewItem)
 
 export default function TreeView(): JSX.Element {
-  const [nodeIds, setNodeIds] = useAtom(nodeIdsAtom)
-  const moveNode = useTreeStore((state) => state.moveNode)
+  const { nodeIds, setNodeIds, moveNode, getNode, setNode } = useTreeStore((state) => ({
+    nodeIds: state.nodeIds,
+    setNodeIds: state.setNodeIds,
+    moveNode: state.moveNode,
+    getNode: state.getNode,
+    setNode: state.setNode,
+  }))
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   )
-  const [draggingNode, setDraggingNode] = useState<NodeModel | undefined>(undefined)
+  const [draggingNode, setDraggingNode] = useState<NodeEntity | undefined>(undefined)
   const [originNodeIds, setOriginNodeIds] = useState<string[]>([])
-  const readDraggingNode = useAtomCallback(
-    useCallback((get, _set, { nodeId }: { nodeId: string }) => {
-      return nodeId ? get(nodeAtom({ id: nodeId })) : undefined
-    }, []),
-  )
-  const writeDraggingNode = useAtomCallback(
-    useCallback((_get, set, { node }: { node: NodeModel }) => {
-      if (!node) {
-        return
-      }
-
-      set(nodeAtom({ id: node.id }), node)
-    }, []),
-  )
 
   const handleDragEnd = (): void => {
     setDraggingNode(undefined)
@@ -74,7 +62,7 @@ export default function TreeView(): JSX.Element {
 
     moveNode({
       refNodeId: over.id,
-      targetNode: draggingNode,
+      targetNodeId: draggingNode.id,
       deltaDepth: Math.round(delta.x / INDENT_WIDTH),
     })
   }
@@ -84,13 +72,13 @@ export default function TreeView(): JSX.Element {
       return
     }
 
-    setDraggingNode(JSON.parse(JSON.stringify(readDraggingNode({ nodeId: active.id }))))
+    setDraggingNode(JSON.parse(JSON.stringify(getNode({ nodeId: active.id }))))
     setOriginNodeIds(JSON.parse(JSON.stringify(nodeIds)))
   }
 
   const handleDragCancel = (): void => {
     if (draggingNode) {
-      writeDraggingNode({ node: draggingNode })
+      setNode({ node: draggingNode })
     }
 
     setNodeIds(originNodeIds)

@@ -10,6 +10,6 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
   },
   renderer: {
-    plugins: [react({ babel: { presets: ['jotai/babel/preset'] } }), tsconfigPaths()],
+    plugins: [react(), tsconfigPaths()],
   },
 })
