@@ -1,6 +1,5 @@
-import PointLink from './Path/shared/PointLink'
-import usePathStore from '../../model'
-import { getMidPoint } from '../../model/path'
+import PointLink from './shared/PointLink'
+import usePathStore, { getMidPoint } from '@/features/path/model'
 
 export default function MidPointLink(): JSX.Element | undefined {
   const point = usePathStore(getMidPoint)

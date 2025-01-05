@@ -1,4 +1,4 @@
-# Pages Directory Structure
+# Pages Structure
 
 _Read this in other languages: [한국어](README.ko.md)_
 
@@ -9,12 +9,7 @@ This document explains the structure and rules of the `pages/` directory. We pur
 - **High Cohesion**: Related files are managed together in a single directory
 - **Low Coupling**: Component dependencies are minimized through clear interfaces
 
-To achieve these principles, we use the following structure and rules:
-
-- Hierarchical directory structure clarifies each component's responsibility and scope
-- Import rules control the direction of component dependencies
-
-## Directory Structure
+## Structure
 
 ### Basic Structure
 
@@ -32,7 +27,7 @@ pages/
 └── index.tsx          # Root page (/)
 ```
 
-### Main Directories
+### Components
 
 #### 1. shared/
 
@@ -46,7 +41,7 @@ pages/
 - Each page contains an `index.tsx` handling its view and logic
 - Dynamic routing expressed in `[parameter]` format
 
-### Component Structure
+#### 3. Component Structure
 
 Each component groups related files together to increase cohesion:
 
@@ -59,11 +54,11 @@ ComponentName/
 └── const.ts       # Constants
 ```
 
-## Import Rules
+## Rules
 
-We follow these rules for clear dependency management:
+### Import Rules
 
-### Allowed Imports
+#### Allowed Imports
 
 ```typescript
 // 1. Same Directory Imports
@@ -75,9 +70,7 @@ import Button from '@/pages/shared/Button' // ✅ Higher hierarchy shared
 import ListItem from './shared/ListItem' // ✅ Same hierarchy shared
 ```
 
-### Forbidden Imports
-
-The following imports are forbidden for dependency management and maintainability:
+#### Forbidden Imports
 
 ```typescript
 // 1. Different Hierarchy Component Imports
@@ -91,8 +84,6 @@ import Button from './products/shared/Button' // ❌ Lower hierarchy shared
 ```
 
 ## ESLint Rules
-
-These rules are automatically checked with the following ESLint configuration:
 
 ```javascript
 {

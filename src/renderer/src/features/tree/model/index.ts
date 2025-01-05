@@ -12,6 +12,10 @@ import {
   updateFocusToPrevNode,
   setNodeTitle,
   setNode,
+  getNodeDepth,
+  isFocused,
+  getNodeTitle,
+  getCollapsed,
 } from './tree'
 import { NodeEntity } from './tree/node'
 
@@ -139,3 +143,4 @@ const useTreeStore = create<TreeStore>((set, get) => ({
 }))
 
 export default useTreeStore
+export { NodeEntity, getNodeDepth, isFocused, getNodeTitle, getCollapsed }

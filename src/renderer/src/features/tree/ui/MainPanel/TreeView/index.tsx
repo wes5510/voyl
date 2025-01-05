@@ -22,8 +22,7 @@ import {
 import { INDENT_WIDTH } from './shared/const'
 import { createPortal } from 'react-dom'
 import DraggingTreeviewItem from './DraggingTreeviewItem'
-import useTreeStore from '@/features/tree/model'
-import { NodeEntity } from '@/features/tree/model/tree/node'
+import useTreeStore, { NodeEntity } from '@/features/tree/model'
 
 const measuring = {
   droppable: {

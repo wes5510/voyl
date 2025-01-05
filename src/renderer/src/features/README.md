@@ -1,34 +1,29 @@
-# Features Directory Structure
+# Features Structure
 
 _Read this in other languages: [한국어](README.ko.md)_
 
 ## Overview
 
-This document explains the structure and rules of the `features/` directory. We pursue two core principles:
+Features is where domain functionality is implemented.
+Each feature is composed as an independent domain unit.
 
-- **High Cohesion**: Manage related files together in one directory
-- **Low Coupling**: Minimize dependencies between components through clear interfaces
-
-## Directory Structure
+## Structure
 
 ### Basic Structure
 
-The project follows this structure:
-
 ```
 features/
-└── tree/                 # Domain unit
-    ├── model/           # Domain model
-    │   ├── index.ts    # Store (states and actions)
-    │   └── tree/       # Domain logic
-    │       ├── index.ts
-    │       └── node.ts
-    └── ui/             # UI components
-        ├── shared/     # Shared UI components
-        └── MainPanel/  # Component implementation
+└── [feature]/
+    ├── model/           # Domain logic
+    │   ├── index.ts     # External interface
+    │   ├── store.ts     # State management
+    │   └── types.ts     # Type definitions
+    └── ui/              # UI components
+        ├── index.tsx    # Main component
+        └── Button/      # Internal component
 ```
 
-### Main Directories
+### Components
 
 #### 1. model/
 
@@ -42,11 +37,11 @@ features/
 - Handles visualization of domain model and user interactions
 - Manages UI-related logic
 
-## Import Rules
+## Rules
 
-Follow these rules for clear dependency management:
+### Import Rules
 
-### Allowed Imports
+#### Allowed Imports
 
 ```typescript
 // 1. Same Directory Imports
@@ -61,7 +56,7 @@ import Button from './shared/Button' // ✅ Shared at the same level
 import { useTreeStore } from '@/features/tree/model' // ✅ Access domain model through store
 ```
 
-### Forbidden Imports
+#### Forbidden Imports
 
 ```typescript
 // 1. Different Level Import Restriction
@@ -79,8 +74,6 @@ import { BView } from '@/features/B/ui' // ❌ UI from another feature
 ```
 
 ## ESLint Rules
-
-These rules are automatically enforced by the following ESLint configuration:
 
 ```javascript
 {

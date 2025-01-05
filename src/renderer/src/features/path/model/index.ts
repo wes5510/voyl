@@ -1,5 +1,12 @@
 import { create } from 'zustand'
-import { PathEntity } from './path'
+import {
+  PathEntity,
+  getFirstPoint,
+  getLastPoint,
+  getMidPoint,
+  getMidPoints,
+  getMidPointLength,
+} from './path'
 import ListIcon from '@/shared/ListIcon'
 
 const usePathStore = create<PathEntity>(() => ({
@@ -13,3 +20,4 @@ const usePathStore = create<PathEntity>(() => ({
 }))
 
 export default usePathStore
+export { getFirstPoint, getLastPoint, getMidPoint, getMidPoints, getMidPointLength }

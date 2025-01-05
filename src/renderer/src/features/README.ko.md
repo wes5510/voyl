@@ -1,34 +1,29 @@
-# Features 디렉토리 구조
+# Features 구조
 
 _다른 언어로 읽기: [English](README.md)_
 
 ## 개요
 
-이 문서는 `features/` 디렉토리의 구조와 규칙을 설명합니다. 우리는 다음 두 가지 핵심 원칙을 추구합니다:
+features는 도메인 기능을 구현하는 곳입니다.
+각 feature는 독립적인 도메인 단위로 구성되어 있습니다.
 
-- **높은 응집도**: 관련된 파일들을 하나의 디렉토리에 모아 관리합니다
-- **낮은 결합도**: 명확한 Interface를 통해 컴포넌트 간 의존성을 최소화합니다
-
-## 디렉토리 구조
+## 구조
 
 ### 기본 구조
 
-프로젝트는 다음과 같은 구조를 따릅니다:
-
 ```
 features/
-└── tree/                 # 도메인 단위
-    ├── model/           # 도메인 모델
-    │   ├── index.ts    # store (상태와 액션)
-    │   └── tree/       # 도메인 로직
-    │       ├── index.ts
-    │       └── node.ts
-    └── ui/             # UI 컴포넌트
-        ├── shared/     # UI 공통 컴포넌트
-        └── MainPanel/  # 컴포넌트 구현
+└── [feature]/
+    ├── model/           # 도메인 로직
+    │   ├── index.ts     # 외부로 노출되는 인터페이스
+    │   ├── store.ts     # 상태 관리
+    │   └── types.ts     # 타입 정의
+    └── ui/              # UI 컴포넌트
+        ├── index.tsx    # 주요 컴포넌트
+        └── Button/      # 내부 컴포넌트
 ```
 
-### 주요 디렉토리
+### 구성요소
 
 #### 1. model/
 
@@ -42,11 +37,11 @@ features/
 - 도메인 모델의 시각화와 사용자 인터랙션 처리
 - UI 관련 로직 관리
 
-## Import 규칙
+## 규칙
 
-명확한 의존성 관리를 위해 다음 규칙들을 따릅니다:
+### Import 규칙
 
-### 허용되는 Import
+#### 허용되는 Import
 
 ```typescript
 // 1. 동일 디렉토리 내 Import
@@ -61,7 +56,7 @@ import Button from './shared/Button' // ✅ 동일 위계 shared
 import { useTreeStore } from '@/features/tree/model' // ✅ store를 통한 도메인 모델 접근
 ```
 
-### 금지되는 Import
+#### 금지되는 Import
 
 ```typescript
 // 1. 다른 위계 Import 금지
@@ -79,8 +74,6 @@ import { BView } from '@/features/B/ui' // ❌ 다른 feature의 UI
 ```
 
 ## ESLint 규칙
-
-위 규칙들은 다음 ESLint 설정으로 자동 검사됩니다:
 
 ```javascript
 {

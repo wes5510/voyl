@@ -2,8 +2,7 @@ import { hstack } from '@/styled-system/patterns'
 import Popover from './Popover'
 import MenuButton from './MenuButton'
 import PointLink from '../shared/PointLink'
-import usePathStore from '@/features/path/model'
-import { getMidPoints } from '@/features/path/model/path'
+import usePathStore, { getMidPoints } from '@/features/path/model'
 
 export default function EllipsisMenu(): JSX.Element {
   const points = usePathStore(getMidPoints)

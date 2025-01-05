@@ -1,8 +1,7 @@
 import { hstack } from '@/styled-system/patterns'
 import { ForwardedRef, forwardRef, PropsWithChildren } from 'react'
 import { INDENT_WIDTH } from '../shared/const'
-import useTreeStore from '@/features/tree/model'
-import { getNodeDepth } from '@/features/tree/model/tree'
+import useTreeStore, { getNodeDepth } from '@/features/tree/model'
 
 export interface TreeViewItemWrapperProps extends PropsWithChildren {
   nodeId: string
