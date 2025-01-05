@@ -37,15 +37,17 @@ export default [
       },
       'import/resolver': {
         typescript: {
-          project: ['./tsconfig.web.json', './tsconfig.node.json'],
+          project: path.resolve(__dirname, './tsconfig.web.json'),
+          alwaysTryTypes: true,
         },
         node: {
           extensions: ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.tsx', '.d.ts'],
+          moduleDirectory: ['node_modules', 'src/renderer/src'],
         },
       },
     },
     rules: {
-      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-non-assertion': 'off',
       'import/no-cycle': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
       'react-hooks/rules-of-hooks': 'error',
@@ -53,12 +55,50 @@ export default [
     },
   },
   {
-    files: ['src/renderer/src/pages/**'],
+    files: ['src/renderer/src/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
     rules: {
       'voyl/import-path-format': 'error',
+    },
+  },
+  {
+    files: ['src/renderer/src/pages/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/import-path-format': [
+        'error',
+        {
+          ignorePatterns: ['.+/features/.*'],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/renderer/src/features/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/features-model-access': 'error',
+      'voyl/features-isolation': 'error',
+    },
+  },
+  {
+    files: ['src/renderer/src/features/**/ui/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/import-path-format': [
+        'error',
+        {
+          ignorePatterns: ['.+/model(/index)?$'],
+        },
+      ],
     },
   },
 ]

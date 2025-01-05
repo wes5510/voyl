@@ -141,6 +141,19 @@ const PathUtils = {
  */
 const RuleChecker = {
   /**
+   * Check if import path matches ignore patterns
+   * @param {string} importPath - Import path to check
+   * @param {string[]} ignorePatterns - Array of regex patterns to ignore
+   * @returns {boolean} True if import path should be ignored
+   */
+  checkIgnorePatterns(importPath, ignorePatterns) {
+    return ignorePatterns.some((pattern) => {
+      const regex = new RegExp(pattern)
+      return regex.test(importPath)
+    })
+  },
+
+  /**
    * Check if import from shared directory follows rules
    * @param {string} resolvedPath - Resolved file system path
    * @returns {Object} Result containing isSharedImport and isValid flags
@@ -204,14 +217,35 @@ export const rule = {
     docs: {
       description: 'Enforce import path format rules',
     },
-    schema: [],
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          ignorePatterns: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
   },
 
   create(context) {
+    const options = context.options[0] || {}
+    const ignorePatterns = options.ignorePatterns || []
+
     return {
       ImportDeclaration(node) {
         const importPath = node.source.value
         const currentFile = context.getFilename()
+
+        // Skip if import path matches ignore patterns
+        if (RuleChecker.checkIgnorePatterns(importPath, ignorePatterns)) {
+          return
+        }
 
         debug('Processing import:', { importPath, currentFile })
 
