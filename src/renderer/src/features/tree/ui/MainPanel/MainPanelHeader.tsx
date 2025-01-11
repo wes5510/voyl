@@ -1,6 +1,6 @@
 import { css } from '@/styled-system/css'
 import { hstack } from '@/styled-system/patterns'
-import ListIcon from 'src/renderer/src/shared/ListIcon'
+import ListIcon from '@/common/ListIcon'
 
 export default function MainPanelHeader(): JSX.Element {
   return (

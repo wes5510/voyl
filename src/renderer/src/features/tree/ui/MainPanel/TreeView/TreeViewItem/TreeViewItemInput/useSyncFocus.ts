@@ -18,6 +18,6 @@ export default function useSyncFocus<T extends HTMLElement = HTMLElement>({
   }, [focused, ref])
 
   return useCallback(() => {
-    setFocusedNodeId(nodeId)
+    setFocusedNodeId({ nodeId })
   }, [nodeId, setFocusedNodeId])
 }

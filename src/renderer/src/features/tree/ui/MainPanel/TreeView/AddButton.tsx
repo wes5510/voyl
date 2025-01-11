@@ -1,5 +1,5 @@
 import { hstack } from '@/styled-system/patterns'
-import PlusIcon from 'src/renderer/src/shared/PlusIcon'
+import PlusIcon from '@/common/PlusIcon'
 
 export default function AddButton(): JSX.Element {
   const handleClick = (): void => {

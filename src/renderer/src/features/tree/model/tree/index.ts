@@ -223,7 +223,7 @@ const __getPrevSiblingNode = ({
 
   for (let i = targetNodeIdx - 1; i >= parentNodeIdx + 1; i--) {
     const __node = entity.nodeMap.get(entity.nodeIds[i])
-    if (__isSiblingNode({ refNode: __node, targetNode: targetNode })) {
+    if (__node && __isSiblingNode({ refNode: __node, targetNode: targetNode })) {
       return __node
     }
   }

@@ -1,4 +1,4 @@
-import ListIcon from 'src/renderer/src/shared/ListIcon'
+import ListIcon from '@/common/ListIcon'
 import IconButton from './IconButton'
 
 export default function AppMenu(): JSX.Element {

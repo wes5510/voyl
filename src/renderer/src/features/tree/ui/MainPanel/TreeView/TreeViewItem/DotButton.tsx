@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 import IconButton from './IconButton'
 import { css } from '@/styled-system/css'
-import CircleIcon from 'src/renderer/src/shared/CircleIcon'
+import CircleIcon from '@/common/CircleIcon'
 
 export interface DotButtonProps {
   onClick?: MouseEventHandler

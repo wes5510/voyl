@@ -1,6 +1,6 @@
 import { css } from '@/styled-system/css'
 import IconButton from './IconButton'
-import ChevronRightIcon from 'src/renderer/src/shared/ChevronRightIcon'
+import ChevronRightIcon from '@/common/ChevronRightIcon'
 import useTreeStore, { getCollapsed } from '@/features/tree/model'
 
 export interface CollapseButtonProps {
@@ -14,7 +14,7 @@ export default function CollapseButton({ nodeId }: CollapseButtonProps): JSX.Ele
   }))
 
   const handleClick = (): void => {
-    setCollapsed({ collapsed: !collapsed })
+    setCollapsed({ nodeId, collapsed: !collapsed })
   }
 
   return (

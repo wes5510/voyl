@@ -13,7 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "@/features/*": ["src/renderer/src/features/*"],
-      "@/shared/*": ["src/renderer/src/shared/*"],
+      "@/common/*": ["src/renderer/src/common/*"],
       "@/pages/*": ["src/renderer/src/pages/*"],
       "@/styled-system/*": ["styled-system/*"]
     }

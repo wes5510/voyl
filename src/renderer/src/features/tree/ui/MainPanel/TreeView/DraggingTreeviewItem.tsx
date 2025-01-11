@@ -1,7 +1,7 @@
 import { center, hstack } from '@/styled-system/patterns'
-import ChevronRightIcon from 'src/renderer/src/shared/ChevronRightIcon'
+import ChevronRightIcon from '@/common/ChevronRightIcon'
 import { css } from '@/styled-system/css'
-import CircleIcon from 'src/renderer/src/shared/CircleIcon'
+import CircleIcon from '@/common/CircleIcon'
 import { INDENT_WIDTH } from './shared/const'
 
 export interface DraggingTreeviewItemProps {
