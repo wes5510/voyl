@@ -62,25 +62,29 @@ ComponentName/
 
 ```typescript
 // 1. Same Directory Imports
-import SubList from './SubList' // ✅ Component in same directory
-import { ProductListType } from './types' // ✅ Types in same directory
+import { ProductList } from './ProductList' // ✅ Files/folders in the same directory(index.ts/tsx)
+import { types } from './types' // ✅ Files in the same directory
 
 // 2. shared Directory Imports
-import Button from '@/pages/shared/Button' // ✅ Higher hierarchy shared
-import ListItem from './shared/ListItem' // ✅ Same hierarchy shared
+import { SharedButton } from '@/pages/shared/Button' // ✅ Upper hierarchy shared files/folders
+import { ListItem } from './shared/ListItem' // ✅ Same hierarchy shared files/folders
+
+// 3. features Imports
+import { useTreeStore } from '@/features/tree/model' // ✅ Single entry point of feature model
+import { TreeView } from '@/features/tree/ui/TreeView' // ✅ Direct files in feature ui
 ```
 
 #### Forbidden Imports
 
 ```typescript
-// 1. Different Hierarchy Component Imports
-import OrderList from '@/pages/orders/OrderList' // ❌ Different hierarchy
-import ProductDetail from '../ProductDetail' // ❌ Higher hierarchy
+// 1. Different Hierarchy Imports
+import { Something } from '../other/Something' // ❌ Different hierarchy
+import { Deep } from './deep/nested/Component' // ❌ Deep nested path
 
-// 2. shared Directory Import Restrictions
-import SubButton from '@/pages/shared/Button/SubButton' // ❌ shared subdirectory
-import ProductCard from '@/pages/orders/shared/ProductCard' // ❌ Different hierarchy shared
-import Button from './products/shared/Button' // ❌ Lower hierarchy shared
+// 2. shared Restrictions
+import { Sub } from './shared/Button/Sub' // ❌ shared subdirectory
+import { Other } from '../shared/Other' // ❌ Different hierarchy shared (except upper)
+import { Button } from './products/shared/Button' // ❌ Lower hierarchy shared
 ```
 
 ## ESLint Rules

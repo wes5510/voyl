@@ -1,4 +1,3 @@
-/* eslint-disable voyl/import-path-format */
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 import { css } from '@/styled-system/css'

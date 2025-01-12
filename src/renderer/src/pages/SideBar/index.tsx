@@ -1,7 +1,7 @@
 import { vstack } from '@/styled-system/patterns'
 import Divider from './Divider'
 import FavoriteMenu from '@/features/favoriteManager/ui/FavoriteMenu'
-import AppMenu from './AppMenu'
+import AppMenu from './AppMenu/IconButton'
 
 export default function SideBar(): JSX.Element {
   return (

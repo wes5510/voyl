@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
-import voylPlugin from './eslint/index.mjs'
+const voylPlugin = (await import('./eslint/index.js')).default
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -55,12 +55,17 @@ export default [
     },
   },
   {
-    files: ['src/renderer/src/**/*.{ts,tsx}'],
+    files: ['src/renderer/src/{common,pages,features/*/ui,features/*/model}/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/import-path-format': 'error',
+      'voyl/same-hierarchy-import': [
+        'error',
+        {
+          ignorePatterns: ['@/styled-system/**'],
+        },
+      ],
     },
   },
   {
@@ -69,10 +74,10 @@ export default [
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/import-path-format': [
+      'voyl/pages-feature-access': [
         'error',
         {
-          ignorePatterns: ['.+/features/.*'],
+          ignorePatterns: ['@/styled-system/**'],
         },
       ],
     },
@@ -83,20 +88,30 @@ export default [
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/features-model-access': 'error',
-      'voyl/features-isolation': 'error',
+      'voyl/feature-model-access': [
+        'error',
+        {
+          ignorePatterns: ['@/styled-system/**'],
+        },
+      ],
+      'voyl/feature-isolation': [
+        'error',
+        {
+          ignorePatterns: ['@/styled-system/**'],
+        },
+      ],
     },
   },
   {
-    files: ['src/renderer/src/features/**/ui/**/*.{ts,tsx}'],
+    files: ['src/renderer/src/common/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/import-path-format': [
+      'voyl/common-isolation': [
         'error',
         {
-          ignorePatterns: ['.+/model(/index)?$'],
+          ignorePatterns: ['@/styled-system/**'],
         },
       ],
     },

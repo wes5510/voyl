@@ -45,32 +45,32 @@ features/
 
 ```typescript
 // 1. 동일 디렉토리 내 Import
-import { TreeNode } from './tree' // ✅ 같은 디렉토리 내 파일
-import { TreeUtils } from './utils' // ✅ 같은 디렉토리 내 유틸리티
-import MainPanel from './MainPanel' // ✅ 같은 디렉토리 내 컴포넌트
+import { TreeView } from './TreeView' // ✅ 같은 디렉토리 내 폴더(index.ts/tsx)
+import { types } from './types' // ✅ 같은 디렉토리 내 파일
 
 // 2. shared 디렉토리 Import
-import Button from './shared/Button' // ✅ 동일 위계 shared
+import { SharedComponent } from '@/features/shared/Component' // ✅ 상위 위계 shared 파일/폴더
+import { ListItem } from './shared/ListItem' // ✅ 동일 위계 shared 파일/폴더
 
 // 3. 도메인 모델을 store를 통한 접근
-import { useTreeStore } from '@/features/tree/model' // ✅ store를 통한 도메인 모델 접근
+import { useTreeStore } from '@/features/tree/model' // ✅ 자신의 feature model의 단일 진입점
 ```
 
 #### 금지되는 Import
 
 ```typescript
-// 1. 다른 위계 Import 금지
-import { PathNode } from '../path/model/node' // ❌ 다른 위계
-import BaseView from '../ui/BaseView' // ❌ 상위 위계
+// 1. 다른 위계 Import
+import { Something } from '../other/Something' // ❌ 다른 위계
+import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
 
-// 2. shared 디렉토리 제한
-import SubButton from './shared/Button/Sub' // ❌ shared 하위 디렉토리
-import Button from '../shared/Button' // ❌ 다른 위계의 shared
+// 2. shared 제한
+import { Sub } from './shared/Button/Sub' // ❌ shared 하위 경로
+import { Other } from '../shared/Other' // ❌ 다른 위계 shared (상위 위계 제외)
+import { Button } from './tree/shared/Button' // ❌ 하위 위계 shared
 
 // 3. Feature 간 Import 금지
-import { BEntity } from '@/features/B/model/domain' // ❌ 다른 feature의 내부 모델
-import { useBStore } from '@/features/B/model' // ❌ 다른 feature의 store
-import { BView } from '@/features/B/ui' // ❌ 다른 feature의 UI
+import { usePathStore } from '@/features/path/model' // ❌ 다른 feature의 model
+import { PathView } from '@/features/path/ui' // ❌ 다른 feature의 ui
 ```
 
 ## ESLint 규칙

@@ -4,7 +4,7 @@ _다른 언어로 읽기: [English](./README.md)_
 
 ## 개요
 
-프로젝트는 pages, features, common으로 구성되어 있습니다.
+프로젝트는 pages, features, common 세 개의 핵심 디렉토리로 구성되어 있습니다.
 각 디렉토리는 명확한 책임과 규칙을 가지고 있어 코드의 응집도를 높이고 결합도를 낮춥니다.
 
 ## 구조
@@ -38,53 +38,41 @@ src/renderer/src/
 
 #### common
 
-- 재사용 가능한 공통 코드
-- UI 컴포넌트, 유틸리티 함수 등
+- 재사용 가능한 순수한 공통 코드
+- 특정 도메인에 종속되지 않음
 - 다른 폴더의 코드를 import할 수 없음
 
 ## 규칙
 
 ### Import 규칙
 
-#### 기본 규칙
+#### 디렉토리 간 Import
 
-`src/renderer/src` 아래의 모든 파일은 동일 위계의 import만 허용됩니다.
+```
+pages/ → features/*/model     # 각 feature model의 단일 진입점
+pages/ → features/*/ui/*      # 각 feature의 ui 직계 파일
+pages/ → common/*            # common의 직계 파일
 
-```typescript
-// ✅ 좋은 예시
-// 같은 디렉토리 내 import
-import { Button } from './Button'
-import { Icon } from './Icon'
+features/*/ui/* → features/*/model  # 자신의 feature model의 단일 진입점
+features/ → common/*               # common의 직계 파일
 
-// 직계 자식 디렉토리의 파일 import
-import { SubComponent } from './SubComponent/index'
-
-// ❌ 나쁜 예시
-// 다른 위계의 import
-import { Something } from '../other/Something'
-import { DeepComponent } from './Deep/More/Component'
+common/ → 외부 의존성 없음
 ```
 
-#### Interface 규칙
+## ESLint 규칙
 
-외부에서 접근 가능한 경로는 다음과 같습니다:
-
-- `/features/*/model/index.ts`: feature의 model을 외부로 노출하는 단일 진입점
-- `/features/*/ui/*`: feature의 ui 폴더 직계 파일들
-- `/common/*`: common 폴더의 직계 폴더들
-
-#### 예외 규칙
-
-1. `/pages`는 아래 경로를 import 할 수 있습니다:
-
-   - `/features/*/ui/*`
-   - `/common/*`
-
-2. `/features/*/ui`는 아래 경로를 import 할 수 있습니다:
-   - 자신의 `/features/*/model/index.ts`
-   - `/common/*`
+```javascript
+{
+  "rules": {
+    "voyl/import-path-format": "error",    // 허용된 import 경로만 사용
+  }
+}
+```
 
 ## 관련 문서
 
+자세한 내용은 각 디렉토리의 README를 참고하세요:
+
 - [Features 구조](./features/README.ko.md)
 - [Pages 구조](./pages/README.ko.md)
+- [Common 구조](./common/README.ko.md)

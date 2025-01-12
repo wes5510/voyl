@@ -62,25 +62,29 @@ ComponentName/
 
 ```typescript
 // 1. 동일 디렉토리 내 Import
-import SubList from './SubList' // ✅ 같은 디렉토리 내 컴포넌트
-import { ProductListType } from './types' // ✅ 같은 디렉토리 내 타입
+import { ProductList } from './ProductList' // ✅ 같은 디렉토리 내 폴더(index.ts/tsx)
+import { types } from './types' // ✅ 같은 디렉토리 내 파일
 
 // 2. shared 디렉토리 Import
-import Button from '@/pages/shared/Button' // ✅ 상위 shared
-import ListItem from './shared/ListItem' // ✅ 동일 위계 shared
+import { SharedButton } from '@/pages/shared/Button' // ✅ 상위 위계 shared 파일/폴더
+import { ListItem } from './shared/ListItem' // ✅ 동일 위계 shared 파일/폴더
+
+// 3. features Import
+import { useTreeStore } from '@/features/tree/model' // ✅ feature model의 단일 진입점
+import { TreeView } from '@/features/tree/ui/TreeView' // ✅ feature ui의 직계 파일
 ```
 
 #### 금지되는 Import
 
 ```typescript
-// 1. 다른 위계의 컴포넌트 Import
-import OrderList from '@/pages/orders/OrderList' // ❌ 다른 위계
-import ProductDetail from '../ProductDetail' // ❌ 상위 위계
+// 1. 다른 위계 Import
+import { Something } from '../other/Something' // ❌ 다른 위계
+import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
 
-// 2. shared 디렉토리 Import 제한
-import SubButton from '@/pages/shared/Button/SubButton' // ❌ shared 하위 디렉토리
-import ProductCard from '@/pages/orders/shared/ProductCard' // ❌ 다른 위계의 shared
-import Button from './products/shared/Button' // ❌ 하위 위계의 shared
+// 2. shared 제한
+import { Sub } from './shared/Button/Sub' // ❌ shared 하위 경로
+import { Other } from '../shared/Other' // ❌ 다른 위계 shared (상위 위계 제외)
+import { Button } from './products/shared/Button' // ❌ 하위 위계 shared
 ```
 
 ## ESLint 규칙
