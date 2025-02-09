@@ -37,48 +37,63 @@ features/
 - Handles visualization of domain model and user interactions
 - Manages UI-related logic
 
-## Rules
+## Import Rules
 
-### Import Rules
+### features
 
-#### Allowed Imports
-
-```typescript
-// 1. Same Directory Imports
-import { TreeNode } from './tree' // ✅ File in the same directory
-import { TreeUtils } from './utils' // ✅ Utility in the same directory
-import MainPanel from './MainPanel' // ✅ Component in the same directory
-
-// 2. Shared Directory Imports
-import Button from './shared/Button' // ✅ Shared at the same level
-
-// 3. Domain Model Access through Store
-import { useTreeStore } from '@/features/tree/model' // ✅ Access domain model through store
-```
-
-#### Forbidden Imports
+#### voyl/feature-model-index-import-only
 
 ```typescript
-// 1. Different Level Import Restriction
-import { PathNode } from '../path/model/node' // ❌ Different level
-import BaseView from '../ui/BaseView' // ❌ Upper level
+// @/features/tree/ui/TreeView.tsx
+import useTreeStore from '@/features/tree/model' // ✅ Same feature file
 
-// 2. Shared Directory Restrictions
-import SubButton from './shared/Button/Sub' // ❌ Shared subdirectory
-import Button from '../shared/Button' // ❌ Shared from different level
-
-// 3. Cross-Feature Import Restrictions
-import { BEntity } from '@/features/B/model/domain' // ❌ Internal model from another feature
-import { useBStore } from '@/features/B/model' // ❌ Store from another feature
-import { BView } from '@/features/B/ui' // ❌ UI from another feature
+import usePathStore from '@/features/path/model' // ❌ Different feature file
 ```
 
-## ESLint Rules
+#### voyl/no-pages-import
 
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // Only allow permitted import paths
-  }
-}
+```typescript
+import { TreeView } from '@/pages/tree/ui' // ❌ Pages layer file
+```
+
+### model/
+
+#### voyl/same-hierarchy-import
+
+```typescript
+// Same hierarchy imports
+import { ProductList } from './ProductList' // ✅ Files/folders in same directory
+import { types } from './types' // ✅ Files in same directory
+
+import { Something } from '../other/Something' // ❌ Different hierarchy
+import { Deep } from './deep/nested/Component' // ❌ Deep nested path
+```
+
+### ui/
+
+#### voyl/same-hierarchy-import
+
+```typescript
+// Same hierarchy imports
+import { ProductList } from './ProductList' // ✅ Files/folders in same directory
+import { types } from './types' // ✅ Files in same directory
+
+import { Something } from '../other/Something' // ❌ Different hierarchy
+import { Deep } from './deep/nested/Component' // ❌ Deep nested path
+
+// Shared imports
+import { SharedButton } from '@/features/tree/ui/shared/Button' // ✅ Upper hierarchy shared
+import { ListItem } from './shared/ListItem' // ✅ Same hierarchy shared
+
+import { Sub } from './shared/Button/Sub' // ❌ Shared subdirectory
+import { Other } from '../shared/Other' // ❌ Different hierarchy shared (except upper)
+import { Button } from './products/shared/Button' // ❌ Lower hierarchy shared
+```
+
+#### voyl/feature-model-index-import-only
+
+```typescript
+import { useTreeStore } from '@/features/tree/model' // ✅ Single entry point of feature model
+
+import { useTreeStore } from '@/features/tree/model/node' // ❌ Deep nested paths in feature model
 ```

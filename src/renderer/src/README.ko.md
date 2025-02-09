@@ -42,33 +42,6 @@ src/renderer/src/
 - 특정 도메인에 종속되지 않음
 - 다른 폴더의 코드를 import할 수 없음
 
-## 규칙
-
-### Import 규칙
-
-#### 디렉토리 간 Import
-
-```
-pages/ → features/*/model     # 각 feature model의 단일 진입점
-pages/ → features/*/ui/*      # 각 feature의 ui 직계 파일
-pages/ → common/*            # common의 직계 파일
-
-features/*/ui/* → features/*/model  # 자신의 feature model의 단일 진입점
-features/ → common/*               # common의 직계 파일
-
-common/ → 외부 의존성 없음
-```
-
-## ESLint 규칙
-
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // 허용된 import 경로만 사용
-  }
-}
-```
-
 ## 관련 문서
 
 자세한 내용은 각 디렉토리의 README를 참고하세요:

@@ -144,4 +144,5 @@ const useTreeStore = create<TreeStore>((set, get) => ({
 }))
 
 export default useTreeStore
-export { NodeEntity, getNodeDepth, isFocused, getNodeTitle, getCollapsed }
+export type { NodeEntity }
+export { getNodeDepth, isFocused, getNodeTitle, getCollapsed }

@@ -42,33 +42,6 @@ src/renderer/src/
 - Not dependent on specific domains
 - Cannot import from other directories
 
-## Rules
-
-### Import Rules
-
-#### Directory Imports
-
-```
-pages/ → features/*/model     # Single entry point of each feature model
-pages/ → features/*/ui/*      # Direct files in each feature's ui
-pages/ → common/*            # Direct files in common
-
-features/*/ui/* → features/*/model  # Single entry point of own feature model
-features/ → common/*               # Direct files in common
-
-common/ → No external dependencies
-```
-
-## ESLint Rules
-
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // Only allow permitted import paths
-  }
-}
-```
-
 ## Related Documentation
 
 For detailed information, please refer to each directory's README:

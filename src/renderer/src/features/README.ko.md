@@ -28,57 +28,72 @@ features/
 #### 1. model/
 
 - 도메인 모델의 데이터 구조와 비즈니스 로직이 위치
-- `index.ts`는 store를 통해 상태와 액션을 외부에 노출
+- `index.ts`는 store를 통한 상태 관리 및 액션 노출
 - 도메인 로직은 순수 함수로 구현
 
 #### 2. ui/
 
 - 도메인 모델을 사용하여 구성된 UI 컴포넌트들이 위치
-- 도메인 모델의 시각화와 사용자 인터랙션 처리
+- 도메인 모델의 시각화와 사용자 상호작용 처리
 - UI 관련 로직 관리
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
+### features
 
-#### 허용되는 Import
+#### voyl/feature-model-index-import-only
 
 ```typescript
-// 1. 동일 디렉토리 내 Import
-import { TreeView } from './TreeView' // ✅ 같은 디렉토리 내 폴더(index.ts/tsx)
+// @/features/tree/ui/TreeView.tsx
+import useTreeStore from '@/features/tree/model' // ✅ 같은 feature 파일
+
+import usePathStore from '@/features/path/model' // ❌ 다른 feature 파일
+```
+
+#### voyl/no-pages-import
+
+```typescript
+import { TreeView } from '@/pages/tree/ui' // ❌ pages 레이어 파일
+```
+
+### model/
+
+#### voyl/same-hierarchy-import
+
+```typescript
+// 동일 계층 내 import
+import { ProductList } from './ProductList' // ✅ 동일 계층 컴포넌트
 import { types } from './types' // ✅ 같은 디렉토리 내 파일
 
-// 2. shared 디렉토리 Import
-import { SharedComponent } from '@/features/shared/Component' // ✅ 상위 위계 shared 파일/폴더
-import { ListItem } from './shared/ListItem' // ✅ 동일 위계 shared 파일/폴더
-
-// 3. 도메인 모델을 store를 통한 접근
-import { useTreeStore } from '@/features/tree/model' // ✅ 자신의 feature model의 단일 진입점
+import { Something } from '../other/Something' // ❌ 다른 계층
+import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
 ```
 
-#### 금지되는 Import
+### ui/
+
+#### voyl/same-hierarchy-import
 
 ```typescript
-// 1. 다른 위계 Import
-import { Something } from '../other/Something' // ❌ 다른 위계
+// 동일 계층 내 import
+import { ProductList } from './ProductList' // ✅ 동일 계층 컴포넌트
+import { types } from './types' // ✅ 같은 디렉토리 내 파일
+
+import { Something } from '../other/Something' // ❌ 다른 계층
 import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
 
-// 2. shared 제한
-import { Sub } from './shared/Button/Sub' // ❌ shared 하위 경로
-import { Other } from '../shared/Other' // ❌ 다른 위계 shared (상위 위계 제외)
-import { Button } from './tree/shared/Button' // ❌ 하위 위계 shared
+// shared import
+import { SharedButton } from '@/features/tree/ui/shared/Button' // ✅ 상위 계층 shared 파일/폴더
+import { ListItem } from './shared/ListItem' // ✅ 동일 계층 shared 파일/폴더
 
-// 3. Feature 간 Import 금지
-import { usePathStore } from '@/features/path/model' // ❌ 다른 feature의 model
-import { PathView } from '@/features/path/ui' // ❌ 다른 feature의 ui
+import { Sub } from './shared/Button/Sub' // ❌ shared 하위 경로
+import { Other } from '../shared/Other' // ❌ 다른 계층 shared (상위 계층 제외)
+import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
 ```
 
-## ESLint 규칙
+#### voyl/feature-model-index-import-only
 
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // 허용된 import 경로만 사용
-  }
-}
+```typescript
+import { useTreeStore } from '@/features/tree/model' // ✅ feature model의 단일 진입점
+
+import { useTreeStore } from '@/features/tree/model/node' // ❌ feature model의 깊은 중첩 경로
 ```

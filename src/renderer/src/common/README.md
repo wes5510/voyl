@@ -28,40 +28,34 @@ common/
 - All files are located at the root level (Flatten structure)
 - Components can be structured as either single files (.tsx) or folders (index.tsx)
 
-## Rules
+## Import Rules
 
-### Import Rules
-
-#### Allowed Imports
+### voyl/same-hierarchy-import
 
 ```typescript
-// 1. Same Directory Imports
-import { Button } from './Button' // ✅ Files/folders in the same directory
-import { useTable } from './useTable' // ✅ Files in the same directory
+// Same hierarchy imports
+import { ProductList } from './ProductList' // ✅ Files/folders in same directory
+import { types } from './types' // ✅ Files in same directory
 
-// 2. Subdirectory index.ts/tsx Imports
-import { ChevronRight } from './icons' // ✅ index.ts/tsx from subdirectory
+import { Something } from '../other/Something' // ❌ Different hierarchy
+import { Deep } from './deep/nested/Component' // ❌ Deep nested path
+
+// Shared imports
+import { SharedButton } from '@/common/shared/Button' // ✅ Upper hierarchy shared
+import { ListItem } from './shared/ListItem' // ✅ Same hierarchy shared
+
+import { Sub } from './shared/Button/Sub' // ❌ Shared subdirectory
+import { Other } from '../shared/Other' // ❌ Different hierarchy shared (except upper)
+import { Button } from './products/shared/Button' // ❌ Lower hierarchy shared
 ```
 
-#### Forbidden Imports
+### voyl/common-isolation
 
 ```typescript
-// 1. Direct Subdirectory Imports
-import { ChevronRight } from './icons/ChevronRight' // ❌ Direct subdirectory access
+// Allowed imports
+import * as React from 'react' // ✅ node_modules modules
 
-// 2. Deep Nested Folder Imports
-import { Something } from './deep/nested/index' // ❌ Deep nested folders
-
-// 3. External Directory Imports
-import { Something } from '../features/Something' // ❌ External directories
-```
-
-## ESLint Rules
-
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // Only allow permitted import paths
-  }
-}
+// Forbidden imports
+import { TreeView } from '@/features/tree/ui/TreeView' // ❌ Other layer modules
+import { PageComponent } from '@/pages/some-page' // ❌ Pages layer modules
 ```

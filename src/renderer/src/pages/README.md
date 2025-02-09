@@ -54,45 +54,40 @@ ComponentName/
 └── const.ts       # Constants
 ```
 
-## Rules
+## Import Rules
 
-### Import Rules
-
-#### Allowed Imports
+### voyl/same-hierarchy-import
 
 ```typescript
-// 1. Same Directory Imports
-import { ProductList } from './ProductList' // ✅ Files/folders in the same directory(index.ts/tsx)
-import { types } from './types' // ✅ Files in the same directory
+// Same hierarchy imports
+import { ProductList } from './ProductList' // ✅ Files/folders in same directory
+import { types } from './types' // ✅ Files in same directory
 
-// 2. shared Directory Imports
-import { SharedButton } from '@/pages/shared/Button' // ✅ Upper hierarchy shared files/folders
-import { ListItem } from './shared/ListItem' // ✅ Same hierarchy shared files/folders
-
-// 3. features Imports
-import { useTreeStore } from '@/features/tree/model' // ✅ Single entry point of feature model
-import { TreeView } from '@/features/tree/ui/TreeView' // ✅ Direct files in feature ui
-```
-
-#### Forbidden Imports
-
-```typescript
-// 1. Different Hierarchy Imports
 import { Something } from '../other/Something' // ❌ Different hierarchy
 import { Deep } from './deep/nested/Component' // ❌ Deep nested path
 
-// 2. shared Restrictions
+// shared import
+import { SharedButton } from '@/pages/shared/Button' // ✅ Upper hierarchy shared
+import { ListItem } from './shared/ListItem' // ✅ Same hierarchy shared
+
 import { Sub } from './shared/Button/Sub' // ❌ shared subdirectory
 import { Other } from '../shared/Other' // ❌ Different hierarchy shared (except upper)
 import { Button } from './products/shared/Button' // ❌ Lower hierarchy shared
 ```
 
-## ESLint Rules
+### voyl/feature-ui-interface-only
 
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // Only allow permitted import paths
-  }
-}
+```typescript
+import { TreeView } from '@/features/tree/ui/TreeView' // ✅ Direct files in feature ui
+import { FirstPointLink } from '@/features/path/ui/Path' // ✅ Direct folders in feature ui
+
+import { FirstPointLink } from '@/features/path/ui/Path/SecondPointLink' // ❌ Deep nested paths in feature ui
+```
+
+### voyl/feature-model-index-import-only
+
+```typescript
+import { useTreeStore } from '@/features/tree/model' // ✅ Single entry point of feature model
+
+import { useTreeStore } from '@/features/tree/model/node' // ❌ Deep nested paths in feature model
 ```

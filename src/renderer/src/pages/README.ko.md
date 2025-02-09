@@ -32,8 +32,8 @@ pages/
 #### 1. shared/
 
 - 공유되는 컴포넌트, 타입, 유틸리티 함수, 상수들이 위치
-- 자신과 동일 및 상위 위계에서만 접근 가능하도록 제한
-- 페이지나 컴포넌트 폴더 어디에나 위치 가능
+- 자신과 동일 및 상위 계층에서만 접근 가능하도록 제한
+- 페이지/컴포넌트 폴더 내 어디서나 배치 가능
 
 #### 2. 페이지 디렉토리
 
@@ -54,45 +54,40 @@ ComponentName/
 └── const.ts       # 상수 정의
 ```
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### 허용되는 Import
+### voyl/same-hierarchy-import
 
 ```typescript
-// 1. 동일 디렉토리 내 Import
-import { ProductList } from './ProductList' // ✅ 같은 디렉토리 내 폴더(index.ts/tsx)
+// 동일 계층 내 import
+import { ProductList } from './ProductList' // ✅ 동일 계층 컴포넌트
 import { types } from './types' // ✅ 같은 디렉토리 내 파일
 
-// 2. shared 디렉토리 Import
-import { SharedButton } from '@/pages/shared/Button' // ✅ 상위 위계 shared 파일/폴더
-import { ListItem } from './shared/ListItem' // ✅ 동일 위계 shared 파일/폴더
-
-// 3. features Import
-import { useTreeStore } from '@/features/tree/model' // ✅ feature model의 단일 진입점
-import { TreeView } from '@/features/tree/ui/TreeView' // ✅ feature ui의 직계 파일
-```
-
-#### 금지되는 Import
-
-```typescript
-// 1. 다른 위계 Import
-import { Something } from '../other/Something' // ❌ 다른 위계
+import { Something } from '../other/Something' // ❌ 다른 계층
 import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
 
-// 2. shared 제한
+// shared import
+import { SharedButton } from '@/pages/shared/Button' // ✅ 상위 계층 shared 파일/폴더
+import { ListItem } from './shared/ListItem' // ✅ 동일 계층 shared 파일/폴더
+
 import { Sub } from './shared/Button/Sub' // ❌ shared 하위 경로
-import { Other } from '../shared/Other' // ❌ 다른 위계 shared (상위 위계 제외)
-import { Button } from './products/shared/Button' // ❌ 하위 위계 shared
+import { Other } from '../shared/Other' // ❌ 다른 계층 shared (상위 계층 제외)
+import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
 ```
 
-## ESLint 규칙
+### voyl/feature-ui-interface-only
 
-```javascript
-{
-  "rules": {
-    "voyl/import-path-format": "error",    // 허용된 import 경로만 사용
-  }
-}
+```typescript
+import { TreeView } from '@/features/tree/ui/TreeView' // ✅ feature ui의 직계 파일
+import { FirstPointLink } from '@/features/path/ui/Path' // ✅ feature ui의 직계 폴더
+
+import { FirstPointLink } from '@/features/path/ui/Path/SecondPointLink' // ❌ feature ui의 깊은 중첩 경로
+```
+
+### voyl/feature-model-index-import-only
+
+```typescript
+import { useTreeStore } from '@/features/tree/model' // ✅ feature model의 단일 진입점
+
+import { useTreeStore } from '@/features/tree/model/node' // ❌ feature model의 깊은 중첩 경로
 ```
