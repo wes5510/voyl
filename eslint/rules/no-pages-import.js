@@ -2,12 +2,13 @@
 'use strict'
 
 const { isNodeModulesImport, getAbsolutePath, isIgnoredPath } = require('./utils/path')
+const { isPagesPath } = require('./utils/page')
 
 module.exports = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Enforce common isolation rules',
+      description: 'Prohibit imports from pages directory',
     },
     schema: [
       {
@@ -24,16 +25,12 @@ module.exports = {
       },
     ],
     messages: {
-      invalidAccess: "Common directory can only import from common directory '{{importPath}}'",
+      noPageImport: "Cannot import from pages directory '{{importPath}}'.",
     },
   },
   create(context) {
     const options = context.options[0] || {}
     const ignorePatterns = options.ignorePatterns || []
-
-    const isCommonPath = (absolutePath) => {
-      return absolutePath.includes('/common/')
-    }
 
     return {
       ImportDeclaration(node) {
@@ -44,20 +41,15 @@ module.exports = {
         }
 
         const absoluteImportPath = getAbsolutePath(importPath, context)
-        const absoluteFilePath = getAbsolutePath(context.physicalFilename, context)
-
-        if (!isCommonPath(absoluteFilePath)) {
-          return
-        }
 
         if (isIgnoredPath(absoluteImportPath, ignorePatterns)) {
           return
         }
 
-        if (!isCommonPath(absoluteImportPath)) {
+        if (isPagesPath(absoluteImportPath)) {
           context.report({
             node,
-            messageId: 'invalidAccess',
+            messageId: 'noPageImport',
             data: { importPath },
           })
         }

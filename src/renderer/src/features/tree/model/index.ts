@@ -17,6 +17,7 @@ import {
   getNodeTitle,
   getCollapsed,
 } from './tree'
+// eslint-disable-next-line
 import { NodeEntity } from './tree/node'
 
 interface TreeStore extends TreeEntity {

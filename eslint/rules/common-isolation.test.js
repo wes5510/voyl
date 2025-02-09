@@ -1,0 +1,99 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+'use strict'
+
+const { mockTsConfigPaths, createRuleTester } = require('./utils/test-utils')
+
+// Mock tsconfig paths
+mockTsConfigPaths()
+
+const rule = require('./common-isolation')
+const ruleTester = createRuleTester()
+
+ruleTester.run('common-isolation', rule, {
+  valid: [
+    // 1. Import from node_modules
+    {
+      code: 'import { useState } from "react"',
+      filename: '/src/renderer/src/common/components/Button.ts',
+    },
+
+    // 2. Import from common directory - relative path
+    {
+      code: 'import { utils } from "./utils"',
+      filename: '/src/renderer/src/common/components/Button.ts',
+    },
+    {
+      code: 'import { Button } from "../components/Button"',
+      filename: '/src/renderer/src/common/utils/index.ts',
+    },
+
+    // 3. Import from common directory - absolute path
+    {
+      code: 'import { utils } from "@/common/utils"',
+      filename: '/src/renderer/src/common/components/Button.ts',
+    },
+
+    // 4. Import from non-common file (should be ignored)
+    {
+      code: 'import { Something } from "@/features/something"',
+      filename: '/src/renderer/src/features/other/index.ts',
+    },
+
+    // 5. Import from ignored patterns
+    {
+      code: 'import { Something } from "@/features/something"',
+      filename: '/src/renderer/src/common/utils.ts',
+      options: [{ ignorePatterns: ['**/features/something'] }],
+    },
+  ],
+
+  invalid: [
+    // 1. Import from features directory - absolute path
+    {
+      code: 'import { Something } from "@/features/something"',
+      filename: '/src/renderer/src/common/utils.ts',
+      errors: [
+        {
+          messageId: 'invalidAccess',
+          data: { importPath: '@/features/something' },
+        },
+      ],
+    },
+
+    // 2. Import from features directory - relative path
+    {
+      code: 'import { Something } from "../../features/something"',
+      filename: '/src/renderer/src/common/utils.ts',
+      errors: [
+        {
+          messageId: 'invalidAccess',
+          data: { importPath: '../../features/something' },
+        },
+      ],
+    },
+
+    // 3. Import from pages directory - absolute path
+    {
+      code: 'import { Something } from "@/pages/something"',
+      filename: '/src/renderer/src/common/utils.ts',
+      errors: [
+        {
+          messageId: 'invalidAccess',
+          data: { importPath: '@/pages/something' },
+        },
+      ],
+    },
+
+    // 4. Import from pages directory - relative path
+    {
+      code: 'import { Something } from "../../pages/something"',
+      filename: '/src/renderer/src/common/utils.ts',
+      errors: [
+        {
+          messageId: 'invalidAccess',
+          data: { importPath: '../../pages/something' },
+        },
+      ],
+    },
+  ],
+})

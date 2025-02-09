@@ -46,6 +46,6 @@ export default function useHandlePaste({
         target.focus()
       }, 0)
     },
-    [setTitle],
+    [setTitle, nodeId],
   )
 }

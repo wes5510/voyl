@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 'use strict'
 
 const path = require('path')
-const micromatch = require('micromatch')
-const { loadConfig, createMatchPath } = require('tsconfig-paths')
+const { isNodeModulesImport, getAbsolutePath, isIgnoredPath } = require('./utils/path')
 
 module.exports = {
   meta: {
@@ -31,69 +31,6 @@ module.exports = {
   create(context) {
     const options = context.options[0] || {}
     const ignorePatterns = options.ignorePatterns || []
-    let matchPathCache = null
-
-    const initMatchPatch = () => {
-      const config = loadConfig()
-
-      if (config.resultType === 'failed') {
-        console.warn('Failed to load tsconfig:', config.message)
-        return () => undefined
-      }
-
-      return createMatchPath(config.absoluteBaseUrl, config.paths)
-    }
-
-    const initTsConfigPathMatcher = () => {
-      return matchPathCache || initMatchPatch()
-    }
-
-    const isAliasPath = (filePath) => {
-      if (isRelativePath(filePath)) {
-        return false
-      }
-
-      const matchPath = initTsConfigPathMatcher()
-      return !!matchPath(filePath)
-    }
-
-    const getAliasAbsolutePath = (filePath) => {
-      const matchPath = initTsConfigPathMatcher()
-      return matchPath(filePath) || filePath
-    }
-
-    const getRelativeAbsolutePath = (filePath, context) => {
-      const currentDir = path.dirname(context.physicalFilename)
-      return path.resolve(currentDir, filePath)
-    }
-
-    const getAbsolutePath = (filePath, context) => {
-      if (isAliasPath(filePath)) {
-        return getAliasAbsolutePath(filePath)
-      }
-
-      if (isRelativePath(filePath)) {
-        return getRelativeAbsolutePath(filePath, context)
-      }
-
-      return filePath
-    }
-
-    const isIgnoredPath = (absolutePath, ignorePatterns) => {
-      return ignorePatterns.some((pattern) => micromatch.isMatch(absolutePath, pattern))
-    }
-
-    const isNodeModulesImport = (importPath) => {
-      return (
-        !importPath.startsWith('./') &&
-        !importPath.startsWith('../') &&
-        !importPath.startsWith('@/')
-      )
-    }
-
-    const isRelativePath = (filePath) => {
-      return filePath.startsWith('./') || filePath.startsWith('../')
-    }
 
     const isSharedImport = (absolutePath) => {
       return absolutePath.includes('/shared')

@@ -55,7 +55,7 @@ export default [
     },
   },
   {
-    files: ['src/renderer/src/{common,pages,features/*/ui,features/*/model}/**/*.{ts,tsx}'],
+    files: ['src/renderer/src/common/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
@@ -63,18 +63,10 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**'],
+          ignorePatterns: ['@/styled-system/**', '**/features/**', '**/common/**'],
         },
       ],
-    },
-  },
-  {
-    files: ['src/renderer/src/pages/**/*.{ts,tsx}'],
-    plugins: {
-      voyl: voylPlugin,
-    },
-    rules: {
-      'voyl/pages-feature-access': [
+      'voyl/common-isolation': [
         'error',
         {
           ignorePatterns: ['@/styled-system/**'],
@@ -88,32 +80,53 @@ export default [
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/feature-model-access': [
+      'voyl/no-cross-feature-imports': ['error'],
+      'voyl/no-pages-import': ['error'],
+    },
+  },
+  {
+    files: ['src/renderer/src/features/*/ui/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**'],
+          ignorePatterns: ['@/styled-system/**', '**/features/*/model/**', '**/common/**'],
         },
       ],
-      'voyl/feature-isolation': [
+      'voyl/feature-model-index-import-only': ['error'],
+    },
+  },
+  {
+    files: ['src/renderer/src/features/*/model/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**'],
+          ignorePatterns: ['@/styled-system/**', '**/common/**'],
         },
       ],
     },
   },
   {
-    files: ['src/renderer/src/common/**/*.{ts,tsx}'],
+    files: ['src/renderer/src/pages/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/common-isolation': [
+      'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**'],
+          ignorePatterns: ['@/styled-system/**', '**/common/**', '**/features/*/ui/**'],
         },
       ],
+      'voyl/feature-ui-interface-only': ['error'],
+      'voyl/feature-model-index-import-only': ['error'],
     },
   },
 ]

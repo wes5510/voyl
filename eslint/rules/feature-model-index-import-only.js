@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 'use strict'
 
+const micromatch = require('micromatch')
 const { isNodeModulesImport, getAbsolutePath, isIgnoredPath } = require('./utils/path')
+const { isFeaturePath } = require('./utils/feature')
+
+const MODEL_ACCESS_PATTERNS = {
+  DIRECTORY_ONLY: '**/features/*/model',
+  INDEX_FILE_ONLY: '**/features/*/model/index.?(.@(ts|tsx))',
+}
 
 module.exports = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Enforce common isolation rules',
+      description: 'Enforce feature model access rules',
     },
     schema: [
       {
@@ -24,15 +31,23 @@ module.exports = {
       },
     ],
     messages: {
-      invalidAccess: "Common directory can only import from common directory '{{importPath}}'",
+      invalidModelAccess:
+        'Model can only be accessed through index file. Invalid import path: {{importPath}}',
     },
   },
   create(context) {
     const options = context.options[0] || {}
     const ignorePatterns = options.ignorePatterns || []
 
-    const isCommonPath = (absolutePath) => {
-      return absolutePath.includes('/common/')
+    const isModelPath = (absolutePath) => {
+      return absolutePath.includes('/model')
+    }
+
+    const isValidModelAccess = (absolutePath) => {
+      return (
+        micromatch.isMatch(absolutePath, MODEL_ACCESS_PATTERNS.DIRECTORY_ONLY) ||
+        micromatch.isMatch(absolutePath, MODEL_ACCESS_PATTERNS.INDEX_FILE_ONLY)
+      )
     }
 
     return {
@@ -44,20 +59,19 @@ module.exports = {
         }
 
         const absoluteImportPath = getAbsolutePath(importPath, context)
-        const absoluteFilePath = getAbsolutePath(context.physicalFilename, context)
-
-        if (!isCommonPath(absoluteFilePath)) {
-          return
-        }
 
         if (isIgnoredPath(absoluteImportPath, ignorePatterns)) {
           return
         }
 
-        if (!isCommonPath(absoluteImportPath)) {
+        if (!isFeaturePath(absoluteImportPath) || !isModelPath(absoluteImportPath)) {
+          return
+        }
+
+        if (!isValidModelAccess(absoluteImportPath)) {
           context.report({
             node,
-            messageId: 'invalidAccess',
+            messageId: 'invalidModelAccess',
             data: { importPath },
           })
         }
