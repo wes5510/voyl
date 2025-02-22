@@ -1,7 +1,7 @@
 import { css } from '@/styled-system/css'
 import IconButton from './IconButton'
 import ChevronRightIcon from '@/common/ChevronRightIcon'
-import useTreeStore, { getCollapsed } from '@/features/tree/model'
+import useTreeStore, { getCollapsed } from '@/features/__tree/model'
 
 export interface CollapseButtonProps {
   nodeId: string

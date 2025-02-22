@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import useTreeStore from '@/features/tree/model'
+import useTreeStore from '@/features/__tree/model'
 
-export default function useHandleShiftTabKey({ nodeId }: { nodeId: string }): HotkeyCallback {
-  const outdentNode = useTreeStore((state) => state.outdentNode)
+export default function useHandleTabKey({ nodeId }: { nodeId: string }): HotkeyCallback {
+  const indentNode = useTreeStore((state) => state.indentNode)
 
   return useCallback(
     (e: KeyboardEvent) => {
@@ -12,9 +12,9 @@ export default function useHandleShiftTabKey({ nodeId }: { nodeId: string }): Ho
         return
       }
 
-      outdentNode({ nodeId })
+      indentNode({ nodeId })
       e.preventDefault()
     },
-    [outdentNode, nodeId],
+    [nodeId, indentNode],
   )
 }

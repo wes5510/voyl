@@ -1,7 +1,7 @@
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './util'
-import useTreeStore from '@/features/tree/model'
+import useTreeStore from '@/features/__tree/model'
 
 const getSourceNodeText = ({
   text,

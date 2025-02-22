@@ -4,7 +4,7 @@ import useHandleEnterKey from './useHandleEnterKey'
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import useHandleTabKey from './useHandleTabKey'
 import useHandleShiftTabKey from './useHandleShiftTabKey'
-import useTreeStore from '@/features/tree/model'
+import useTreeStore from '@/features/__tree/model'
 
 export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const handelEnterKey = useHandleEnterKey({ nodeId })

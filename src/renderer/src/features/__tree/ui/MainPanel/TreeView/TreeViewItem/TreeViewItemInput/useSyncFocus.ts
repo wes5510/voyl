@@ -1,4 +1,4 @@
-import useTreeStore, { isFocused } from '@/features/tree/model'
+import useTreeStore, { isFocused } from '@/features/__tree/model'
 import { RefObject, useCallback, useEffect } from 'react'
 
 export default function useSyncFocus<T extends HTMLElement = HTMLElement>({
