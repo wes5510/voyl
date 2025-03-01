@@ -1,6 +1,7 @@
 export interface TaskEntity {
   id: string
   title: string
+  done: boolean
 }
 
 export const updateTitle = ({
@@ -17,4 +18,12 @@ export const truncateTitleAt = ({
 }: {
   entity: TaskEntity
   index: number
-}): TaskEntity => ({ ...entity, title: entity.title.slice(0, index) })
+}): TaskEntity => updateTitle({ entity, title: entity.title.slice(0, index) })
+
+export const updateDone = ({
+  entity,
+  done,
+}: {
+  entity: TaskEntity
+  done: boolean
+}): TaskEntity => ({ ...entity, done })
