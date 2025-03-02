@@ -122,7 +122,12 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**', '**/common/**', '**/features/*/ui/**'],
+          ignorePatterns: [
+            '@/styled-system/**',
+            '**/common/**',
+            '**/features/*/ui/**',
+            '**/models/**',
+          ],
         },
       ],
       'voyl/feature-ui-interface-only': ['error'],

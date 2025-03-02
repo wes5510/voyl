@@ -1,10 +1,12 @@
 import { css } from '@/styled-system/css'
 import { hstack } from '@/styled-system/patterns'
 import { useState } from 'react'
-import MainPanel from '@/features/__tree/ui/MainPanel'
+import MainPanel from './MainPanel'
+import useTreeView from './useTreeView'
 
 export default function NodesPage(): JSX.Element {
   const [opened, setOpened] = useState<boolean>(false)
+  useTreeView()
 
   const handleClick = (): void => {
     setOpened((prev) => !prev)

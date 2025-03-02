@@ -1,6 +1,6 @@
 import { ClipboardEventHandler, useCallback } from 'react'
 import { isHTMLTextAreaElement } from '../shared/util'
-import useTreeStore from '@/models/tree'
+import useTreeStore from '@/models/nodeTable'
 import { BREAK_LINE } from './const'
 import { removeNewLine, insertText } from './util'
 

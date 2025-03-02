@@ -1,5 +1,5 @@
 import IconButton from './IconButton'
-import useTreeStore, { getCollapsed } from '@/models/tree'
+import useTreeStore, { getCollapsed } from '@/models/nodeTable'
 import CollapseIcon from '../shared/CollapseIcon'
 
 export interface CollapseButtonProps {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './shared/util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import useTreeStore from '@/models/tree'
+import useTreeStore from '@/models/nodeTable'
 import useTreeViewStore from '@/models/treeView'
 
 export default function useHandleBackspaceKey({ nodeId }: { nodeId: string }): HotkeyCallback {

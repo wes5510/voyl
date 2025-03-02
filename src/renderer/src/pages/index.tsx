@@ -11,7 +11,7 @@ export default function IndexPage(): JSX.Element {
       <div className={hstack({ flex: 1, w: 'full', gap: 0 })}>
         <SideBar />
         <Routes>
-          <Route path="nodes" element={<NodesPage />} />
+          <Route path="nodes/:nodeId" element={<NodesPage />} />
           <Route path="*" element={<NodesPage />} />
         </Routes>
       </div>

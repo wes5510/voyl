@@ -6,7 +6,7 @@ import useAutoResize from './useAutoResize'
 import useHandlePaste from './useHandlePaste'
 import useHandleKey from './useHandleKey'
 import useFocus from './useFocus'
-import useTreeStore, { getTitle } from '@/models/tree'
+import useTreeStore, { getTitle } from '@/models/nodeTable'
 
 export interface TreeViewItemInputProps {
   nodeId: string

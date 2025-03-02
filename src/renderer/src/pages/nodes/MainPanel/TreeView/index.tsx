@@ -20,7 +20,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { createPortal } from 'react-dom'
-import useTreeViewStore, { getTreeViewNodes } from '@/models/tree'
+import useTreeViewStore, { getDraggingNode, getTreeViewNodes } from '@/models/treeView'
 import DraggingTreeviewItem from './DraggingTreeviewItem'
 
 const measuring = {
@@ -33,7 +33,7 @@ const MTreeViewItem = memo(TreeViewItem)
 export default function TreeView(): JSX.Element {
   const { treeViewNodes, draggingNode } = useTreeViewStore((state) => ({
     treeViewNodes: getTreeViewNodes(state),
-    draggingNode: state.draggingNode,
+    draggingNode: getDraggingNode(state),
   }))
 
   const sensors = useSensors(
