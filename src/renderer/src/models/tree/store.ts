@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { toggleCollapsedByNodeId, setTitleByNodeId, insertNewNodeAfter, TreeEntity } from './index'
+import { NodeEntity } from './node'
 
 interface TreeStore {
   entity: TreeEntity
@@ -14,10 +15,10 @@ interface TreeStore {
       title: string
     }
     newNodeTitle: string
-  }) => void
+  }) => NodeEntity['id'] | undefined
 }
 
-const useTreeStore = create<TreeStore>((set) => ({
+const useTreeStore = create<TreeStore>((set, get) => ({
   entity: {
     nodeTable: new Map([
       [
@@ -52,9 +53,15 @@ const useTreeStore = create<TreeStore>((set) => ({
     }))
   },
   insertNewNodeAfter: ({ sourceNode, newNodeTitle }) => {
-    set((prev) => ({
-      entity: insertNewNodeAfter({ entity: prev.entity, sourceNode, newNodeTitle }),
-    }))
+    const { entity: newEntity, newNode } = insertNewNodeAfter({
+      entity: get().entity,
+      sourceNode,
+      newNodeTitle,
+    })
+
+    set({ entity: newEntity })
+
+    return newNode?.id
   },
 }))
 

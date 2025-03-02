@@ -17,7 +17,7 @@ interface TreeViewStore {
     rootNodeId: string
     nodeTable: NodeTableEntity
   }) => void
-  setFocusedNodeId: ({ nodeId }: { nodeId: string }) => void
+  setFocusedNodeId: ({ nodeId }: { nodeId?: string }) => void
   setFocusToPrevNode: () => void
   setFocusToNextNode: () => void
 }

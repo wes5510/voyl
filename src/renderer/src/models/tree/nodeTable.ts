@@ -38,3 +38,19 @@ export const removeNode = ({
 
   return newEntity
 }
+
+export const setNodes = ({
+  entity,
+  nodes,
+}: {
+  entity: NodeTableEntity
+  nodes: NodeEntity[]
+}): NodeTableEntity => {
+  const newEntity = new Map(entity)
+
+  nodes.forEach((node) => {
+    newEntity.set(node.id, node)
+  })
+
+  return newEntity
+}
