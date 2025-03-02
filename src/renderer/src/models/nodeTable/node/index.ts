@@ -1,4 +1,4 @@
-import { TaskEntity } from './task'
+import { setTitle, TaskEntity } from './task'
 
 export interface NodeEntity {
   id: string
@@ -15,4 +15,21 @@ export const toggleCollapsed = ({ entity }: { entity: NodeEntity }): NodeEntity 
     ...entity,
     collapsed: !entity.collapsed,
   }
+}
+
+export const setTaskTitle = ({
+  entity,
+  title,
+}: {
+  entity: NodeEntity
+  title: string
+}): NodeEntity => {
+  return {
+    ...entity,
+    task: setTitle({ entity: entity.task, title }),
+  }
+}
+
+export const getTaskTitle = ({ entity }: { entity: NodeEntity }): string => {
+  return entity.task.title
 }

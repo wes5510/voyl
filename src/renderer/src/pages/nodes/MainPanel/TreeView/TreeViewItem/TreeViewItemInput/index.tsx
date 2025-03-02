@@ -6,7 +6,7 @@ import useAutoResize from './useAutoResize'
 import useHandlePaste from './useHandlePaste'
 import useHandleKey from './useHandleKey'
 import useFocus from './useFocus'
-import useTreeStore, { getTitle } from '@/models/nodeTable/store'
+import useNodeTableStore, { getTitleByNodeId } from '@/models/nodeTable/store'
 
 export interface TreeViewItemInputProps {
   nodeId: string
@@ -18,12 +18,12 @@ export default function TreeViewItemInput({
   className,
 }: TreeViewItemInputProps): JSX.Element {
   const elemRef = useRef<HTMLTextAreaElement>(null)
-  const { title, setTitle } = useTreeStore((state) => ({
-    title: getTitle({
-      entity: state,
+  const { title, setTitle } = useNodeTableStore((state) => ({
+    title: getTitleByNodeId({
+      entity: state.entity,
       nodeId,
     }),
-    setTitle: state.setTitle,
+    setTitle: state.setTitleByNodeId,
   }))
 
   const keyRef = useHotkeys<HTMLTextAreaElement>(

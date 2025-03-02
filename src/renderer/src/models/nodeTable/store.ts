@@ -1,9 +1,10 @@
 import { create } from 'zustand'
-import { NodeTableEntity, toggleCollapsedByNodeId } from './index'
+import { NodeTableEntity, toggleCollapsedByNodeId, setTitleByNodeId } from './index'
 
 interface NodeTableStore {
   entity: NodeTableEntity
   toggleCollapsed: ({ nodeId }: { nodeId: string }) => void
+  setTitleByNodeId: ({ nodeId, title }: { nodeId: string; title: string }) => void
 }
 
 const useNodeTableStore = create<NodeTableStore>((set) => ({
@@ -18,9 +19,14 @@ const useNodeTableStore = create<NodeTableStore>((set) => ({
       }),
     }))
   },
+  setTitleByNodeId: ({ nodeId, title }: { nodeId: string; title: string }) => {
+    set((prev) => ({
+      entity: setTitleByNodeId({ entity: prev.entity, nodeId, title }),
+    }))
+  },
 }))
 
 export default useNodeTableStore
 export type { NodeTableEntity }
 export type { NodeEntity } from './node'
-export { getCollapsedByNodeId } from './index'
+export { getCollapsedByNodeId, getTitleByNodeId } from './index'
