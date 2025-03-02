@@ -120,3 +120,19 @@ const __nodeToTreeViewNode = ({
     childNodeIds: node.childNodeIds,
   }
 }
+
+export const setFocusedNodeId = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId: string
+}): TreeViewEntity => {
+  return {
+    ...entity,
+    focusedNodeId: nodeId,
+  }
+}
+
+export const isFocus = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: string }): boolean =>
+  entity.focusedNodeId === nodeId

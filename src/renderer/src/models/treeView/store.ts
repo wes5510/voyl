@@ -1,10 +1,11 @@
 import { create } from 'zustand'
-import { setRootNodeId, TreeViewEntity } from './index'
+import { setRootNodeId, setFocusedNodeId, TreeViewEntity } from './index'
 import useNodeTableStore from '../nodeTable/store'
 
 interface TreeViewStore {
   entity: TreeViewEntity
   setRootNodeId: (rootNodeId: string) => void
+  setFocusedNodeId: ({ nodeId }: { nodeId: string }) => void
 }
 
 const useTreeViewStore = create<TreeViewStore>((set) => ({
@@ -21,7 +22,12 @@ const useTreeViewStore = create<TreeViewStore>((set) => ({
       entity: setRootNodeId({ entity: state.entity, rootNodeId, nodeTable }),
     }))
   },
+  setFocusedNodeId: ({ nodeId }) => {
+    set((state) => ({
+      entity: setFocusedNodeId({ entity: state.entity, nodeId }),
+    }))
+  },
 }))
 
 export default useTreeViewStore
-export { getTreeViewNodes, getDraggingNode } from './index'
+export { getTreeViewNodes, getDraggingNode, isFocus } from './index'
