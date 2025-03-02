@@ -1,5 +1,5 @@
 import { useParams } from 'react-router'
-import useTreeViewStore from '@/models/treeView'
+import useTreeViewStore from '@/models/treeView/store'
 import { useEffect } from 'react'
 
 export default function useTreeView(): void {

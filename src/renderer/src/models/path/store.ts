@@ -6,7 +6,7 @@ import {
   getMidPoint,
   getMidPoints,
   getMidPointLength,
-} from './path'
+} from '.'
 import ListIcon from '@/common/ListIcon'
 
 const usePathStore = create<PathEntity>(() => ({

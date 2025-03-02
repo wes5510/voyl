@@ -1,5 +1,5 @@
 import PointLink from './shared/PointLink'
-import usePathStore, { getFirstPoint } from '@/features/path/model'
+import usePathStore, { getFirstPoint } from '@/models/path/store'
 
 export default function FirstPointLink(): JSX.Element | undefined {
   const point = usePathStore(getFirstPoint)

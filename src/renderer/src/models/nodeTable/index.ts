@@ -1,16 +1,9 @@
-import { create } from 'zustand'
-import { NodeTableEntity } from './nodeTable'
+import { NodeEntity } from './node'
 
-interface NodeTableStore {
-  entity: NodeTableEntity
+export interface NodeTableEntity {
+  nodeTable: Map<NodeEntity['id'], NodeEntity>
 }
 
-const useNodeTableStore = create<NodeTableStore>(() => ({
-  entity: {
-    nodeTable: new Map(),
-  },
-}))
-
-export default useNodeTableStore
-export type { NodeTableEntity }
-export type { NodeEntity } from './node'
+export const createNodeTable = (): NodeTableEntity => {
+  return { nodeTable: new Map() }
+}

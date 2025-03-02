@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { FavoritesManagerEntity } from './favoriteManager'
+import { FavoritesManagerEntity } from '.'
 
 const useFavoriteManagerStore = create<FavoritesManagerEntity>(() => ({
   favorites: [

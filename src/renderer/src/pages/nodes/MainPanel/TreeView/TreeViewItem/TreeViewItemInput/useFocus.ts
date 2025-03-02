@@ -1,4 +1,4 @@
-import useTreeViewStore, { isFocused } from '@/models/treeView'
+import useTreeViewStore, { isFocused } from '@/models/treeView/store'
 import { RefObject, useCallback, useEffect } from 'react'
 
 export default function useFocus<T extends HTMLElement = HTMLElement>({

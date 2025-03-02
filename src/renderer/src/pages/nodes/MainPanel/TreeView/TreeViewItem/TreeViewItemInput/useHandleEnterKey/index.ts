@@ -1,8 +1,8 @@
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from '../shared/util'
-import useTreeStore from '@/models/nodeTable'
-import useTreeViewStore from '@/models/treeView'
+import useTreeStore from '@/models/nodeTable/store'
+import useTreeViewStore from '@/models/treeView/store'
 import { getSourceNodeTitle, getNewNodeTitle } from './util'
 
 export default function useHandleEnterKey({ nodeId }: { nodeId: string }): HotkeyCallback {

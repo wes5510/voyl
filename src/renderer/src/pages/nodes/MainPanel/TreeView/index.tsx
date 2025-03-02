@@ -20,7 +20,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { createPortal } from 'react-dom'
-import useTreeViewStore, { getDraggingNode, getTreeViewNodes } from '@/models/treeView'
+import useTreeViewStore, { getDraggingNode, getTreeViewNodes } from '@/models/treeView/store'
 import DraggingTreeviewItem from './DraggingTreeviewItem'
 
 const measuring = {

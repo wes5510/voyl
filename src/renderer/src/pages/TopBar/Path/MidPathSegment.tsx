@@ -1,6 +1,6 @@
 import EllipsisMenu from './EllipsisMenu'
 import MidPointLink from './MidPointLink'
-import usePathStore, { getMidPointLength } from '@/features/path/model'
+import usePathStore, { getMidPointLength } from '@/models/path/store'
 
 export default function MidPathSegment(): JSX.Element | undefined {
   const length = usePathStore(getMidPointLength)
