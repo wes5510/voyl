@@ -12,7 +12,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/features/*": ["src/renderer/src/features/*"],
+      "@/models/*": ["src/renderer/src/models/*"],
       "@/common/*": ["src/renderer/src/common/*"],
       "@/pages/*": ["src/renderer/src/pages/*"],
       "@/styled-system/*": ["styled-system/*"]

@@ -1,11 +1,12 @@
 import { useCallback } from 'react'
-import { isHTMLTextAreaElement } from './util'
+import { isHTMLTextAreaElement } from './shared/util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import useTreeStore from '@/features/__tree/model'
+import useTreeStore from '@/models/tree'
+import useTreeViewStore from '@/models/treeView'
 
 export default function useHandleBackspaceKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const removeNode = useTreeStore((state) => state.removeNode)
-
+  const setFocusForRemovedNode = useTreeViewStore((state) => state.setFocusForRemovedNode)
   return useCallback(
     (e: KeyboardEvent) => {
       if (!isHTMLTextAreaElement(e.target) || e.target.value) {
@@ -13,8 +14,9 @@ export default function useHandleBackspaceKey({ nodeId }: { nodeId: string }): H
       }
 
       removeNode({ nodeId })
+      setFocusForRemovedNode({ nodeId })
       e.preventDefault()
     },
-    [nodeId, removeNode],
+    [nodeId, removeNode, setFocusForRemovedNode],
   )
 }

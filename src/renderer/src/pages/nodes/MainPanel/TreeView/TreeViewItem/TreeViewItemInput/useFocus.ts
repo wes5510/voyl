@@ -1,15 +1,15 @@
-import useTreeStore, { isFocused } from '@/features/__tree/model'
+import useTreeViewStore, { isFocused } from '@/models/treeView'
 import { RefObject, useCallback, useEffect } from 'react'
 
-export default function useSyncFocus<T extends HTMLElement = HTMLElement>({
+export default function useFocus<T extends HTMLElement = HTMLElement>({
   nodeId,
   ref,
 }: {
   nodeId: string
   ref: RefObject<T>
 }): () => void {
-  const focused = useTreeStore((state) => isFocused({ entity: state, nodeId }))
-  const setFocusedNodeId = useTreeStore((state) => state.setFocusedNodeId)
+  const focused = useTreeViewStore((state) => isFocused({ entity: state, nodeId }))
+  const setFocusedNodeId = useTreeViewStore((state) => state.setFocusedNodeId)
 
   useEffect(() => {
     if (focused) {

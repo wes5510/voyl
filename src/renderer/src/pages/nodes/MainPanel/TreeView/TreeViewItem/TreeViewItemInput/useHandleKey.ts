@@ -4,14 +4,14 @@ import useHandleEnterKey from './useHandleEnterKey'
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import useHandleTabKey from './useHandleTabKey'
 import useHandleShiftTabKey from './useHandleShiftTabKey'
-import useTreeStore from '@/features/__tree/model'
+import useTreeViewStore from '@/models/treeView'
 
 export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const handelEnterKey = useHandleEnterKey({ nodeId })
   const handleBackspaceKey = useHandleBackspaceKey({ nodeId })
-  const { updateFocusToPrevNode, updateFocusToNextNode } = useTreeStore((state) => ({
-    updateFocusToPrevNode: state.updateFocusToPrevNode,
-    updateFocusToNextNode: state.updateFocusToNextNode,
+  const { setFocusToPrevNode, setFocusToNextNode } = useTreeViewStore((state) => ({
+    setFocusToPrevNode: state.setFocusToPrevNode,
+    setFocusToNextNode: state.setFocusToNextNode,
   }))
   const handleTabKey = useHandleTabKey({ nodeId })
   const handleShiftTabKey = useHandleShiftTabKey({ nodeId })
@@ -28,11 +28,11 @@ export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCall
           break
         }
         case 'up': {
-          updateFocusToPrevNode()
+          setFocusToPrevNode()
           break
         }
         case 'down': {
-          updateFocusToNextNode()
+          setFocusToNextNode()
           break
         }
         case 'tab': {
@@ -50,8 +50,8 @@ export default function useHandleKey({ nodeId }: { nodeId: string }): HotkeyCall
       handleBackspaceKey,
       handleShiftTabKey,
       handleTabKey,
-      updateFocusToNextNode,
-      updateFocusToPrevNode,
+      setFocusToNextNode,
+      setFocusToPrevNode,
     ],
   )
 }

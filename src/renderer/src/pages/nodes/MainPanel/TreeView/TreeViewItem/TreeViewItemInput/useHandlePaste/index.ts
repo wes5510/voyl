@@ -1,20 +1,15 @@
 import { ClipboardEventHandler, useCallback } from 'react'
-import { isHTMLTextAreaElement } from './util'
-import useTreeStore from '@/features/__tree/model'
-
-const BREAK_LINE = '\n'
-
-const removeNewLine = (text: string): string => text.replaceAll(BREAK_LINE, ' ')
-
-const insertText = ({ sourceText, newText, selection }): string =>
-  `${sourceText.slice(0, selection.start)}${newText}${sourceText.slice(selection.end)}`
+import { isHTMLTextAreaElement } from '../shared/util'
+import useTreeStore from '@/models/tree'
+import { BREAK_LINE } from './const'
+import { removeNewLine, insertText } from './util'
 
 export default function useHandlePaste({
   nodeId,
 }: {
   nodeId: string
 }): ClipboardEventHandler<HTMLTextAreaElement> {
-  const setTitle = useTreeStore((state) => state.setNodeTitle)
+  const setTitle = useTreeStore((state) => state.setTitle)
 
   return useCallback(
     (e: React.ClipboardEvent<HTMLTextAreaElement>) => {

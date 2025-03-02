@@ -1,5 +1,5 @@
 import { vstack } from '@/styled-system/patterns'
-import TreeViewItem from './TreeViewItem'
+import TreeViewItem from '../../../../../pages/nodes/MainPanel/TreeView/TreeViewItem'
 import { memo, useState } from 'react'
 import AddButton from './AddButton'
 import {
@@ -19,9 +19,8 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import { INDENT_WIDTH } from './shared/const'
 import { createPortal } from 'react-dom'
-import DraggingTreeviewItem from './DraggingTreeviewItem'
+import DraggingTreeviewItem from '../../../../../pages/nodes/MainPanel/TreeView/DraggingTreeviewItem'
 import useTreeStore, { NodeEntity } from '@/features/__tree/model'
 
 const measuring = {

@@ -2,7 +2,7 @@ import CollapseButton from './CollapseButton'
 import DotButton from './DotButton'
 import TreeViewItemInput from './TreeViewItemInput'
 import { css } from '@/styled-system/css'
-import TreeViewItemWrapper from './TreeViewItemWrapper'
+import TreeViewItemWrapper from '../shared/TreeViewItemWrapper'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { memo } from 'react'
@@ -12,9 +12,10 @@ const MCollapseButton = memo(CollapseButton)
 
 export interface TreeViewItemProps {
   nodeId: string
+  depth: number
 }
 
-export default function TreeViewItem({ nodeId }: TreeViewItemProps): JSX.Element {
+export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps): JSX.Element {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: nodeId,
   })
@@ -26,7 +27,7 @@ export default function TreeViewItem({ nodeId }: TreeViewItemProps): JSX.Element
   }
 
   return (
-    <TreeViewItemWrapper ref={setNodeRef} nodeId={nodeId} style={style}>
+    <TreeViewItemWrapper ref={setNodeRef} depth={depth} style={style}>
       <MCollapseButton nodeId={nodeId} />
       <DotButton {...attributes} {...listeners} />
       <MTreeViewItemInput

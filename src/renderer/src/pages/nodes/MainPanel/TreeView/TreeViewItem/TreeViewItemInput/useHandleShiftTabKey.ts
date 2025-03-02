@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
-import { isHTMLTextAreaElement } from './util'
+import { isHTMLTextAreaElement } from './shared/util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import useTreeStore from '@/features/__tree/model'
+import useTreeStore from '@/models/treeView'
 
 export default function useHandleShiftTabKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const outdentNode = useTreeStore((state) => state.outdentNode)
