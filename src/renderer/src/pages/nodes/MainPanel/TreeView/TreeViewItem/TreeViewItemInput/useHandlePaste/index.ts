@@ -1,6 +1,6 @@
 import { ClipboardEventHandler, useCallback } from 'react'
 import { isHTMLTextAreaElement } from '../shared/util'
-import useTreeStore from '@/models/nodeTable/store'
+import useTreeStore from '@/models/tree/store'
 import { BREAK_LINE } from './const'
 import { removeNewLine, insertText } from './util'
 
@@ -9,7 +9,7 @@ export default function useHandlePaste({
 }: {
   nodeId: string
 }): ClipboardEventHandler<HTMLTextAreaElement> {
-  const setTitle = useTreeStore((state) => state.setTitle)
+  const setTitle = useTreeStore((state) => state.setTitleByNodeId)
 
   return useCallback(
     (e: React.ClipboardEvent<HTMLTextAreaElement>) => {

@@ -1,15 +1,12 @@
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from '../shared/util'
-import useTreeStore from '@/models/nodeTable/store'
 import useTreeViewStore from '@/models/treeView/store'
 import { getSourceNodeTitle, getNewNodeTitle } from './util'
+import useTreeStore from '@/models/tree/store'
 
 export default function useHandleEnterKey({ nodeId }: { nodeId: string }): HotkeyCallback {
-  const { setTitle, insertNewNodeAfter } = useTreeStore((state) => ({
-    setTitle: state.setTitle,
-    insertNewNodeAfter: state.insertNewNodeAfter,
-  }))
+  const insertNewNodeAfter = useTreeStore((state) => state.insertNewNodeAfter)
   const setFocusedNodeId = useTreeViewStore((state) => state.setFocusedNodeId)
 
   return useCallback(
@@ -20,16 +17,14 @@ export default function useHandleEnterKey({ nodeId }: { nodeId: string }): Hotke
 
       const { value, selectionStart, selectionEnd } = e.target
 
-      setTitle({
-        nodeId,
-        title: getSourceNodeTitle({
-          text: value,
-          selectionStart,
-        }),
-      })
-
       const newNodeId = insertNewNodeAfter({
-        refNodeId: nodeId,
+        sourceNode: {
+          id: nodeId,
+          title: getSourceNodeTitle({
+            text: value,
+            selectionStart,
+          }),
+        },
         newNodeTitle: getNewNodeTitle({
           text: value,
           selectionEnd,
@@ -38,6 +33,6 @@ export default function useHandleEnterKey({ nodeId }: { nodeId: string }): Hotke
 
       setFocusedNodeId({ nodeId: newNodeId })
     },
-    [insertNewNodeAfter, nodeId, setFocusedNodeId, setTitle],
+    [nodeId, setFocusedNodeId, insertNewNodeAfter],
   )
 }

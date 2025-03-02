@@ -1,11 +1,25 @@
 import { create } from 'zustand'
-import { setRootNodeId, setFocusedNodeId, TreeViewEntity } from './index'
-import useNodeTableStore from '../nodeTable/store'
+import {
+  setRootNodeId,
+  setFocusedNodeId,
+  TreeViewEntity,
+  setFocusToPrevNode,
+  setFocusToNextNode,
+} from './index'
+import { NodeTableEntity } from '../tree/store'
 
 interface TreeViewStore {
   entity: TreeViewEntity
-  setRootNodeId: (rootNodeId: string) => void
+  setRootNodeId: ({
+    rootNodeId,
+    nodeTable,
+  }: {
+    rootNodeId: string
+    nodeTable: NodeTableEntity
+  }) => void
   setFocusedNodeId: ({ nodeId }: { nodeId: string }) => void
+  setFocusToPrevNode: () => void
+  setFocusToNextNode: () => void
 }
 
 const useTreeViewStore = create<TreeViewStore>((set) => ({
@@ -15,16 +29,24 @@ const useTreeViewStore = create<TreeViewStore>((set) => ({
     focusedNodeId: undefined,
     rootNodeId: '1',
   },
-  setRootNodeId: (rootNodeId) => {
-    const nodeTable = useNodeTableStore.getState().entity.nodeTable
-
-    set((state) => ({
-      entity: setRootNodeId({ entity: state.entity, rootNodeId, nodeTable }),
+  setRootNodeId: ({ rootNodeId, nodeTable }) => {
+    set((prev) => ({
+      entity: setRootNodeId({ entity: prev.entity, rootNodeId, nodeTable }),
     }))
   },
   setFocusedNodeId: ({ nodeId }) => {
-    set((state) => ({
-      entity: setFocusedNodeId({ entity: state.entity, nodeId }),
+    set((prev) => ({
+      entity: setFocusedNodeId({ entity: prev.entity, nodeId }),
+    }))
+  },
+  setFocusToPrevNode: () => {
+    set((prev) => ({
+      entity: setFocusToPrevNode({ entity: prev.entity }),
+    }))
+  },
+  setFocusToNextNode: () => {
+    set((prev) => ({
+      entity: setFocusToNextNode({ entity: prev.entity }),
     }))
   },
 }))

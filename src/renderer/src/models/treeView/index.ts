@@ -1,4 +1,4 @@
-import { NodeEntity } from '../nodeTable/store'
+import { NodeEntity } from '../tree/store'
 
 export interface TreeViewEntity {
   nodes: TreeViewNode[]
@@ -126,7 +126,7 @@ export const setFocusedNodeId = ({
   nodeId,
 }: {
   entity: TreeViewEntity
-  nodeId: string
+  nodeId: string | undefined
 }): TreeViewEntity => {
   return {
     ...entity,
@@ -136,3 +136,55 @@ export const setFocusedNodeId = ({
 
 export const isFocus = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: string }): boolean =>
   entity.focusedNodeId === nodeId
+
+export const setFocusToPrevNode = ({ entity }: { entity: TreeViewEntity }): TreeViewEntity => {
+  return setFocusedNodeId({
+    entity,
+    nodeId: __getPrevNodeId({ entity, nodeId: entity.focusedNodeId }),
+  })
+}
+
+const __getPrevNodeId = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId?: string
+}): string | undefined => {
+  if (!nodeId) {
+    return
+  }
+
+  const idx = entity.nodes.findIndex((node) => node.id === nodeId)
+  if (idx <= 0) {
+    return
+  }
+
+  return entity.nodes[idx - 1].id
+}
+
+export const setFocusToNextNode = ({ entity }: { entity: TreeViewEntity }): TreeViewEntity => {
+  return setFocusedNodeId({
+    entity,
+    nodeId: __getNextNodeId({ entity, nodeId: entity.focusedNodeId }),
+  })
+}
+
+const __getNextNodeId = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId?: string
+}): string | undefined => {
+  if (!nodeId) {
+    return
+  }
+
+  const idx = entity.nodes.findIndex((node) => node.id === nodeId)
+  if (idx < 0 || idx === entity.nodes.length - 1) {
+    return
+  }
+
+  return entity.nodes[idx + 1].id
+}

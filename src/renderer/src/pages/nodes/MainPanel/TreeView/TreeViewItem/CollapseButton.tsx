@@ -1,5 +1,5 @@
 import IconButton from './IconButton'
-import useNodeTableStore, { getCollapsedByNodeId } from '@/models/nodeTable/store'
+import useTreeStore, { getCollapsedByNodeId } from '@/models/tree/store'
 import CollapseIcon from '../shared/CollapseIcon'
 
 export interface CollapseButtonProps {
@@ -7,7 +7,7 @@ export interface CollapseButtonProps {
 }
 
 export default function CollapseButton({ nodeId }: CollapseButtonProps): JSX.Element {
-  const { collapsed, toggleCollapsed } = useNodeTableStore((state) => ({
+  const { collapsed, toggleCollapsed } = useTreeStore((state) => ({
     collapsed: getCollapsedByNodeId({ entity: state.entity, nodeId }),
     toggleCollapsed: state.toggleCollapsed,
   }))
