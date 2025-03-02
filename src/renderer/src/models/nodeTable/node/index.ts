@@ -9,3 +9,10 @@ export interface NodeEntity {
   collapsed: boolean
   task: TaskEntity
 }
+
+export const toggleCollapsed = ({ entity }: { entity: NodeEntity }): NodeEntity => {
+  return {
+    ...entity,
+    collapsed: !entity.collapsed,
+  }
+}
