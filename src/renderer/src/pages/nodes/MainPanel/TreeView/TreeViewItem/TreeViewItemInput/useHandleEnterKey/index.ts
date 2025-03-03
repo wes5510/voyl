@@ -37,6 +37,6 @@ export default function useHandleEnterKey({ nodeId }: { nodeId: string }): Hotke
 
       setFocusedNodeId({ nodeId: newNodeId })
     },
-    [nodeId, setFocusedNodeId, insertNewNodeAfter],
+    [nodeId, setFocusedNodeId, insertNewNodeAfter, expanded],
   )
 }

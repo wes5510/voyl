@@ -1,6 +1,6 @@
 import { vstack } from '@/styled-system/patterns'
 import TreeViewItem from './TreeViewItem'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import AddButton from './AddButton'
 import {
   DndContext,

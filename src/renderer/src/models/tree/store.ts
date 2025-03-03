@@ -16,6 +16,7 @@ interface TreeStore {
   insertNewNodeAfter: ({
     sourceNode,
     newNodeTitle,
+    nested,
   }: {
     sourceNode: {
       id: string
@@ -26,7 +27,7 @@ interface TreeStore {
   }) => NodeEntityId | undefined
   removeNode: ({ nodeId }: { nodeId: string }) => void
   outdentNode: ({ nodeId }: { nodeId: string }) => void
-  indentNode: ({ nodeId }: { nodeId: string }) => void
+  indentNode: ({ nodeId }: { nodeId: string }) => NodeEntityId | undefined
 }
 
 const __useTreeStore = create<TreeStore>((set, get) => ({
@@ -37,11 +38,8 @@ const __useTreeStore = create<TreeStore>((set, get) => ({
         'n-1',
         {
           id: 'n-1',
-          prevSiblingNodeId: undefined,
-          nextSiblingNodeId: undefined,
           parentNodeId: undefined,
           childNodeIds: ['n-2'],
-          collapsed: false,
           task: {
             id: 'task-1',
             title: 'task-1',
@@ -53,11 +51,8 @@ const __useTreeStore = create<TreeStore>((set, get) => ({
         'n-2',
         {
           id: 'n-2',
-          prevSiblingNodeId: undefined,
-          nextSiblingNodeId: undefined,
           parentNodeId: 'n-1',
           childNodeIds: [],
-          collapsed: true,
           task: {
             id: 'task-2',
             title: 'task-2',
@@ -95,14 +90,15 @@ const __useTreeStore = create<TreeStore>((set, get) => ({
     }))
   },
   indentNode: ({ nodeId }: { nodeId: string }) => {
-    set((prev) => ({
-      entity: indentNode({ entity: prev.entity, nodeId }),
-    }))
+    const { entity, parentNodeId } = indentNode({ entity: get().entity, nodeId })
+    set({ entity })
+    return parentNodeId
   },
 }))
 
 const useTreeStore = <T>(selector: (state: TreeStore) => T) => __useTreeStore(useShallow(selector))
 
+export const rawUseTreeStore = __useTreeStore
 export default useTreeStore
 export type { NodeEntity, NodeEntityId } from './node'
 export { getNode } from './nodeTable'

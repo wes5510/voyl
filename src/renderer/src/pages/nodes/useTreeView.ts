@@ -7,8 +7,8 @@ export default function useTreeView(): void {
   const { nodeId } = useParams()
   const setRootNodeId = useTreeViewStore((state) => state.setRootNodeId)
   const { nodeTable, rootNodeId } = useTreeStore((state) => ({
-    nodeTable: getNodeTable(state.entity),
-    rootNodeId: getRootNodeId(state.entity),
+    nodeTable: getNodeTable({ entity: state.entity }),
+    rootNodeId: getRootNodeId({ entity: state.entity }),
   }))
 
   useEffect(() => {

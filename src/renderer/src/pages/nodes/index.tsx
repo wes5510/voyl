@@ -3,6 +3,9 @@ import { hstack } from '@/styled-system/patterns'
 import { useState } from 'react'
 import MainPanel from './MainPanel'
 import useTreeView from './useTreeView'
+import { memo } from 'react'
+
+const MMainPanel = memo(MainPanel)
 
 export default function NodesPage() {
   const [opened, setOpened] = useState<boolean>(false)
@@ -26,7 +29,7 @@ export default function NodesPage() {
         (Tester) Open Side Panel
       </button>
       <div className={css({ flex: 1, h: 'full' })}>
-        <MainPanel />
+        <MMainPanel />
       </div>
       <div
         className={css({

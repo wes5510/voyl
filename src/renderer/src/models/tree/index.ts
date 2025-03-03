@@ -294,7 +294,7 @@ const __setParentNodeId = ({
   }
 }
 
-export const getNodeTable = (entity: TreeEntity): NodeTableEntity => {
+export const getNodeTable = ({ entity }: { entity: TreeEntity }): NodeTableEntity => {
   return entity.nodeTable
 }
 
@@ -449,7 +449,13 @@ const __moveToParentNextSibling = ({
   })
 }
 
-export const indentNode = ({ entity, nodeId }: { entity: TreeEntity; nodeId: NodeEntityId }) => {
+export const indentNode = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeEntity
+  nodeId: NodeEntityId
+}): { entity: TreeEntity; parentNodeId?: NodeEntityId } => {
   return __moveToPrevSiblingAsChild({
     entity,
     nodeId,
@@ -462,23 +468,26 @@ const __moveToPrevSiblingAsChild = ({
 }: {
   entity: TreeEntity
   nodeId: NodeEntityId
-}) => {
+}): { entity: TreeEntity; parentNodeId?: NodeEntityId } => {
   const prevSiblingNodeId = __getPrevSiblingNodeId({ entity, nodeId })
 
   if (!prevSiblingNodeId) {
-    return entity
+    return { entity, parentNodeId: undefined }
   }
 
-  return __moveToChildNode({
-    entity,
+  return {
+    entity: __moveToChildNode({
+      entity,
+      parentNodeId: prevSiblingNodeId,
+      newNodeId: nodeId,
+      index:
+        __getLastChildNodeIndex({
+          entity,
+          parentNodeId: prevSiblingNodeId,
+        }) + 1,
+    }),
     parentNodeId: prevSiblingNodeId,
-    newNodeId: nodeId,
-    index:
-      __getLastChildNodeIndex({
-        entity,
-        parentNodeId: prevSiblingNodeId,
-      }) + 1,
-  })
+  }
 }
 
 const __getPrevSiblingNodeId = ({
@@ -523,6 +532,6 @@ const __getLastChildNodeIndex = ({
   return getLastChildNodeIndex({ entity: parentNode })
 }
 
-export const getRootNodeId = (entity: TreeEntity): NodeEntityId => {
+export const getRootNodeId = ({ entity }: { entity: TreeEntity }): NodeEntityId => {
   return entity.rootNodeId
 }

@@ -12,4 +12,4 @@ export const getNewNodeTitle = ({
 }: {
   text: string
   selectionEnd?: number
-}): string => (selectionEnd ? text.slice(selectionEnd) : '')
+}): string => text.slice(selectionEnd)

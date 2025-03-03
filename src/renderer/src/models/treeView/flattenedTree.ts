@@ -39,7 +39,7 @@ const __generateNodes = ({
   entity: FlattenedTreeEntity
   nodeTable: NodeTable
 }): FlattenedTreeEntity => {
-  const childNodeIds = getChildNodeIdsByNodeId({ entity: nodeTable, nodeId: entity.rootNodeId })
+  const childNodeIds = __getChildNodeIdsByNodeId({ nodeTable, nodeId: entity.rootNodeId })
 
   return {
     ...entity,
@@ -55,6 +55,7 @@ const __generateNodes = ({
     }),
   }
 }
+
 const __flattenNodes = ({
   nodes,
   expandedNodeIds,
@@ -71,7 +72,7 @@ const __flattenNodes = ({
       ...__flattenNodes({
         nodes: __childNodeIdsToTreeViewNodes({
           childNodeIds: node.expanded
-            ? getChildNodeIdsByNodeId({ entity: nodeTable, nodeId: node.id })
+            ? __getChildNodeIdsByNodeId({ nodeTable, nodeId: node.id })
             : [],
           expandedNodeIds,
           nodeTable,
@@ -82,6 +83,16 @@ const __flattenNodes = ({
       }),
     ]
   }, [] as FlattenedTreeNode[])
+
+const __getChildNodeIdsByNodeId = ({
+  nodeTable,
+  nodeId,
+}: {
+  nodeTable: NodeTable
+  nodeId: NodeEntityId
+}): NodeEntityId[] => {
+  return getChildNodeIdsByNodeId({ entity: { nodeTable, rootNodeId: '' }, nodeId })
+}
 
 const __childNodeIdsToTreeViewNodes = ({
   childNodeIds,
@@ -135,39 +146,64 @@ const __nodeToTreeViewNode = ({
 export const toggleExpanded = ({
   entity,
   nodeId,
+  nodeTable,
 }: {
   entity: FlattenedTreeEntity
   nodeId: string
+  nodeTable: NodeTable
 }): FlattenedTreeEntity => {
   return __isExpanded({ nodeId, expandedNodeIds: entity.expandedNodeIds })
-    ? __collapse({ entity, nodeId })
-    : __expand({ entity, nodeId })
+    ? __collapse({ entity, nodeId, nodeTable })
+    : expand({ entity, nodeId, nodeTable })
 }
 
-const __expand = ({
+export const setExpandedNodeIds = ({
   entity,
-  nodeId,
+  expandedNodeIds,
+  nodeTable,
 }: {
   entity: FlattenedTreeEntity
-  nodeId: string
+  expandedNodeIds: string[]
+  nodeTable: NodeTable
 }): FlattenedTreeEntity => {
-  return {
+  const __newEntity = {
     ...entity,
-    expandedNodeIds: [...entity.expandedNodeIds, nodeId],
+    expandedNodeIds,
   }
+
+  return __generateNodes({ entity: __newEntity, nodeTable })
 }
 
 const __collapse = ({
   entity,
   nodeId,
+  nodeTable,
 }: {
   entity: FlattenedTreeEntity
   nodeId: string
+  nodeTable: NodeTable
 }): FlattenedTreeEntity => {
-  return {
-    ...entity,
+  return setExpandedNodeIds({
+    entity,
     expandedNodeIds: entity.expandedNodeIds.filter((id) => id !== nodeId),
-  }
+    nodeTable,
+  })
+}
+
+export const expand = ({
+  entity,
+  nodeId,
+  nodeTable,
+}: {
+  entity: FlattenedTreeEntity
+  nodeId: string
+  nodeTable: NodeTable
+}): FlattenedTreeEntity => {
+  return setExpandedNodeIds({
+    entity,
+    expandedNodeIds: [...entity.expandedNodeIds, nodeId],
+    nodeTable,
+  })
 }
 
 export const isExpanded = ({

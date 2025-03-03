@@ -1,5 +1,6 @@
 import { type NodeEntity } from '../tree/store'
 import {
+  expand,
   FlattenedTreeEntity,
   FlattenedTreeNode,
   initFlattenedTree,
@@ -141,13 +142,30 @@ const __hasPrevNode = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: str
 export const toggleExpandedNode = ({
   entity,
   nodeId,
+  nodeTable,
 }: {
   entity: TreeViewEntity
   nodeId: string
+  nodeTable: NodeTable
 }) => {
   return {
     ...entity,
-    flattenedTree: toggleExpanded({ entity: entity.flattenedTree, nodeId }),
+    flattenedTree: toggleExpanded({ entity: entity.flattenedTree, nodeId, nodeTable }),
+  }
+}
+
+export const expandNode = ({
+  entity,
+  nodeId,
+  nodeTable,
+}: {
+  entity: TreeViewEntity
+  nodeId: string
+  nodeTable: NodeTable
+}) => {
+  return {
+    ...entity,
+    flattenedTree: expand({ entity: entity.flattenedTree, nodeId, nodeTable }),
   }
 }
 
