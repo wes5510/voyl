@@ -8,7 +8,7 @@ export interface IconButtonProps {
   onClick?: MouseEventHandler
 }
 
-export default function IconButton({ icon, text, active, onClick }: IconButtonProps): JSX.Element {
+export default function IconButton({ icon, text, active, onClick }: IconButtonProps) {
   return (
     <TooltipButton text={text} active={active} onClick={onClick}>
       {icon}

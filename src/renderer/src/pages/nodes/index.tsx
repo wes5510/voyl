@@ -4,7 +4,7 @@ import { useState } from 'react'
 import MainPanel from './MainPanel'
 import useTreeView from './useTreeView'
 
-export default function NodesPage(): JSX.Element {
+export default function NodesPage() {
   const [opened, setOpened] = useState<boolean>(false)
   useTreeView()
 

@@ -13,10 +13,7 @@ export interface TreeViewItemInputProps {
   className?: string
 }
 
-export default function TreeViewItemInput({
-  nodeId,
-  className,
-}: TreeViewItemInputProps): JSX.Element {
+export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInputProps) {
   const elemRef = useRef<HTMLTextAreaElement>(null)
   const { title, setTitle } = useTreeStore((state) => ({
     title: getTitleByNodeId({

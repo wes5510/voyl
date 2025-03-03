@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from './shared/util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import useTreeStore from '@/models/treeView/store'
+import useTreeStore from '@/models/tree/store'
 
 export default function useHandleTabKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const indentNode = useTreeStore((state) => state.indentNode)

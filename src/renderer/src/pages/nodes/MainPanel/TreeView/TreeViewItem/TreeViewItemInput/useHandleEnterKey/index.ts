@@ -1,13 +1,16 @@
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import { useCallback } from 'react'
 import { isHTMLTextAreaElement } from '../shared/util'
-import useTreeViewStore from '@/models/treeView/store'
+import useTreeViewStore, { isExpandedNode } from '@/models/treeView/store'
 import { getSourceNodeTitle, getNewNodeTitle } from './util'
 import useTreeStore from '@/models/tree/store'
 
 export default function useHandleEnterKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const insertNewNodeAfter = useTreeStore((state) => state.insertNewNodeAfter)
-  const setFocusedNodeId = useTreeViewStore((state) => state.setFocusedNodeId)
+  const { setFocusedNodeId, expanded } = useTreeViewStore((state) => ({
+    setFocusedNodeId: state.setFocusedNodeId,
+    expanded: isExpandedNode({ entity: state.entity, nodeId }),
+  }))
 
   return useCallback(
     (e: KeyboardEvent) => {
@@ -29,6 +32,7 @@ export default function useHandleEnterKey({ nodeId }: { nodeId: string }): Hotke
           text: value,
           selectionEnd,
         }),
+        nested: expanded,
       })
 
       setFocusedNodeId({ nodeId: newNodeId })

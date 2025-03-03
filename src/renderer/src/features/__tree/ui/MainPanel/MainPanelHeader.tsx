@@ -2,7 +2,7 @@ import { css } from '@/styled-system/css'
 import { hstack } from '@/styled-system/patterns'
 import ListIcon from '@/common/ListIcon'
 
-export default function MainPanelHeader(): JSX.Element {
+export default function MainPanelHeader() {
   return (
     <div
       className={hstack({

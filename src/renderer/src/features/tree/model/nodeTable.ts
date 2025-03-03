@@ -1,7 +1,7 @@
-import { NodeEntity } from './node'
+import { NodeEntity, NodeEntityId } from './node'
 
 export interface NodeTableEntity {
-  nodes: Map<NodeEntity['id'], NodeEntity>
+  nodes: Map<NodeEntityId, NodeEntity>
 }
 
 export const getNode = ({
@@ -9,7 +9,7 @@ export const getNode = ({
   nodeId,
 }: {
   entity: NodeTableEntity
-  nodeId: NodeEntity['id']
+  nodeId: NodeEntityId
 }): NodeEntity | undefined => entity.nodes.get(nodeId)
 
 export const setNode = ({

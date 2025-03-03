@@ -3,7 +3,7 @@ import Scroller from './Scroller'
 import Header from './Header'
 import TreeView from './TreeView'
 
-export default function MainPanel(): JSX.Element {
+export default function MainPanel() {
   return (
     <Scroller>
       <div

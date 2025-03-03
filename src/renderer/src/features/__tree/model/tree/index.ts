@@ -12,7 +12,7 @@ import {
 export interface TreeEntity {
   nodeIds: string[]
   focusedNodeId?: string
-  nodeMap: Map<NodeEntity['id'], NodeEntity>
+  nodeMap: Map<NodeEntityId, NodeEntity>
 }
 
 export const isFocused = ({ entity, nodeId }: { entity: TreeEntity; nodeId: string }): boolean =>
@@ -35,7 +35,7 @@ export const insertNewNodeAfter = ({
   newNodeTitle,
 }: {
   entity: TreeEntity
-  refNodeId: NodeEntity['id']
+  refNodeId: NodeEntityId
   newNodeTitle: string
 }): TreeEntity => {
   const refNode = entity.nodeMap.get(refNodeId)

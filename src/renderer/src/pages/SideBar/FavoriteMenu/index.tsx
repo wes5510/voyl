@@ -1,7 +1,7 @@
 import CharButton from './CharButton'
 import useFavoriteManagerStore from '@/models/favoriteManager/store'
 
-export default function FavoriteMenu(): JSX.Element {
+export default function FavoriteMenu() {
   const favorites = useFavoriteManagerStore((state) => state.favorites)
 
   return (

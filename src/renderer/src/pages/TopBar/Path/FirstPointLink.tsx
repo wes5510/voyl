@@ -1,7 +1,7 @@
 import PointLink from './shared/PointLink'
 import usePathStore, { getFirstPoint } from '@/models/path/store'
 
-export default function FirstPointLink(): JSX.Element | undefined {
+export default function FirstPointLink() {
   const point = usePathStore(getFirstPoint)
 
   return point && <PointLink text={point.text} href={point.url} icon={point.icon} />

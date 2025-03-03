@@ -1,49 +1,91 @@
 import {
   createNewNode,
+  getChildNodeIds,
   getTaskTitle,
   NodeEntity,
-  prependChildNodeId,
-  setNextSiblingNodeId,
-  setNodeProps,
-  setPrevSiblingNodeId,
   setTaskTitle,
-  toggleCollapsed,
+  removeChildNodeId,
+  NodeEntityId,
+  insertChildNodeId,
+  setParentNodeId,
+  getChildNodeIndex,
+  getPrevSiblingChildNodeId,
+  getLastChildNodeIndex,
 } from './node'
-import { getNode, NodeTableEntity, setNode, setNodes } from './nodeTable'
+import { getNode, isExistNode, NodeTableEntity, removeNodes, setNode } from './nodeTable'
 
 export interface TreeEntity {
+  rootNodeId: NodeEntityId
   nodeTable: NodeTableEntity
 }
 
-export const toggleCollapsedByNodeId = ({
+export const getChildNodeIdsByNodeId = ({
   entity,
   nodeId,
 }: {
   entity: TreeEntity
-  nodeId: NodeEntity['id']
-}): TreeEntity => {
+  nodeId: NodeEntityId
+}): NodeEntityId[] => {
   const node = getNode({ entity: entity.nodeTable, nodeId })
-
-  return node
-    ? {
-        ...entity,
-        nodeTable: setNode({
-          entity: entity.nodeTable,
-          node: toggleCollapsed({ entity: node }),
-        }),
-      }
-    : entity
+  return node ? getChildNodeIds({ entity: node }) : []
 }
 
-export const getCollapsedByNodeId = ({
+export const getTitleByNodeId = ({
   entity,
   nodeId,
 }: {
   entity: TreeEntity
-  nodeId: NodeEntity['id']
-}): boolean => {
+  nodeId: NodeEntityId
+}): NodeEntity['task']['title'] => {
   const node = getNode({ entity: entity.nodeTable, nodeId })
-  return node ? node.collapsed : false
+  return node ? getTaskTitle({ entity: node }) : ''
+}
+
+export const insertNewNodeAfter = ({
+  entity,
+  sourceNode,
+  newNodeTitle,
+  nested,
+}: {
+  entity: TreeEntity
+  sourceNode: {
+    id: NodeEntityId
+    title: string
+  }
+  newNodeTitle: NodeEntity['task']['title']
+  nested: boolean
+}): { entity: TreeEntity; newNode: NodeEntity } => {
+  if (!isExistNode({ entity: entity.nodeTable, nodeId: sourceNode.id })) {
+    throw new Error('Source node not found')
+  }
+
+  const { entity: newEntity, newNodeId } = __createNewNode({
+    entity: setTitleByNodeId({ entity, nodeId: sourceNode.id, title: sourceNode.title }),
+    title: newNodeTitle,
+  })
+
+  const __newEntity = nested
+    ? __prependChildNode({
+        entity: newEntity,
+        sourceNodeId: sourceNode.id,
+        newNodeId,
+      })
+    : __appendSiblingNode({
+        entity: newEntity,
+        sourceNodeId: sourceNode.id,
+        newNodeId,
+      })
+
+  const newNode = getNode({ entity: __newEntity.nodeTable, nodeId: newNodeId })
+
+  if (!newNode) {
+    throw new Error('New node not found')
+  }
+
+  return {
+    entity: __newEntity,
+    newNode,
+  }
 }
 
 export const setTitleByNodeId = ({
@@ -52,7 +94,7 @@ export const setTitleByNodeId = ({
   title,
 }: {
   entity: TreeEntity
-  nodeId: NodeEntity['id']
+  nodeId: NodeEntityId
   title: NodeEntity['task']['title']
 }): TreeEntity => {
   const node = getNode({ entity: entity.nodeTable, nodeId })
@@ -68,45 +110,187 @@ export const setTitleByNodeId = ({
     : entity
 }
 
-export const getTitleByNodeId = ({
+const __createNewNode = ({
+  entity,
+  title,
+}: {
+  entity: TreeEntity
+  title: string
+}): { entity: TreeEntity; newNodeId: NodeEntityId } => {
+  const newNode = createNewNode({ title })
+
+  return {
+    entity: {
+      ...entity,
+      nodeTable: setNode({ entity: entity.nodeTable, node: newNode }),
+    },
+    newNodeId: newNode.id,
+  }
+}
+
+const __prependChildNode = ({
+  entity,
+  sourceNodeId,
+  newNodeId,
+}: {
+  entity: TreeEntity
+  sourceNodeId: NodeEntityId
+  newNodeId: NodeEntityId
+}): TreeEntity => {
+  return __moveToChildNode({
+    entity,
+    parentNodeId: sourceNodeId,
+    newNodeId,
+    index: 0,
+  })
+}
+
+const __appendSiblingNode = ({
+  entity,
+  sourceNodeId,
+  newNodeId,
+}: {
+  entity: TreeEntity
+  sourceNodeId: string
+  newNodeId: string
+}): TreeEntity => {
+  const parentNodeId = __getParentNodeIdByNodeId({ entity, nodeId: sourceNodeId })
+
+  if (!parentNodeId) {
+    return entity
+  }
+
+  return __moveToChildNode({
+    entity,
+    parentNodeId,
+    newNodeId,
+    index:
+      __getChildNodeIndex({
+        entity,
+        parentNodeId,
+        childNodeId: sourceNodeId,
+      }) + 1,
+  })
+}
+
+const __getChildNodeIndex = ({
+  entity,
+  parentNodeId,
+  childNodeId,
+}: {
+  entity: TreeEntity
+  parentNodeId: string
+  childNodeId: string
+}): number => {
+  const parentNode = getNode({ entity: entity.nodeTable, nodeId: parentNodeId })
+
+  if (!parentNode) {
+    throw new Error('Parent node not found')
+  }
+
+  return getChildNodeIndex({ entity: parentNode, childNodeId })
+}
+
+const __moveToChildNode = ({
+  entity,
+  parentNodeId,
+  newNodeId,
+  index,
+}: {
+  entity: TreeEntity
+  parentNodeId: string
+  newNodeId: string
+  index: number
+}): TreeEntity => {
+  let __newEntity = __removeChildNodeIdFromParentNode({ entity, nodeId: newNodeId })
+  __newEntity = __insertChildNodeId({ entity: __newEntity, parentNodeId, newNodeId, index })
+  __newEntity = __setParentNodeId({
+    entity: __newEntity,
+    nodeId: newNodeId,
+    parentNodeId,
+  })
+
+  return __newEntity
+}
+
+const __insertChildNodeId = ({
+  entity,
+  parentNodeId,
+  newNodeId,
+  index,
+}: {
+  entity: TreeEntity
+  parentNodeId: string
+  newNodeId: string
+  index: number
+}): TreeEntity => {
+  const parentNode = getNode({ entity: entity.nodeTable, nodeId: parentNodeId })
+
+  if (!parentNode) {
+    return entity
+  }
+
+  return {
+    ...entity,
+    nodeTable: setNode({
+      entity: entity.nodeTable,
+      node: insertChildNodeId({ entity: parentNode, newNodeId, index }),
+    }),
+  }
+}
+
+const __removeChildNodeIdFromParentNode = ({
   entity,
   nodeId,
 }: {
   entity: TreeEntity
-  nodeId: NodeEntity['id']
-}): NodeEntity['task']['title'] => {
+  nodeId: NodeEntityId
+}): TreeEntity => {
   const node = getNode({ entity: entity.nodeTable, nodeId })
-  return node ? getTaskTitle({ entity: node }) : ''
-}
 
-export const insertNewNodeAfter = ({
-  entity,
-  sourceNode,
-  newNodeTitle,
-}: {
-  entity: TreeEntity
-  sourceNode: {
-    id: NodeEntity['id']
-    title: NodeEntity['task']['title']
-  }
-  newNodeTitle: NodeEntity['task']['title']
-}): { entity: TreeEntity; newNode?: NodeEntity } => {
-  const srcNode = getNode({ entity: entity.nodeTable, nodeId: sourceNode.id })
-
-  if (!srcNode) {
-    throw new Error('Source node not found')
+  if (!node) {
+    return entity
   }
 
-  const newNode = createNewNode({ title: newNodeTitle })
-  const __srcNode = setTaskTitle({ entity: srcNode, title: sourceNode.title })
+  const parentNode = __getParentNode({ entity, node })
 
-  const newEntity = srcNode.collapsed
-    ? __appendSiblingNode({ entity, sourceNode: __srcNode, newNode })
-    : __prependChildNode({ entity, sourceNode: __srcNode, newNode })
+  if (!parentNode) {
+    return entity
+  }
 
   return {
-    entity: newEntity,
-    newNode: getNode({ entity: newEntity.nodeTable, nodeId: newNode.id }),
+    ...entity,
+    nodeTable: setNode({
+      entity: entity.nodeTable,
+      node: removeChildNodeId({ entity: parentNode, nodeId: node.id }),
+    }),
+  }
+}
+
+const __setParentNodeId = ({
+  entity,
+  nodeId,
+  parentNodeId,
+}: {
+  entity: TreeEntity
+  nodeId: string
+  parentNodeId: string
+}): TreeEntity => {
+  const node = getNode({ entity: entity.nodeTable, nodeId })
+
+  if (!node) {
+    return entity
+  }
+
+  return {
+    ...entity,
+    nodeTable: setNode({
+      entity: entity.nodeTable,
+      node: setParentNodeId({
+        entity: node,
+        parentNodeId,
+      }),
+    }),
   }
 }
 
@@ -114,134 +298,231 @@ export const getNodeTable = (entity: TreeEntity): NodeTableEntity => {
   return entity.nodeTable
 }
 
-const __prependChildNode = ({
+export const removeNodeByNodeId = ({
   entity,
-  sourceNode,
-  newNode,
+  nodeId,
 }: {
   entity: TreeEntity
-  sourceNode: NodeEntity
-  newNode: NodeEntity
+  nodeId: NodeEntityId
 }): TreeEntity => {
-  const sourceNodeFirstChildNode = __setPrevSiblingNodeIdOfFirstChildNode({
-    entity,
-    sourceNode,
-    newNodeId: newNode.id,
-  })
+  if (nodeId === entity.rootNodeId) {
+    throw new Error('Root node cannot be removed')
+  }
 
-  const __newNode = setNodeProps({
-    entity: newNode,
-    props: {
-      parentNodeId: sourceNode.id,
-      nextSiblingNodeId: sourceNodeFirstChildNode?.id,
-    },
-  })
+  const node = getNode({ entity: entity.nodeTable, nodeId })
 
-  const __sourceNode = prependChildNodeId({
-    entity: sourceNode,
-    newNodeId: __newNode.id,
-  })
+  if (!node) {
+    return entity
+  }
 
   return {
     ...entity,
-    nodeTable: setNodes({
-      entity: entity.nodeTable,
-      nodes: [__sourceNode, __newNode, sourceNodeFirstChildNode].filter(
-        (node) => node !== undefined,
-      ),
+    nodeTable: __removeNodeWithChildNodes({
+      entity: __removeNodeFromParentNode({ entity, node }),
+      node,
     }),
   }
 }
 
-const __setPrevSiblingNodeIdOfFirstChildNode = ({
+const __removeNodeFromParentNode = ({
   entity,
-  sourceNode,
-  newNodeId,
+  node,
 }: {
   entity: TreeEntity
-  sourceNode: NodeEntity
-  newNodeId: NodeEntity['id']
-}) => {
-  let sourceNodeFirstChildNode: NodeEntity | undefined = undefined
-
-  if (sourceNode.childNodeIds[0]) {
-    sourceNodeFirstChildNode = getNode({
-      entity: entity.nodeTable,
-      nodeId: sourceNode.childNodeIds[0],
-    })
-
-    if (sourceNodeFirstChildNode) {
-      sourceNodeFirstChildNode = setPrevSiblingNodeId({
-        entity: sourceNodeFirstChildNode,
-        nodeId: newNodeId,
-      })
-    }
-  }
-
-  return sourceNodeFirstChildNode
-}
-
-const __appendSiblingNode = ({
-  entity,
-  sourceNode,
-  newNode,
-}: {
-  entity: TreeEntity
-  sourceNode: NodeEntity
-  newNode: NodeEntity
+  node: NodeEntity
 }): TreeEntity => {
-  const nextSiblingNode = __setPrevSiblingNodeIdOfNextSiblingNode({
-    entity,
-    sourceNode,
-    newNodeId: newNode.id,
-  })
-
-  const __newNode = setNodeProps({
-    entity: newNode,
-    props: {
-      prevSiblingNodeId: sourceNode.id,
-      nextSiblingNodeId: nextSiblingNode?.id,
-    },
-  })
-
-  const __sourceNode = setNextSiblingNodeId({
-    entity: sourceNode,
-    nodeId: __newNode.id,
-  })
+  const parentNode = __getParentNode({ entity, node })
+  if (!parentNode) {
+    return entity
+  }
 
   return {
     ...entity,
-    nodeTable: setNodes({
+    nodeTable: setNode({
       entity: entity.nodeTable,
-      nodes: [__sourceNode, __newNode, nextSiblingNode].filter((node) => node !== undefined),
+      node: removeChildNodeId({ entity: parentNode, nodeId: node.id }),
     }),
   }
 }
 
-const __setPrevSiblingNodeIdOfNextSiblingNode = ({
+const __getParentNodeIdByNodeId = ({
   entity,
-  sourceNode,
-  newNodeId,
+  nodeId,
 }: {
   entity: TreeEntity
-  sourceNode: NodeEntity
-  newNodeId: NodeEntity['id']
+  nodeId: NodeEntityId
 }) => {
-  let nextSiblingNode: NodeEntity | undefined
+  const node = getNode({ entity: entity.nodeTable, nodeId })
 
-  if (sourceNode.nextSiblingNodeId) {
-    nextSiblingNode = getNode({
-      entity: entity.nodeTable,
-      nodeId: sourceNode.nextSiblingNodeId,
-    })
+  if (!node) {
+    return undefined
+  }
 
-    if (nextSiblingNode) {
-      nextSiblingNode = setPrevSiblingNodeId({
-        entity: nextSiblingNode,
-        nodeId: newNodeId,
-      })
+  return __getParentNode({
+    entity,
+    node,
+  })?.id
+}
+
+const __getParentNode = ({ entity, node }: { entity: TreeEntity; node: NodeEntity }) => {
+  return node.parentNodeId
+    ? getNode({ entity: entity.nodeTable, nodeId: node.parentNodeId })
+    : undefined
+}
+
+const __removeNodeWithChildNodes = ({ entity, node }: { entity: TreeEntity; node: NodeEntity }) => {
+  return removeNodes({
+    entity: entity.nodeTable,
+    nodeIds: [...__getNestedChildNodeIds({ entity, node }), node.id],
+  })
+}
+
+const __getNestedChildNodeIds = ({
+  entity,
+  node,
+}: {
+  entity: TreeEntity
+  node: NodeEntity
+}): NodeEntityId[] => {
+  const nestedChildNodeIds: NodeEntityId[] = []
+  const stack: NodeEntity[] = [node]
+
+  while (stack.length > 0) {
+    const currentNode = stack.pop()
+
+    if (!currentNode) {
+      continue
+    }
+
+    if (currentNode !== node) {
+      nestedChildNodeIds.push(currentNode.id)
+    }
+
+    const childNodeIds = getChildNodeIds({ entity: currentNode })
+    for (const childNodeId of childNodeIds) {
+      const childNode = getNode({ entity: entity.nodeTable, nodeId: childNodeId })
+      if (childNode) {
+        stack.push(childNode)
+      }
     }
   }
 
-  return nextSiblingNode
+  return nestedChildNodeIds
+}
+
+export const outdentNode = ({ entity, nodeId }: { entity: TreeEntity; nodeId: NodeEntityId }) => {
+  return __moveToParentNextSibling({
+    entity,
+    nodeId: nodeId,
+  })
+}
+
+const __moveToParentNextSibling = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeEntity
+  nodeId: NodeEntityId
+}) => {
+  const parentNodeId = __getParentNodeIdByNodeId({ entity, nodeId })
+
+  if (!parentNodeId) {
+    return entity
+  }
+
+  const grandParentNodeId = __getParentNodeIdByNodeId({ entity, nodeId: parentNodeId })
+
+  if (!grandParentNodeId) {
+    return entity
+  }
+
+  return __moveToChildNode({
+    entity,
+    parentNodeId: grandParentNodeId,
+    newNodeId: nodeId,
+    index:
+      __getChildNodeIndex({
+        entity,
+        parentNodeId: grandParentNodeId,
+        childNodeId: parentNodeId,
+      }) + 1,
+  })
+}
+
+export const indentNode = ({ entity, nodeId }: { entity: TreeEntity; nodeId: NodeEntityId }) => {
+  return __moveToPrevSiblingAsChild({
+    entity,
+    nodeId,
+  })
+}
+
+const __moveToPrevSiblingAsChild = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeEntity
+  nodeId: NodeEntityId
+}) => {
+  const prevSiblingNodeId = __getPrevSiblingNodeId({ entity, nodeId })
+
+  if (!prevSiblingNodeId) {
+    return entity
+  }
+
+  return __moveToChildNode({
+    entity,
+    parentNodeId: prevSiblingNodeId,
+    newNodeId: nodeId,
+    index:
+      __getLastChildNodeIndex({
+        entity,
+        parentNodeId: prevSiblingNodeId,
+      }) + 1,
+  })
+}
+
+const __getPrevSiblingNodeId = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeEntity
+  nodeId: NodeEntityId
+}) => {
+  const node = getNode({ entity: entity.nodeTable, nodeId })
+
+  if (!node) {
+    return undefined
+  }
+
+  const parentNode = __getParentNode({
+    entity,
+    node,
+  })
+
+  return parentNode
+    ? getPrevSiblingChildNodeId({
+        entity: parentNode,
+        childNodeId: nodeId,
+      })
+    : undefined
+}
+
+const __getLastChildNodeIndex = ({
+  entity,
+  parentNodeId,
+}: {
+  entity: TreeEntity
+  parentNodeId: NodeEntityId
+}): number => {
+  const parentNode = getNode({ entity: entity.nodeTable, nodeId: parentNodeId })
+
+  if (!parentNode) {
+    throw new Error('Parent node not found')
+  }
+
+  return getLastChildNodeIndex({ entity: parentNode })
+}
+
+export const getRootNodeId = (entity: TreeEntity): NodeEntityId => {
+  return entity.rootNodeId
 }

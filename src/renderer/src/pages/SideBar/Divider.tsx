@@ -1,6 +1,6 @@
 import { css } from '@/styled-system/css'
 
-export default function Divider(): JSX.Element {
+export default function Divider() {
   return (
     <div
       className={css({

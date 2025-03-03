@@ -3,7 +3,7 @@ import Divider from './Divider'
 import FavoriteMenu from './FavoriteMenu'
 import AppMenu from './AppMenu'
 
-export default function SideBar(): JSX.Element {
+export default function SideBar() {
   return (
     <div
       className={vstack({

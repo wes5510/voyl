@@ -1,7 +1,7 @@
 import { hstack } from '@/styled-system/patterns'
 import PlusIcon from '@/common/PlusIcon'
 
-export default function AddButton(): JSX.Element {
+export default function AddButton() {
   const handleClick = (): void => {
     // TODO: Append a new node to the tree
   }

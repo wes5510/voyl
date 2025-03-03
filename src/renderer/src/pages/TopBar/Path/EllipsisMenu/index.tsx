@@ -4,7 +4,7 @@ import MenuButton from './MenuButton'
 import PointLink from '../shared/PointLink'
 import usePathStore, { getMidPoints } from '@/models/path/store'
 
-export default function EllipsisMenu(): JSX.Element {
+export default function EllipsisMenu() {
   const points = usePathStore(getMidPoints)
 
   return (

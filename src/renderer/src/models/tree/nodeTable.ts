@@ -1,10 +1,6 @@
-import { NodeEntity } from './node'
+import { NodeEntity, NodeEntityId } from './node'
 
-export type NodeTableEntity = Map<NodeEntity['id'], NodeEntity>
-
-export const createNodeTable = (): NodeTableEntity => {
-  return new Map()
-}
+export type NodeTableEntity = Map<NodeEntityId, NodeEntity>
 
 export const setNode = ({
   entity,
@@ -21,36 +17,33 @@ export const getNode = ({
   nodeId,
 }: {
   entity: NodeTableEntity
-  nodeId: NodeEntity['id']
+  nodeId: NodeEntityId
 }): NodeEntity | undefined => {
   return entity.get(nodeId)
 }
 
-export const removeNode = ({
+export const removeNodes = ({
   entity,
-  nodeId,
+  nodeIds,
 }: {
   entity: NodeTableEntity
-  nodeId: NodeEntity['id']
+  nodeIds: NodeEntityId[]
 }): NodeTableEntity => {
   const newEntity = new Map(entity)
-  newEntity.delete(nodeId)
+
+  nodeIds.forEach((nodeId) => {
+    newEntity.delete(nodeId)
+  })
 
   return newEntity
 }
 
-export const setNodes = ({
+export const isExistNode = ({
   entity,
-  nodes,
+  nodeId,
 }: {
   entity: NodeTableEntity
-  nodes: NodeEntity[]
-}): NodeTableEntity => {
-  const newEntity = new Map(entity)
-
-  nodes.forEach((node) => {
-    newEntity.set(node.id, node)
-  })
-
-  return newEntity
+  nodeId: NodeEntityId
+}): boolean => {
+  return entity.has(nodeId)
 }

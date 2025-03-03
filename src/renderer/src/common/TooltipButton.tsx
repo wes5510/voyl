@@ -8,12 +8,7 @@ export interface TooltipButtonProps extends PropsWithChildren {
   onClick?: MouseEventHandler
 }
 
-export default function TooltipButton({
-  children,
-  text,
-  active,
-  onClick,
-}: TooltipButtonProps): JSX.Element {
+export default function TooltipButton({ children, text, active, onClick }: TooltipButtonProps) {
   return (
     <Tooltip text={text}>
       <button

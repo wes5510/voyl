@@ -1,21 +1,13 @@
 import { createNewTask, setTitle, TaskEntity } from './task'
 import { v4 as uuidv4 } from 'uuid'
 
-export interface NodeEntity {
-  id: string
-  prevSiblingNodeId?: string
-  nextSiblingNodeId?: string
-  parentNodeId?: string
-  childNodeIds: string[]
-  collapsed: boolean
-  task: TaskEntity
-}
+export type NodeEntityId = string
 
-export const toggleCollapsed = ({ entity }: { entity: NodeEntity }): NodeEntity => {
-  return {
-    ...entity,
-    collapsed: !entity.collapsed,
-  }
+export interface NodeEntity {
+  id: NodeEntityId
+  parentNodeId?: NodeEntityId
+  childNodeIds: NodeEntityId[]
+  task: TaskEntity
 }
 
 export const setTaskTitle = ({
@@ -39,12 +31,11 @@ export const createNewNode = ({ title = '' }: { title?: string } = {}): NodeEnti
   return {
     id: uuidv4(),
     childNodeIds: [],
-    collapsed: false,
     task: createNewTask({ title }),
   }
 }
 
-export const setPrevSiblingNodeId = ({
+export const removeChildNodeId = ({
   entity,
   nodeId,
 }: {
@@ -53,61 +44,76 @@ export const setPrevSiblingNodeId = ({
 }): NodeEntity => {
   return {
     ...entity,
-    prevSiblingNodeId: nodeId,
+    childNodeIds: entity.childNodeIds.filter((id) => id !== nodeId),
   }
-}
-
-export const setNextSiblingNodeId = ({
-  entity,
-  nodeId,
-}: {
-  entity: NodeEntity
-  nodeId: string
-}): NodeEntity => {
-  return {
-    ...entity,
-    nextSiblingNodeId: nodeId,
-  }
-}
-
-export const setNodeProps = ({
-  entity,
-  props,
-}: {
-  entity: NodeEntity
-  props: Partial<NodeEntity>
-}): NodeEntity => {
-  return {
-    ...entity,
-    ...props,
-  }
-}
-
-export const prependChildNodeId = ({
-  entity,
-  newNodeId,
-}: {
-  entity: NodeEntity
-  newNodeId: string
-}): NodeEntity => {
-  return {
-    ...entity,
-    childNodeIds: [newNodeId, ...entity.childNodeIds],
-  }
-}
-
-export const getPrevSiblingNodeId = ({ entity }: { entity: NodeEntity }): string | undefined => {
-  return entity.prevSiblingNodeId
-}
-
-export const getNextSiblingNodeId = ({ entity }: { entity: NodeEntity }): string | undefined => {
-  return entity.nextSiblingNodeId
 }
 
 export const getParentNodeId = ({ entity }: { entity: NodeEntity }): string | undefined => {
   return entity.parentNodeId
 }
 
-export const getChildNodeIds = ({ entity }: { entity: NodeEntity }): string[] => {
+export const getChildNodeIds = ({ entity }: { entity: NodeEntity }): NodeEntityId[] => {
   return entity.childNodeIds
+}
+
+export const insertChildNodeId = ({
+  entity,
+  newNodeId,
+  index,
+}: {
+  entity: NodeEntity
+  newNodeId: string
+  index: number
+}): NodeEntity => {
+  const newIds = [...entity.childNodeIds]
+  newIds.splice(index, 0, newNodeId)
+
+  return {
+    ...entity,
+    childNodeIds: newIds,
+  }
+}
+
+export const setParentNodeId = ({
+  entity,
+  parentNodeId,
+}: {
+  entity: NodeEntity
+  parentNodeId: string
+}): NodeEntity => {
+  return {
+    ...entity,
+    parentNodeId,
+  }
+}
+
+export const getChildNodeIndex = ({
+  entity,
+  childNodeId,
+}: {
+  entity: NodeEntity
+  childNodeId: string
+}): number => {
+  return entity.childNodeIds.indexOf(childNodeId)
+}
+
+export const getPrevSiblingChildNodeId = ({
+  entity,
+  childNodeId,
+}: {
+  entity: NodeEntity
+  childNodeId: NodeEntityId
+}) => {
+  const childNodeIds = getChildNodeIds({ entity })
+  const index = childNodeIds.indexOf(childNodeId)
+
+  if (index === 0) {
+    return undefined
+  }
+
+  return childNodeIds[index - 1]
+}
+
+export const getLastChildNodeIndex = ({ entity }: { entity: NodeEntity }): number => {
+  return entity.childNodeIds.length - 1
 }

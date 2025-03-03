@@ -6,7 +6,7 @@ export interface IconButtonProps extends PropsWithChildren {
   onClick?: MouseEventHandler
 }
 
-export default function IconButton({ children, onClick, ...props }: IconButtonProps): JSX.Element {
+export default function IconButton({ children, onClick, ...props }: IconButtonProps) {
   return (
     <button
       className={center({

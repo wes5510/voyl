@@ -2,16 +2,16 @@ import { css } from '@/styled-system/css'
 import ChevronRightIcon from '@/common/ChevronRightIcon'
 
 export interface CollapseIconProps {
-  collapsed: boolean
+  expanded: boolean
 }
 
-export default function CollapseIcon({ collapsed }: CollapseIconProps): JSX.Element {
+export default function CollapseIcon({ expanded }: CollapseIconProps) {
   return (
     <ChevronRightIcon
       className={css({
         w: 4,
         h: 4,
-        transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
+        transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)',
         translate: 'transform',
         transitionDuration: 'normal',
       })}

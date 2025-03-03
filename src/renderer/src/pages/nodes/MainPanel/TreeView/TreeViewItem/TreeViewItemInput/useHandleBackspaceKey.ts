@@ -7,14 +7,15 @@ import useTreeViewStore from '@/models/treeView/store'
 export default function useHandleBackspaceKey({ nodeId }: { nodeId: string }): HotkeyCallback {
   const removeNode = useTreeStore((state) => state.removeNode)
   const setFocusForRemovedNode = useTreeViewStore((state) => state.setFocusForRemovedNode)
+
   return useCallback(
     (e: KeyboardEvent) => {
       if (!isHTMLTextAreaElement(e.target) || e.target.value) {
         return
       }
 
-      removeNode({ nodeId })
       setFocusForRemovedNode({ nodeId })
+      removeNode({ nodeId })
       e.preventDefault()
     },
     [nodeId, removeNode, setFocusForRemovedNode],

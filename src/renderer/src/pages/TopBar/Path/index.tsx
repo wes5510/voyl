@@ -3,7 +3,7 @@ import FirstPointLink from './FirstPointLink'
 import LastPointLink from './LastPointLink'
 import MidPathSegment from './MidPathSegment'
 
-export default function Path(): JSX.Element {
+export default function Path() {
   return (
     <div className={hstack({ gap: 1.5, fontSize: 'sm', color: 'zinc.600' })}>
       <FirstPointLink />

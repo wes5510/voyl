@@ -1,8 +1,14 @@
-import { NodeEntity } from '../tree/store'
+import { type NodeEntity } from '../tree/store'
+import {
+  FlattenedTreeEntity,
+  FlattenedTreeNode,
+  initFlattenedTree,
+  isExpanded,
+  toggleExpanded,
+} from './flattenedTree'
 
 export interface TreeViewEntity {
-  nodes: TreeViewNode[]
-  rootNodeId: string
+  flattenedTree: FlattenedTreeEntity
   focusedNodeId?: string
   draggingNode?: DraggingNode
 }
@@ -13,17 +19,10 @@ interface DraggingNode {
   depth: number
 }
 
-interface TreeViewNode {
-  id: string
-  depth: number
-  collapsed: boolean
-  childNodeIds: string[]
-}
-
 type NodeTable = Map<string, NodeEntity>
 
-export const getTreeViewNodes = ({ entity }: { entity: TreeViewEntity }): TreeViewNode[] => {
-  return entity.nodes
+export const getTreeViewNodes = ({ entity }: { entity: TreeViewEntity }): FlattenedTreeNode[] => {
+  return entity.flattenedTree.nodes
 }
 
 export const getDraggingNode = ({
@@ -43,81 +42,9 @@ export const setRootNodeId = ({
   nodeTable: NodeTable
   rootNodeId: string
 }): TreeViewEntity => {
-  if (entity.rootNodeId === rootNodeId) {
-    return entity
-  }
-
-  const __new = {
-    ...entity,
-    rootNodeId,
-  }
-
-  return __generateNodes({ entity: __new, nodeTable })
-}
-
-const __generateNodes = ({
-  entity,
-  nodeTable,
-}: {
-  entity: TreeViewEntity
-  nodeTable: NodeTable
-}): TreeViewEntity => {
   return {
     ...entity,
-    nodes: __flattenNodes({
-      nodes: [
-        __nodeToTreeViewNode({
-          node: nodeTable.get(entity.rootNodeId),
-          depth: 0,
-        }),
-      ],
-      nodeTable,
-    }),
-  }
-}
-
-const __flattenNodes = ({
-  nodes,
-  nodeTable,
-}: {
-  nodes: TreeViewNode[]
-  nodeTable: NodeTable
-}): TreeViewNode[] =>
-  nodes.reduce((acc, node): TreeViewNode[] => {
-    if (node.collapsed) {
-      return acc
-    }
-
-    const childNodeIds = nodeTable.get(node.id)?.childNodeIds ?? []
-
-    return [
-      ...acc,
-      node,
-      ...__flattenNodes({
-        nodes: childNodeIds.map((id) =>
-          __nodeToTreeViewNode({ node: nodeTable.get(id), depth: node.depth + 1 }),
-        ),
-        nodeTable,
-      }),
-    ]
-  }, [] as TreeViewNode[])
-
-const __nodeToTreeViewNode = ({
-  node,
-  depth,
-}: {
-  node?: NodeEntity
-  depth: number
-}): TreeViewNode => {
-  if (!node) {
-    throw new Error('Node is undefined')
-  }
-
-  return {
-    id: node.id,
-    depth,
-    collapsed: node.collapsed,
-    childNodeIds: node.childNodeIds,
+    flattenedTree: initFlattenedTree({ entity: entity.flattenedTree, rootNodeId, nodeTable }),
   }
 }
 
@@ -155,12 +82,12 @@ const __getPrevNodeId = ({
     return
   }
 
-  const idx = entity.nodes.findIndex((node) => node.id === nodeId)
+  const idx = entity.flattenedTree.nodes.findIndex((node) => node.id === nodeId)
   if (idx <= 0) {
     return
   }
 
-  return entity.nodes[idx - 1].id
+  return entity.flattenedTree.nodes[idx - 1].id
 }
 
 export const setFocusToNextNode = ({ entity }: { entity: TreeViewEntity }): TreeViewEntity => {
@@ -181,10 +108,48 @@ const __getNextNodeId = ({
     return
   }
 
-  const idx = entity.nodes.findIndex((node) => node.id === nodeId)
-  if (idx < 0 || idx === entity.nodes.length - 1) {
+  const idx = entity.flattenedTree.nodes.findIndex((node) => node.id === nodeId)
+  if (idx < 0 || idx === entity.flattenedTree.nodes.length - 1) {
     return
   }
 
-  return entity.nodes[idx + 1].id
+  return entity.flattenedTree.nodes[idx + 1].id
 }
+
+export const setFocusForRemovedNode = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId: string
+}) => {
+  const hasPrevSiblingNode = __hasPrevNode({ entity, nodeId })
+
+  return setFocusedNodeId({
+    entity,
+    nodeId: hasPrevSiblingNode
+      ? __getPrevNodeId({ entity, nodeId })
+      : __getNextNodeId({ entity, nodeId }),
+  })
+}
+
+const __hasPrevNode = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: string }) => {
+  const idx = entity.flattenedTree.nodes.findIndex((node) => node.id === nodeId)
+  return idx > 0
+}
+
+export const toggleExpandedNode = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId: string
+}) => {
+  return {
+    ...entity,
+    flattenedTree: toggleExpanded({ entity: entity.flattenedTree, nodeId }),
+  }
+}
+
+export const isExpandedNode = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: string }) =>
+  isExpanded({ entity: entity.flattenedTree, nodeId })

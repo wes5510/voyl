@@ -1,7 +1,7 @@
 import { css } from '@/styled-system/css'
 import { PropsWithChildren } from 'react'
 
-export default function Scroller({ children }: PropsWithChildren): JSX.Element {
+export default function Scroller({ children }: PropsWithChildren) {
   return (
     <div
       className={css({

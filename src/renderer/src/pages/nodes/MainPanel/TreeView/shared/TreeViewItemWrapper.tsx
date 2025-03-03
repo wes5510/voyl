@@ -10,7 +10,7 @@ export interface TreeViewItemWrapperProps extends PropsWithChildren {
 function TreeViewItemWrapper(
   { depth, style, children }: TreeViewItemWrapperProps,
   ref: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+) {
   return (
     <div
       ref={ref}

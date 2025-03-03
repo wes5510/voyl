@@ -1,10 +1,17 @@
 import { create } from 'zustand'
-import { toggleCollapsedByNodeId, setTitleByNodeId, insertNewNodeAfter, TreeEntity } from './index'
-import { NodeEntity } from './node'
+import {
+  setTitleByNodeId,
+  insertNewNodeAfter,
+  TreeEntity,
+  removeNodeByNodeId,
+  outdentNode,
+  indentNode,
+} from './index'
+import { NodeEntityId } from './node'
+import { useShallow } from 'zustand/react/shallow'
 
 interface TreeStore {
   entity: TreeEntity
-  toggleCollapsed: ({ nodeId }: { nodeId: string }) => void
   setTitleByNodeId: ({ nodeId, title }: { nodeId: string; title: string }) => void
   insertNewNodeAfter: ({
     sourceNode,
@@ -15,57 +22,89 @@ interface TreeStore {
       title: string
     }
     newNodeTitle: string
-  }) => NodeEntity['id'] | undefined
+    nested: boolean
+  }) => NodeEntityId | undefined
+  removeNode: ({ nodeId }: { nodeId: string }) => void
+  outdentNode: ({ nodeId }: { nodeId: string }) => void
+  indentNode: ({ nodeId }: { nodeId: string }) => void
 }
 
-const useTreeStore = create<TreeStore>((set, get) => ({
+const __useTreeStore = create<TreeStore>((set, get) => ({
   entity: {
+    rootNodeId: 'n-1',
     nodeTable: new Map([
       [
-        '1',
+        'n-1',
         {
-          id: 'node-1',
+          id: 'n-1',
           prevSiblingNodeId: undefined,
           nextSiblingNodeId: undefined,
           parentNodeId: undefined,
-          childNodeIds: [],
+          childNodeIds: ['n-2'],
           collapsed: false,
           task: {
             id: 'task-1',
-            title: 'test',
+            title: 'task-1',
+            done: false,
+          },
+        },
+      ],
+      [
+        'n-2',
+        {
+          id: 'n-2',
+          prevSiblingNodeId: undefined,
+          nextSiblingNodeId: undefined,
+          parentNodeId: 'n-1',
+          childNodeIds: [],
+          collapsed: true,
+          task: {
+            id: 'task-2',
+            title: 'task-2',
             done: false,
           },
         },
       ],
     ]),
   },
-  toggleCollapsed: ({ nodeId }: { nodeId: string }) => {
-    set((prev) => ({
-      entity: toggleCollapsedByNodeId({
-        entity: prev.entity,
-        nodeId,
-      }),
-    }))
-  },
   setTitleByNodeId: ({ nodeId, title }: { nodeId: string; title: string }) => {
     set((prev) => ({
       entity: setTitleByNodeId({ entity: prev.entity, nodeId, title }),
     }))
   },
-  insertNewNodeAfter: ({ sourceNode, newNodeTitle }) => {
+  insertNewNodeAfter: ({ sourceNode, newNodeTitle, nested }) => {
     const { entity: newEntity, newNode } = insertNewNodeAfter({
       entity: get().entity,
       sourceNode,
       newNodeTitle,
+      nested,
     })
 
     set({ entity: newEntity })
 
     return newNode?.id
   },
+  removeNode: ({ nodeId }: { nodeId: string }) => {
+    set((prev) => ({
+      entity: removeNodeByNodeId({ entity: prev.entity, nodeId }),
+    }))
+  },
+  outdentNode: ({ nodeId }: { nodeId: string }) => {
+    set((prev) => ({
+      entity: outdentNode({ entity: prev.entity, nodeId }),
+    }))
+  },
+  indentNode: ({ nodeId }: { nodeId: string }) => {
+    set((prev) => ({
+      entity: indentNode({ entity: prev.entity, nodeId }),
+    }))
+  },
 }))
 
+const useTreeStore = <T>(selector: (state: TreeStore) => T) => __useTreeStore(useShallow(selector))
+
 export default useTreeStore
-export type { NodeEntity } from './node'
+export type { NodeEntity, NodeEntityId } from './node'
+export { getNode } from './nodeTable'
 export type { NodeTableEntity } from './nodeTable'
-export { getCollapsedByNodeId, getTitleByNodeId, getNodeTable } from './index'
+export { getTitleByNodeId, getNodeTable, getRootNodeId, getChildNodeIdsByNodeId } from './index'

@@ -8,7 +8,7 @@ interface MenuButtonProps {
   icon?: ElementType
 }
 
-export default function MenuButton({ href, text, icon: Icon }: MenuButtonProps): JSX.Element {
+export default function MenuButton({ href, text, icon: Icon }: MenuButtonProps) {
   return (
     <a
       className={hstack({

@@ -1,4 +1,4 @@
-import CollapseButton from './CollapseButton'
+import CollapseButton from './ExpandButton'
 import DotButton from './DotButton'
 import TreeViewItemInput from './TreeViewItemInput'
 import { css } from '@/styled-system/css'
@@ -15,7 +15,7 @@ export interface TreeViewItemProps {
   depth: number
 }
 
-export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps): JSX.Element {
+export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: nodeId,
   })

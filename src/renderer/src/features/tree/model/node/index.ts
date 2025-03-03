@@ -1,11 +1,13 @@
 import { TaskEntity } from './task'
 
+export type NodeEntityId = string
+
 export interface NodeEntity {
-  id: string
-  prevSiblingNodeId?: string
-  nextSiblingNodeId?: string
-  parentNodeId?: string
-  childNodeIds: string[]
+  id: NodeEntityId
+  prevSiblingNodeId?: NodeEntityId
+  nextSiblingNodeId?: NodeEntityId
+  parentNodeId?: NodeEntityId
+  childNodeIds: NodeEntityId[]
   collapsed: boolean
   task: TaskEntity
 }

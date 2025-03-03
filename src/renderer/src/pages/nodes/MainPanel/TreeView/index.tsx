@@ -30,7 +30,7 @@ const measuring = {
 }
 const MTreeViewItem = memo(TreeViewItem)
 
-export default function TreeView(): JSX.Element {
+export default function TreeView() {
   const { treeViewNodes, draggingNode } = useTreeViewStore((state) => ({
     treeViewNodes: getTreeViewNodes(state),
     draggingNode: getDraggingNode(state),

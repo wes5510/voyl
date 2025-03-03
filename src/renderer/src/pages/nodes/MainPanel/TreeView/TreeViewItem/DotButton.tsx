@@ -6,7 +6,7 @@ export interface DotButtonProps {
   onClick?: MouseEventHandler
 }
 
-export default function DotButton({ onClick, ...props }: DotButtonProps): JSX.Element {
+export default function DotButton({ onClick, ...props }: DotButtonProps) {
   return (
     <IconButton onClick={onClick} {...props}>
       <DotIcon />

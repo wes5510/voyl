@@ -9,10 +9,7 @@ export interface DraggingTreeviewItemProps {
   title: string
 }
 
-export default function DraggingTreeviewItem({
-  depth,
-  title,
-}: DraggingTreeviewItemProps): JSX.Element {
+export default function DraggingTreeviewItem({ depth, title }: DraggingTreeviewItemProps) {
   return (
     <TreeViewItemWrapper depth={depth}>
       <div className={center({ w: 6, h: 6 })}>

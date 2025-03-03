@@ -8,7 +8,7 @@ interface PointLinkProps {
   href?: string
 }
 
-export default function PointLink({ text, icon: Icon, href }: PointLinkProps): JSX.Element {
+export default function PointLink({ text, icon: Icon, href }: PointLinkProps) {
   return (
     <div className={hstack({ gap: 2 })}>
       <span>/</span>

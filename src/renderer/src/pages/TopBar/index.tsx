@@ -1,7 +1,7 @@
 import Path from './Path'
 import { hstack } from '@/styled-system/patterns'
 
-export default function TopBar(): JSX.Element {
+export default function TopBar() {
   return (
     <div
       className={hstack({

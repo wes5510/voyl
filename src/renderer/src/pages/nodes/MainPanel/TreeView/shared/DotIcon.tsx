@@ -1,7 +1,7 @@
 import { css } from '@/styled-system/css'
 import CircleIcon from '@/common/CircleIcon'
 
-export default function DotIcon(): JSX.Element {
+export default function DotIcon() {
   return (
     <CircleIcon
       className={css({

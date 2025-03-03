@@ -8,7 +8,7 @@ export interface CharButtonProps {
   onClick?: MouseEventHandler
 }
 
-export default function CharButton({ text, active, onClick }: CharButtonProps): JSX.Element {
+export default function CharButton({ text, active, onClick }: CharButtonProps) {
   return (
     <TooltipButton text={text} active={active} onClick={onClick}>
       <span

@@ -6,7 +6,7 @@ export interface TooltipProps extends PropsWithChildren {
   text: string
 }
 
-export default function Tooltip({ children, text }: TooltipProps): JSX.Element {
+export default function Tooltip({ children, text }: TooltipProps) {
   return (
     <BaseTooltip.Provider skipDelayDuration={0} delayDuration={150}>
       <BaseTooltip.Root>

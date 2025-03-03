@@ -5,8 +5,11 @@ import {
   TreeViewEntity,
   setFocusToPrevNode,
   setFocusToNextNode,
+  setFocusForRemovedNode,
+  toggleExpandedNode,
 } from './index'
 import { NodeTableEntity } from '../tree/store'
+import { useShallow } from 'zustand/react/shallow'
 
 interface TreeViewStore {
   entity: TreeViewEntity
@@ -20,14 +23,19 @@ interface TreeViewStore {
   setFocusedNodeId: ({ nodeId }: { nodeId?: string }) => void
   setFocusToPrevNode: () => void
   setFocusToNextNode: () => void
+  setFocusForRemovedNode: ({ nodeId }: { nodeId: string }) => void
+  toggleExpandedNode: ({ nodeId }: { nodeId: string }) => void
 }
 
-const useTreeViewStore = create<TreeViewStore>((set) => ({
+const __useTreeViewStore = create<TreeViewStore>((set) => ({
   entity: {
-    nodes: [],
+    flattenedTree: {
+      nodes: [],
+      expandedNodeIds: [],
+      rootNodeId: 'n-1',
+    },
     draggingNode: undefined,
     focusedNodeId: undefined,
-    rootNodeId: '1',
   },
   setRootNodeId: ({ rootNodeId, nodeTable }) => {
     set((prev) => ({
@@ -49,7 +57,20 @@ const useTreeViewStore = create<TreeViewStore>((set) => ({
       entity: setFocusToNextNode({ entity: prev.entity }),
     }))
   },
+  setFocusForRemovedNode: ({ nodeId }) => {
+    set((prev) => ({
+      entity: setFocusForRemovedNode({ entity: prev.entity, nodeId }),
+    }))
+  },
+  toggleExpandedNode: ({ nodeId }) => {
+    set((prev) => ({
+      entity: toggleExpandedNode({ entity: prev.entity, nodeId }),
+    }))
+  },
 }))
 
+const useTreeViewStore = <T>(selector: (state: TreeViewStore) => T) =>
+  __useTreeViewStore(useShallow(selector))
+
 export default useTreeViewStore
-export { getTreeViewNodes, getDraggingNode, isFocus } from './index'
+export { getTreeViewNodes, getDraggingNode, isFocus, isExpandedNode } from './index'
