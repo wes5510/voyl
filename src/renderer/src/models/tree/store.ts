@@ -6,6 +6,7 @@ import {
   removeNodeByNodeId,
   outdentNode,
   indentNode,
+  moveToChildNode,
 } from './index'
 import { NodeEntityId } from './node'
 import { useShallow } from 'zustand/react/shallow'
@@ -28,6 +29,15 @@ interface TreeStore {
   removeNode: ({ nodeId }: { nodeId: string }) => void
   outdentNode: ({ nodeId }: { nodeId: string }) => void
   indentNode: ({ nodeId }: { nodeId: string }) => NodeEntityId | undefined
+  moveToChildNode: ({
+    parentNodeId,
+    newNodeId,
+    index,
+  }: {
+    parentNodeId: string
+    newNodeId: string
+    index: number
+  }) => void
 }
 
 const __useTreeStore = create<TreeStore>((set, get) => ({
@@ -93,6 +103,11 @@ const __useTreeStore = create<TreeStore>((set, get) => ({
     const { entity, parentNodeId } = indentNode({ entity: get().entity, nodeId })
     set({ entity })
     return parentNodeId
+  },
+  moveToChildNode: ({ parentNodeId, newNodeId, index }) => {
+    set((prev) => ({
+      entity: moveToChildNode({ entity: prev.entity, parentNodeId, newNodeId, index }),
+    }))
   },
 }))
 

@@ -1,37 +1,34 @@
 import { type NodeEntity } from '../tree/store'
 import {
+  DraggingNodeEntity,
+  setDraggingNodeByNodeId,
+  moveDraggingNodeByDeltaDepthAndOverNodeId,
+} from './draggingNode'
+import {
   expand,
   FlattenedTreeEntity,
   FlattenedTreeNode,
+  getChildNodeIds,
+  getFlattenedTreeNode,
+  getParentNodeId,
+  getPrevNode,
+  getRootNodeId,
   initFlattenedTree,
   isExpanded,
+  sliceFlattenedTree,
   toggleExpanded,
 } from './flattenedTree'
 
 export interface TreeViewEntity {
   flattenedTree: FlattenedTreeEntity
   focusedNodeId?: string
-  draggingNode?: DraggingNode
-}
-
-interface DraggingNode {
-  id: string
-  title: string
-  depth: number
+  draggingNode?: DraggingNodeEntity
 }
 
 type NodeTable = Map<string, NodeEntity>
 
 export const getTreeViewNodes = ({ entity }: { entity: TreeViewEntity }): FlattenedTreeNode[] => {
   return entity.flattenedTree.nodes
-}
-
-export const getDraggingNode = ({
-  entity,
-}: {
-  entity: TreeViewEntity
-}): DraggingNode | undefined => {
-  return entity.draggingNode
 }
 
 export const setRootNodeId = ({
@@ -171,3 +168,132 @@ export const expandNode = ({
 
 export const isExpandedNode = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: string }) =>
   isExpanded({ entity: entity.flattenedTree, nodeId })
+
+export const getDraggingNode = ({
+  entity,
+}: {
+  entity: TreeViewEntity
+}): DraggingNodeEntity | undefined => {
+  return entity.draggingNode
+}
+
+export const setDraggingNode = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId?: string
+}) => {
+  return {
+    ...entity,
+    draggingNode: setDraggingNodeByNodeId({
+      entity: entity.draggingNode,
+      nodeId,
+      flattenedTree: entity.flattenedTree,
+    }),
+  }
+}
+
+export const moveDraggingNode = ({
+  entity,
+  overNodeId,
+  deltaDepth,
+}: {
+  entity: TreeViewEntity
+  overNodeId: string
+  deltaDepth: number
+}) => {
+  const draggingNode = entity.draggingNode
+  if (!draggingNode) {
+    return entity
+  }
+
+  return {
+    ...entity,
+    draggingNode: moveDraggingNodeByDeltaDepthAndOverNodeId({
+      entity: draggingNode,
+      overNodeId,
+      deltaDepth,
+      flattenedTree: entity.flattenedTree,
+    }),
+  }
+}
+
+export const getNodeDepth = ({ entity, nodeId }: { entity: TreeViewEntity; nodeId: string }) => {
+  const node = getFlattenedTreeNode({ entity: entity.flattenedTree, nodeId })
+  return node?.depth ?? 0
+}
+
+export const getDraggingNodeParentId = ({
+  entity,
+  overNodeId,
+}: {
+  entity: TreeViewEntity
+  overNodeId: string
+}) => {
+  const { draggingNode } = entity
+  if (!draggingNode) {
+    return
+  }
+
+  const overNodePrev = getPrevNode({ entity: entity.flattenedTree, nodeId: overNodeId })
+  const rootNodeId = getRootNodeId({ entity: entity.flattenedTree })
+
+  if (draggingNode.depth === 0 || !overNodePrev) {
+    return rootNodeId
+  }
+
+  if (draggingNode.depth === overNodePrev.depth) {
+    return getParentNodeId({ entity: entity.flattenedTree, nodeId: overNodePrev.id })
+  }
+
+  if (draggingNode.depth > overNodePrev.depth) {
+    return overNodePrev.id
+  }
+
+  const siblingNode = sliceFlattenedTree({ entity: entity.flattenedTree, endNodeId: overNodeId })
+    .reverse()
+    .find((item) => item.depth === draggingNode.depth)
+
+  if (!siblingNode) {
+    return rootNodeId
+  }
+
+  const newParentNodeId = getParentNodeId({
+    entity: entity.flattenedTree,
+    nodeId: siblingNode.id,
+  })
+
+  return newParentNodeId ?? rootNodeId
+}
+
+export const getCountChildBetweenNodes = ({
+  entity,
+  parentNodeId,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  parentNodeId: string
+  nodeId: string
+}) => {
+  const childNodes = getChildNodeIds({ entity: entity.flattenedTree, nodeId: parentNodeId })
+
+  if (!childNodes || childNodes.length === 0) {
+    return 0
+  }
+
+  const nodesUnderParent = sliceFlattenedTree({
+    entity: entity.flattenedTree,
+    startNodeId: parentNodeId,
+    endNodeId: nodeId,
+  })
+
+  return nodesUnderParent.reduce((acc, node) => (childNodes.includes(node.id) ? acc + 1 : acc), 0)
+}
+
+export const resetDraggingNode = ({ entity }: { entity: TreeViewEntity }) => {
+  return {
+    ...entity,
+    draggingNode: undefined,
+  }
+}

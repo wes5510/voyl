@@ -8,8 +8,13 @@ import {
   setFocusForRemovedNode,
   toggleExpandedNode,
   expandNode,
+  setDraggingNode,
+  moveDraggingNode,
+  getDraggingNodeParentId,
+  getCountChildBetweenNodes,
+  resetDraggingNode,
 } from './index'
-import { NodeTableEntity, rawUseTreeStore } from '../tree/store'
+import { NodeTableEntity } from '../tree/store'
 import { useShallow } from 'zustand/react/shallow'
 
 interface TreeViewStore {
@@ -33,9 +38,20 @@ interface TreeViewStore {
     nodeTable: NodeTableEntity
   }) => void
   expandNode: ({ nodeId, nodeTable }: { nodeId: string; nodeTable: NodeTableEntity }) => void
+  setDraggingNode: ({ nodeId }: { nodeId?: string }) => void
+  moveDraggingNode: ({ overNodeId, deltaDepth }: { overNodeId: string; deltaDepth: number }) => void
+  getDraggingNodeParentId: ({ overNodeId }: { overNodeId: string }) => string | undefined
+  getCountChildBetweenNodes: ({
+    parentNodeId,
+    nodeId,
+  }: {
+    parentNodeId: string
+    nodeId: string
+  }) => number
+  resetDraggingNode: () => void
 }
 
-const __useTreeViewStore = create<TreeViewStore>((set) => ({
+const __useTreeViewStore = create<TreeViewStore>((set, get) => ({
   entity: {
     flattenedTree: {
       nodes: [],
@@ -84,10 +100,29 @@ const __useTreeViewStore = create<TreeViewStore>((set) => ({
       }),
     }))
   },
+  setDraggingNode: ({ nodeId }) => {
+    set((prev) => ({
+      entity: setDraggingNode({ entity: prev.entity, nodeId }),
+    }))
+  },
+  resetDraggingNode: () => {
+    set((prev) => ({
+      entity: resetDraggingNode({ entity: prev.entity }),
+    }))
+  },
+  moveDraggingNode: ({ overNodeId, deltaDepth }) => {
+    set((prev) => ({
+      entity: moveDraggingNode({ entity: prev.entity, overNodeId, deltaDepth }),
+    }))
+  },
+  getDraggingNodeParentId: ({ overNodeId }) =>
+    getDraggingNodeParentId({ entity: get().entity, overNodeId }),
+  getCountChildBetweenNodes: ({ parentNodeId, nodeId }) =>
+    getCountChildBetweenNodes({ entity: get().entity, parentNodeId, nodeId }),
 }))
 
 const useTreeViewStore = <T>(selector: (state: TreeViewStore) => T) =>
   __useTreeViewStore(useShallow(selector))
 
 export default useTreeViewStore
-export { getTreeViewNodes, getDraggingNode, isFocus, isExpandedNode } from './index'
+export { getTreeViewNodes, getDraggingNode, isFocus, isExpandedNode, getNodeDepth } from './index'

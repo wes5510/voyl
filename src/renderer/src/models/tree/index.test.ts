@@ -442,8 +442,9 @@ describe('indentNode', () => {
       ]),
     }
 
-    const newEntity = indentNode({ entity, nodeId: 'n-1' })
+    const { entity: newEntity, parentNodeId } = indentNode({ entity, nodeId: 'n-1' })
     expect(newEntity).toEqual(entity)
+    expect(parentNodeId).toEqual(undefined)
   })
 
   it('이전 친구 노드가 없을때, Indent하면 이전 엔티티 그대로 반환한다', () => {
@@ -479,8 +480,9 @@ describe('indentNode', () => {
       ]),
     }
 
-    const newEntity = indentNode({ entity, nodeId: 'n-1' })
+    const { entity: newEntity, parentNodeId } = indentNode({ entity, nodeId: 'n-1' })
     expect(newEntity).toEqual(entity)
+    expect(parentNodeId).toEqual(undefined)
   })
 
   it('이전 친구 노드가 있을때, Indent하면 이전 친구 노드의 자식 노드로 이동한다', () => {
@@ -542,7 +544,7 @@ describe('indentNode', () => {
       ]),
     }
 
-    const newEntity = indentNode({ entity, nodeId: 'n-1-2' })
+    const { entity: newEntity, parentNodeId } = indentNode({ entity, nodeId: 'n-1-2' })
     const parentNode = getNode({
       entity: newEntity.nodeTable,
       nodeId: 'n',
@@ -559,6 +561,7 @@ describe('indentNode', () => {
     })!
 
     expect(getParentNodeId({ entity: targetNode })).toEqual('n-1')
+    expect(parentNodeId).toEqual('n-1')
     expect(getChildNodeIds({ entity: parentNode })).toEqual(['n-1'])
     expect(getChildNodeIds({ entity: siblingNode })).toEqual(['n-1-1', 'n-1-2'])
   })

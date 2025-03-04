@@ -137,7 +137,7 @@ const __prependChildNode = ({
   sourceNodeId: NodeEntityId
   newNodeId: NodeEntityId
 }): TreeEntity => {
-  return __moveToChildNode({
+  return moveToChildNode({
     entity,
     parentNodeId: sourceNodeId,
     newNodeId,
@@ -160,7 +160,7 @@ const __appendSiblingNode = ({
     return entity
   }
 
-  return __moveToChildNode({
+  return moveToChildNode({
     entity,
     parentNodeId,
     newNodeId,
@@ -191,7 +191,7 @@ const __getChildNodeIndex = ({
   return getChildNodeIndex({ entity: parentNode, childNodeId })
 }
 
-const __moveToChildNode = ({
+export const moveToChildNode = ({
   entity,
   parentNodeId,
   newNodeId,
@@ -436,7 +436,7 @@ const __moveToParentNextSibling = ({
     return entity
   }
 
-  return __moveToChildNode({
+  return moveToChildNode({
     entity,
     parentNodeId: grandParentNodeId,
     newNodeId: nodeId,
@@ -476,7 +476,7 @@ const __moveToPrevSiblingAsChild = ({
   }
 
   return {
-    entity: __moveToChildNode({
+    entity: moveToChildNode({
       entity,
       parentNodeId: prevSiblingNodeId,
       newNodeId: nodeId,
