@@ -288,7 +288,20 @@ export const getCountChildBetweenNodes = ({
     endNodeId: nodeId,
   })
 
-  return nodesUnderParent.reduce((acc, node) => (childNodes.includes(node.id) ? acc + 1 : acc), 0)
+  const count = nodesUnderParent.reduce(
+    (acc, node) => (childNodes.includes(node.id) ? acc + 1 : acc),
+    0,
+  )
+
+  console.log({
+    parentNodeId,
+    nodeId,
+    nodesUnderParent,
+    childNodes,
+    count,
+  })
+
+  return count
 }
 
 export const resetDraggingNode = ({ entity }: { entity: TreeViewEntity }) => {

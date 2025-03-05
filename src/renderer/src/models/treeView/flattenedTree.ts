@@ -321,3 +321,33 @@ const __childNodeIdsOfRootNode = ({ entity }: { entity: FlattenedTreeEntity }) =
 const __isRootNode = ({ entity, nodeId }: { entity: FlattenedTreeEntity; nodeId: string }) => {
   return nodeId === entity.rootNodeId
 }
+
+export const moveNode = ({
+  entity,
+  id: { from, to },
+}: {
+  entity: FlattenedTreeEntity
+  id: {
+    from: NodeEntityId
+    to: NodeEntityId
+  }
+}) => {
+  return {
+    ...entity,
+    nodes: __moveItem({
+      array: entity.nodes,
+      from: getIndex({ entity, nodeId: from }),
+      to: getIndex({ entity, nodeId: to }),
+    }),
+  }
+}
+
+const __moveItem = <T>({ array, from, to }: { array: T[]; from: number; to: number }): T[] => {
+  const newArray = array.slice()
+  newArray.splice(to < 0 ? newArray.length + to : to, 0, newArray.splice(from, 1)[0])
+  return newArray
+}
+
+export const getDepth = ({ entity, nodeId }: { entity: FlattenedTreeEntity; nodeId: string }) => {
+  return getFlattenedTreeNode({ entity, nodeId })?.depth
+}

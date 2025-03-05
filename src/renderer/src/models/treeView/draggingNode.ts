@@ -1,9 +1,11 @@
 import { NodeEntityId } from '../tree/node'
 import {
   FlattenedTreeEntity,
+  getDepth,
   getFlattenedTreeNode,
   getNextNode,
   getPrevNode,
+  moveNode,
 } from './flattenedTree'
 
 export interface DraggingNodeEntity {
@@ -45,45 +47,67 @@ export const moveDraggingNodeByDeltaDepthAndOverNodeId = ({
   deltaDepth: number
   flattenedTree: FlattenedTreeEntity
 }): DraggingNodeEntity | undefined => {
-  const originNode = getFlattenedTreeNode({ entity: flattenedTree, nodeId: entity.id })
+  const originNodeDepth = getDepth({ entity: flattenedTree, nodeId: entity.id })
 
-  if (!originNode) {
+  if (originNodeDepth === undefined) {
     return undefined
   }
 
   return {
     ...entity,
-    depth: __getValidDepth({
-      originNodeDepth: originNode.depth,
+    depth: __getDepth({
       overNodeId,
-      deltaDepth,
+      draggingNodeId: entity.id,
+      depth: originNodeDepth + deltaDepth,
       flattenedTree,
     }),
   }
 }
 
-const __getValidDepth = ({
-  originNodeDepth,
+const __getDepth = ({
   overNodeId,
-  deltaDepth,
+  draggingNodeId,
+  depth,
   flattenedTree,
 }: {
-  originNodeDepth: number
   overNodeId: NodeEntityId
-  deltaDepth: number
+  draggingNodeId: NodeEntityId
+  depth: number
   flattenedTree: FlattenedTreeEntity
 }): number => {
-  const depth = originNodeDepth + deltaDepth
-  const maxDepth = __getMaxDepth({ overNodeId, flattenedTree })
-  const minDepth = __getMinDepth({ overNodeId, flattenedTree })
+  const { max, min } = __getMaxMinDepth({
+    overNodeId,
+    draggingNodeId,
+    flattenedTree,
+  })
 
-  if (depth >= maxDepth) {
-    return maxDepth
-  } else if (depth < minDepth) {
-    return minDepth
+  if (depth >= max) {
+    return max
+  } else if (depth < min) {
+    return min
   }
 
   return depth
+}
+
+const __getMaxMinDepth = ({
+  overNodeId,
+  draggingNodeId,
+  flattenedTree,
+}: {
+  overNodeId: NodeEntityId
+  draggingNodeId: NodeEntityId
+  flattenedTree: FlattenedTreeEntity
+}) => {
+  const movedFlattenedTree = moveNode({
+    entity: flattenedTree,
+    id: { from: draggingNodeId, to: overNodeId },
+  })
+
+  return {
+    max: __getMaxDepth({ overNodeId: draggingNodeId, flattenedTree: movedFlattenedTree }),
+    min: __getMinDepth({ overNodeId: draggingNodeId, flattenedTree: movedFlattenedTree }),
+  }
 }
 
 const __getMaxDepth = ({
