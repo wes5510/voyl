@@ -153,7 +153,7 @@ export const toggleExpanded = ({
   nodeTable: NodeTable
 }): FlattenedTreeEntity => {
   return __isExpanded({ nodeId, expandedNodeIds: entity.expandedNodeIds })
-    ? __collapse({ entity, nodeId, nodeTable })
+    ? collapse({ entity, nodeId, nodeTable })
     : expand({ entity, nodeId, nodeTable })
 }
 
@@ -174,7 +174,7 @@ export const setExpandedNodeIds = ({
   return __generateNodes({ entity: __newEntity, nodeTable })
 }
 
-const __collapse = ({
+export const collapse = ({
   entity,
   nodeId,
   nodeTable,

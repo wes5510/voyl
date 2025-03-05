@@ -10,6 +10,7 @@ import {
 
 export interface DraggingNodeEntity {
   id: string
+  prevExpanded: boolean
   depth: number
 }
 
@@ -27,11 +28,13 @@ export const setDraggingNodeByNodeId = ({
   }
 
   const node = getFlattenedTreeNode({ entity: flattenedTree, nodeId })
+
   return node
     ? {
         ...entity,
         id: node.id,
         depth: node.depth,
+        prevExpanded: node.expanded,
       }
     : undefined
 }

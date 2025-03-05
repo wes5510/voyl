@@ -51,7 +51,10 @@ export default function TreeView() {
     getDraggingNodeParentId: state.getDraggingNodeParentId,
     getCountChildBetweenNodes: state.getCountChildBetweenNodes,
   }))
-  const moveToChildNode = useTreeStore((state) => state.moveToChildNode)
+  const { moveToChildNode, nodeTable } = useTreeStore((state) => ({
+    moveToChildNode: state.moveToChildNode,
+    nodeTable: state.entity.nodeTable,
+  }))
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -78,7 +81,7 @@ export default function TreeView() {
       index: childNodeIndex,
     })
 
-    resetDraggingNode()
+    resetDraggingNode({ nodeTable })
   }
 
   const handleDragMove = ({ delta, over }: DragMoveEvent): void => {
@@ -99,6 +102,7 @@ export default function TreeView() {
 
     setDraggingNode({
       nodeId: active.id,
+      nodeTable,
     })
   }
 

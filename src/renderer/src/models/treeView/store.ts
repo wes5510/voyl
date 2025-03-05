@@ -38,7 +38,7 @@ interface TreeViewStore {
     nodeTable: NodeTableEntity
   }) => void
   expandNode: ({ nodeId, nodeTable }: { nodeId: string; nodeTable: NodeTableEntity }) => void
-  setDraggingNode: ({ nodeId }: { nodeId?: string }) => void
+  setDraggingNode: ({ nodeId, nodeTable }: { nodeId?: string; nodeTable: NodeTableEntity }) => void
   moveDraggingNode: ({ overNodeId, deltaDepth }: { overNodeId: string; deltaDepth: number }) => void
   getDraggingNodeParentId: ({ overNodeId }: { overNodeId: string }) => string | undefined
   getCountChildBetweenNodes: ({
@@ -48,7 +48,7 @@ interface TreeViewStore {
     parentNodeId: string
     nodeId: string
   }) => number
-  resetDraggingNode: () => void
+  resetDraggingNode: ({ nodeTable }: { nodeTable: NodeTableEntity }) => void
 }
 
 const __useTreeViewStore = create<TreeViewStore>((set, get) => ({
@@ -100,14 +100,14 @@ const __useTreeViewStore = create<TreeViewStore>((set, get) => ({
       }),
     }))
   },
-  setDraggingNode: ({ nodeId }) => {
+  setDraggingNode: ({ nodeId, nodeTable }) => {
     set((prev) => ({
-      entity: setDraggingNode({ entity: prev.entity, nodeId }),
+      entity: setDraggingNode({ entity: prev.entity, nodeId, nodeTable }),
     }))
   },
-  resetDraggingNode: () => {
+  resetDraggingNode: ({ nodeTable }) => {
     set((prev) => ({
-      entity: resetDraggingNode({ entity: prev.entity }),
+      entity: resetDraggingNode({ entity: prev.entity, nodeTable }),
     }))
   },
   moveDraggingNode: ({ overNodeId, deltaDepth }) => {

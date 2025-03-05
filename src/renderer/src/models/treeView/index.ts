@@ -5,6 +5,7 @@ import {
   moveDraggingNodeByDeltaDepthAndOverNodeId,
 } from './draggingNode'
 import {
+  collapse,
   expand,
   FlattenedTreeEntity,
   FlattenedTreeNode,
@@ -180,12 +181,21 @@ export const getDraggingNode = ({
 export const setDraggingNode = ({
   entity,
   nodeId,
+  nodeTable,
 }: {
   entity: TreeViewEntity
   nodeId?: string
+  nodeTable: NodeTable
 }) => {
   return {
     ...entity,
+    flattenedTree: nodeId
+      ? collapse({
+          entity: entity.flattenedTree,
+          nodeId,
+          nodeTable,
+        })
+      : entity.flattenedTree,
     draggingNode: setDraggingNodeByNodeId({
       entity: entity.draggingNode,
       nodeId,
@@ -293,20 +303,29 @@ export const getCountChildBetweenNodes = ({
     0,
   )
 
-  console.log({
-    parentNodeId,
-    nodeId,
-    nodesUnderParent,
-    childNodes,
-    count,
-  })
-
   return count
 }
 
-export const resetDraggingNode = ({ entity }: { entity: TreeViewEntity }) => {
-  return {
-    ...entity,
-    draggingNode: undefined,
-  }
+export const resetDraggingNode = ({
+  entity,
+  nodeTable,
+}: {
+  entity: TreeViewEntity
+  nodeTable: NodeTable
+}) => {
+  const { draggingNode } = entity
+
+  return draggingNode
+    ? {
+        ...entity,
+        flattenedTree: draggingNode.prevExpanded
+          ? expand({
+              entity: entity.flattenedTree,
+              nodeId: draggingNode.id,
+              nodeTable,
+            })
+          : entity.flattenedTree,
+        draggingNode: undefined,
+      }
+    : entity
 }
