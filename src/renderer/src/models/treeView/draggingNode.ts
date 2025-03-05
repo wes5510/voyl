@@ -108,29 +108,29 @@ const __getMaxMinDepth = ({
   })
 
   return {
-    max: __getMaxDepth({ overNodeId: draggingNodeId, flattenedTree: movedFlattenedTree }),
-    min: __getMinDepth({ overNodeId: draggingNodeId, flattenedTree: movedFlattenedTree }),
+    max: __getMaxDepth({ nodeId: draggingNodeId, flattenedTree: movedFlattenedTree }),
+    min: __getMinDepth({ nodeId: draggingNodeId, flattenedTree: movedFlattenedTree }),
   }
 }
 
 const __getMaxDepth = ({
-  overNodeId,
+  nodeId,
   flattenedTree,
 }: {
-  overNodeId: NodeEntityId
+  nodeId: NodeEntityId
   flattenedTree: FlattenedTreeEntity
 }): number => {
-  const overNodePrevNode = getPrevNode({ entity: flattenedTree, nodeId: overNodeId })
+  const overNodePrevNode = getPrevNode({ entity: flattenedTree, nodeId })
   return overNodePrevNode ? overNodePrevNode.depth + 1 : 0
 }
 
 const __getMinDepth = ({
-  overNodeId,
+  nodeId,
   flattenedTree,
 }: {
-  overNodeId: NodeEntityId
+  nodeId: NodeEntityId
   flattenedTree: FlattenedTreeEntity
 }): number => {
-  const overNodeNextNode = getNextNode({ entity: flattenedTree, nodeId: overNodeId })
+  const overNodeNextNode = getNextNode({ entity: flattenedTree, nodeId })
   return overNodeNextNode ? overNodeNextNode.depth : 0
 }

@@ -107,7 +107,7 @@ export default function TreeView() {
   }
 
   const handleDragCancel = (): void => {
-    resetDraggingNode()
+    resetDraggingNode({ nodeTable })
   }
 
   return (

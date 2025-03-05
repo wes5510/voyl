@@ -16,6 +16,7 @@ import {
   getRootNodeId,
   initFlattenedTree,
   isExpanded,
+  moveNode,
   sliceFlattenedTree,
   toggleExpanded,
 } from './flattenedTree'
@@ -246,22 +247,29 @@ export const getDraggingNodeParentId = ({
     return
   }
 
-  const overNodePrev = getPrevNode({ entity: entity.flattenedTree, nodeId: overNodeId })
-  const rootNodeId = getRootNodeId({ entity: entity.flattenedTree })
+  const movedFlattenedTree = moveNode({
+    entity: entity.flattenedTree,
+    id: { from: draggingNode.id, to: overNodeId },
+  })
+  const overNodePrev = getPrevNode({
+    entity: movedFlattenedTree,
+    nodeId: draggingNode.id,
+  })
+  const rootNodeId = getRootNodeId({ entity: movedFlattenedTree })
 
   if (draggingNode.depth === 0 || !overNodePrev) {
     return rootNodeId
   }
 
   if (draggingNode.depth === overNodePrev.depth) {
-    return getParentNodeId({ entity: entity.flattenedTree, nodeId: overNodePrev.id })
+    return getParentNodeId({ entity: movedFlattenedTree, nodeId: overNodePrev.id })
   }
 
   if (draggingNode.depth > overNodePrev.depth) {
     return overNodePrev.id
   }
 
-  const siblingNode = sliceFlattenedTree({ entity: entity.flattenedTree, endNodeId: overNodeId })
+  const siblingNode = sliceFlattenedTree({ entity: movedFlattenedTree, endNodeId: draggingNode.id })
     .reverse()
     .find((item) => item.depth === draggingNode.depth)
 
@@ -270,7 +278,7 @@ export const getDraggingNodeParentId = ({
   }
 
   const newParentNodeId = getParentNodeId({
-    entity: entity.flattenedTree,
+    entity: movedFlattenedTree,
     nodeId: siblingNode.id,
   })
 
