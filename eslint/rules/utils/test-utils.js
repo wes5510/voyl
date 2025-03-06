@@ -13,7 +13,7 @@ const mockTsConfigPaths = () => {
     resultType: 'success',
     absoluteBaseUrl: '/src/renderer/src',
     paths: {
-      '@/features/*': ['features/*'],
+      '@/models/*': ['models/*'],
       '@/common/*': ['common/*'],
       '@/pages/*': ['pages/*'],
       '@/styled-system/*': ['styled-system/*'],

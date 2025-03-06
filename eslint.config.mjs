@@ -63,7 +63,7 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**', '**/features/**', '**/common/**'],
+          ignorePatterns: ['@/styled-system/**', '**/common/**'],
         },
       ],
       'voyl/common-isolation': [
@@ -75,32 +75,7 @@ export default [
     },
   },
   {
-    files: ['src/renderer/src/features/**/*.{ts,tsx}'],
-    plugins: {
-      voyl: voylPlugin,
-    },
-    rules: {
-      'voyl/no-cross-feature-imports': ['error'],
-      'voyl/no-pages-import': ['error'],
-    },
-  },
-  {
-    files: ['src/renderer/src/features/*/ui/**/*.{ts,tsx}'],
-    plugins: {
-      voyl: voylPlugin,
-    },
-    rules: {
-      'voyl/same-hierarchy-import': [
-        'error',
-        {
-          ignorePatterns: ['@/styled-system/**', '**/features/*/model/**', '**/common/**'],
-        },
-      ],
-      'voyl/feature-model-index-import-only': ['error'],
-    },
-  },
-  {
-    files: ['src/renderer/src/features/*/model/**/*.{ts,tsx}'],
+    files: ['src/renderer/src/models/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
@@ -111,6 +86,8 @@ export default [
           ignorePatterns: ['@/styled-system/**', '**/common/**'],
         },
       ],
+      'voyl/no-cross-model-imports': ['error'],
+      'voyl/no-pages-import': ['error'],
     },
   },
   {
@@ -122,16 +99,10 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: [
-            '@/styled-system/**',
-            '**/common/**',
-            '**/features/*/ui/**',
-            '**/models/**',
-          ],
+          ignorePatterns: ['@/styled-system/**', '**/common/**', '**/models/**'],
         },
       ],
-      'voyl/feature-ui-interface-only': ['error'],
-      'voyl/feature-model-index-import-only': ['error'],
+      'voyl/model-store-import-only': ['error'],
     },
   },
 ]

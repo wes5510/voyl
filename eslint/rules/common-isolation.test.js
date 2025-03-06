@@ -35,39 +35,39 @@ ruleTester.run('common-isolation', rule, {
 
     // 4. Import from non-common file (should be ignored)
     {
-      code: 'import { Something } from "@/features/something"',
-      filename: '/src/renderer/src/features/other/index.ts',
+      code: 'import { Something } from "@/models/something"',
+      filename: '/src/renderer/src/models/other/index.ts',
     },
 
     // 5. Import from ignored patterns
     {
-      code: 'import { Something } from "@/features/something"',
+      code: 'import { Something } from "@/models/something"',
       filename: '/src/renderer/src/common/utils.ts',
-      options: [{ ignorePatterns: ['**/features/something'] }],
+      options: [{ ignorePatterns: ['**/models/something'] }],
     },
   ],
 
   invalid: [
-    // 1. Import from features directory - absolute path
+    // 1. Import from models directory - absolute path
     {
-      code: 'import { Something } from "@/features/something"',
+      code: 'import { Something } from "@/models/something"',
       filename: '/src/renderer/src/common/utils.ts',
       errors: [
         {
           messageId: 'invalidAccess',
-          data: { importPath: '@/features/something' },
+          data: { importPath: '@/models/something' },
         },
       ],
     },
 
-    // 2. Import from features directory - relative path
+    // 2. Import from models directory - relative path
     {
-      code: 'import { Something } from "../../features/something"',
+      code: 'import { Something } from "../../models/something"',
       filename: '/src/renderer/src/common/utils.ts',
       errors: [
         {
           messageId: 'invalidAccess',
-          data: { importPath: '../../features/something' },
+          data: { importPath: '../../models/something' },
         },
       ],
     },
