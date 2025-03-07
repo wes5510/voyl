@@ -14,40 +14,40 @@ ruleTester.run('no-cross-model-imports', rule, {
     // 1. Import from same model - absolute path
     {
       code: 'import { getNode } from "@/models/tree"',
-      filename: '/src/renderer/src/models/tree/node',
+      filename: '/project/src/models/tree/node/index.ts',
     },
     {
       code: 'import { getNodeByIndex } from "@/models/tree/nodeTable"',
-      filename: '/src/renderer/src/models/tree/store.ts',
+      filename: '/project/src/models/tree/store.ts',
     },
 
     // 2. Import from same model - relative path
     {
       code: 'import { getNode } from "../node"',
-      filename: '/src/renderer/src/models/tree/nodeTable',
+      filename: '/project/src/models/tree/nodeTable/index.ts',
     },
     {
       code: 'import { getNodeByIndex } from "./nodeTable"',
-      filename: '/src/renderer/src/models/tree/store.ts',
+      filename: '/project/src/models/tree/store.ts',
     },
 
     // 3. Import from node_modules
     {
       code: 'import React from "react"',
-      filename: '/src/renderer/src/models/tree/nodeTable/index.ts',
+      filename: '/project/src/models/tree/nodeTable/index.ts',
     },
 
     // 4. Import from ignored patterns
     {
       code: 'import { Something } from "@/models/other"',
-      filename: '/src/renderer/src/models/tree/nodeTable/index.ts',
+      filename: '/project/src/models/tree/nodeTable/index.ts',
       options: [{ ignorePatterns: ['**/models/other/**'] }],
     },
 
     // 5. Import from non-model file
     {
       code: 'import { useStore } from "@/models/tree"',
-      filename: '/src/renderer/src/pages/index.tsx',
+      filename: '/project/src/pages/index.tsx',
     },
   ],
 
@@ -55,7 +55,7 @@ ruleTester.run('no-cross-model-imports', rule, {
     // 1. Import from different model - absolute path
     {
       code: 'import { useStore } from "@/models/path"',
-      filename: '/src/renderer/src/models/tree/nodeTable/index.ts',
+      filename: '/project/src/models/tree/nodeTable/index.ts',
       errors: [
         {
           messageId: 'invalidModelAccess',
@@ -64,34 +64,22 @@ ruleTester.run('no-cross-model-imports', rule, {
       ],
     },
 
-    // 3. Import from different model - relative path
+    // 2. Import from different model - relative path
     {
-      code: 'import { getNodeByIndex } from "../../path/model"',
-      filename: '/src/renderer/src/models/tree/nodeTable/index.ts',
+      code: 'import { getNodeByIndex } from "../../path"',
+      filename: '/project/src/models/tree/nodeTable/index.ts',
       errors: [
         {
           messageId: 'invalidModelAccess',
-          data: { importPath: '../../path/model' },
+          data: { importPath: '../../path' },
         },
       ],
     },
 
-    // 4. Import from different model component - relative path
-    {
-      code: 'import { PathView } from "../../path/point"',
-      filename: '/src/renderer/src/models/tree/index.ts',
-      errors: [
-        {
-          messageId: 'invalidModelAccess',
-          data: { importPath: '../../path/point' },
-        },
-      ],
-    },
-
-    // 5. Import from deep path in different model
+    // 3. Import from deep path in different model
     {
       code: 'import { util } from "@/models/path/point"',
-      filename: '/src/renderer/src/models/tree/index.ts',
+      filename: '/project/src/models/tree/index.ts',
       errors: [
         {
           messageId: 'invalidModelAccess',

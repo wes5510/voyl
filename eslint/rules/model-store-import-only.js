@@ -60,13 +60,7 @@ module.exports = {
           return
         }
 
-        console.log({
-          absoluteImportPath,
-          'isValidModelAccess(absoluteImportPath)': isValidModelAccess(absoluteImportPath),
-        })
-
         if (!isValidModelAccess(absoluteImportPath)) {
-          console.log('invalidModelAccess')
           context.report({
             node,
             messageId: 'invalidModelAccess',

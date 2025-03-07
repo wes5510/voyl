@@ -5,7 +5,7 @@ const isModelPath = (absolutePath) => {
 }
 
 const getModelName = (absolutePath) => {
-  const match = absolutePath.match(/\/models\/([^/]+)\//)
+  const match = absolutePath.match(/\/models\/([^/]+)/)
   return match ? match[1] : null
 }
 

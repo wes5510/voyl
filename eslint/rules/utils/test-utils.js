@@ -11,12 +11,11 @@ const { RuleTester } = require('eslint')
 const mockTsConfigPaths = () => {
   mock.method(configLoader, 'loadConfig', () => ({
     resultType: 'success',
-    absoluteBaseUrl: '/src/renderer/src',
+    absoluteBaseUrl: '/project/src',
     paths: {
       '@/models/*': ['models/*'],
       '@/common/*': ['common/*'],
       '@/pages/*': ['pages/*'],
-      '@/styled-system/*': ['styled-system/*'],
     },
   }))
 

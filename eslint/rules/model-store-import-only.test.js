@@ -17,7 +17,7 @@ ruleTester.run('model-store-import-only', rule, {
     },
     {
       code: 'import { useStore } from "../models/tree/store"',
-      filename: '/src/renderer/src/pages//nodes/page.tsx',
+      filename: '/src/renderer/src/pages/nodes/page.tsx',
     },
     {
       code: 'import { util } from "@/models/tree/store/internal"',
@@ -42,12 +42,12 @@ ruleTester.run('model-store-import-only', rule, {
       ],
     },
     {
-      code: 'import { util } from "../store/utils"',
+      code: 'import { util } from "../../models/tree/utils"',
       filename: '/src/renderer/src/pages/nodes/page.tsx',
       errors: [
         {
           messageId: 'invalidModelAccess',
-          data: { importPath: '../store/utils' },
+          data: { importPath: '../../models/tree/store/utils' },
         },
       ],
     },
