@@ -23,8 +23,6 @@ export default [
       'plugin:react/recommended',
       'plugin:react/jsx-runtime',
       'plugin:react-hooks/recommended',
-      '@electron-toolkit/eslint-config-ts/recommended',
-      '@electron-toolkit/eslint-config-prettier',
       'plugin:@typescript-eslint/recommended',
       'plugin:import/recommended',
       'plugin:import/typescript',

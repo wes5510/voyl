@@ -1,8 +1,7 @@
 import IconButton from './IconButton'
 import useTreeViewStore, { isExpandedNode } from '@/models/treeView/store'
 import CollapseIcon from '../shared/CollapseIcon'
-import { getNodeTable } from '@/models/tree/store'
-import useTreeStore from '@/models/tree/store'
+import useTreeStore, { getNodeTable } from '@/models/tree/store'
 
 export interface CollapseButtonProps {
   nodeId: string

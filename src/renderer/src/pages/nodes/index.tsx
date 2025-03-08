@@ -1,9 +1,8 @@
 import { css } from '@/styled-system/css'
 import { hstack } from '@/styled-system/patterns'
-import { useState } from 'react'
+import { useState , memo } from 'react'
 import MainPanel from './MainPanel'
 import useTreeView from './useTreeView'
-import { memo } from 'react'
 
 const MMainPanel = memo(MainPanel)
 

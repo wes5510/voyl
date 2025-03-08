@@ -102,7 +102,7 @@ module.exports = {
           return
         }
 
-        if (isSharedImport(absoluteImportPath)) {
+        if (isSharedImport(absoluteImportPath) && !isSharedImport(absoluteFilePath)) {
           if (!isValidSharedImport(absoluteFilePath, absoluteImportPath)) {
             context.report({
               node,
