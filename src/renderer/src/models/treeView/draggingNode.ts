@@ -1,4 +1,3 @@
-import { NodeEntityId } from '../tree/node'
 import {
   FlattenedTreeEntity,
   getDepth,
@@ -20,7 +19,7 @@ export const setDraggingNodeByNodeId = ({
   flattenedTree,
 }: {
   entity?: DraggingNodeEntity
-  nodeId?: NodeEntityId
+  nodeId?: string
   flattenedTree: FlattenedTreeEntity
 }) => {
   if (!nodeId) {
@@ -73,8 +72,8 @@ const __getDepth = ({
   depth,
   flattenedTree,
 }: {
-  overNodeId: NodeEntityId
-  draggingNodeId: NodeEntityId
+  overNodeId: string
+  draggingNodeId: string
   depth: number
   flattenedTree: FlattenedTreeEntity
 }): number => {
@@ -98,8 +97,8 @@ const __getMaxMinDepth = ({
   draggingNodeId,
   flattenedTree,
 }: {
-  overNodeId: NodeEntityId
-  draggingNodeId: NodeEntityId
+  overNodeId: string
+  draggingNodeId: string
   flattenedTree: FlattenedTreeEntity
 }) => {
   const movedFlattenedTree = moveNode({
@@ -117,7 +116,7 @@ const __getMaxDepth = ({
   nodeId,
   flattenedTree,
 }: {
-  nodeId: NodeEntityId
+  nodeId: string
   flattenedTree: FlattenedTreeEntity
 }): number => {
   const overNodePrevNode = getPrevNode({ entity: flattenedTree, nodeId })
@@ -128,7 +127,7 @@ const __getMinDepth = ({
   nodeId,
   flattenedTree,
 }: {
-  nodeId: NodeEntityId
+  nodeId: string
   flattenedTree: FlattenedTreeEntity
 }): number => {
   const overNodeNextNode = getNextNode({ entity: flattenedTree, nodeId })

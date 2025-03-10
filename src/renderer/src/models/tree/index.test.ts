@@ -156,7 +156,7 @@ describe('insertNewNodeAfter', () => {
   })
 
   it('nested가 true이면, 소스 노드의 첫번째 자식에 노드 생성', () => {
-    vi.mocked(uuid.v4).mockReturnValueOnce('n-1' as any)
+    vi.mocked(uuid.v4).mockReturnValueOnce('n-1' as unknown as Uint8Array)
 
     const entity: TreeEntity = {
       rootNodeId: 'n',
@@ -213,7 +213,7 @@ describe('insertNewNodeAfter', () => {
   })
 
   it('nested가 false이면, 소스 노드의 다음 친구 노드에 노드 생성', () => {
-    vi.mocked(uuid.v4).mockReturnValueOnce('n-2' as any)
+    vi.mocked(uuid.v4).mockReturnValueOnce('n-2' as unknown as Uint8Array)
 
     const entity: TreeEntity = {
       rootNodeId: 'n',

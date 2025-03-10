@@ -14,31 +14,19 @@ import {
   getCountChildBetweenNodes,
   resetDraggingNode,
 } from './index'
-import { NodeTableEntity } from '../tree/store'
+import { NodeTable } from './flattenedTree'
 import { useShallow } from 'zustand/react/shallow'
 
 interface TreeViewStore {
   entity: TreeViewEntity
-  setRootNodeId: ({
-    rootNodeId,
-    nodeTable,
-  }: {
-    rootNodeId: string
-    nodeTable: NodeTableEntity
-  }) => void
+  setRootNodeId: ({ rootNodeId, nodeTable }: { rootNodeId: string; nodeTable: NodeTable }) => void
   setFocusedNodeId: ({ nodeId }: { nodeId?: string }) => void
   setFocusToPrevNode: () => void
   setFocusToNextNode: () => void
   setFocusForRemovedNode: ({ nodeId }: { nodeId: string }) => void
-  toggleExpandedNode: ({
-    nodeId,
-    nodeTable,
-  }: {
-    nodeId: string
-    nodeTable: NodeTableEntity
-  }) => void
-  expandNode: ({ nodeId, nodeTable }: { nodeId: string; nodeTable: NodeTableEntity }) => void
-  setDraggingNode: ({ nodeId, nodeTable }: { nodeId?: string; nodeTable: NodeTableEntity }) => void
+  toggleExpandedNode: ({ nodeId, nodeTable }: { nodeId: string; nodeTable: NodeTable }) => void
+  expandNode: ({ nodeId, nodeTable }: { nodeId: string; nodeTable: NodeTable }) => void
+  setDraggingNode: ({ nodeId, nodeTable }: { nodeId?: string; nodeTable: NodeTable }) => void
   moveDraggingNode: ({ overNodeId, deltaDepth }: { overNodeId: string; deltaDepth: number }) => void
   getDraggingNodeParentId: ({ overNodeId }: { overNodeId: string }) => string | undefined
   getCountChildBetweenNodes: ({
@@ -48,7 +36,7 @@ interface TreeViewStore {
     parentNodeId: string
     nodeId: string
   }) => number
-  resetDraggingNode: ({ nodeTable }: { nodeTable: NodeTableEntity }) => void
+  resetDraggingNode: ({ nodeTable }: { nodeTable: NodeTable }) => void
 }
 
 const __useTreeViewStore = create<TreeViewStore>((set, get) => ({

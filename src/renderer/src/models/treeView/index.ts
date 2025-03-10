@@ -1,4 +1,3 @@
-import { type NodeEntity } from '../tree/store'
 import {
   DraggingNodeEntity,
   setDraggingNodeByNodeId,
@@ -17,6 +16,7 @@ import {
   initFlattenedTree,
   isExpanded,
   moveNode,
+  NodeTable,
   sliceFlattenedTree,
   toggleExpanded,
 } from './flattenedTree'
@@ -26,8 +26,6 @@ export interface TreeViewEntity {
   focusedNodeId?: string
   draggingNode?: DraggingNodeEntity
 }
-
-type NodeTable = Map<string, NodeEntity>
 
 export const getTreeViewNodes = ({ entity }: { entity: TreeViewEntity }): FlattenedTreeNode[] => {
   return entity.flattenedTree.nodes

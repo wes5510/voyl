@@ -1,10 +1,14 @@
-import { getChildNodeIdsByNodeId, getNode, NodeEntity, NodeEntityId } from '../tree/store'
-
 export type FlattenedTreeEntity = {
   nodes: FlattenedTreeNode[]
   expandedNodeIds: string[]
   rootNodeId: string
 }
+export interface NodeTableItem {
+  id: string
+  childNodeIds: string[]
+}
+
+export type NodeTable = Map<string, NodeTableItem>
 
 export interface FlattenedTreeNode {
   id: string
@@ -12,16 +16,13 @@ export interface FlattenedTreeNode {
   expanded: boolean
   childNodeIds: string[]
 }
-
-type NodeTable = Map<NodeEntityId, NodeEntity>
-
 export const initFlattenedTree = ({
   entity,
   rootNodeId,
   nodeTable,
 }: {
   entity: FlattenedTreeEntity
-  rootNodeId: NodeEntityId
+  rootNodeId: string
   nodeTable: NodeTable
 }): FlattenedTreeEntity => {
   const __new = {
@@ -89,9 +90,9 @@ const __getChildNodeIdsByNodeId = ({
   nodeId,
 }: {
   nodeTable: NodeTable
-  nodeId: NodeEntityId
-}): NodeEntityId[] => {
-  return getChildNodeIdsByNodeId({ entity: { nodeTable, rootNodeId: '' }, nodeId })
+  nodeId: string
+}): string[] => {
+  return nodeTable.get(nodeId)?.childNodeIds ?? []
 }
 
 const __childNodeIdsToTreeViewNodes = ({
@@ -107,7 +108,7 @@ const __childNodeIdsToTreeViewNodes = ({
 }): FlattenedTreeNode[] => {
   return childNodeIds.map((id) =>
     __nodeToTreeViewNode({
-      node: getNode({ entity: nodeTable, nodeId: id }),
+      node: nodeTable.get(id),
       depth,
       expanded: __isExpanded({ nodeId: id, expandedNodeIds }),
     }),
@@ -127,7 +128,7 @@ const __nodeToTreeViewNode = ({
   depth,
   expanded,
 }: {
-  node?: NodeEntity
+  node?: NodeTableItem
   depth: number
   expanded: boolean
 }): FlattenedTreeNode => {
@@ -328,8 +329,8 @@ export const moveNode = ({
 }: {
   entity: FlattenedTreeEntity
   id: {
-    from: NodeEntityId
-    to: NodeEntityId
+    from: string
+    to: string
   }
 }) => {
   return {

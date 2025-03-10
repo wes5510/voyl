@@ -6,7 +6,7 @@ export default function useFocus<T extends HTMLElement = HTMLElement>({
   ref,
 }: {
   nodeId: string
-  ref: RefObject<T>
+  ref: RefObject<T | null>
 }): () => void {
   const focused = useTreeViewStore((state) => isFocus({ entity: state.entity, nodeId }))
   const setFocusedNodeId = useTreeViewStore((state) => state.setFocusedNodeId)
