@@ -1,6 +1,4 @@
-import { css } from '@/styled-system/css'
-import { hstack } from '@/styled-system/patterns'
-import { useState , memo } from 'react'
+import { useState, memo } from 'react'
 import MainPanel from './MainPanel'
 import useTreeView from './useTreeView'
 
@@ -15,41 +13,17 @@ export default function NodesPage() {
   }
 
   return (
-    <div className={hstack({ w: 'full', h: 'full', gap: 0, overflowX: 'hidden' })}>
-      <button
-        onClick={handleClick}
-        className={css({
-          zIndex: 100,
-          position: 'absolute',
-          bottom: 0,
-          bg: 'blue.500',
-        })}
-      >
+    <div className="flex h-full w-full flex-row gap-0 overflow-x-hidden">
+      <button onClick={handleClick} className="absolute bottom-0 z-[100] bg-blue-500">
         (Tester) Open Side Panel
       </button>
-      <div className={css({ flex: 1, h: 'full' })}>
+      <div className="h-full flex-1">
         <MMainPanel />
       </div>
       <div
-        className={css({
-          w: '28rem',
-          h: 'full',
-          mr: opened ? '0' : '-28rem',
-          transition: 'margin-right',
-          transitionTimingFunction: 'ease-in-out',
-          transitionDuration: 'normal',
-        })}
+        className={`h-full w-[28rem] ${opened ? 'mr-0' : '-mr-[28rem]'} transition-[margin-right] duration-300 ease-in-out`}
       >
-        <div
-          className={css({
-            h: 'full',
-            borderLeftWidth: '1px',
-            borderLeftColor: 'zinc.300',
-            borderLeftStyle: 'solid',
-          })}
-        >
-          Side Panel
-        </div>
+        <div className="h-full border-l border-l-zinc-300">Side Panel</div>
       </div>
     </div>
   )
