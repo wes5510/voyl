@@ -4,8 +4,8 @@ _Read this in other languages: [한국어](README.ko.md)_
 
 ## Overview
 
-common manages pure shared code that is reused throughout the project.
-It minimizes external dependencies to maintain high reusability and independence.
+The Common layer manages domain-independent pure shared code that can be reused across the project.
+It minimizes external dependencies to ensure high reusability and independence.
 
 ## Structure
 
@@ -13,49 +13,56 @@ It minimizes external dependencies to maintain high reusability and independence
 
 ```
 common/
-├── Button/         # UI Components
+├── Button/         # UI components
 │   └── index.tsx
-├── useTable.ts     # React hooks
-├── date.util.ts    # Utility functions
-├── date.const.ts   # Constants
-└── table.type.ts   # Type definitions
+└── useTable.ts     # React hooks
 ```
 
 ### Components
 
 - Includes UI components, React hooks, utility functions, constants, and type definitions
 - Pure shared code that is not dependent on specific domains
-- All files are located at the root level (Flatten structure)
-- Components can be structured as either single files (.tsx) or folders (index.tsx)
+- Components can be structured as single files (.tsx) or folders (index.tsx)
 
-## Import Rules
+## Rules
 
-### voyl/same-hierarchy-import
+### Import Rules
+
+#### voyl/same-hierarchy-import
+
+This rule allows importing only from files in the same hierarchy.
 
 ```typescript
-// Same hierarchy imports
-import { ProductList } from './ProductList' // ✅ Files/folders in same directory
-import { types } from './types' // ✅ Files in same directory
+// Imports within the same hierarchy
+import { ProductList } from './ProductList' // ✅ Component in the same hierarchy
+import { types } from './types' // ✅ File in the same directory
 
 import { Something } from '../other/Something' // ❌ Different hierarchy
-import { Deep } from './deep/nested/Component' // ❌ Deep nested path
+import { Deep } from './deep/nested/Component' // ❌ Deeply nested path
 
 // Shared imports
-import { SharedButton } from '@/common/shared/Button' // ✅ Upper hierarchy shared
-import { ListItem } from './shared/ListItem' // ✅ Same hierarchy shared
+import { SharedButton } from '@/common/shared/Button' // ✅ Shared file/folder from higher hierarchy
+import { ListItem } from './shared/ListItem' // ✅ Shared file/folder from same hierarchy
 
-import { Sub } from './shared/Button/Sub' // ❌ Shared subdirectory
-import { Other } from '../shared/Other' // ❌ Different hierarchy shared (except upper)
-import { Button } from './products/shared/Button' // ❌ Lower hierarchy shared
+import { Sub } from './shared/Button/Sub' // ❌ Path below shared
+import { Other } from '../shared/Other' // ❌ Shared from different hierarchy (except higher)
+import { Button } from './products/shared/Button' // ❌ Shared from lower hierarchy
 ```
 
-### voyl/common-isolation
+#### voyl/common-isolation
+
+This rule prohibits importing code from other layers.
 
 ```typescript
-// Allowed imports
-import * as React from 'react' // ✅ node_modules modules
+import * as React from 'react' // ✅ Node modules
 
-// Forbidden imports
-import { TreeView } from '@/features/tree/ui/TreeView' // ❌ Other layer modules
-import { PageComponent } from '@/pages/some-page' // ❌ Pages layer modules
+import type { TreeView } from '@/models/treeView' // ❌ Module from another layer
 ```
+
+## Related Documentation
+
+For detailed information about other layers, please refer to the following documents:
+
+- [Project Structure](../README.md)
+- [Models Structure](../models/README.md)
+- [Pages Structure](../pages/README.md)

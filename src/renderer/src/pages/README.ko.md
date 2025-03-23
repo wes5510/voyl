@@ -4,27 +4,23 @@ _다른 언어로 읽기: [English](README.md)_
 
 ## 개요
 
-이 문서는 `pages/` 디렉토리의 구조와 규칙을 설명합니다. 우리는 다음 두 가지 핵심 원칙을 추구합니다:
-
-- **높은 응집도**: 관련된 파일들을 하나의 디렉토리에 모아 관리합니다
-- **낮은 결합도**: 명확한 Interface를 통해 컴포넌트 간 의존성을 최소화합니다
+Pages 레이어는 애플리케이션의 UI 컴포넌트와 사용자 인터페이스를 구성합니다.
+URL 구조와 1:1로 매칭되는 디렉토리 구조를 통해 직관적인 페이지 구성을 제공합니다.
 
 ## 구조
 
 ### 기본 구조
 
-프로젝트는 다음과 같은 계층적 구조를 따릅니다:
-
 ```
 pages/
 ├── shared/              # 최상위 공통 컴포넌트
-├── products/           # /products 페이지
-│   ├── shared/        # products 페이지 공통 컴포넌트
-│   ├── list/          # /products/list 페이지
-│   │   ├── shared/   # list 페이지 공통 컴포넌트
+├── products/            # /products 페이지
+│   ├── shared/          # products 페이지 공통 컴포넌트
+│   ├── list/            # /products/list 페이지
+│   │   ├── shared/      # list 페이지 공통 컴포넌트
 │   │   └── index.tsx
-│   └── [id]/          # /products/:id 페이지
-└── index.tsx          # 루트 페이지 (/)
+│   └── [id]/            # /products/:id 페이지
+└── index.tsx            # 루트 페이지 (/)
 ```
 
 ### 구성요소
@@ -54,9 +50,13 @@ ComponentName/
 └── const.ts       # 상수 정의
 ```
 
-## Import 규칙
+## 규칙
 
-### voyl/same-hierarchy-import
+### Import 규칙
+
+#### voyl/same-hierarchy-import
+
+동일 계층 내의 파일만 import할 수 있습니다.
 
 ```typescript
 // 동일 계층 내 import
@@ -75,19 +75,20 @@ import { Other } from '../shared/Other' // ❌ 다른 계층 shared (상위 계�
 import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
 ```
 
-### voyl/feature-ui-interface-only
+#### voyl/model-store-import-only
+
+model 레이어에서는 store만 import할 수 있습니다.
 
 ```typescript
-import { TreeView } from '@/features/tree/ui/TreeView' // ✅ feature ui의 직계 파일
-import { FirstPointLink } from '@/features/path/ui/Path' // ✅ feature ui의 직계 폴더
+import useTreeViewStore from '@/models/treeView/store' // ✅ model의 store
 
-import { FirstPointLink } from '@/features/path/ui/Path/SecondPointLink' // ❌ feature ui의 깊은 중첩 경로
+import { useTreeStore } from '@/models/treeView/draggingNode' // ❌ model의 깊은 중첩 경로
 ```
 
-### voyl/feature-model-index-import-only
+## 관련 문서
 
-```typescript
-import { useTreeStore } from '@/features/tree/model' // ✅ feature model의 단일 진입점
+아래 문서에서 다른 레이어에 대한 상세 정보를 확인할 수 있습니다:
 
-import { useTreeStore } from '@/features/tree/model/node' // ❌ feature model의 깊은 중첩 경로
-```
+- [프로젝트 구조](../README.ko.md)
+- [Models 구조](../models/README.ko.md)
+- [Common 구조](../common/README.ko.md)
