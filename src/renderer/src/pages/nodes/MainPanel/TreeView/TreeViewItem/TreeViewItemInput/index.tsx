@@ -1,5 +1,4 @@
 import { useHotkeys } from 'react-hotkeys-hook'
-import { css, cx } from '@/styled-system/css'
 import { ChangeEvent, useRef } from 'react'
 import mergeRefs from 'merge-refs'
 import useAutoResize from './useAutoResize'
@@ -7,6 +6,7 @@ import useHandlePaste from './useHandlePaste'
 import useHandleKey from './useHandleKey'
 import useFocus from './useFocus'
 import useTreeStore, { getTitleByNodeId } from '@/models/tree/store'
+import cn from '@/common/cn'
 
 export interface TreeViewItemInputProps {
   nodeId: string
@@ -51,14 +51,7 @@ export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInp
       onPaste={handlePaste}
       rows={1}
       onFocus={handleFocus}
-      className={cx(
-        css({
-          wordBreak: 'break-word',
-          outline: 'none',
-          resize: 'none',
-        }),
-        className,
-      )}
+      className={cn('word-break-break-word resize-none outline-none', className)}
     />
   )
 }

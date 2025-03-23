@@ -8,7 +8,7 @@ export default function AddButton() {
   return (
     <button
       onClick={handleClick}
-      className="flex w-fit cursor-pointer gap-1 transition duration-75 hover:font-semibold"
+      className="flex w-fit cursor-pointer items-center gap-1 transition duration-75 hover:font-semibold"
     >
       <PlusIcon width="20" height="20" />
       Add Thing

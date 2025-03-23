@@ -1,4 +1,4 @@
-import { center } from '@/styled-system/patterns'
+import cn from '@/common/cn'
 import { MouseEventHandler, PropsWithChildren } from 'react'
 
 export interface IconButtonProps extends PropsWithChildren {
@@ -6,20 +6,13 @@ export interface IconButtonProps extends PropsWithChildren {
   onClick?: MouseEventHandler
 }
 
-export default function IconButton({ children, onClick, ...props }: IconButtonProps) {
+export default function IconButton({ children, onClick, className, ...props }: IconButtonProps) {
   return (
     <button
-      className={center({
-        w: 6,
-        h: 6,
-        rounded: 'full',
-        cursor: 'pointer',
-        bg: {
-          _hover: 'neutral.200',
-        },
-        transitionProperty: 'background',
-        transitionDuration: 'slow',
-      })}
+      className={cn(
+        'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition duration-75 hover:bg-zinc-200/80',
+        className,
+      )}
       onClick={onClick}
       {...props}
     >

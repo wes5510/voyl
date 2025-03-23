@@ -1,7 +1,6 @@
 import CollapseButton from './ExpandButton'
 import DotButton from './DotButton'
 import TreeViewItemInput from './TreeViewItemInput'
-import { css } from '@/styled-system/css'
 import TreeViewItemWrapper from '../shared/TreeViewItemWrapper'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -30,12 +29,7 @@ export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps) {
     <TreeViewItemWrapper ref={setNodeRef} depth={depth} style={style}>
       <MCollapseButton nodeId={nodeId} />
       <DotButton {...attributes} {...listeners} />
-      <MTreeViewItemInput
-        nodeId={nodeId}
-        className={css({
-          flex: 1,
-        })}
-      />
+      <MTreeViewItemInput nodeId={nodeId} className="flex-1" />
     </TreeViewItemWrapper>
   )
 }

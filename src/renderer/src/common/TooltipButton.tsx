@@ -1,6 +1,6 @@
 import { MouseEventHandler, PropsWithChildren } from 'react'
-import { center } from '@/styled-system/patterns'
 import Tooltip from './Tooltip'
+import cn from './cn'
 
 export interface TooltipButtonProps extends PropsWithChildren {
   text: string
@@ -12,18 +12,10 @@ export default function TooltipButton({ children, text, active, onClick }: Toolt
   return (
     <Tooltip text={text}>
       <button
-        className={center({
-          w: 10,
-          h: 10,
-          cursor: 'pointer',
-          bg: active
-            ? 'zinc.200'
-            : {
-                _hover: 'neutral.200',
-              },
-          transitionProperty: 'background',
-          transitionDuration: 'slow',
-        })}
+        className={cn(
+          'flex h-10 w-10 cursor-pointer items-center justify-center transition duration-75 hover:bg-zinc-200/80',
+          active && 'bg-zinc-200',
+        )}
         onClick={onClick}
       >
         {children}

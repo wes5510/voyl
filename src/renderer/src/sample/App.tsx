@@ -1,6 +1,5 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
-import { css } from '@/styled-system/css'
 
 function App() {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -8,8 +7,8 @@ function App() {
   return (
     <>
       <img alt="logo" className="logo" src={electronLogo} />
-      <div className={css({ fontSize: '2xl', fontWeight: 'bold' })}>Powered by electron-vite</div>
-      <div className="text">
+      <div className="text-2xl font-bold">Powered by electron-vite</div>
+      <div className="text-sm">
         Build an Electron app with <span className="react">React</span>
         &nbsp;and <span className="ts">TypeScript</span>
       </div>

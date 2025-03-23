@@ -1,4 +1,3 @@
-import { vstack } from '@/styled-system/patterns'
 import TreeViewItem from './TreeViewItem'
 import { memo } from 'react'
 import AddButton from './AddButton'
@@ -111,7 +110,7 @@ export default function TreeView() {
   }
 
   return (
-    <div className={vstack({ gap: 3, alignItems: 'normal' })}>
+    <div className="items-normal flex flex-col gap-3">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
