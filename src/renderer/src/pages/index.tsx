@@ -1,4 +1,3 @@
-import { hstack, vstack } from '@/styled-system/patterns'
 import NodesPage from './nodes'
 import TopBar from './TopBar'
 import SideBar from './SideBar'
@@ -6,9 +5,9 @@ import { Route, Routes } from 'react-router'
 
 export default function IndexPage() {
   return (
-    <div className={vstack({ gap: 0, h: 'full' })}>
+    <div className="flex h-screen flex-col gap-0">
       <TopBar />
-      <div className={hstack({ flex: 1, w: 'full', gap: 0 })}>
+      <div className="flex w-full flex-1 flex-row gap-0">
         <SideBar />
         <Routes>
           <Route path="nodes" element={<NodesPage />} />

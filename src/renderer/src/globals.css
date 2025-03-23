@@ -1,3 +1,5 @@
+@layer reset, base, tokens, recipes, utilities;
+
 @import "tailwindcss";
 @import "tw-animate-css";
 

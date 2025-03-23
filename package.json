@@ -66,9 +66,9 @@
     "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^8.27.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "electron": "^35.0.3",
-    "electron-builder": "^25.1.8",
-    "electron-vite": "^3.0.0",
+    "electron": "35.0.3",
+    "electron-builder": "25.1.8",
+    "electron-vite": "3.0.0",
     "eslint": "^9.23.0",
     "eslint-import-resolver-typescript": "^4.2.2",
     "eslint-plugin-import": "^2.31.0",
@@ -87,5 +87,11 @@
     "vite": "^6.2.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.9"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
   }
 }
