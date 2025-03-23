@@ -7,12 +7,12 @@ import {
   getMidPoints,
   getMidPointLength,
 } from '.'
-import ListIcon from '@/common/ListIcon'
+import { ListTree } from 'lucide-react'
 
 const usePathStore = create<PathEntity>(() => ({
   points: [
     {
-      icon: ListIcon,
+      icon: ListTree,
       text: 'Things',
       url: '/',
     },

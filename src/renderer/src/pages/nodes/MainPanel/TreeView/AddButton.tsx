@@ -1,4 +1,4 @@
-import PlusIcon from '@/common/PlusIcon'
+import { Plus } from 'lucide-react'
 
 export default function AddButton() {
   const handleClick = (): void => {
@@ -10,7 +10,7 @@ export default function AddButton() {
       onClick={handleClick}
       className="flex w-fit cursor-pointer items-center gap-1 transition duration-75 hover:font-semibold"
     >
-      <PlusIcon width="20" height="20" />
+      <Plus className="h-5 w-5 stroke-[1.5]" />
       Add Thing
     </button>
   )

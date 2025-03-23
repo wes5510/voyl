@@ -1,5 +1,9 @@
-import CircleIcon from '@/common/CircleIcon'
+import { Circle } from 'lucide-react'
 
 export default function DotIcon() {
-  return <CircleIcon className="h-1.5 w-1.5 self-center" />
+  return (
+    <div className="flex items-center justify-center">
+      <Circle className="h-1.5 w-1.5 fill-inherit" />
+    </div>
+  )
 }
