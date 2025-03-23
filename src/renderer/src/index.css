@@ -1,6 +1,0 @@
-@import "tailwindcss";
-@layer reset, base, tokens, recipes, utilities;
-
-html, #root {
-  height: 100%;
-}

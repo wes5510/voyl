@@ -1,4 +1,4 @@
-import './index.css'
+import './globals.css'
 import '@fontsource/roboto-mono/700.css'
 import { createRoot } from 'react-dom/client'
 import { StrictMode } from 'react'

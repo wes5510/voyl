@@ -47,7 +47,7 @@ ruleTester.run('model-store-import-only', rule, {
       errors: [
         {
           messageId: 'invalidModelAccess',
-          data: { importPath: '../../models/tree/store/utils' },
+          data: { importPath: '../../models/tree/utils' },
         },
       ],
     },
