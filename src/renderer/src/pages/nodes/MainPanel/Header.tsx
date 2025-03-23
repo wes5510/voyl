@@ -1,29 +1,10 @@
-import { css } from '@/styled-system/css'
-import { hstack } from '@/styled-system/patterns'
 import ListIcon from '@/common/ListIcon'
 
 export default function MainPanelHeader() {
   return (
-    <div
-      className={hstack({
-        gap: 3,
-      })}
-    >
-      <ListIcon
-        className={css({
-          width: 9,
-          height: 9,
-        })}
-      />
-      <span
-        className={css({
-          fontSize: '3xl',
-          fontWeight: 'bold',
-          fontFamily: 'roboto mono, monospace',
-        })}
-      >
-        Things
-      </span>
+    <div className="flex items-center gap-3">
+      <ListIcon className="h-9 w-9" />
+      <span className="font-[roboto_mono,_monospace] text-3xl font-bold">Things</span>
     </div>
   )
 }

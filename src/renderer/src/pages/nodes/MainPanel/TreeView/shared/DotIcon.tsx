@@ -1,14 +1,5 @@
-import { css } from '@/styled-system/css'
 import CircleIcon from '@/common/CircleIcon'
 
 export default function DotIcon() {
-  return (
-    <CircleIcon
-      className={css({
-        w: 1.5,
-        h: 1.5,
-        alignSelf: 'center',
-      })}
-    />
-  )
+  return <CircleIcon className="h-1.5 w-1.5 self-center" />
 }

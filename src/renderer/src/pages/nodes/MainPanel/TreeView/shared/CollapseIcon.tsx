@@ -1,4 +1,3 @@
-import { css } from '@/styled-system/css'
 import ChevronRightIcon from '@/common/ChevronRightIcon'
 
 export interface CollapseIconProps {
@@ -8,13 +7,7 @@ export interface CollapseIconProps {
 export default function CollapseIcon({ expanded }: CollapseIconProps) {
   return (
     <ChevronRightIcon
-      className={css({
-        w: 4,
-        h: 4,
-        transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)',
-        translate: 'transform',
-        transitionDuration: 'normal',
-      })}
+      className={`h-4 w-4 transition-transform duration-300 ${expanded ? 'rotate-90' : 'rotate-0'}`}
     />
   )
 }

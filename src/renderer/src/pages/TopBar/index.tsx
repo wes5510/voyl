@@ -1,18 +1,8 @@
 import Path from './Path'
-import { hstack } from '@/styled-system/patterns'
 
 export default function TopBar() {
   return (
-    <div
-      className={hstack({
-        paddingStart: 2.5,
-        h: 10,
-        w: 'full',
-        borderBottomWidth: '1px',
-        borderBottomColor: 'black/50',
-        justify: 'space-between',
-      })}
-    >
+    <div className="flex h-10 w-full flex-shrink-0 items-center justify-between border-b border-black/50 px-2.5">
       <Path />
     </div>
   )

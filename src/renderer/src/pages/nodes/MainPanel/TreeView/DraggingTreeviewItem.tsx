@@ -1,5 +1,3 @@
-import { center } from '@/styled-system/patterns'
-import { css } from '@/styled-system/css'
 import TreeViewItemWrapper from './shared/TreeViewItemWrapper'
 import CollapseIcon from './shared/CollapseIcon'
 import DotIcon from './shared/DotIcon'
@@ -16,13 +14,13 @@ export default function DraggingTreeviewItem({ nodeId }: DraggingTreeviewItemPro
 
   return (
     <TreeViewItemWrapper depth={depth}>
-      <div className={center({ w: 6, h: 6 })}>
+      <div className="flex h-6 w-6 items-center justify-center">
         <CollapseIcon expanded={false} />
       </div>
-      <div className={center({ w: 6, h: 6 })}>
+      <div className="flex h-6 w-6 items-center justify-center">
         <DotIcon />
       </div>
-      <div className={css({ flex: 1 })}>{title}</div>
+      <div className="flex-1">{title}</div>
     </TreeViewItemWrapper>
   )
 }

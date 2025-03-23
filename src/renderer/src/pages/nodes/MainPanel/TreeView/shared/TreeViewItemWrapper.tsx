@@ -1,4 +1,3 @@
-import { hstack } from '@/styled-system/patterns'
 import { ForwardedRef, forwardRef, PropsWithChildren } from 'react'
 import { INDENT_WIDTH } from './const'
 
@@ -14,10 +13,7 @@ function TreeViewItemWrapper(
   return (
     <div
       ref={ref}
-      className={hstack({
-        gap: 1.5,
-        alignItems: 'flex-start',
-      })}
+      className="flex items-start gap-1.5"
       style={{
         paddingLeft: `${depth * INDENT_WIDTH}px`,
         ...style,

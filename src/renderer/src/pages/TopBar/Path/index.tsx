@@ -1,11 +1,10 @@
-import { hstack } from '@/styled-system/patterns'
 import FirstPointLink from './FirstPointLink'
 import LastPointLink from './LastPointLink'
 import MidPathSegment from './MidPathSegment'
 
 export default function Path() {
   return (
-    <div className={hstack({ gap: 1.5, fontSize: 'sm', color: 'zinc.600' })}>
+    <div className="flex items-center gap-1.5 text-sm text-zinc-600">
       <FirstPointLink />
       <MidPathSegment />
       <LastPointLink />

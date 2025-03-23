@@ -1,4 +1,3 @@
-import { hstack } from '@/styled-system/patterns'
 import PlusIcon from '@/common/PlusIcon'
 
 export default function AddButton() {
@@ -9,16 +8,7 @@ export default function AddButton() {
   return (
     <button
       onClick={handleClick}
-      className={hstack({
-        width: 'fit-content',
-        gap: 1,
-        cursor: 'pointer',
-        _hover: {
-          fontWeight: 'semibold',
-        },
-        transitionProperty: 'font-weight',
-        transitionDuration: 'fastest',
-      })}
+      className="flex w-fit cursor-pointer gap-1 transition duration-75 hover:font-semibold"
     >
       <PlusIcon width="20" height="20" />
       Add Thing

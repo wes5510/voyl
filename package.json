@@ -33,6 +33,7 @@
     "@electron-toolkit/utils": "^4.0.0",
     "@fontsource/roboto-mono": "^5.2.5",
     "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-scroll-area": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@tailwindcss/vite": "^4.0.15",
     "autosize": "^6.0.1",

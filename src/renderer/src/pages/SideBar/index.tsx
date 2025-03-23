@@ -1,19 +1,11 @@
-import { vstack } from '@/styled-system/patterns'
 import Divider from './Divider'
 import FavoriteMenu from './FavoriteMenu'
 import AppMenu from './AppMenu'
 
 export default function SideBar() {
   return (
-    <div
-      className={vstack({
-        h: 'full',
-        borderRightWidth: '1px',
-        borderRightColor: 'black/50',
-        justify: 'space-between',
-      })}
-    >
-      <div className={vstack({ gap: 0 })}>
+    <div className="flex h-full flex-col justify-between border-r border-black/50">
+      <div className="flex flex-col gap-0">
         <AppMenu />
         <Divider />
         <FavoriteMenu />
