@@ -26,6 +26,7 @@ export default [
       'plugin:@typescript-eslint/recommended',
       'plugin:import/recommended',
       'plugin:import/typescript',
+      'plugin:tailwindcss/recommended',
     ),
   ),
   {
