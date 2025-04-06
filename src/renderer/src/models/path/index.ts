@@ -4,18 +4,19 @@ export interface PathEntity {
   points: PointEntity[]
 }
 
-export const getFirstPoint = ({ points }: PathEntity): PointEntity | undefined =>
-  points.length > 0 ? points[0] : undefined
+export const getFirstPoint = ({ entity }: { entity: PathEntity }): PointEntity | undefined =>
+  entity.points.length > 0 ? entity.points[0] : undefined
 
-export const getLastPoint = ({ points }: PathEntity): PointEntity | undefined =>
-  points.length > 1 ? points[points.length - 1] : undefined
+export const getLastPoint = ({ entity }: { entity: PathEntity }): PointEntity | undefined =>
+  entity.points.length > 1 ? entity.points[entity.points.length - 1] : undefined
 
-export const getMidPoints = ({ points }: PathEntity): PointEntity[] =>
-  points.length > 2 ? points.slice(1, points.length - 1) : []
+export const getMidPoints = ({ entity }: { entity: PathEntity }): PointEntity[] =>
+  entity.points.length > 2 ? entity.points.slice(1, entity.points.length - 1) : []
 
-export const getMidPoint = ({ points }: PathEntity): PointEntity | undefined => {
-  const midPoints = getMidPoints({ points })
+export const getMidPoint = ({ entity }: { entity: PathEntity }): PointEntity | undefined => {
+  const midPoints = getMidPoints({ entity })
   return midPoints.length > 0 ? midPoints[0] : undefined
 }
 
-export const getMidPointLength = ({ points }: PathEntity): number => getMidPoints({ points }).length
+export const getMidPointLength = ({ entity }: { entity: PathEntity }): number =>
+  getMidPoints({ entity }).length

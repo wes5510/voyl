@@ -1,5 +1,5 @@
-import PointLink from './shared/PointLink'
 import usePathStore, { getFirstPoint } from '@/models/path/store'
+import PointLink from './shared/PointLink'
 
 export default function FirstPointLink() {
   const point = usePathStore(getFirstPoint)

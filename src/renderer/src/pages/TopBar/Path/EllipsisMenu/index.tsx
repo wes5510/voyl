@@ -1,24 +1,29 @@
-import { hstack } from '@/styled-system/patterns'
-import Popover from './Popover'
-import MenuButton from './MenuButton'
-import PointLink from '../shared/PointLink'
 import usePathStore, { getMidPoints } from '@/models/path/store'
+import BreadcrumbItem from '@/common/BreadcrumbItem'
+import DropdownMenu from '@/common/DropdownMenu'
+import BreadcrumbEllipsis from '@/common/BreadcrumbEllipsis'
+import DropdownMenuContent from '@/common/DropdownMenuContent'
+import MenuButton from './MenuButton'
+import DropdownMenuTrigger from '@/common/DropdownMenuTrigger'
 
 export default function EllipsisMenu() {
   const points = usePathStore(getMidPoints)
 
   return (
-    <div className={hstack({ gap: 2 })}>
-      <Popover.Root>
-        <Popover.Trigger>
-          <PointLink text="..." />
-        </Popover.Trigger>
-        <Popover.Content>
-          {points.map((point) => (
-            <MenuButton key={point.url} icon={point.icon} href={point.url} text={point.text} />
+    <BreadcrumbItem>
+      <span>/</span>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <div className="flex cursor-pointer items-center gap-1" aria-label="Toggle menu">
+            <BreadcrumbEllipsis />
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {points.map(({ url, icon, text }) => (
+            <MenuButton key={url} icon={icon} href={url} text={text} />
           ))}
-        </Popover.Content>
-      </Popover.Root>
-    </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </BreadcrumbItem>
   )
 }

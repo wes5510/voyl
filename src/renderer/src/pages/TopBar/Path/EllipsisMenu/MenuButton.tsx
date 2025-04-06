@@ -1,5 +1,5 @@
 import { ElementType } from 'react'
-import cn from '@/common/cn'
+import DropdownMenuItem from '@/common/DropdownMenuItem'
 
 interface MenuButtonProps {
   href: string
@@ -9,9 +9,11 @@ interface MenuButtonProps {
 
 export default function MenuButton({ href, text, icon: Icon }: MenuButtonProps) {
   return (
-    <a className={cn('flex w-full cursor-pointer gap-1 p-3 hover:bg-zinc-100')} href={href}>
-      {Icon && <Icon className="h-4 w-4" />}
-      <span className="flex-1 truncate">{text}</span>
-    </a>
+    <DropdownMenuItem asChild>
+      <a href={href} className="flex items-center gap-2">
+        {Icon && <Icon className="h-4 w-4" />}
+        <span className="flex-1 truncate">{text}</span>
+      </a>
+    </DropdownMenuItem>
   )
 }

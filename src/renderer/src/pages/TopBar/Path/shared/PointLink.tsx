@@ -1,6 +1,6 @@
 import { ElementType } from 'react'
-import { hstack } from '@/styled-system/patterns'
-import { css } from '@/styled-system/css'
+import BreadcrumbLink from '@/common/BreadcrumbLink'
+import BreadcrumbItem from '@/common/BreadcrumbItem'
 
 interface PointLinkProps {
   text: string
@@ -10,35 +10,10 @@ interface PointLinkProps {
 
 export default function PointLink({ text, icon: Icon, href }: PointLinkProps) {
   return (
-    <div className={hstack({ gap: 2 })}>
+    <BreadcrumbItem>
       <span>/</span>
-      <a
-        href={href}
-        className={hstack({
-          gap: 1,
-          cursor: 'pointer',
-          _hover: {
-            textDecoration: 'underline',
-          },
-        })}
-      >
-        {Icon && (
-          <Icon
-            className={css({
-              w: 4,
-              h: 4,
-            })}
-          />
-        )}
-        <span
-          className={css({
-            truncate: true,
-            maxW: 48,
-          })}
-        >
-          {text}
-        </span>
-      </a>
-    </div>
+      {Icon && <Icon className="h-4 w-4" />}
+      <BreadcrumbLink href={href}>{text}</BreadcrumbLink>
+    </BreadcrumbItem>
   )
 }

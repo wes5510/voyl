@@ -3,7 +3,3 @@ dist
 out
 .DS_Store
 *.log*
-
-## Panda
-styled-system
-styled-system-studio

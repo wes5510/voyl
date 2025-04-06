@@ -15,7 +15,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/node_modules', '**/dist', '**/out', '**/.gitignore', '**/styled-system'],
+    ignores: ['**/node_modules', '**/dist', '**/out', '**/.gitignore'],
   },
   ...fixupConfigRules(
     compat.extends(
@@ -61,15 +61,10 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**', '**/common/**'],
+          ignorePatterns: ['**/common/**'],
         },
       ],
-      'voyl/common-isolation': [
-        'error',
-        {
-          ignorePatterns: ['@/styled-system/**'],
-        },
-      ],
+      'voyl/common-isolation': ['error'],
     },
   },
   {
@@ -81,7 +76,7 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**', '**/common/**'],
+          ignorePatterns: ['**/common/**'],
         },
       ],
       'voyl/no-cross-model-imports': ['error'],
@@ -97,7 +92,7 @@ export default [
       'voyl/same-hierarchy-import': [
         'error',
         {
-          ignorePatterns: ['@/styled-system/**', '**/common/**', '**/models/**'],
+          ignorePatterns: ['**/common/**', '**/models/**'],
         },
       ],
       'voyl/model-store-import-only': ['error'],
