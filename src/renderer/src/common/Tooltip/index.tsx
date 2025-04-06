@@ -7,12 +7,18 @@ interface TooltipProps {
   content: string
   children: React.ReactNode
   side?: React.ComponentProps<typeof Content>['side']
+  disableHoverableContent?: boolean
 }
 
-export default function Tooltip({ content, children, side }: TooltipProps) {
+export default function Tooltip({
+  content,
+  children,
+  side,
+  disableHoverableContent,
+}: TooltipProps) {
   return (
     <Provider>
-      <Root>
+      <Root disableHoverableContent={disableHoverableContent}>
         <Trigger>{children}</Trigger>
         <Content side={side}>{content}</Content>
       </Root>

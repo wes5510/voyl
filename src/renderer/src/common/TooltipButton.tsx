@@ -10,7 +10,7 @@ export interface TooltipButtonProps extends PropsWithChildren {
 
 export default function TooltipButton({ children, text, active, onClick }: TooltipButtonProps) {
   return (
-    <Tooltip content={text} side="right">
+    <Tooltip content={text} side="right" disableHoverableContent>
       <button
         className={cn(
           'flex h-10 w-10 cursor-pointer items-center justify-center transition duration-75 hover:bg-zinc-200/80',
