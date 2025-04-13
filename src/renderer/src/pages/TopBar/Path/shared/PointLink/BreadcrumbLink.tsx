@@ -1,5 +1,5 @@
 import { Slot } from '@radix-ui/react-slot'
-import cn from './cn'
+import cn from '@/common/cn'
 
 export default function BreadcrumbLink({
   asChild,

@@ -1,6 +1,7 @@
 import { ElementType } from 'react'
-import BreadcrumbLink from '@/common/BreadcrumbLink'
-import BreadcrumbItem from '@/common/BreadcrumbItem'
+import BreadcrumbLink from './BreadcrumbLink'
+import BreadcrumbItem from '../BreadcrumbItem'
+import BreadcrumbSeparator from '../BreadcrumbSeparator'
 
 interface PointLinkProps {
   text: string
@@ -11,7 +12,7 @@ interface PointLinkProps {
 export default function PointLink({ text, icon: Icon, href }: PointLinkProps) {
   return (
     <BreadcrumbItem>
-      <span>/</span>
+      <BreadcrumbSeparator />
       {Icon && <Icon className="h-4 w-4" />}
       <BreadcrumbLink href={href}>{text}</BreadcrumbLink>
     </BreadcrumbItem>

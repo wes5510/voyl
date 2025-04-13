@@ -1,4 +1,4 @@
-import cn from './cn'
+import cn from '../../../../common/cn'
 
 export default function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (

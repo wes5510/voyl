@@ -84,6 +84,14 @@ module.exports = {
       if (isIndexFile(absoluteImportPath)) {
         return isValidIndexImport(absoluteFilePath, absoluteImportPath)
       }
+
+      if (isIndexFile(absoluteFilePath)) {
+        return (
+          isValidIndexImport(absoluteImportPath, absoluteFilePath) ||
+          isSameDirectory(absoluteFilePath, absoluteImportPath)
+        )
+      }
+
       return isSameDirectory(absoluteFilePath, absoluteImportPath)
     }
 

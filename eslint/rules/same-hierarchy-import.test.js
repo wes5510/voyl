@@ -20,6 +20,10 @@ ruleTester.run('same-hierarchy-import', rule, {
       code: 'import { Something } from "@/pages/Something"',
       filename: '/project/src/pages/index.ts',
     },
+    {
+      code: 'import { Something } from "../Something"',
+      filename: '/project/src/pages/A/index.ts',
+    },
 
     // 2. Import from shared directory
     {

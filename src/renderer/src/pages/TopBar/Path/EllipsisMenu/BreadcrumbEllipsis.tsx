@@ -1,14 +1,12 @@
 import { MoreHorizontal } from 'lucide-react'
-import cn from './cn'
 
-export default function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'>) {
+export default function BreadcrumbEllipsis() {
   return (
     <span
       data-slot="breadcrumb-ellipsis"
       role="presentation"
       aria-hidden="true"
-      className={cn('flex size-9 items-center justify-center', className)}
-      {...props}
+      className="flex size-9 items-center justify-center"
     >
       <MoreHorizontal className="size-4" />
       <span className="sr-only">More</span>

@@ -1,17 +1,18 @@
 import usePathStore, { getMidPoints } from '@/models/path/store'
-import BreadcrumbItem from '@/common/BreadcrumbItem'
+import BreadcrumbItem from '../shared/BreadcrumbItem'
 import DropdownMenu from '@/common/DropdownMenu'
-import BreadcrumbEllipsis from '@/common/BreadcrumbEllipsis'
+import BreadcrumbEllipsis from './BreadcrumbEllipsis'
 import DropdownMenuContent from '@/common/DropdownMenuContent'
 import MenuButton from './MenuButton'
 import DropdownMenuTrigger from '@/common/DropdownMenuTrigger'
+import BreadcrumbSeparator from '../shared/BreadcrumbSeparator'
 
 export default function EllipsisMenu() {
   const points = usePathStore(getMidPoints)
 
   return (
     <BreadcrumbItem>
-      <span>/</span>
+      <BreadcrumbSeparator />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex cursor-pointer items-center gap-1" aria-label="Toggle menu">

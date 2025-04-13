@@ -1,17 +1,14 @@
-import Breadcrumb from '@/common/Breadcrumb'
 import FirstPointLink from './FirstPointLink'
 import LastPointLink from './LastPointLink'
 import MidPathSegment from './MidPathSegment'
-import BreadcrumbList from '@/common/BreadcrumbList'
+import Breadcrumb from './Breadcrumb'
 
 export default function Path() {
   return (
     <Breadcrumb>
-      <BreadcrumbList>
-        <FirstPointLink />
-        <MidPathSegment />
-        <LastPointLink />
-      </BreadcrumbList>
+      <FirstPointLink />
+      <MidPathSegment />
+      <LastPointLink />
     </Breadcrumb>
   )
 }
