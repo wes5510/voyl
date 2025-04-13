@@ -1,5 +1,5 @@
 import { ElementType } from 'react'
-import DropdownMenuItem from '@/common/DropdownMenuItem'
+import DropdownMenuItem from './DropdownMenuItem'
 
 interface MenuButtonProps {
   href: string

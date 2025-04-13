@@ -1,10 +1,10 @@
 import usePathStore, { getMidPoints } from '@/models/path/store'
 import BreadcrumbItem from '../shared/BreadcrumbItem'
-import DropdownMenu from '@/common/DropdownMenu'
+import DropdownMenu from './DropdownMenu'
 import BreadcrumbEllipsis from './BreadcrumbEllipsis'
-import DropdownMenuContent from '@/common/DropdownMenuContent'
+import DropdownMenuContent from './DropdownMenuContent'
 import MenuButton from './MenuButton'
-import DropdownMenuTrigger from '@/common/DropdownMenuTrigger'
+import DropdownMenuTrigger from './DropdownMenuTrigger'
 import BreadcrumbSeparator from '../shared/BreadcrumbSeparator'
 
 export default function EllipsisMenu() {

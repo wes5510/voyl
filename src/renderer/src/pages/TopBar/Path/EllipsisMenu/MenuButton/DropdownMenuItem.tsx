@@ -1,5 +1,5 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import cn from './cn'
+import cn from '@/common/cn'
 
 export default function DropdownMenuItem({
   className,
