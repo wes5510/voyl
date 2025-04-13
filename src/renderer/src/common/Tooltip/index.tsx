@@ -19,7 +19,7 @@ export default function Tooltip({
   return (
     <Provider>
       <Root disableHoverableContent={disableHoverableContent}>
-        <Trigger>{children}</Trigger>
+        <Trigger asChild>{children}</Trigger>
         <Content side={side}>{content}</Content>
       </Root>
     </Provider>
