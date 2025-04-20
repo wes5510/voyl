@@ -118,4 +118,4 @@ export default useTreeStore
 export type { NodeEntity, NodeEntityId } from './node'
 export { getNode } from './nodeTable'
 export type { NodeTableEntity } from './nodeTable'
-export { getTitleByNodeId, getNodeTable, getRootNodeId, getChildNodeIdsByNodeId } from './index'
+export { getTitleByNodeId, getNodeTable, getRootNodeId } from './index'

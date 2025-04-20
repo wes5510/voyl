@@ -19,17 +19,6 @@ export interface TreeEntity {
   nodeTable: NodeTableEntity
 }
 
-export const getChildNodeIdsByNodeId = ({
-  entity,
-  nodeId,
-}: {
-  entity: TreeEntity
-  nodeId: NodeEntityId
-}): NodeEntityId[] => {
-  const node = getNode({ entity: entity.nodeTable, nodeId })
-  return node ? getChildNodeIds({ entity: node }) : []
-}
-
 export const getTitleByNodeId = ({
   entity,
   nodeId,
