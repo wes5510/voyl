@@ -65,6 +65,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/autosize": "^4.0.3",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/micromatch": "^4.0.9",
     "@types/node": "^22.13.11",
     "@types/react": "^19.0.12",
