@@ -39,8 +39,11 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@tailwindcss/vite": "^4.0.15",
     "autosize": "^6.0.1",
+    "better-sqlite3": "^11.9.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
     "electron-updater": "^6.3.9",
     "lucide-react": "^0.483.0",
     "merge-refs": "^2.0.0",
@@ -93,7 +96,9 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "electron",
-      "esbuild"
+      "esbuild",
+      "unrs-resolver",
+      "better-sqlite3"
     ]
   }
 }
