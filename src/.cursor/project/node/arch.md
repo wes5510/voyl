@@ -65,8 +65,8 @@ classDiagram
     <<노드 유형 정의>>
     +String id
     +String name
-    +String[] definedAttributes
-    +getDefinedAttributes() String[]
+    +String[] definedAttributeNames
+    +getDefinedAttributeNames() String[]
   }
 
   Tree o--> "1" NodeTable : contains
