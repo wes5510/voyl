@@ -1,6 +1,6 @@
 # Node
 
-![Nodes](./nodes.png)
+![Nodes](./assets/nodes.png)
 
 - Node는 Voyl에서 사용자가 다루는 모든 항목으로, 트리 구조를 형성한다.
 
@@ -14,7 +14,7 @@
 
 ### 제목
 
-![Title](./title.png)
+![Title](./assets/title.png)
 
 - 한 줄 텍스트로 노드 내용을 표현한다.
 - 편집이 가능하다.
@@ -28,21 +28,21 @@
 
 ### 내용
 
-![content](./content.png)
+![content](./assets/content.png)
 
 - 상세 설명을 위한 장문 입력 공간이다.
 - TipTap 라이브러리로 굵게, 기울임, 링크, 개행 등 풍부한 텍스트 편집을 지원한다.
 
 ### 속성
 
-![attributes](./attributes.png)
+![attributes](./assets/attributes.png)
 
 - Node의 추가 정보를 설정할 수 있다.
 - 마감일(예: 2023-10-20), 완료 여부 등을 설정할 수 있다.
 - 날짜, 참/거짓, 숫자, 텍스트를 입력할 수 있다.
 - 클릭하면 설정할 수 있는 Popover가 표시된다.
 
-  ![attribute settings](./attributes-settings.png)
+  ![attribute settings](./assets/attributes-settings.png)
 
 - 설정된 속성만 노드의 제목 아래에 표시된다.
 
