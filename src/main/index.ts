@@ -1,6 +1,8 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { installExtension, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
+import './db/connect.js'
 
 function createWindow(): void {
   // Create the browser window.
@@ -57,6 +59,10 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  installExtension(REACT_DEVELOPER_TOOLS)
+    .then((name) => console.log(`Added Extension: ${name}`))
+    .catch((err) => console.log('An error occurred: ', err))
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
