@@ -4,12 +4,10 @@ import { schema } from './schemas/index.js'
 import { join } from 'path'
 import { app } from 'electron'
 
-const dbPath =
-  process.env.NODE_ENV === 'development'
-    ? join(app.getAppPath(), 'database.sqlite')
-    : join(app.getPath('userData'), 'database.sqlite')
+const isDev = process.env.NODE_ENV === 'development'
+const DB_NAME = 'database.sqlite'
 
-console.log(`Database path: ${dbPath}`)
+const dbPath = isDev ? join(app.getAppPath(), DB_NAME) : join(app.getPath('userData'), DB_NAME)
 
 const sqlite = new Database(dbPath)
 
@@ -17,5 +15,5 @@ sqlite.pragma('journal_mode = WAL')
 
 export const db = drizzle(sqlite, {
   schema,
-  logger: process.env.NODE_ENV === 'development',
+  logger: isDev,
 })
