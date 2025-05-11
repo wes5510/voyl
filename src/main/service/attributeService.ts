@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm'
 
 /**
  * 새로운 속성을 생성합니다.
- * @param data 생성할 속성의 데이터 (name, value, nodeId 포함)
+ * @param data 생성할 속성의 데이터 (name, value). id는 자동으로 생성됩니다.
  * @returns 생성된 속성 객체
  */
 export async function createAttribute(data: Omit<NewAttribute, 'id'>): Promise<Attribute> {
