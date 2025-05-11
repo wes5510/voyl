@@ -15,9 +15,8 @@ export const attributes = sqliteTable('attributes', {
     .primaryKey()
     .$defaultFn(() => uuidv4()),
   name: text('name').notNull(),
-  value: text('value', { mode: 'json' }), // 다양한 타입의 값을 JSON 문자열로 저장
+  value: text('value', { mode: 'json' }),
 })
 
-// Drizzle ORM을 위한 타입 정의
-export type Attribute = typeof attributes.$inferSelect // SELECT 쿼리 결과 타입
-export type NewAttribute = typeof attributes.$inferInsert // INSERT 쿼리 입력 타입
+export type Attribute = typeof attributes.$inferSelect
+export type NewAttribute = typeof attributes.$inferInsert
