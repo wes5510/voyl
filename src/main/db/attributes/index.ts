@@ -1,5 +1,5 @@
-import { db } from '../db/connect.js'
-import { attributes, NewAttribute, Attribute } from '../db/schemas/attributes.js'
+import { db } from '../connect.js'
+import { attributes, NewAttribute, Attribute } from './schema.js'
 import { eq } from 'drizzle-orm'
 
 /**

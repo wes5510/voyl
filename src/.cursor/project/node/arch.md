@@ -11,8 +11,8 @@ classDiagram
         +String? parentId
         +String[] childIds
         +String title
-        +Attribute[] attributes
-        +NodeType? type
+        +String[] attributeIds
+        +String? typeId
     }
     class Tree {
         +String rootNodeId
