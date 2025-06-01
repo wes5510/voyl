@@ -144,7 +144,7 @@ const rule: Rule.RuleModule = {
         }
 
         const absoluteFilePath = getAbsolutePath({
-          filePath: context.getPhysicalFilename(),
+          filePath: context.physicalFilename,
           context,
           extensions,
         })

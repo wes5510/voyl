@@ -1,6 +1,5 @@
-import { isNodeModulesImport, getAbsolutePath, isIgnoredPath } from '../utils/path'
-import { isPagesPath } from '../utils/page'
-import { Rule } from 'eslint'
+import type { Rule } from 'eslint'
+import { isNodeModulesImport, getAbsolutePath, isMatchedPattern } from '../utils/path'
 
 const DEFAULT_EXTENSIONS = ['.js', '.ts', '.jsx', '.tsx']
 
@@ -8,30 +7,34 @@ const rule: Rule.RuleModule = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Prohibit imports from pages directory',
+      description: 'Restrict imports to specified patterns',
     },
     schema: [
       {
         type: 'object',
         properties: {
-          ignorePatterns: {
+          patterns: {
             type: 'array',
-            items: {
-              type: 'string',
-            },
+            items: { type: 'string' },
           },
+        },
+        additionalProperties: false,
+      },
+      {
+        type: 'object',
+        properties: {
+          extensions: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,
       },
     ],
     messages: {
-      noPageImport: "Cannot import from pages directory '{{importPath}}'.",
+      invalidImport: "Import path '{{importPath}}' is not allowed. Allowed patterns: {{patterns}}.",
     },
-    defaultOptions: [{ ignorePatterns: [] }],
   },
   create(context) {
-    const options = context.options[0] || {}
-    const ignorePatterns = options.ignorePatterns || []
+    const options = context.options[0] ?? {}
+    const patterns = options.patterns ?? []
     const extensions = options.extensions ?? DEFAULT_EXTENSIONS
 
     return {
@@ -52,15 +55,15 @@ const rule: Rule.RuleModule = {
           extensions,
         })
 
-        if (isIgnoredPath({ absolutePath: absoluteImportPath, ignorePatterns })) {
-          return
-        }
+        const isAllowed = patterns.some((pattern: string) =>
+          isMatchedPattern({ absolutePath: absoluteImportPath, pattern }),
+        )
 
-        if (isPagesPath({ absolutePath: absoluteImportPath })) {
+        if (!isAllowed) {
           context.report({
             node,
-            messageId: 'noPageImport',
-            data: { importPath },
+            messageId: 'invalidImport',
+            data: { importPath, patterns: patterns.join(', ') },
           })
         }
       },
