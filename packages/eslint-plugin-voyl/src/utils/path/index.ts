@@ -29,13 +29,15 @@ export const getAbsolutePath = ({
   filePath,
   context,
   extensions,
+  tsconfigPath,
 }: {
   filePath: string
   context: Rule.RuleContext
   extensions: string[]
+  tsconfigPath: string
 }) => {
-  if (isAliasPath({ filePath, extensions })) {
-    return getAliasAbsolutePath({ filePath, extensions })
+  if (isAliasPath({ filePath, extensions, tsconfigPath })) {
+    return getAliasAbsolutePath({ filePath, extensions, tsconfigPath })
   }
 
   if (isRelativePath({ filePath })) {
@@ -45,27 +47,42 @@ export const getAbsolutePath = ({
   return path.normalize(filePath)
 }
 
-let matchPathCache: ReturnType<typeof createMatchPath> | undefined = undefined
+const matchPathCache: Map<string, ReturnType<typeof createMatchPath>> = new Map()
 
-const isAliasPath = ({ filePath, extensions }: { filePath: string; extensions: string[] }) => {
+const isAliasPath = ({
+  filePath,
+  extensions,
+  tsconfigPath,
+}: {
+  filePath: string
+  extensions: string[]
+  tsconfigPath: string
+}) => {
   if (isRelativePath({ filePath })) {
     return false
   }
 
-  const matchPath = matchPathCache || (matchPathCache = initMatchPath())
-
+  const matchPath = getMatchPath({ tsconfigPath })
   return !!matchPath(filePath, undefined, undefined, extensions)
 }
 
-const initMatchPath = () => {
-  const config = loadConfig()
+const getMatchPath = ({ tsconfigPath }: { tsconfigPath: string }) => {
+  if (matchPathCache.has(tsconfigPath)) {
+    return matchPathCache.get(tsconfigPath)!
+  }
+
+  const config = loadConfig(tsconfigPath)
 
   if (config.resultType === 'failed') {
     console.warn('Failed to load tsconfig:', config.message)
-    return () => undefined
+    const emptyMatchPath = () => undefined
+    matchPathCache.set(tsconfigPath, emptyMatchPath)
+    return emptyMatchPath
   }
 
-  return createMatchPath(config.absoluteBaseUrl, config.paths)
+  const matchPath = createMatchPath(config.absoluteBaseUrl, config.paths)
+  matchPathCache.set(tsconfigPath, matchPath)
+  return matchPath
 }
 
 const isRelativePath = ({ filePath }: { filePath: string }) => {
@@ -75,11 +92,13 @@ const isRelativePath = ({ filePath }: { filePath: string }) => {
 const getAliasAbsolutePath = ({
   filePath,
   extensions,
+  tsconfigPath,
 }: {
   filePath: string
   extensions: string[]
+  tsconfigPath: string
 }) => {
-  const matchPath = matchPathCache || (matchPathCache = initMatchPath())
+  const matchPath = getMatchPath({ tsconfigPath })
   return matchPath(filePath, undefined, undefined, extensions) || filePath
 }
 
@@ -122,7 +141,9 @@ const getSegments = ({ absolutePath }: { absolutePath: string }) => {
 
 export const isIndexFile = ({ absolutePath }: { absolutePath: string }): boolean => {
   const filename = path.basename(absolutePath)
-  return filename.startsWith(INDEX_FILE_NAME)
+  const extension = path.extname(filename)
+
+  return filename === `${INDEX_FILE_NAME}${extension}`
 }
 
 export const isSameDirectory = ({

@@ -75,9 +75,9 @@ import { Other } from '../shared/Other' // ❌ 다른 계층 shared (상위 계�
 import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
 ```
 
-#### voyl/model-store-import-only
+#### voyl/restrict-imports-to-pattern
 
-- model 레이어에서는 store만 import할 수 있습니다.
+- model 모듈에서는 store만 import할 수 있습니다.
 
   ```typescript
   import useTreeViewStore from '@/models/treeView/store' // ✅ model의 store
@@ -87,7 +87,7 @@ import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
 
 ## 관련 문서
 
-아래 문서에서 다른 레이어에 대한 상세 정보를 확인할 수 있습니다:
+아래 문서에서 다른 모듈에 대한 상세 정보를 확인할 수 있습니다:
 
 - [프로젝트 구조](../README.ko.md)
 - [Models 구조](../models/README.ko.md)

@@ -39,7 +39,7 @@ common/
   import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
   ```
 
-#### voyl/restrict-imports-to-subtree
+#### voyl/restrict-imports-to-pattern
 
 - 다른 모듈의 코드를 import할 수 없습니다.
 

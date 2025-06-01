@@ -13,6 +13,17 @@ ruleTester.run('restrict-imports-to-pattern', rule, {
       filename: '/project/src/pages/index.ts',
       options: [{ patterns: ['**/src/pages/**'] }],
     },
+    {
+      code: 'import { Something } from "./Something.js"',
+      filename: '/project/src/pages/index.ts',
+      options: [{ patterns: ['**/src/pages/*'] }],
+    },
+    {
+      code: 'import { Something } from "./b/Something.js"',
+      filename: '/project/src/pages/index.ts',
+      options: [{ patterns: ['**/src/pages/*/**'] }],
+      errors: [{ messageId: 'invalidImport' }],
+    },
   ],
 
   invalid: [
@@ -20,6 +31,18 @@ ruleTester.run('restrict-imports-to-pattern', rule, {
       code: 'import { Something } from "../models/Something"',
       filename: '/project/src/pages/index.ts',
       options: [{ patterns: ['**/src/pages/**'] }],
+      errors: [{ messageId: 'invalidImport' }],
+    },
+    {
+      code: 'import { Something } from "./b/Something.js"',
+      filename: '/project/src/pages/index.ts',
+      options: [{ patterns: ['**/src/pages/*'] }],
+      errors: [{ messageId: 'invalidImport' }],
+    },
+    {
+      code: 'import { Something } from "./Something.js"',
+      filename: '/project/src/pages/index.ts',
+      options: [{ patterns: ['**/src/pages/*/**'] }],
       errors: [{ messageId: 'invalidImport' }],
     },
   ],

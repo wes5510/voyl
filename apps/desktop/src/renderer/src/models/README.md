@@ -26,9 +26,10 @@ models/
 
 ### Import 규칙
 
-#### voyl/no-cross-model-imports
+#### voyl/restrict-imports-to-pattern
 
 - 다른 model과의 의존성을 금지합니다.
+- pages 모듈의 코드를 import할 수 없습니다.
 
 ```typescript
 // @/models/tree/index.ts
@@ -36,14 +37,6 @@ import useTreeStore from '@/models/tree/nodeTable' // ✅ 같은 model 파일
 
 import usePathStore from '@/models/treeView' // ❌ 다른 model 파일
 ```
-
-#### voyl/no-pages-import
-
-- pages 모듈의 코드를 import할 수 없습니다.
-
-  ```typescript
-  import { TreeView } from '@/pages/tree/ui' // ❌ pages 모듈 파일
-  ```
 
 #### voyl/same-hierarchy-import
 

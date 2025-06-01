@@ -59,15 +59,6 @@ db/
   import { someModel } from '../../models/node/index.js' // ❌ models 모듈
   ```
 
-- 다른 테이블과의 의존성 금지
-
-  ```typescript
-  // attributes/index.ts
-  import { createAttribute } from './schema.js' // ✅ 같은 테이블
-
-  import { getNodeById } from '../node/index.js' // ❌ 다른 테이블 의존성
-  ```
-
 ## 관련 문서
 
 - [메인 프로세스 구조](../README.md)

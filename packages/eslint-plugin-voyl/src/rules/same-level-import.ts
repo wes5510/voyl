@@ -20,7 +20,7 @@ const rule: Rule.RuleModule = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'enforce same level imports',
+      description: 'Enforce same level imports',
       recommended: false,
     },
     schema: [
@@ -31,12 +31,7 @@ const rule: Rule.RuleModule = {
             type: 'array',
             items: { type: 'string' },
           },
-        },
-        additionalProperties: false,
-      },
-      {
-        type: 'object',
-        properties: {
+          tsconfigPath: { type: 'string' },
           extensions: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,
@@ -50,6 +45,7 @@ const rule: Rule.RuleModule = {
   create(context) {
     const options = context.options[0] ?? {}
     const patterns = options.patterns ?? []
+    const tsconfigPath = options.tsconfigPath
     const extensions = options.extensions ?? DEFAULT_EXTENSIONS
 
     const isSharedImport = ({ absolutePath }: { absolutePath: string }) => {
@@ -113,7 +109,9 @@ const rule: Rule.RuleModule = {
           }) ||
           isSameDirectory({
             absolutePath1: absoluteFilePath,
-            absolutePath2: absoluteImportPath,
+            absolutePath2: getPathWithoutIndexFile({
+              absolutePath: absoluteImportPath,
+            }),
           })
         )
       }
@@ -147,6 +145,7 @@ const rule: Rule.RuleModule = {
           filePath: context.physicalFilename,
           context,
           extensions,
+          tsconfigPath,
         })
 
         const matchedPattern = getMatchedPattern({
@@ -162,6 +161,7 @@ const rule: Rule.RuleModule = {
           filePath: importPath,
           context,
           extensions,
+          tsconfigPath,
         })
 
         if (

@@ -1,5 +1,10 @@
 import type { Rule } from 'eslint'
-import { isNodeModulesImport, getAbsolutePath, isMatchedPattern } from '../utils/path'
+import {
+  isNodeModulesImport,
+  getAbsolutePath,
+  isMatchedPattern,
+  getMatchedPattern,
+} from '../utils/path'
 
 const DEFAULT_EXTENSIONS = ['.js', '.ts', '.jsx', '.tsx']
 
@@ -17,12 +22,7 @@ const rule: Rule.RuleModule = {
             type: 'array',
             items: { type: 'string' },
           },
-        },
-        additionalProperties: false,
-      },
-      {
-        type: 'object',
-        properties: {
+          tsconfigPath: { type: 'string' },
           extensions: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,
@@ -35,6 +35,7 @@ const rule: Rule.RuleModule = {
   create(context) {
     const options = context.options[0] ?? {}
     const patterns = options.patterns ?? []
+    const tsconfigPath = options.tsconfigPath
     const extensions = options.extensions ?? DEFAULT_EXTENSIONS
 
     return {
@@ -53,6 +54,7 @@ const rule: Rule.RuleModule = {
           filePath: importPath,
           context,
           extensions,
+          tsconfigPath,
         })
 
         const isAllowed = patterns.some((pattern: string) =>

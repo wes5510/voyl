@@ -47,7 +47,7 @@ common/
   import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
   ```
 
-#### voyl/restrict-imports-to-subtree
+#### voyl/restrict-imports-to-pattern
 
 - 다른 모듈의 코드를 import할 수 없습니다.
 

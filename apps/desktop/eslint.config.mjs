@@ -51,16 +51,25 @@ export default [
       '@typescript-eslint/no-non-assertion': 'off',
       'import/no-cycle': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
-      'react-hooks/rules-of-hooks': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+  {
+    files: ['src/renderer/src/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'react-hooks/rules-of-hooks': 'error',
       'voyl/same-level-import': [
         'error',
         {
           patterns: [
-            '**/renderer/src/common/**',
-            '**/renderer/src/pages/**',
-            '**/renderer/src/models/**',
+            '**/src/renderer/src/common/**',
+            '**/src/renderer/src/pages/**',
+            '**/src/renderer/src/models/**',
           ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
         },
       ],
     },
@@ -71,14 +80,29 @@ export default [
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/common-isolation': ['error'],
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: ['**/src/renderer/src/common/**'],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
+        },
+      ],
     },
   },
   {
     files: ['src/renderer/src/models/**/*.{ts,tsx}'],
     rules: {
-      'voyl/no-cross-model-imports': ['error'],
-      'voyl/no-pages-import': ['error'],
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/renderer/src/models/*/**',
+            '**/src/renderer/src/common/*',
+            '**/src/renderer/src/common/shared/*',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
+        },
+      ],
     },
   },
   {
@@ -87,7 +111,129 @@ export default [
       voyl: voylPlugin,
     },
     rules: {
-      'voyl/model-store-import-only': ['error'],
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/renderer/src/pages/**',
+            '**/src/renderer/src/models/*/store',
+            '**/src/renderer/src/common/*',
+            '**/src/renderer/src/common/shared/*',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/same-level-import': [
+        'error',
+        {
+          patterns: [
+            '**/src/main/common/**',
+            '**/src/main/ipc/**',
+            '**/src/main/models/**',
+            '**/src/main/windows/**',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/common/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: ['**/src/main/common/**'],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/db/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: ['**/src/main/db/**', '**/src/main/common/*', '**/src/main/common/shared/*'],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/ipc/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/main/ipc/*',
+            '**/src/main/common/*',
+            '**/src/main/common/shared/*',
+            '**/src/main/models/*/index.js',
+            '**/src/main/windows/*/*',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/models/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/main/models/*/**',
+            '**/src/main/common/*',
+            '**/src/main/common/shared/*',
+            '**/src/main/db/*/*',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/windows/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/main/windows/*/**',
+            '**/src/main/common/*',
+            '**/src/main/common/shared/*',
+            '**/src/main/models/*/index.js',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
     },
   },
 ]
