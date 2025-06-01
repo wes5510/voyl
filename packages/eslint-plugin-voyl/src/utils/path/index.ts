@@ -154,13 +154,3 @@ export const isNodeModulesImport = ({ importPath }: { importPath: string }) => {
     !importPath.startsWith('./') && !importPath.startsWith('../') && !importPath.startsWith('@/')
   )
 }
-
-export const isIgnoredPath = ({
-  absolutePath,
-  ignorePatterns,
-}: {
-  absolutePath: string
-  ignorePatterns: string[]
-}) => {
-  return ignorePatterns.some((pattern) => micromatch.isMatch(absolutePath, pattern))
-}
