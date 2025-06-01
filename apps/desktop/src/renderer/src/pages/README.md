@@ -1,94 +1,94 @@
-# Pages Structure
+# Pages 구조
 
-_Read this in other languages: [한국어](README.ko.md)_
+_다른 언어로 읽기: [English](README.md)_
 
-## Overview
+## 개요
 
-The Pages layer composes UI components and user interfaces for the application.
-It provides intuitive page organization through a directory structure that maps 1:1 with the URL structure.
+Pages 레이어는 애플리케이션의 UI 컴포넌트와 사용자 인터페이스를 구성합니다.
+URL 구조와 1:1로 매칭되는 디렉토리 구조를 통해 직관적인 페이지 구성을 제공합니다.
 
-## Structure
+## 구조
 
-### Basic Structure
+### 기본 구조
 
 ```
 pages/
-├── shared/              # Top-level shared components
-├── products/            # /products page
-│   ├── shared/          # Shared components for products page
-│   ├── list/            # /products/list page
-│   │   ├── shared/      # Shared components for list page
+├── shared/              # 최상위 공통 컴포넌트
+├── products/            # /products 페이지
+│   ├── shared/          # products 페이지 공통 컴포넌트
+│   ├── list/            # /products/list 페이지
+│   │   ├── shared/      # list 페이지 공통 컴포넌트
 │   │   └── index.tsx
-│   └── [id]/            # /products/:id page
-└── index.tsx            # Root page (/)
+│   └── [id]/            # /products/:id 페이지
+└── index.tsx            # 루트 페이지 (/)
 ```
 
-### Components
+### 구성요소
 
 #### 1. shared/
 
-- Contains shared components, types, utility functions, and constants
-- Can only be accessed from the same or higher hierarchies
-- Can be placed anywhere within page/component folders
+- 공유되는 컴포넌트, 타입, 유틸리티 함수, 상수들이 위치
+- 자신과 동일 및 상위 계층에서만 접근 가능하도록 제한
+- 페이지/컴포넌트 폴더 내 어디서나 배치 가능
 
-#### 2. Page Directories
+#### 2. 페이지 디렉토리
 
-- Directory structure that maps 1:1 with URL structure
-- Each page contains an `index.tsx` responsible for its view and logic
-- Dynamic routing is represented in the `[parameter]` format
+- URL 구조와 1:1로 매칭되는 디렉토리 구조
+- 각 페이지는 자신의 뷰와 로직을 담당하는 `index.tsx` 포함
+- 동적 라우팅은 `[parameter]` 형식으로 표현
 
-#### 3. Component Structure
+#### 3. 컴포넌트 구조
 
-Each component groups related files in a single directory to increase cohesion:
+각 컴포넌트는 관련 파일들을 하나의 디렉토리에 모아 응집도를 높입니다:
 
 ```
 ComponentName/
-├── shared/         # Internal shared elements
-├── index.tsx      # Component implementation
-├── types.ts       # Type definitions
-├── utils.ts       # Utility functions
-└── const.ts       # Constant definitions
+├── shared/         # 컴포넌트 내부 공통 요소
+├── index.tsx      # 컴포넌트 구현
+├── types.ts       # 타입 정의
+├── utils.ts       # 유틸리티 함수
+└── const.ts       # 상수 정의
 ```
 
-## Rules
+## 규칙
 
-### Import Rules
+### Import 규칙
 
 #### voyl/same-hierarchy-import
 
-This rule allows importing only from files in the same hierarchy.
+- 동일 계층 내의 파일만 import할 수 있습니다.
 
 ```typescript
-// Imports within the same hierarchy
-import { ProductList } from './ProductList' // ✅ Component in the same hierarchy
-import { types } from './types' // ✅ File in the same directory
+// 동일 계층 내 import
+import { ProductList } from './ProductList' // ✅ 동일 계층 컴포넌트
+import { types } from './types' // ✅ 같은 디렉토리 내 파일
 
-import { Something } from '../other/Something' // ❌ Different hierarchy
-import { Deep } from './deep/nested/Component' // ❌ Deeply nested path
+import { Something } from '../other/Something' // ❌ 다른 계층
+import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
 
-// Shared imports
-import { SharedButton } from '@/pages/shared/Button' // ✅ Shared file/folder from higher hierarchy
-import { ListItem } from './shared/ListItem' // ✅ Shared file/folder from same hierarchy
+// shared import
+import { SharedButton } from '@/pages/shared/Button' // ✅ 상위 계층 shared 파일/폴더
+import { ListItem } from './shared/ListItem' // ✅ 동일 계층 shared 파일/폴더
 
-import { Sub } from './shared/Button/Sub' // ❌ Path below shared
-import { Other } from '../shared/Other' // ❌ Shared from different hierarchy (except higher)
-import { Button } from './products/shared/Button' // ❌ Shared from lower hierarchy
+import { Sub } from './shared/Button/Sub' // ❌ shared 하위 경로
+import { Other } from '../shared/Other' // ❌ 다른 계층 shared (상위 계층 제외)
+import { Button } from './products/shared/Button' // ❌ 하위 계층 shared
 ```
 
 #### voyl/model-store-import-only
 
-This rule allows importing only stores from the models layer.
+- model 레이어에서는 store만 import할 수 있습니다.
 
-```typescript
-import useTreeViewStore from '@/models/treeView/store' // ✅ Store from a model
+  ```typescript
+  import useTreeViewStore from '@/models/treeView/store' // ✅ model의 store
 
-import { useTreeStore } from '@/models/treeView/draggingNode' // ❌ Deeply nested path in model
-```
+  import { useTreeStore } from '@/models/treeView/draggingNode' // ❌ model의 깊은 중첩 경로
+  ```
 
-## Related Documentation
+## 관련 문서
 
-For detailed information about other layers, please refer to the following documents:
+아래 문서에서 다른 레이어에 대한 상세 정보를 확인할 수 있습니다:
 
-- [Project Structure](../README.md)
-- [Models Structure](../models/README.md)
-- [Common Structure](../common/README.md)
+- [프로젝트 구조](../README.ko.md)
+- [Models 구조](../models/README.ko.md)
+- [Common 구조](../common/README.ko.md)

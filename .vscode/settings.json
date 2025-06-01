@@ -23,5 +23,6 @@
     "voyl",
     "vstack",
     "zustand"
-  ]
+  ],
+  "codeQL.githubDatabase.update": "never"
 }

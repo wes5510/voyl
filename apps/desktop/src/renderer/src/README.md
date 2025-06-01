@@ -1,52 +1,50 @@
-# Project Structure
+# 프로젝트 구조
 
-_Read this in other languages: [한국어](./README.ko.md)_
+## 개요
 
-## Overview
+프로젝트는 pages, models, common 세 개의 핵심 모듈로 구성되어 있습니다.
+각 모듈은 명확한 책임과 규칙을 가지고 있어 코드의 응집도를 높이고 결합도를 낮춥니다.
 
-The project consists of three core layers: pages, models, and common.
-Each layer has clear responsibilities and rules to increase cohesion and decrease coupling.
+## 구조
 
-## Structure
-
-### Basic Structure
+### 기본 구조
 
 ```
 src/renderer/src/
-├── pages/          # Page components
-├── models/         # Domain model data structures & business logic
-└── common/         # Common code
+├── pages/          # 페이지 컴포넌트
+├── models/         # 도메인 모델의 데이터 구조 & 비즈니스 로직
+└── common/         # 공통 코드
 ```
 
-### Components
+### 모듈
 
 #### pages
 
-- Components for each page
-- Compose pages using models
-- Can import from models and common
+- 페이지 단위의 컴포넌트들
+- models를 조합하여 페이지를 구성
+- models와 common을 import하여 사용 가능
 
 #### models
 
-- Contains domain model data structures and business logic
-- Each model is an independent domain unit
-- Cannot have dependencies on other models
-- Can import from common
+- 도메인 모델의 데이터 구조와 비즈니스 로직이 위치
+- 각 model는 독립적인 도메인 단위
+- 다른 model와의 의존성을 가질 수 없음
+- common을 import하여 사용 가능
 
 #### common
 
-- Pure shared code that can be reused
-- Not dependent on specific domains
-- Cannot import from other layers
+- 재사용 가능한 순수한 공통 코드
+- 특정 도메인에 종속되지 않음
+- 다른 모듈의 코드를 import할 수 없음
 
-## Rules
+## 규칙
 
-Each layer follows specific rules and constraints. Please refer to each layer's README for details.
+각 모듈은 특정 규칙과 제약 사항을 따라야 합니다. 자세한 내용은 각 모듈별 README를 참고하세요.
 
-## Related Documentation
+## 관련 문서
 
-For detailed information, please refer to the following documents:
+아래 문서에서 각 모듈에 대한 상세 정보를 확인할 수 있습니다:
 
-- [Models Structure](./models/README.md)
-- [Pages Structure](./pages/README.md)
-- [Common Structure](./common/README.md)
+- [Models 구조](./models/README.ko.md)
+- [Pages 구조](./pages/README.ko.md)
+- [Common 구조](./common/README.ko.md)
