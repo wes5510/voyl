@@ -60,7 +60,7 @@ src/main/
 
 아래 문서에서 각 모듈에 대한 상세 정보를 확인할 수 있습니다:
 
-- [Renderer 구조](../renderer/src/README.md)
+- [Renderer 구조](../renderer/README.md)
 - [DB 모듈](./db/README.md)
 - [IPC 모듈](./ipc/README.md)
 - [Common 모듈](./common/README.md)

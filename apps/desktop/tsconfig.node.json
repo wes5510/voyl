@@ -7,11 +7,7 @@
     "moduleResolution": "NodeNext",
     "types": ["electron-vite/node"],
     "paths": {
-      "@/models/*": ["src/main/models/*"],
-      "@/common/*": ["src/main/common/*"],
-      "@/db/*": ["src/main/db/*"],
-      "@/ipc/*": ["src/main/ipc/*"],
-      "@/windows/*": ["src/main/windows/*"],
+      "@/main/*": ["./src/main/*"],
     }
   }
 }
