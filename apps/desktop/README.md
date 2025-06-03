@@ -66,7 +66,7 @@ src/
 ### UI/UX
 
 - **Tailwind CSS** - 스타일링
-- **Radix UI** - 접근성 있는 UI 컴포넌트
+- **Shadcn UI** - 접근성 있는 UI 컴포넌트
 - **Lucide React** - 아이콘
 - **@dnd-kit** - 드래그 앤 드롭
 

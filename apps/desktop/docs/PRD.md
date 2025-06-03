@@ -73,33 +73,13 @@ Voyl은 누구나 자유롭게 일할 수 있는 유연한 도구로, 개인의 
 
 ## 6. 기술 아키텍처
 
-### 프론트엔드
+### 애플리케이션 구조
 
-- React (웹), Electron (데스크탑)
+- **클라이언트**: React 기반 Electron 데스크톱 애플리케이션
+- **데이터 저장**: SQLite 기반 로컬 데이터베이스
+- **운영 방식**: 오프라인 우선, 계정 불필요
 
-### 상태 관리
-
-- Zustand
-
-### UI
-
-- Tailwind CSS (웹), Shadcn UI 컴포넌트
-
-### 아이콘
-
-- Lucide
-
-### 백엔드
-
-- Node.js (필요 시)
-
-### 데이터베이스
-
-- SQLite3
-
-### ORM
-
-- Drizzle ORM (better-sqlite3 드라이버)
+상세한 기술 스택 및 개발 환경 정보는 [README.md](../README.md)를 참고하세요.
 
 ## 7. 참고 자료
 
