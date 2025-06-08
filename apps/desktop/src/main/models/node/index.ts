@@ -16,6 +16,10 @@ export async function getNodeParentIdById({ id }: { id: string }) {
   return db.getNodeParentIdById({ id })
 }
 
+export async function getNodeById({ id }: { id: string }) {
+  return db.getNodeById({ id })
+}
+
 export async function setNodeParent({ id, newParentId }: { id: string; newParentId?: string }) {
   return db.setNodeParentId({
     id,
