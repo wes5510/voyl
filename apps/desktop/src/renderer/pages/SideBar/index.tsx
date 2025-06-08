@@ -1,6 +1,8 @@
 import Divider from './Divider'
 import FavoriteMenu from './FavoriteMenu'
 import AppMenu from './AppMenu'
+import { Suspense } from 'react'
+import Skeleton from '@/renderer/common/Skeleton'
 
 export default function SideBar() {
   return (
@@ -8,7 +10,16 @@ export default function SideBar() {
       <div className="flex flex-col gap-0">
         <AppMenu />
         <Divider />
-        <FavoriteMenu />
+        <Suspense
+          fallback={
+            <div className="flex flex-col gap-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+            </div>
+          }
+        >
+          <FavoriteMenu />
+        </Suspense>
       </div>
     </div>
   )

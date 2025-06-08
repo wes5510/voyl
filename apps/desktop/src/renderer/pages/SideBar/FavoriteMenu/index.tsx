@@ -2,7 +2,7 @@ import CharButton from './CharButton'
 import useFavoriteManagerStore from '@/renderer/models/favoriteManager/store'
 
 export default function FavoriteMenu() {
-  const favorites = useFavoriteManagerStore((state) => state.favorites)
+  const favorites = useFavoriteManagerStore((state) => state.favorites())
 
   return (
     <>
