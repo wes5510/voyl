@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import {
-  setRootNodeId,
   setFocusedNodeId,
   TreeViewEntity,
   setFocusToPrevNode,
@@ -13,13 +12,14 @@ import {
   getDraggingNodeParentId,
   getCountChildBetweenNodes,
   resetDraggingNode,
+  setTopNodeId,
 } from './index'
 import { NodeTable } from './flattenedTree'
 import { useShallow } from 'zustand/react/shallow'
 
 interface TreeViewStore {
   entity: TreeViewEntity
-  setRootNodeId: ({ rootNodeId, nodeTable }: { rootNodeId: string; nodeTable: NodeTable }) => void
+  setTopNodeId: ({ topNodeId }: { topNodeId: string }) => void
   setFocusedNodeId: ({ nodeId }: { nodeId?: string }) => void
   setFocusToPrevNode: () => void
   setFocusToNextNode: () => void
@@ -48,10 +48,11 @@ const __useTreeViewStore = create<TreeViewStore>((set, get) => ({
     },
     draggingNode: undefined,
     focusedNodeId: undefined,
+    topNodeId: undefined,
   },
-  setRootNodeId: ({ rootNodeId, nodeTable }) => {
+  setTopNodeId: ({ topNodeId }) => {
     set((prev) => ({
-      entity: setRootNodeId({ entity: prev.entity, rootNodeId, nodeTable }),
+      entity: setTopNodeId({ entity: prev.entity, topNodeId }),
     }))
   },
   setFocusedNodeId: ({ nodeId }) => {

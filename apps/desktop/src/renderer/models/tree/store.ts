@@ -10,6 +10,7 @@ import {
 } from './index'
 import { NodeEntityId } from './node'
 import { useShallow } from 'zustand/react/shallow'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
 interface TreeStore {
   entity: TreeEntity

@@ -1,12 +1,12 @@
 import { useState, memo } from 'react'
 import MainPanel from './MainPanel'
-import useTreeView from './useTreeView'
+import useSetTreeViewTopNode from './useSetTreeViewTopNode'
 
 const MMainPanel = memo(MainPanel)
 
 export default function NodesPage() {
   const [opened, setOpened] = useState<boolean>(false)
-  useTreeView()
+  useSetTreeViewTopNode()
 
   const handleClick = (): void => {
     setOpened((prev) => !prev)

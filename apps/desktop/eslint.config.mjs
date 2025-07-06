@@ -71,6 +71,7 @@ export default [
             '**/src/renderer/pages/**',
             '**/src/renderer/models/**',
             '**/src/renderer/repos/**',
+            '**/src/renderer/store/**',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
         },
@@ -103,7 +104,6 @@ export default [
             '**/src/renderer/common/*',
             '**/src/renderer/common/shared/*',
             '**/src/common/*',
-            '**/src/renderer/repos/*',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
         },
@@ -121,9 +121,30 @@ export default [
         {
           patterns: [
             '**/src/renderer/pages/**',
-            '**/src/renderer/models/*/store',
+            '**/src/renderer/store/*',
             '**/src/renderer/common/*',
             '**/src/renderer/common/shared/*',
+            '**/src/common/*',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/renderer/store/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/renderer/store/*/**',
+            '**/src/renderer/common/*',
+            '**/src/renderer/models/*',
+            '**/src/renderer/repos/*',
             '**/src/common/*',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),

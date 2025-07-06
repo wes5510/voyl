@@ -1,6 +1,9 @@
 export type FlattenedTreeEntity = {
   nodes: FlattenedTreeNode[]
   expandedNodeIds: string[]
+  /**
+   * @deprecated treeView의 topNodeId 사용
+   */
   rootNodeId: string
 }
 export interface NodeTableItem {

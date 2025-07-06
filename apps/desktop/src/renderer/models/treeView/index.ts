@@ -25,24 +25,23 @@ export interface TreeViewEntity {
   flattenedTree: FlattenedTreeEntity
   focusedNodeId?: string
   draggingNode?: DraggingNodeEntity
+  topNodeId?: string
 }
 
 export const getTreeViewNodes = ({ entity }: { entity: TreeViewEntity }): FlattenedTreeNode[] => {
   return entity.flattenedTree.nodes
 }
 
-export const setRootNodeId = ({
+export const setTopNodeId = ({
   entity,
-  nodeTable,
-  rootNodeId,
+  topNodeId,
 }: {
   entity: TreeViewEntity
-  nodeTable: NodeTable
-  rootNodeId: string
+  topNodeId: string
 }): TreeViewEntity => {
   return {
     ...entity,
-    flattenedTree: initFlattenedTree({ entity: entity.flattenedTree, rootNodeId, nodeTable }),
+    topNodeId,
   }
 }
 
