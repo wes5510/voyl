@@ -1,5 +1,7 @@
+import { CHANNELS } from '@/common/channel.const'
+
 export const fetchRootNodeId = (): Promise<string> => {
-  return window.electron.ipcRenderer.invoke('/tree/root-node-id/get')
+  return window.electron.ipcRenderer.invoke(CHANNELS.GET_ROOT_NODE_ID)
 }
 
 export interface NodeDTO {
@@ -11,7 +13,7 @@ export interface NodeDTO {
 }
 
 export const fetchNode = async ({ nodeId }: { nodeId: string }): Promise<NodeDTO> => {
-  const ret = await window.electron.ipcRenderer.invoke('/tree/node/get', { nodeId })
+  const ret = await window.electron.ipcRenderer.invoke(CHANNELS.GET_NODE, { nodeId })
   return ret
 }
 

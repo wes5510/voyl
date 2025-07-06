@@ -1,5 +1,5 @@
 import { IpcMain } from 'electron'
-import { CHANNELS } from '../common/channel.const.js'
+import { CHANNELS } from '../../common/channel.const.js'
 import { getNode, getRootNodeId } from '../models/tree/index.js'
 
 export default function treeHandlers(ipcMain: IpcMain) {
