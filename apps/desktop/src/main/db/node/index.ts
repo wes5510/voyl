@@ -1,6 +1,6 @@
 import { Node, nodes } from './schema.js'
 import { db } from '../connect.js'
-import { eq } from 'drizzle-orm'
+import { eq, isNull } from 'drizzle-orm'
 
 export async function updateNodeTitle(params: {
   id: string
@@ -94,4 +94,16 @@ export async function getNodeById({ id }: { id: string }): Promise<Node | undefi
     .limit(1)
 
   return ret[0] ?? undefined
+}
+
+export async function getRootNodeId(): Promise<string | undefined> {
+  const ret = await db.select({ id: nodes.id }).from(nodes).where(isNull(nodes.parentId)).limit(1)
+
+  return ret[0]?.id ?? undefined
+}
+
+export async function getChildIds({ parentId }: { parentId: string }): Promise<string[]> {
+  const ret = await db.select({ id: nodes.id }).from(nodes).where(eq(nodes.parentId, parentId))
+
+  return ret.map((r) => r.id)
 }
