@@ -28,4 +28,6 @@ const __useTreeViewStore = create<TreeViewStore>((set) => ({
 const useTreeViewStore = <T>(selector: (state: TreeViewStore) => T) =>
   __useTreeViewStore(useShallow(selector))
 
-export default useTreeViewStore
+export const useTopNodeId = () => useTreeViewStore((state) => state.entity.topNodeId)
+
+export const useSetTopNodeId = () => useTreeViewStore((state) => state.setTopNodeId)

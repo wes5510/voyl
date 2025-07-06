@@ -1,148 +1,30 @@
-import TreeViewItem from './TreeViewItem'
 import { memo } from 'react'
-import AddButton from './AddButton'
-import {
-  DndContext,
-  PointerSensor,
-  KeyboardSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-  DragStartEvent,
-  DragOverlay,
-  DragMoveEvent,
-  MeasuringStrategy,
-  DragEndEvent,
-} from '@dnd-kit/core'
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable'
-import { createPortal } from 'react-dom'
-import useTreeViewStore, {
-  getDraggingNode,
-  getTreeViewNodes,
-} from '@/renderer/models/treeView/store'
-import DraggingTreeviewItem from './DraggingTreeviewItem'
-import { INDENT_WIDTH } from './shared/const'
-import useTreeStore from '@/renderer/models/tree/store'
+import TreeViewItem from './TreeViewItem'
 
-const measuring = {
-  droppable: {
-    strategy: MeasuringStrategy.Always,
-  },
+const MemoizedTreeViewItem = memo(TreeViewItem)
+
+const useFlattenedTree = () => {
+  /*
+  1. topNodeId 가져오기
+  2. nodeTable 만들기
+    2-1. node 모으기
+      2-1-1. isTop 이거나 expanded 이면 
+        2-1-1-1. node에 해당하는 child 가져오기
+        2-1-1-2. nodeTable에 추가
+        2-1-1-3. 2-1. 반복
+  3. initFlattenedTree 호출
+  4. initFlattenedTree 결과 반환
+  */
 }
-const MTreeViewItem = memo(TreeViewItem)
 
 export default function TreeView() {
-  const {
-    treeViewNodes,
-    draggingNode,
-    setDraggingNode,
-    resetDraggingNode,
-    moveDraggingNode,
-    getDraggingNodeParentId,
-    getCountChildBetweenNodes,
-  } = useTreeViewStore((state) => ({
-    treeViewNodes: getTreeViewNodes(state),
-    draggingNode: getDraggingNode({ entity: state.entity }),
-    setDraggingNode: state.setDraggingNode,
-    resetDraggingNode: state.resetDraggingNode,
-    moveDraggingNode: state.moveDraggingNode,
-    getDraggingNodeParentId: state.getDraggingNodeParentId,
-    getCountChildBetweenNodes: state.getCountChildBetweenNodes,
-  }))
-  const { moveToChildNode, nodeTable } = useTreeStore((state) => ({
-    moveToChildNode: state.moveToChildNode,
-    nodeTable: state.entity.nodeTable,
-  }))
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  )
-
-  const handleDragEnd = ({ over }: DragEndEvent): void => {
-    if (!draggingNode || typeof over?.id !== 'string') {
-      return
-    }
-
-    const parentNodeId = getDraggingNodeParentId({ overNodeId: over.id })
-    if (!parentNodeId) {
-      return
-    }
-
-    const childNodeIndex = getCountChildBetweenNodes({ parentNodeId, nodeId: over.id })
-
-    moveToChildNode({
-      parentNodeId,
-      newNodeId: draggingNode.id,
-      index: childNodeIndex,
-    })
-
-    resetDraggingNode({ nodeTable })
-  }
-
-  const handleDragMove = ({ delta, over }: DragMoveEvent): void => {
-    if (typeof over?.id !== 'string' || !draggingNode) {
-      return
-    }
-
-    moveDraggingNode({
-      overNodeId: over.id,
-      deltaDepth: Math.round(delta.x / INDENT_WIDTH),
-    })
-  }
-
-  const handleDragStart = ({ active }: DragStartEvent): void => {
-    if (typeof active.id !== 'string') {
-      return
-    }
-
-    setDraggingNode({
-      nodeId: active.id,
-      nodeTable,
-    })
-  }
-
-  const handleDragCancel = (): void => {
-    resetDraggingNode({ nodeTable })
-  }
+  const flattenedTree = useFlattenedTree()
 
   return (
     <div className="items-normal flex flex-col gap-3">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        measuring={measuring}
-        onDragEnd={handleDragEnd}
-        onDragStart={handleDragStart}
-        onDragCancel={handleDragCancel}
-        onDragMove={handleDragMove}
-      >
-        <SortableContext
-          items={treeViewNodes.map((node) => node.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          {treeViewNodes.map((node) => (
-            <MTreeViewItem
-              key={node.id}
-              nodeId={node.id}
-              depth={draggingNode?.id === node.id ? draggingNode.depth : node.depth}
-            />
-          ))}
-          {createPortal(
-            <DragOverlay>
-              {draggingNode && <DraggingTreeviewItem nodeId={draggingNode.id} />}
-            </DragOverlay>,
-            document.body,
-          )}
-        </SortableContext>
-      </DndContext>
-      <AddButton />
+      {flattenedTree.map((node) => (
+        <MemoizedTreeViewItem key={node.id} nodeId={node.id} depth={node.depth} />
+      ))}
     </div>
   )
 }

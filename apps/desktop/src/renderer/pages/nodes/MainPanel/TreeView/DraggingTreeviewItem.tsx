@@ -1,4 +1,4 @@
-import TreeViewItemWrapper from './shared/TreeViewItemWrapper'
+import TreeViewItemWrapper from './shared/Wrapper'
 import CollapseIcon from './shared/CollapseIcon'
 import DotIcon from './shared/DotIcon'
 import useTreeStore, { getTitleByNodeId, NodeEntityId } from '@/renderer/models/tree/store'
