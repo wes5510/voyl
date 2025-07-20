@@ -29,7 +29,7 @@ export const nodes = sqliteTable('nodes', {
     .$type<string[]>()
     .$defaultFn(() => sql`'[]'`),
   title: text('title').notNull().default(''),
-  content: text('content'),
+  content: text('content').notNull().default(''),
   typeId: text('type_id').references(() => nodeTypes.id, {
     onDelete: 'set null',
     onUpdate: 'cascade',

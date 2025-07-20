@@ -1,13 +1,13 @@
-import CollapseButton from './ExpandButton'
+import ExpandButton from './ExpandButton'
 import DotButton from './DotButton'
 import TreeViewItemInput from './TreeViewItemInput'
-import TreeViewItemWrapper from '../shared/TreeViewItemWrapper'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { memo } from 'react'
+import Wrapper from '../shared/Wrapper'
 
-const MTreeViewItemInput = memo(TreeViewItemInput)
-const MCollapseButton = memo(CollapseButton)
+const MemoizedTreeViewItemInput = memo(TreeViewItemInput)
+const MemoizedExpandButton = memo(ExpandButton)
 
 export interface TreeViewItemProps {
   nodeId: string
@@ -26,10 +26,10 @@ export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps) {
   }
 
   return (
-    <TreeViewItemWrapper ref={setNodeRef} depth={depth} style={style}>
-      <MCollapseButton nodeId={nodeId} />
+    <Wrapper ref={setNodeRef} depth={depth} style={style}>
+      <MemoizedExpandButton />
       <DotButton {...attributes} {...listeners} />
-      <MTreeViewItemInput nodeId={nodeId} className="flex-1" />
-    </TreeViewItemWrapper>
+      <MemoizedTreeViewItemInput nodeId={nodeId} className="flex-1" />
+    </Wrapper>
   )
 }

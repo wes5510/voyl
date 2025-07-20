@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
-import nodesHandlers from './nodes.js'
+import treeHandlers from './tree.js'
 import favoriteHandlers from './favorite.js'
 
-nodesHandlers(ipcMain)
+treeHandlers(ipcMain)
 favoriteHandlers(ipcMain)
