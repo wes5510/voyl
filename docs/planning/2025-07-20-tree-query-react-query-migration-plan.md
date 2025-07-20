@@ -28,7 +28,7 @@
 - `apps/desktop/src/renderer/store/treeView/` (React Query 추가 + Zustand 단순화)
 - `apps/desktop/src/renderer/pages/nodes/MainPanel/TreeView/` (컴포넌트 수정)
 - `apps/desktop/src/main/` (백엔드 API 추가 + 테스트)
-- `apps/desktop/src/renderer/repos/tree.ts` (API 함수 추가)
+- `apps/desktop/src/renderer/repos/treeView.ts` (새 파일 - API 함수 추가)
 
 ### 참고만 할 파일들
 
@@ -100,9 +100,62 @@ entity: {
 
 **목적**: 확장된 노드들만 포함한 평면화된 트리 구조 제공
 
-#### 3-1. 테스트 케이스 정의 (Red Phase)
+**🎯 작업 전략**:
 
-**파일**: `apps/desktop/src/main/models/tree/index.test.ts` (새 파일)
+1. **인프라 설정 먼저** (3-1 ~ 3-3): 채널, IPC, 모델 확장
+2. **TDD에 집중** (3-4 ~ 3-5): Red → Green → Refactor
+
+#### 3-1. 새 채널 추가
+
+**파일**: `apps/desktop/src/common/channel.const.ts`
+
+```typescript
+export const CHANNELS = {
+  GET_VIEW_TREE_NODES: '/view/tree/nodes/get', // view > tree > nodes 계층
+} as const
+```
+
+#### 3-2. IPC 핸들러
+
+**파일**: `apps/desktop/src/main/ipc/tree.ts`
+
+```typescript
+import { getTreeViewNodes } from '../models/treeView'
+
+ipcMain.handle(CHANNELS.GET_VIEW_TREE_NODES, (_, { topNodeId }: { topNodeId: string }) => {
+  return getTreeViewNodes({ topNodeId })
+})
+```
+
+#### 3-3. tree core 모델 확장
+
+**파일**: `apps/desktop/src/main/models/tree/index.ts` (기존 파일 확장)
+
+**추가할 함수** (기존 패턴에 맞게 wrapper 함수):
+
+```typescript
+export async function getChildNodeIds({ parentId }: { parentId: string }): Promise<string[]> {
+  if (parentId === '') {
+    throw new Error('Parent ID cannot be empty string')
+  }
+
+  const childIds = await db.getChildIds({ parentId })
+  return childIds
+}
+
+export async function getNodeIndex({ nodeId }: { nodeId: string }): Promise<string | undefined> {
+  if (nodeId === '') {
+    throw new Error('Node ID cannot be empty string')
+  }
+
+  const index = await db.getNodeIndexById({ id: nodeId })
+  return index
+}
+```
+
+#### 3-4. 🔴 TDD: 테스트 케이스 정의 (Red Phase)
+
+**파일**: `apps/desktop/src/main/models/treeView/index.test.ts` (새 파일)
 
 **테스트 시나리오**:
 
@@ -113,35 +166,22 @@ entity: {
 **Mock 설정**:
 
 ```typescript
-vi.mock('../../db/node/index.js', () => ({
-  getChildIds: vi.fn(),
-  getNodeIndexById: vi.fn(),
+vi.mock('../tree/index.js', () => ({
+  getChildNodeIds: vi.fn(),
+  getNodeIndex: vi.fn(),
 }))
 ```
 
-#### 3-2. 새 채널 추가
+#### 3-5. 🟢 TDD: 비즈니스 로직 구현 (Green → Refactor Phase)
 
-**파일**: `apps/desktop/src/common/channel.const.ts`
+**파일**: `apps/desktop/src/main/models/treeView/index.ts` (새 파일)
 
-```typescript
-export const CHANNELS = {
-  GET_VIEW_TREE_NODES: '/view/tree/nodes/get', // view > tree > nodes 계층
-} as const
-```
-
-#### 3-3. IPC 핸들러
-
-**파일**: `apps/desktop/src/main/ipc/tree.ts`
+**의존성**:
 
 ```typescript
-ipcMain.handle(CHANNELS.GET_VIEW_TREE_NODES, (_, { topNodeId }: { topNodeId: string }) => {
-  return getTreeViewNodes({ topNodeId })
-})
+// tree core 모델만 의존
+import { getChildNodeIds, getNodeIndex } from '../tree'
 ```
-
-#### 3-4. 비즈니스 로직 구현 (Green → Refactor Phase)
-
-**파일**: `apps/desktop/src/main/models/tree/index.ts`
 
 **핵심 기능**:
 
@@ -159,7 +199,13 @@ export type TreeViewItem = {
 }
 ```
 
-**테스트**: `npm run test src/main/models/tree/index.test.ts`
+**TDD 프로세스**:
+
+1. **Red**: 테스트 실행 → 실패 확인
+2. **Green**: 최소 구현으로 테스트 통과
+3. **Refactor**: 코드 개선 및 기능 완성
+
+**테스트**: `npm run test src/main/models/treeView/index.test.ts`
 
 ### 4. treeView 전용 React Query 구현
 
@@ -191,6 +237,9 @@ export const TREE_VIEW_QUERY_KEYS = {
 **파일**: `apps/desktop/src/renderer/store/treeView/queryOptions.ts`
 
 ```typescript
+import { fetchTreeViewNodes } from '@/renderer/repos/treeView'
+import { TREE_VIEW_QUERY_KEYS } from './queryKeys'
+
 export const getTreeViewNodesQueryOptions = ({ topNodeId }: { topNodeId: string }) => ({
   queryKey: TREE_VIEW_QUERY_KEYS.nodes({ topNodeId }),
   queryFn: () => fetchTreeViewNodes({ topNodeId }),
@@ -200,7 +249,7 @@ export const getTreeViewNodesQueryOptions = ({ topNodeId }: { topNodeId: string 
 
 #### 4-4. API 함수
 
-**파일**: `apps/desktop/src/renderer/repos/tree.ts`
+**파일**: `apps/desktop/src/renderer/repos/treeView.ts` (새 파일)
 
 ```typescript
 export const fetchTreeViewNodes = async ({
@@ -277,9 +326,10 @@ const { expandedNodeIds, draggingNode, focusedNodeId } = useTreeViewStore(...)
 1. **TypeScript 오류 해결** (즉시)
 2. **TreeViewStore 단순화**
 3. **백엔드 API 구현 (TDD)**
-   - Red: 테스트 케이스 작성
-   - Green: 최소 구현으로 테스트 통과
-   - Refactor: 코드 개선 및 기능 완성
+   - 인프라 설정: 채널, IPC, tree core 모델 확장
+   - 🔴 Red: 테스트 케이스 작성
+   - 🟢 Green: 최소 구현으로 테스트 통과
+   - 🔵 Refactor: 코드 개선 및 기능 완성
 4. **treeView 전용 React Query 구현**
 5. **TreeView 컴포넌트 마이그레이션**
 6. **상태 관리 역할 분담**
@@ -292,7 +342,7 @@ const { expandedNodeIds, draggingNode, focusedNodeId } = useTreeViewStore(...)
 ```bash
 # 백엔드 테스트 실행
 cd apps/desktop
-npm run test src/main/models/tree/index.test.ts
+npm run test src/main/models/treeView/index.test.ts
 ```
 
 **테스트 커버리지**:
@@ -322,9 +372,15 @@ store/
     ├── queryOptions.ts # 새 파일
     └── queryKeys.ts   # 새 파일
 
-main/models/tree/
-├── index.ts           # 비즈니스 로직
-└── index.test.ts      # TDD 테스트
+repos/
+├── tree.ts            # tree core API 함수
+└── treeView.ts        # treeView extension API 함수 (새 파일)
+
+main/models/
+├── tree/              # tree core (기존)
+└── treeView/          # treeView extension (새 폴더)
+    ├── index.ts       # 비즈니스 로직
+    └── index.test.ts  # TDD 테스트
 ```
 
 ### 데이터 흐름
@@ -356,7 +412,7 @@ TreeView Component ← expandedNodeIds (treeView store - Zustand)
 
 ## 핵심 설계 원칙
 
-1. **완전한 분리**: tree ↔ treeView 독립적 관리
+1. **개념적 분리**: tree ↔ treeView 코드 섞임 금지
 2. **TDD 접근**: 백엔드 로직의 안전한 구현과 리팩토링
 3. **단순한 사용**: `useTopNodeId()` 만으로 충분
 4. **확장 가능**: `/view/tree/nodes` 구조 (캘린더, 칸반 뷰 대비)

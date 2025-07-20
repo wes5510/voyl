@@ -8,5 +8,5 @@ export const getRootNodeIdQueryOptions = () => ({
 
 export const getTreeNodeQueryOptions = ({ nodeId }: { nodeId?: string }) => ({
   queryKey: QUERY_KEYS.node({ nodeId }),
-  queryFn: () => (nodeId ? fetchNode({ nodeId }) : undefined),
+  queryFn: () => (nodeId ? fetchNode({ nodeId }) : null),
 })

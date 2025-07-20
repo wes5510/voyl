@@ -33,3 +33,21 @@ export async function getNode({ nodeId }: { nodeId: string }): Promise<{
     content: node.content,
   }
 }
+
+export async function getChildNodeIds({ parentId }: { parentId: string }): Promise<string[]> {
+  if (parentId === '') {
+    throw new Error('Parent ID cannot be empty string')
+  }
+
+  const childIds = await db.getChildIds({ parentId })
+  return childIds
+}
+
+export async function getNodeIndex({ nodeId }: { nodeId: string }): Promise<string | undefined> {
+  if (nodeId === '') {
+    throw new Error('Node ID cannot be empty string')
+  }
+
+  const index = await db.getNodeIndexById({ id: nodeId })
+  return index
+}

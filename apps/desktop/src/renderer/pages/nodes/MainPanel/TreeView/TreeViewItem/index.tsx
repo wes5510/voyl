@@ -27,7 +27,7 @@ export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps) {
 
   return (
     <Wrapper ref={setNodeRef} depth={depth} style={style}>
-      <MemoizedExpandButton nodeId={nodeId} />
+      <MemoizedExpandButton />
       <DotButton {...attributes} {...listeners} />
       <MemoizedTreeViewItemInput nodeId={nodeId} className="flex-1" />
     </Wrapper>
