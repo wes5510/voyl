@@ -9,14 +9,10 @@ interface TreeViewStore {
 
 const __useTreeViewStore = create<TreeViewStore>((set) => ({
   entity: {
-    flattenedTree: {
-      nodes: [],
-      expandedNodeIds: [],
-      rootNodeId: 'n-1',
-    },
-    draggingNode: undefined,
-    focusedNodeId: undefined,
+    expandedNodeIds: [],
     topNodeId: undefined,
+    focusedNodeId: undefined,
+    draggingNode: undefined,
   },
   setTopNodeId: ({ topNodeId }) => {
     set((prev) => ({
