@@ -1,11 +1,11 @@
 import { useHotkeys } from 'react-hotkeys-hook'
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import mergeRefs from 'merge-refs'
+import { useTreeNodeDetailed } from '@/renderer/store/tree'
 import useAutoResize from './useAutoResize'
 import useHandlePaste from './useHandlePaste'
 import useHandleKey from './useHandleKey'
 import useFocus from './useFocus'
-import useTreeStore, { getTitleByNodeId } from '@/renderer/models/tree/store'
 import cn from '@/renderer/common/shared/cn'
 
 export interface TreeViewItemInputProps {
@@ -15,13 +15,13 @@ export interface TreeViewItemInputProps {
 
 export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInputProps) {
   const elemRef = useRef<HTMLTextAreaElement>(null)
-  const { title, setTitle } = useTreeStore((state) => ({
-    title: getTitleByNodeId({
-      entity: state.entity,
-      nodeId,
-    }),
-    setTitle: state.setTitleByNodeId,
-  }))
+  const node = useTreeNodeDetailed({ nodeId })
+  const [localTitle, setLocalTitle] = useState(node?.title || '')
+
+  // node 데이터가 변경되면 localTitle 동기화
+  if (node?.title !== undefined && localTitle !== node.title) {
+    setLocalTitle(node.title)
+  }
 
   const keyRef = useHotkeys<HTMLTextAreaElement>(
     ['enter', 'backspace', 'up', 'down', 'tab', 'shift+tab'],
@@ -40,14 +40,21 @@ export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInp
   const handlePaste = useHandlePaste({ nodeId })
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setTitle({ nodeId, title: e.target.value })
+    setLocalTitle(e.target.value)
+    // TODO: 실제 백엔드 업데이트는 debounce 또는 blur 시점에 처리
+  }
+
+  const handleBlur = (): void => {
+    // TODO: 실제 백엔드 업데이트 로직 구현
+    // 현재는 로컬 상태만 관리
   }
 
   return (
     <textarea
       ref={mergeRefs(keyRef, elemRef)}
-      value={title}
+      value={localTitle}
       onChange={handleChange}
+      onBlur={handleBlur}
       onPaste={handlePaste}
       rows={1}
       onFocus={handleFocus}

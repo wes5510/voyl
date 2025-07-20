@@ -1,6 +1,5 @@
-import { CHANNELS } from '../../common/channel.const.js'
+import { CHANNELS } from '@/common/channel.const'
 
-export const getNode = async (nodeId: string) => {
-  const node = await window.electron.ipcRenderer.invoke(CHANNELS.GET_NODE, { id: nodeId })
-  return node
+export const updateNodeTitle = ({ nodeId, title }: { nodeId: string; title: string }) => {
+  return window.electron.ipcRenderer.invoke(CHANNELS.UPDATE_NODE_TITLE, { nodeId, title })
 }
