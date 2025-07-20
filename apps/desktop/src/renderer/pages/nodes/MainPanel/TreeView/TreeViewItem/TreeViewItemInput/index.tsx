@@ -1,7 +1,7 @@
 import { useHotkeys } from 'react-hotkeys-hook'
 import { ChangeEvent, useRef, useState } from 'react'
 import mergeRefs from 'merge-refs'
-import { useTreeNodeDetailed } from '@/renderer/store/tree'
+import { useTreeNode } from '@/renderer/store/tree'
 import useAutoResize from './useAutoResize'
 import useHandlePaste from './useHandlePaste'
 import useHandleKey from './useHandleKey'
@@ -15,7 +15,7 @@ export interface TreeViewItemInputProps {
 
 export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInputProps) {
   const elemRef = useRef<HTMLTextAreaElement>(null)
-  const node = useTreeNodeDetailed({ nodeId })
+  const node = useTreeNode({ nodeId })
   const [localTitle, setLocalTitle] = useState(node?.title || '')
 
   // node 데이터가 변경되면 localTitle 동기화
