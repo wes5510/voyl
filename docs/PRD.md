@@ -76,12 +76,12 @@ Voyl은 누구나 자유롭게 일할 수 있는 유연한 도구로, 개인의 
 
 ### 6.1 애플리케이션 구조
 
-| 구성 요소       | 설명                                                    |
-| --------------- | ------------------------------------------------------- |
-| **클라이언트**  | React 기반 Electron 앱 (또는 React Native 모바일 앱)    |
-| **로컬 저장소** | `.voyl/` 폴더 구조 기반 파일 시스템 (JSON, Markdown 등) |
-| **보조 인덱스** | SQLite를 캐시로 사용하여 검색/정렬 성능 향상            |
-| **플러그인**    | Dropbox 등 외부 동기화 및 CRDT 기능은 익스텐션으로 분리 |
+| 구성 요소       | 설명                                                          |
+| --------------- | ------------------------------------------------------------- |
+| **클라이언트**  | React 기반 Electron 앱 (또는 React Native 모바일 앱)          |
+| **로컬 저장소** | 사용자 지정 워크스페이스 기반 파일 시스템 (JSON, Markdown 등) |
+| **보조 인덱스** | SQLite를 캐시로 사용하여 검색/정렬 성능 향상                  |
+| **플러그인**    | Dropbox 등 외부 동기화 및 CRDT 기능은 익스텐션으로 분리       |
 
 ---
 
@@ -90,24 +90,30 @@ Voyl은 누구나 자유롭게 일할 수 있는 유연한 도구로, 개인의 
 Voyl은 로컬 파일 시스템을 \*\*데이터의 원천(Source of Truth)\*\*으로 사용합니다. 모든 노드는 `.json` 파일로 저장되며, 긴 본문은 별도 `.md` 파일에 저장됩니다. SQLite는 캐시로만 사용되며, 없어도 앱은 정상 작동합니다.
 
 ```
-📁 .voyl/
+📁 [사용자 지정 워크스페이스]/
 ├── nodes/
 │   └── 74da8d.json         # 노드 메타데이터
 ├── content/
 │   └── 74da8d.md           # 긴 본문 내용
 ├── log/
 │   └── 2025-07-20.log      # 변경 이력
-├── index.db                # SQLite 색인 (검색/정렬 전용)
-├── config.json             # 앱 설정, 속성 정의, 플러그인 설정 등
+├── settings.json           # 워크스페이스 설정 (nodeTypes, attributes 등)
 ```
+
+**예시 경로**:
+
+- `/Users/john/Documents/MyVoylWorkspace/`
+- `/Users/john/Dropbox/Work/ProjectNotes/`
+- `C:\Users\john\Documents\VoylProjects\`
 
 ---
 
 ### 6.3 저장 위치
 
-- 사용자에게 앱 첫 실행 시 저장 위치를 선택하게 함
-- 추천 위치: Google Drive, Dropbox 등 클라우드 싱크 가능한 디렉터리
-- 저장 위치는 `.config/voyl/settings.json` 등에 기록됨
+- 사용자에게 앱 첫 실행 시 워크스페이스 경로를 직접 지정하게 함
+- 추천 위치: Documents, Google Drive, Dropbox 등 클라우드 싱크 가능한 디렉터리
+- 사용자가 워크스페이스 이름을 자유롭게 설정 가능 (예: "MyNotes", "WorkProjects")
+- 선택된 경로는 앱 설정(`userData/voyl/config.json`)에 기록됨
 - 앱 내에서 변경 및 마이그레이션 가능
 
 ---
@@ -120,7 +126,7 @@ Voyl은 로컬 파일 시스템을 \*\*데이터의 원천(Source of Truth)\*\*�
 | 포함 정보      | `id`, `title`, `parentId`, `tags`, `due`, `done`, `updatedAt` 등 |
 | 재생성         | 앱 실행 시 자동 감지, 손상되거나 누락되면 전체 재빌드            |
 | 삭제 노드 대응 | `.json` 실존 여부 기준으로 UI 렌더링 시 필터링함                 |
-| 완전 제거 가능 | `nodes/*.json`만 있으면 캐시 없이도 복원 가능                    |
+| 완전 제거 가능 | 워크스페이스의 `nodes/*.json`만 있으면 캐시 없이도 복원 가능     |
 
 ---
 
@@ -130,7 +136,7 @@ Voyl은 모든 외부 동기화 및 협업 기능을 \*\*플러그인(익스텐�
 
 | 플러그인             | 설명                                         |
 | -------------------- | -------------------------------------------- |
-| `sync-dropbox`       | Dropbox API를 통해 `.voyl/` 폴더를 싱크      |
+| `sync-dropbox`       | Dropbox API를 통해 워크스페이스 폴더를 싱크  |
 | `sync-google-drive`  | Google Drive API 연동 예정                   |
 | `plugin-crdt`        | CRDT 기반 병합 확장 가능 (Automerge, Yjs 등) |
 | `plugin-timemachine` | log 기반 시간여행 UI 제공 가능               |
@@ -145,7 +151,7 @@ Voyl은 모든 외부 동기화 및 협업 기능을 \*\*플러그인(익스텐�
 
 | 플랫폼       | 구현 전략                                                   |
 | ------------ | ----------------------------------------------------------- |
-| React Native | `react-native-fs`를 통해 `.voyl/` 내부 구조 유지            |
+| React Native | `react-native-fs`를 통해 워크스페이스 내부 구조 유지        |
 | 저장 위치    | 자동 경로 사용 (앱 전용 폴더), 단 Dropbox 연동 시 선택 가능 |
 | 외부 동기화  | Dropbox API 연동은 백그라운드 플러그인으로 구현             |
 | 캐시 사용    | SQLite 사용 가능 (`react-native-sqlite-storage` 등 활용)    |
