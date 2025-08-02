@@ -50,10 +50,14 @@ Repository 패턴 기반 인프라 구축을 통해 사용자가 워크스페이
 ### 경로 구조 설계
 
 ```
-# 로컬 앱 데이터 (userData - Electron 기본)
+# 로컬 앱 데이터
+## 영구 데이터 (userData)
 ~/Library/Application Support/voyl/  (macOS 기준)
-├── cache.db                          # SQLite 캐시
 └── config.json                       # 앱 설정 (workspacePath 포함)
+
+## 캐시 데이터 (cache)
+~/Library/Caches/voyl/               (macOS 기준)
+└── cache.db                          # SQLite 캐시 (매번 초기화)
 
 # 사용자 워크스페이스 (사용자 지정 경로)
 [사용자 지정 워크스페이스]/
