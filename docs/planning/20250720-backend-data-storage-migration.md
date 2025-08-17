@@ -78,7 +78,7 @@ Repository Layer (/main/repos/)
 
 **완료 기준**: 사용자가 워크스페이스 경로를 지정하고 폴더가 생성됨
 
-**구현 계획**: [📋 overview.md](./20250720-infrastructure-layer/overview.md) 참조
+**구현 계획**: [📋 README.md](./20250720-infrastructure-layer/README.md) 참조
 
 ### **2. 데이터 레이어 구현**
 
