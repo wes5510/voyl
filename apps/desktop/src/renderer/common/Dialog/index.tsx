@@ -1,0 +1,7 @@
+export { Dialog, DialogTrigger, DialogPortal, DialogClose } from './DialogRoot.js'
+export { DialogOverlay } from './DialogOverlay.js'
+export { DialogContent } from './DialogContent.js'
+export { DialogHeader } from './DialogHeader.js'
+export { DialogFooter } from './DialogFooter.js'
+export { DialogTitle } from './DialogTitle.js'
+export { DialogDescription } from './DialogDescription.js'
