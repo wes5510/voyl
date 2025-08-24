@@ -32,6 +32,17 @@ vi.mock('../models/app/index.js', () => ({
 }))
 
 describe('App IPC Handlers', () => {
+  // 핸들러 찾기 유틸 함수
+  function getHandler(channel: string) {
+    const result = vi.mocked(mockIpcMain.handle).mock.calls.find(
+      ([c]) => c === channel
+    )?.[1]
+    if (!result) {
+      throw new Error(`Handler not found for channel: ${channel}`)
+    }
+    return result
+  }
+
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -59,11 +70,9 @@ describe('App IPC Handlers', () => {
 
       // Register handlers and get the function
       registerAppHandlers(mockIpcMain)
-      const selectPathHandler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.SELECT_WORKSPACE_PATH)?.[1]
+      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
 
-      const result = await selectPathHandler?.(undefined as any)
+      const result = await selectPathHandler({} as Electron.IpcMainInvokeEvent)
 
       expect(dialog.showOpenDialog).toHaveBeenCalledWith({
         properties: ['openDirectory', 'createDirectory'],
@@ -81,11 +90,9 @@ describe('App IPC Handlers', () => {
       })
 
       registerAppHandlers(mockIpcMain)
-      const selectPathHandler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.SELECT_WORKSPACE_PATH)?.[1]
+      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
 
-      const result = await selectPathHandler?.(undefined as any)
+      const result = await selectPathHandler({} as Electron.IpcMainInvokeEvent)
       expect(result).toBeNull()
     })
   })
@@ -96,11 +103,9 @@ describe('App IPC Handlers', () => {
       vi.mocked(isInitialized).mockResolvedValue(true)
 
       registerAppHandlers(mockIpcMain)
-      const handler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.IS_INITIALIZED)?.[1]
+      const handler = getHandler(CHANNELS.IS_INITIALIZED)
 
-      const result = await handler?.(undefined as any)
+      const result = await handler({} as Electron.IpcMainInvokeEvent)
       expect(result).toBe(true)
     })
 
@@ -109,11 +114,9 @@ describe('App IPC Handlers', () => {
       vi.mocked(isInitialized).mockRejectedValue(new Error('Test error'))
 
       registerAppHandlers(mockIpcMain)
-      const handler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.IS_INITIALIZED)?.[1]
+      const handler = getHandler(CHANNELS.IS_INITIALIZED)
 
-      const result = await handler?.(undefined as any)
+      const result = await handler({} as Electron.IpcMainInvokeEvent)
       expect(result).toBe(false)
     })
   })
@@ -124,12 +127,10 @@ describe('App IPC Handlers', () => {
       vi.mocked(initializeApp).mockResolvedValue(undefined)
 
       registerAppHandlers(mockIpcMain)
-      const handler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.INITIALIZE_APP)?.[1]
+      const handler = getHandler(CHANNELS.INITIALIZE_APP)
 
       const mockEvent = {} as Electron.IpcMainInvokeEvent
-      await expect(handler?.(mockEvent, '/test/path')).resolves.not.toThrow()
+      await expect(handler(mockEvent, '/test/path')).resolves.not.toThrow()
 
       expect(initializeApp).toHaveBeenCalledWith({ workspacePath: '/test/path' })
     })
@@ -139,12 +140,10 @@ describe('App IPC Handlers', () => {
       vi.mocked(initializeApp).mockRejectedValue(new Error('Init failed'))
 
       registerAppHandlers(mockIpcMain)
-      const handler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.INITIALIZE_APP)?.[1]
+      const handler = getHandler(CHANNELS.INITIALIZE_APP)
 
       const mockEvent = {} as Electron.IpcMainInvokeEvent
-      await expect(handler?.(mockEvent, '/test/path')).rejects.toThrow('Init failed')
+      await expect(handler(mockEvent, '/test/path')).rejects.toThrow('Init failed')
     })
   })
 
@@ -154,11 +153,9 @@ describe('App IPC Handlers', () => {
       vi.mocked(loadApp).mockResolvedValue(undefined)
 
       registerAppHandlers(mockIpcMain)
-      const handler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.LOAD_APP)?.[1]
+      const handler = getHandler(CHANNELS.LOAD_APP)
 
-      await expect(handler?.(undefined as any)).resolves.not.toThrow()
+      await expect(handler({} as Electron.IpcMainInvokeEvent)).resolves.not.toThrow()
       expect(loadApp).toHaveBeenCalled()
     })
 
@@ -167,11 +164,9 @@ describe('App IPC Handlers', () => {
       vi.mocked(loadApp).mockRejectedValue(new Error('Load failed'))
 
       registerAppHandlers(mockIpcMain)
-      const handler = vi
-        .mocked(mockIpcMain.handle)
-        .mock.calls.find(([channel]) => channel === CHANNELS.LOAD_APP)?.[1]
+      const handler = getHandler(CHANNELS.LOAD_APP)
 
-      await expect(handler?.(undefined as any)).rejects.toThrow('Load failed')
+      await expect(handler({} as Electron.IpcMainInvokeEvent)).rejects.toThrow('Load failed')
     })
   })
 })

@@ -92,9 +92,10 @@ export async function initializeApp({ workspacePath }: { workspacePath: string }
 export async function loadApp(): Promise<void> {
   // 1. config 파일에서 메모리로 로드 (이미 메모리에 있다면 파일에서 다시 로드)
   await loadAppConfig()
-  // 2. 캐시 DB 초기화는 별도로 구현 예정
-  // const cachePath = getCachePath()
-  // await initializeDB(cachePath)
+  // 2. 캐시 DB 초기화
+  const cachePath = getCachePath()
+  const { initialize } = await import('../../db/index.js')
+  await initialize(cachePath)
 }
 
 /**
