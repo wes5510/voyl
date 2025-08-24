@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { dialog, ipcMain } from 'electron'
-import { homedir } from 'os'
 import { join } from 'path'
 import registerAppHandlers from './app.js'
 import { CHANNELS } from '../../common/channel.const.js'
@@ -68,7 +67,7 @@ describe('App IPC Handlers', () => {
         ([channel]) => channel === CHANNELS.SELECT_WORKSPACE_PATH
       )?.[1]
 
-      const result = await selectPathHandler?.()
+      const result = await selectPathHandler?.(undefined as any)
       
       expect(dialog.showOpenDialog).toHaveBeenCalledWith({
         properties: ['openDirectory', 'createDirectory'],
@@ -90,7 +89,7 @@ describe('App IPC Handlers', () => {
         ([channel]) => channel === CHANNELS.SELECT_WORKSPACE_PATH
       )?.[1]
 
-      const result = await selectPathHandler?.()
+      const result = await selectPathHandler?.(undefined as any)
       expect(result).toBeNull()
     })
   })
@@ -105,7 +104,7 @@ describe('App IPC Handlers', () => {
         ([channel]) => channel === CHANNELS.IS_INITIALIZED
       )?.[1]
 
-      const result = await handler?.()
+      const result = await handler?.(undefined as any)
       expect(result).toBe(true)
     })
 
@@ -118,7 +117,7 @@ describe('App IPC Handlers', () => {
         ([channel]) => channel === CHANNELS.IS_INITIALIZED
       )?.[1]
 
-      const result = await handler?.()
+      const result = await handler?.(undefined as any)
       expect(result).toBe(false)
     })
   })
@@ -163,7 +162,7 @@ describe('App IPC Handlers', () => {
         ([channel]) => channel === CHANNELS.LOAD_APP
       )?.[1]
 
-      await expect(handler?.()).resolves.not.toThrow()
+      await expect(handler?.(undefined as any)).resolves.not.toThrow()
       expect(loadApp).toHaveBeenCalled()
     })
 
@@ -176,7 +175,7 @@ describe('App IPC Handlers', () => {
         ([channel]) => channel === CHANNELS.LOAD_APP
       )?.[1]
 
-      await expect(handler?.()).rejects.toThrow('Load failed')
+      await expect(handler?.(undefined as any)).rejects.toThrow('Load failed')
     })
   })
 })

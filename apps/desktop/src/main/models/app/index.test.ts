@@ -1,6 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { tmpdir } from 'os'
-import { join } from 'path'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs-extra'
 import { app } from 'electron'
 import { 
@@ -10,8 +8,7 @@ import {
   loadAppConfig,
   getAppConfig,
   setAppConfig,
-  initializeApp,
-  loadApp
+  initializeApp
 } from './index.js'
 
 // Electron app mock

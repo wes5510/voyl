@@ -79,7 +79,7 @@ describe('Workspace Model', () => {
       vi.mocked(fs.access).mockResolvedValue(undefined)
       vi.mocked(fs.writeFile).mockResolvedValue(undefined)
       vi.mocked(fs.remove).mockResolvedValue(undefined)
-      vi.mocked(fs.pathExists).mockResolvedValue(false)
+      vi.mocked(fs.pathExists).mockResolvedValue(false as any)
       vi.mocked(fs.writeJson).mockResolvedValue(undefined)
     })
 
