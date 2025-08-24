@@ -1,16 +1,16 @@
 import { FolderIcon, Loader2 } from 'lucide-react'
-import { useSelectWorkspacePath } from '@/renderer/store/app/index.js'
-import { Button } from '@/renderer/common/Button.js'
-import { Alert, AlertDescription } from '@/renderer/common/Alert.js'
+import { useSelectWorkspacePath } from '@/renderer/store/app'
+import { Button } from '@/renderer/common/Button'
+import { Alert, AlertDescription } from '@/renderer/common/Alert'
 
 interface WorkspacePathSelectorProps {
   selectedPath: string
   onPathSelect: (path: string) => void
 }
 
-export default function WorkspacePathSelector({ 
-  selectedPath, 
-  onPathSelect 
+export default function WorkspacePathSelector({
+  selectedPath,
+  onPathSelect,
 }: WorkspacePathSelectorProps) {
   const selectPath = useSelectWorkspacePath()
 
@@ -18,7 +18,7 @@ export default function WorkspacePathSelector({
     selectPath.mutate(undefined, {
       onSuccess: (path) => {
         if (path) onPathSelect(path)
-      }
+      },
     })
   }
 
@@ -52,7 +52,9 @@ export default function WorkspacePathSelector({
       {selectPath.error && (
         <Alert variant="destructive">
           <AlertDescription>
-            {selectPath.error instanceof Error ? selectPath.error.message : '경로 선택 중 오류가 발생했습니다'}
+            {selectPath.error instanceof Error
+              ? selectPath.error.message
+              : '경로 선택 중 오류가 발생했습니다'}
           </AlertDescription>
         </Alert>
       )}

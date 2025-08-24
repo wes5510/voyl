@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { selectWorkspacePath, initializeApp, loadApp } from '@/renderer/repos/app.js'
+import { selectWorkspacePath, initializeApp, loadApp } from '@/renderer/repos/app'
 import { QUERY_KEYS } from './const.js'
 import { getInitializationQueryOptions } from './queryOptions.js'
 
@@ -8,9 +8,9 @@ import { getInitializationQueryOptions } from './queryOptions.js'
  */
 export function useAppInitialized() {
   const { data: isInitialized } = useSuspenseQuery(getInitializationQueryOptions())
-  
-  return { 
-    isInitialized: isInitialized ?? false
+
+  return {
+    isInitialized: isInitialized ?? false,
   }
 }
 
@@ -28,7 +28,7 @@ export function useSelectWorkspacePath() {
  */
 export function useInitializeWorkspace() {
   const queryClient = useQueryClient()
-  
+
   return useMutation({
     mutationFn: async (path: string) => {
       // 1. 초기화 (설정 생성 + 워크스페이스 폴더 생성)

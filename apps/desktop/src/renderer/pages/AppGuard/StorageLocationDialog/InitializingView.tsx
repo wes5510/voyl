@@ -2,7 +2,7 @@ import { Loader2 } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
-} from '@/renderer/common/Dialog.js'
+} from '@/renderer/common/Dialog'
 
 export default function InitializingView() {
   return (
