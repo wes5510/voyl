@@ -1,11 +1,12 @@
 import { Node, nodes } from './schema.js'
-import { db } from '../connect.js'
+import { getDatabase } from '../index.js'
 import { eq, isNull } from 'drizzle-orm'
 
 export async function updateNodeTitle(params: {
   id: string
   title: string
 }): Promise<Node | undefined> {
+  const db = getDatabase()
   const ret = await db
     .update(nodes)
     .set({ title: params.title })
@@ -16,12 +17,14 @@ export async function updateNodeTitle(params: {
 }
 
 export async function getNodeTitleById({ id }: { id: string }): Promise<string | undefined> {
+  const db = getDatabase()
   const ret = await db.select({ title: nodes.title }).from(nodes).where(eq(nodes.id, id)).limit(1)
 
   return ret[0]?.title ?? undefined
 }
 
 export async function getNodeParentIdById({ id }: { id: string }): Promise<string | undefined> {
+  const db = getDatabase()
   const ret = await db
     .select({ parentId: nodes.parentId })
     .from(nodes)
@@ -38,6 +41,7 @@ export async function setNodeParentId({
   id: string
   newParentId?: string
 }): Promise<Node | undefined> {
+  const db = getDatabase()
   const ret = await db
     .update(nodes)
     .set({ parentId: newParentId ?? null })
@@ -48,6 +52,7 @@ export async function setNodeParentId({
 }
 
 export async function getNodeIndexById({ id }: { id: string }): Promise<string | undefined> {
+  const db = getDatabase()
   const ret = await db.select({ index: nodes.index }).from(nodes).where(eq(nodes.id, id)).limit(1)
 
   return ret[0]?.index ?? undefined
@@ -57,6 +62,7 @@ export async function setNodeIndex(params: {
   id: string
   index: string
 }): Promise<Node | undefined> {
+  const db = getDatabase()
   const ret = await db
     .update(nodes)
     .set({ index: params.index })
@@ -73,12 +79,14 @@ export async function updateNodeAttributeIds({
   id: string
   attributeIds: string[]
 }) {
+  const db = getDatabase()
   const ret = await db.update(nodes).set({ attributeIds }).where(eq(nodes.id, id)).returning()
 
   return ret[0] ?? undefined
 }
 
 export async function getNodeById({ id }: { id: string }): Promise<Node | undefined> {
+  const db = getDatabase()
   const ret = await db
     .select({
       id: nodes.id,
@@ -97,12 +105,14 @@ export async function getNodeById({ id }: { id: string }): Promise<Node | undefi
 }
 
 export async function getRootNodeId(): Promise<string | undefined> {
+  const db = getDatabase()
   const ret = await db.select({ id: nodes.id }).from(nodes).where(isNull(nodes.parentId)).limit(1)
 
   return ret[0]?.id ?? undefined
 }
 
 export async function getChildIds({ parentId }: { parentId: string }): Promise<string[]> {
+  const db = getDatabase()
   const ret = await db.select({ id: nodes.id }).from(nodes).where(eq(nodes.parentId, parentId))
 
   return ret.map((r) => r.id)

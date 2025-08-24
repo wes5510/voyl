@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1737789000000,
+      "tag": "0000_create_node_types",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1737789001000,
+      "tag": "0001_create_attributes",
+      "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1737789002000,
+      "tag": "0002_create_nodes",
+      "breakpoints": false
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1737789003000,
+      "tag": "0003_create_indexes",
+      "breakpoints": false
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1737789004000,
+      "tag": "0004_create_type_index",
+      "breakpoints": false
+    }
+  ]
+}

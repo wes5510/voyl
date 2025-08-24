@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS idx_nodes_parent_id ON nodes(parent_id)

@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS idx_nodes_type_id ON nodes(type_id)
