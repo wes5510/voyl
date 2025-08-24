@@ -27,7 +27,7 @@ async function openDirectoryDialog(): Promise<string | null> {
  */
 async function checkIsInitialized(): Promise<boolean> {
   try {
-    return await isInitialized() // 비동기 함수로 통일
+    return isInitialized()
   } catch (error) {
     console.error('Failed to check initialization status:', error)
     return false

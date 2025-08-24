@@ -6,7 +6,7 @@ interface AppGuardProps {
 }
 
 export default function AppGuard({ children }: AppGuardProps) {
-  const { isInitialized } = useAppInitialized()
+  const isInitialized = useAppInitialized()
 
   // 앱이 초기화되지 않았으면 초기화 다이얼로그 표시
   if (!isInitialized) {

@@ -1,7 +1,7 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { sql } from 'drizzle-orm'
 import { v4 as uuidv4 } from 'uuid'
-import { nodeTypes } from '../nodeType/schema.js' // NodeType 스키마 import 및 확장자 .js 추가
+import { nodeTypes } from '../nodeType/schema' // NodeType 스키마 import
 
 /**
  * Node 모델은 트리 구조의 기본 단위입니다.

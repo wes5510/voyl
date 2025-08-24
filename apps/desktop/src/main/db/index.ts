@@ -84,8 +84,7 @@ async function createSchema(): Promise<void> {
 
 /**
  * 런타임 스키마 생성
- *
- * ✅ 확정된 최고의 방법: Drizzle migrate 함수!
+ * Drizzle migrate 함수 사용
  */
 async function createSchemaRuntime(): Promise<void> {
   try {
@@ -94,18 +93,21 @@ async function createSchemaRuntime(): Promise<void> {
       throw new Error('Database instance not created')
     }
 
-    // Drizzle 공식 migrate 함수 사용 (production-ready!)
+    // Drizzle 공식 migrate 함수 사용
     const { migrate } = await import('drizzle-orm/better-sqlite3/migrator')
-
+    const { join } = await import('path')
+    
+    // __dirname 대체 (ES modules)
+    const migrationsPath = join(process.cwd(), 'src/main/db/migrations')
+    
     await migrate(db, {
-      migrationsFolder: './src/main/db/migrations',
+      migrationsFolder: migrationsPath,
     })
 
     console.log('✅ Schema migrated successfully with Drizzle migrate')
   } catch (error) {
-    // Migration 파일이 없을 수도 있으므로 일단 에러를 로그만 남김
-    console.warn('Migration failed (migrations folder may not exist):', error)
-    // throw하지 않고 계속 진행
+    console.error('Migration failed:', error)
+    throw error
   }
 }
 

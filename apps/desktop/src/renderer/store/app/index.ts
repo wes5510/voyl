@@ -9,9 +9,7 @@ import { getInitializationQueryOptions } from './queryOptions.js'
 export function useAppInitialized() {
   const { data: isInitialized } = useSuspenseQuery(getInitializationQueryOptions())
 
-  return {
-    isInitialized: isInitialized ?? false,
-  }
+  return isInitialized ?? false
 }
 
 /**
