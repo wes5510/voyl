@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3'
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 import fs from 'fs-extra'
+import { dirname } from 'path'
 
 // 현재 DB 인스턴스 (재초기화 가능하도록 변수로 관리)
 let sqlite: Database.Database | null = null
@@ -21,7 +22,7 @@ export async function initialize(cachePath: string): Promise<void> {
     }
 
     // 3. 캐시 디렉토리 생성
-    const dbDir = cachePath.replace(/\/[^\/]+$/, '') // 파일명 제거하고 디렉토리만
+    const dbDir = dirname(cachePath) // path.dirname으로 안전하게 디렉토리 추출
     await fs.ensureDir(dbDir)
 
     // 4. 새로운 DB 인스턴스 생성

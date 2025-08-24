@@ -21,7 +21,7 @@ export async function checkWorkspacePermissions({
     const testFile = join(workspacePath, '.test-write-permission')
     await fs.writeFile(testFile, 'test')
     await fs.remove(testFile)
-  } catch (error) {
+  } catch {
     throw new Error(`Insufficient permissions for workspace: ${workspacePath}`)
   }
 }
