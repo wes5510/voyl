@@ -2,7 +2,6 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { installExtension, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
-import './db/connect.js'
 import './ipc/index.js'
 
 function createWindow(): void {
