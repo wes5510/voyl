@@ -32,7 +32,7 @@ describe('Workspace Model', () => {
       vi.mocked(fs.writeJson).mockResolvedValue(undefined)
     })
 
-    it('필수 디렉터리를 모두 생성해야 함', async () => {
+    it('워크스페이스 초기화 시 필수 디렉터리가 모두 생성되어야 함', async () => {
       await initializeWorkspace({ workspacePath: testWorkspacePath })
 
       // 디렉터리 생성 확인
@@ -42,7 +42,7 @@ describe('Workspace Model', () => {
       expect(fs.ensureDir).toHaveBeenCalledWith(join(testWorkspacePath, 'log'))
     })
 
-    it('기본값을 포함한 settings.json 파일을 생성해야 함', async () => {
+    it('워크스페이스 초기화 시 기본 settings.json 파일이 생성되어야 함', async () => {
       await initializeWorkspace({ workspacePath: testWorkspacePath })
 
       expect(fs.writeJson).toHaveBeenCalledWith(
@@ -57,7 +57,7 @@ describe('Workspace Model', () => {
       )
     })
 
-    it('워크스페이스 경로를 검증해야 함', async () => {
+    it('잘못된 경로가 주어지면 검증 에러가 발생해야 함', async () => {
       await expect(initializeWorkspace({ workspacePath: '' })).rejects.toThrow(
         'Workspace path cannot be empty'
       )
@@ -67,7 +67,7 @@ describe('Workspace Model', () => {
       )
     })
 
-    it('실패 시 정리 작업을 수행해야 함', async () => {
+    it('초기화 중 실패하면 정리 작업이 수행되어야 함', async () => {
       // Mock ensureDir to fail on second call
       vi.mocked(fs.ensureDir)
         .mockResolvedValueOnce(undefined) // workspace dir succeeds
@@ -81,7 +81,7 @@ describe('Workspace Model', () => {
   })
 
   describe('checkWorkspacePermissions', () => {
-    it('읽기/쓰기 권한을 확인해야 함', async () => {
+    it('경로 권한 확인 시 읽기/쓰기 권한이 있어야 함', async () => {
       vi.mocked(fs.ensureDir).mockResolvedValue(undefined)
       vi.mocked(fs.access).mockResolvedValue(undefined)
       vi.mocked(fs.writeFile).mockResolvedValue(undefined)
@@ -95,7 +95,7 @@ describe('Workspace Model', () => {
       )
     })
 
-    it('권한이 부족할 때 에러를 발생시켜야 함', async () => {
+    it('경로에 권한이 부족하면 에러가 발생해야 함', async () => {
       vi.mocked(fs.ensureDir).mockResolvedValue(undefined)
       vi.mocked(fs.access).mockRejectedValue(new Error('Permission denied'))
 
