@@ -3,6 +3,7 @@ import { join } from 'path'
 import fs from 'fs-extra'
 import { APP_PATHS } from './const.js'
 import { initializeWorkspace } from './workspace/index.js'
+import { initialize as initializeDB } from '../../db/index.js'
 
 /**
  * 앱 설정 파일 경로
@@ -25,7 +26,9 @@ export function getCachePath(): string {
  * 비동기로 통일하여 일관성 유지
  */
 export async function isInitialized(): Promise<boolean> {
-  return fs.pathExists(getConfigPath())
+  const configPath = getConfigPath()
+  const exists = await fs.pathExists(configPath)
+  return exists
 }
 
 // 앱 설정 싱글톤 메모리 관리
@@ -94,8 +97,7 @@ export async function loadApp(): Promise<void> {
   await loadAppConfig()
   // 2. 캐시 DB 초기화
   const cachePath = getCachePath()
-  const { initialize } = await import('../../db/index.js')
-  await initialize(cachePath)
+  await initializeDB(cachePath)
 }
 
 /**

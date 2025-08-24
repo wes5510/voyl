@@ -243,6 +243,7 @@ export default [
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
             '**/src/main/db/*/*',
+            '**/src/main/db/index.js',
             '**/src/common/*',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
