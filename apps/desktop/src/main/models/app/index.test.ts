@@ -98,7 +98,7 @@ describe('App Model', () => {
   })
 
   describe('initializeApp', () => {
-    it('should initialize app with workspace path', async () => {
+    it('워크스페이스 경로가 주어지면 앱을 초기화해야 함', async () => {
       const mockWorkspacePath = '/test/workspace'
       vi.mocked(fs.writeJson).mockResolvedValue(undefined)
 
@@ -123,7 +123,7 @@ describe('App Model', () => {
   })
 
   describe('memory management', () => {
-    it('should manage app config in memory', () => {
+    it('config 설정과 조회 시 메모리에서 관리되어야 함', () => {
       expect(getAppConfig()).toBeNull()
 
       const testConfig = { workspacePath: '/test/path' }
