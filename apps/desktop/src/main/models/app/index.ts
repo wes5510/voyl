@@ -24,7 +24,7 @@ export function getCachePath(): string {
  * 비동기로 통일하여 일관성 유지
  */
 export async function isInitialized(): Promise<boolean> {
-  return fs.existsSync(getConfigPath())
+  return fs.pathExists(getConfigPath())
 }
 
 /**
@@ -32,7 +32,7 @@ export async function isInitialized(): Promise<boolean> {
  */
 export async function loadAppConfig(): Promise<{ workspacePath: string }> {
   const configPath = getConfigPath()
-  if (!fs.existsSync(configPath)) {
+  if (!(await fs.pathExists(configPath))) {
     throw new Error('App configuration not found. Initialization required.')
   }
   const config = await fs.readJson(configPath)
