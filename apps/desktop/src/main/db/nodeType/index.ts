@@ -1,17 +1,20 @@
-import { db } from '../connect.js'
+import { getDatabase } from '../index.js'
 import { nodeTypes, type NewNodeType, type NodeType } from './schema.js'
 import { eq } from 'drizzle-orm'
 
 export const createNodeType = async (data: Omit<NewNodeType, 'id'>): Promise<NodeType> => {
+  const db = getDatabase()
   const [newNodeType] = await db.insert(nodeTypes).values(data).returning()
   return newNodeType
 }
 
 export const getAllNodeTypes = async (): Promise<NodeType[]> => {
+  const db = getDatabase()
   return await db.select().from(nodeTypes)
 }
 
 export const getNodeTypeById = async ({ id }: { id: string }): Promise<NodeType | undefined> => {
+  const db = getDatabase()
   const [nodeType] = await db.select().from(nodeTypes).where(eq(nodeTypes.id, id))
   return nodeType || undefined
 }

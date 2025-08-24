@@ -157,3 +157,6 @@ export function getDatabase() {
   }
   return db
 }
+
+// Legacy export for backward compatibility
+export { getDatabase as db }
