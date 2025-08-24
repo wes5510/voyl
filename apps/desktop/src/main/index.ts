@@ -2,7 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { installExtension, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
-import './db/connect.js'
+// DB 연결은 앱 초기화 후 loadApp에서 처리
+// import './db/connect.js'
 import './ipc/index.js'
 
 function createWindow(): void {
@@ -72,6 +73,17 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+  }
+})
+
+// 앱 종료 전 정리 작업
+app.on('before-quit', async () => {
+  // DB 연결 종료
+  try {
+    const { closeDatabase } = await import('./db/connect.js')
+    closeDatabase()
+  } catch (error) {
+    console.error('Failed to close database:', error)
   }
 })
 
