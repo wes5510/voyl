@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { dialog, ipcMain } from 'electron'
+import { dialog } from 'electron'
 import { homedir } from 'os'
 import { join } from 'path'
 import registerAppHandlers from './app.js'
@@ -10,13 +10,18 @@ vi.mock('electron', () => ({
   dialog: {
     showOpenDialog: vi.fn(),
   },
-  ipcMain: {
-    handle: vi.fn(),
-  },
 }))
+
+// Mock ipcMain for testing
+const mockIpcMain = {
+  handle: vi.fn(),
+} as unknown as Electron.IpcMain
 
 // Mock os
 vi.mock('os', () => ({
+  default: {
+    homedir: vi.fn(() => '/home/user'),
+  },
   homedir: vi.fn(() => '/home/user'),
 }))
 
@@ -33,22 +38,22 @@ describe('App IPC Handlers', () => {
   })
 
   describe('registerAppHandlers', () => {
-    it('should register all app handlers', () => {
-      registerAppHandlers()
+    it('앱 핸들러 등록 시 모든 IPC 채널이 등록되어야 함', () => {
+      registerAppHandlers(mockIpcMain)
 
-      expect(ipcMain.handle).toHaveBeenCalledWith(
+      expect(mockIpcMain.handle).toHaveBeenCalledWith(
         CHANNELS.IS_INITIALIZED,
         expect.any(Function)
       )
-      expect(ipcMain.handle).toHaveBeenCalledWith(
+      expect(mockIpcMain.handle).toHaveBeenCalledWith(
         CHANNELS.SELECT_WORKSPACE_PATH,
         expect.any(Function)
       )
-      expect(ipcMain.handle).toHaveBeenCalledWith(
+      expect(mockIpcMain.handle).toHaveBeenCalledWith(
         CHANNELS.INITIALIZE_APP,
         expect.any(Function)
       )
-      expect(ipcMain.handle).toHaveBeenCalledWith(
+      expect(mockIpcMain.handle).toHaveBeenCalledWith(
         CHANNELS.LOAD_APP,
         expect.any(Function)
       )
@@ -56,15 +61,15 @@ describe('App IPC Handlers', () => {
   })
 
   describe('openDirectoryDialog', () => {
-    it('should open dialog with Documents default path', async () => {
+    it('경로 선택 시 Documents 기본 경로로 다이얼로그가 열려야 함', async () => {
       vi.mocked(dialog.showOpenDialog).mockResolvedValue({
         canceled: false,
         filePaths: ['/selected/path'],
       })
 
       // Register handlers and get the function
-      registerAppHandlers()
-      const selectPathHandler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const selectPathHandler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.SELECT_WORKSPACE_PATH
       )?.[1]
 
@@ -79,14 +84,14 @@ describe('App IPC Handlers', () => {
       expect(result).toBe('/selected/path')
     })
 
-    it('should return null when dialog is canceled', async () => {
+    it('다이얼로그 취소 시 null을 반환해야 함', async () => {
       vi.mocked(dialog.showOpenDialog).mockResolvedValue({
         canceled: true,
         filePaths: [],
       })
 
-      registerAppHandlers()
-      const selectPathHandler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const selectPathHandler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.SELECT_WORKSPACE_PATH
       )?.[1]
 
@@ -96,12 +101,12 @@ describe('App IPC Handlers', () => {
   })
 
   describe('checkIsInitialized', () => {
-    it('should return true when app is initialized', async () => {
+    it('앱 초기화 상태 확인 시 초기화되어 있으면 true를 반환해야 함', async () => {
       const { isInitialized } = await import('../models/app/index.js')
       vi.mocked(isInitialized).mockResolvedValue(true)
 
-      registerAppHandlers()
-      const handler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const handler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.IS_INITIALIZED
       )?.[1]
 
@@ -109,12 +114,12 @@ describe('App IPC Handlers', () => {
       expect(result).toBe(true)
     })
 
-    it('should return false on error', async () => {
+    it('앱 초기화 상태 확인 중 에러 발생 시 false를 반환해야 함', async () => {
       const { isInitialized } = await import('../models/app/index.js')
       vi.mocked(isInitialized).mockRejectedValue(new Error('Test error'))
 
-      registerAppHandlers()
-      const handler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const handler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.IS_INITIALIZED
       )?.[1]
 
@@ -124,12 +129,12 @@ describe('App IPC Handlers', () => {
   })
 
   describe('handleInitializeApp', () => {
-    it('should initialize app successfully', async () => {
+    it('앱 초기화 요청 시 성공적으로 초기화되어야 함', async () => {
       const { initializeApp } = await import('../models/app/index.js')
       vi.mocked(initializeApp).mockResolvedValue(undefined)
 
-      registerAppHandlers()
-      const handler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const handler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.INITIALIZE_APP
       )?.[1]
 
@@ -139,12 +144,12 @@ describe('App IPC Handlers', () => {
       expect(initializeApp).toHaveBeenCalledWith({ workspacePath: '/test/path' })
     })
 
-    it('should throw error on failure', async () => {
+    it('앱 초기화 실패 시 에러를 던져야 함', async () => {
       const { initializeApp } = await import('../models/app/index.js')
       vi.mocked(initializeApp).mockRejectedValue(new Error('Init failed'))
 
-      registerAppHandlers()
-      const handler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const handler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.INITIALIZE_APP
       )?.[1]
 
@@ -154,12 +159,12 @@ describe('App IPC Handlers', () => {
   })
 
   describe('handleLoadApp', () => {
-    it('should load app successfully', async () => {
+    it('앱 로드 요청 시 성공적으로 로드되어야 함', async () => {
       const { loadApp } = await import('../models/app/index.js')
       vi.mocked(loadApp).mockResolvedValue(undefined)
 
-      registerAppHandlers()
-      const handler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const handler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.LOAD_APP
       )?.[1]
 
@@ -167,12 +172,12 @@ describe('App IPC Handlers', () => {
       expect(loadApp).toHaveBeenCalled()
     })
 
-    it('should throw error on failure', async () => {
+    it('앱 로드 실패 시 에러를 던져야 함', async () => {
       const { loadApp } = await import('../models/app/index.js')
       vi.mocked(loadApp).mockRejectedValue(new Error('Load failed'))
 
-      registerAppHandlers()
-      const handler = vi.mocked(ipcMain.handle).mock.calls.find(
+      registerAppHandlers(mockIpcMain)
+      const handler = vi.mocked(mockIpcMain.handle).mock.calls.find(
         ([channel]) => channel === CHANNELS.LOAD_APP
       )?.[1]
 
