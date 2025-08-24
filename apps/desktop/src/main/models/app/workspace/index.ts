@@ -1,5 +1,4 @@
-import { join } from 'path'
-import path from 'path'
+import path, { join } from 'path'
 import fs from 'fs-extra'
 import { WORKSPACE_PATHS } from './const.js'
 
