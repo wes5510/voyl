@@ -1,4 +1,4 @@
-import { db } from '../connect.js'
+import { getDatabase } from '../index.js'
 import { attributes, NewAttribute, Attribute } from './schema.js'
 import { eq } from 'drizzle-orm'
 
@@ -8,6 +8,7 @@ import { eq } from 'drizzle-orm'
  * @returns 생성된 속성 객체
  */
 export async function createAttribute(data: Omit<NewAttribute, 'id'>): Promise<Attribute> {
+  const db = getDatabase()
   const [result] = await db.insert(attributes).values(data).returning()
   return result
 }
@@ -18,6 +19,7 @@ export async function createAttribute(data: Omit<NewAttribute, 'id'>): Promise<A
  * @returns 조회된 속성 객체 또는 undefined (찾지 못한 경우)
  */
 export async function getAttributeById(attributeId: string): Promise<Attribute | undefined> {
+  const db = getDatabase()
   const [result] = await db.select().from(attributes).where(eq(attributes.id, attributeId))
   return result || undefined
 }
@@ -32,6 +34,7 @@ export async function updateAttributeValue(
   attributeId: string,
   newValue: unknown,
 ): Promise<Attribute | undefined> {
+  const db = getDatabase()
   const [result] = await db
     .update(attributes)
     .set({ value: newValue })
@@ -46,6 +49,7 @@ export async function updateAttributeValue(
  * @returns 삭제 성공 여부 (true: 성공, false: 실패 또는 해당 속성 없음)
  */
 export async function deleteAttributeById(attributeId: string): Promise<boolean> {
+  const db = getDatabase()
   const result = await db
     .delete(attributes)
     .where(eq(attributes.id, attributeId))
