@@ -14,12 +14,8 @@ export async function isInitialized(): Promise<boolean> {
  * 워크스페이스 경로 선택 (Documents 초기 경로)
  */
 export async function selectWorkspacePath(): Promise<string | null> {
-  try {
-    return await window.api.selectWorkspacePath()
-  } catch (error) {
-    console.error('Failed to open directory dialog:', error)
-    return null
-  }
+  const ret = await window.api.selectWorkspacePath()
+  return ret
 }
 
 /**

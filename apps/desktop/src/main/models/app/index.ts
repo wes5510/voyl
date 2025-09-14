@@ -103,7 +103,7 @@ export async function loadApp(): Promise<void> {
 /**
  * 앱 설정을 파일에 저장
  */
-async function saveAppConfigToFile(config: { workspacePath: string }): Promise<void> {
+export async function saveAppConfigToFile(config: { workspacePath: string }): Promise<void> {
   const configPath = getConfigPath()
   const fullConfig = {
     version: '1.0.0',

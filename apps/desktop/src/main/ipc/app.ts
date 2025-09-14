@@ -1,14 +1,18 @@
-import { dialog } from 'electron'
+import { dialog, BrowserWindow } from 'electron'
 import { homedir } from 'os'
 import { join } from 'path'
-import { initializeApp, loadApp, isInitialized } from '../models/app/index.js'
+import * as AppModel from '../models/app/index.js'
 import { CHANNELS } from '../../common/channel.const.js'
 
 /**
  * 디렉터리 선택 다이얼로그 (Documents 초기 경로)
  */
-async function openDirectoryDialog(): Promise<string | null> {
-  const result = await dialog.showOpenDialog({
+async function openDirectoryDialog(
+  event: Electron.IpcMainInvokeEvent,
+): Promise<string | null> {
+  const window = BrowserWindow.fromWebContents(event.sender)
+
+  const result = await dialog.showOpenDialog(window ?? undefined, {
     properties: ['openDirectory', 'createDirectory'],
     title: 'Select Workspace Location',
     buttonLabel: 'Select',
@@ -25,9 +29,9 @@ async function openDirectoryDialog(): Promise<string | null> {
 /**
  * 앱 초기화 상태 확인
  */
-async function checkIsInitialized(): Promise<boolean> {
+async function isInitialized(): Promise<boolean> {
   try {
-    return await isInitialized()
+    return await AppModel.isInitialized()
   } catch (error) {
     console.error('Failed to check initialization status:', error)
     return false
@@ -42,7 +46,7 @@ async function handleInitializeApp(
   workspacePath: string,
 ): Promise<void> {
   try {
-    await initializeApp({ workspacePath })
+    await AppModel.initializeApp({ workspacePath })
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw error
@@ -56,7 +60,7 @@ async function handleInitializeApp(
  */
 async function handleLoadApp(): Promise<void> {
   try {
-    await loadApp()
+    await AppModel.loadApp()
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw error
@@ -70,7 +74,7 @@ async function handleLoadApp(): Promise<void> {
  */
 export default function registerAppHandlers(ipcMain: Electron.IpcMain): void {
   // 앱 초기화 상태 확인
-  ipcMain.handle(CHANNELS.IS_INITIALIZED, checkIsInitialized)
+  ipcMain.handle(CHANNELS.IS_INITIALIZED, isInitialized)
 
   // 워크스페이스 경로 선택
   ipcMain.handle(CHANNELS.SELECT_WORKSPACE_PATH, openDirectoryDialog)
