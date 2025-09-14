@@ -5,6 +5,7 @@ import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router'
 import IndexPage from './pages'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import Toaster from './common/Toaster'
 
 const queryClient = new QueryClient()
 
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <IndexPage />
+        <Toaster />
       </BrowserRouter>
     </QueryClientProvider>
   </StrictMode>,

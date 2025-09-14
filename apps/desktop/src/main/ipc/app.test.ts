@@ -9,6 +9,9 @@ vi.mock('electron', () => ({
   dialog: {
     showOpenDialog: vi.fn(),
   },
+  BrowserWindow: {
+    fromWebContents: vi.fn(() => null),
+  },
 }))
 
 // Mock ipcMain for testing
@@ -72,9 +75,10 @@ describe('App IPC Handlers', () => {
       registerAppHandlers(mockIpcMain)
       const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
 
-      const result = await selectPathHandler({} as Electron.IpcMainInvokeEvent)
+      const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
+      const result = await selectPathHandler(mockEvent)
 
-      expect(dialog.showOpenDialog).toHaveBeenCalledWith({
+      expect(dialog.showOpenDialog).toHaveBeenCalledWith(undefined, {
         properties: ['openDirectory', 'createDirectory'],
         title: 'Select Workspace Location',
         buttonLabel: 'Select',
@@ -92,7 +96,8 @@ describe('App IPC Handlers', () => {
       registerAppHandlers(mockIpcMain)
       const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
 
-      const result = await selectPathHandler({} as Electron.IpcMainInvokeEvent)
+      const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
+      const result = await selectPathHandler(mockEvent)
       expect(result).toBeNull()
     })
   })
