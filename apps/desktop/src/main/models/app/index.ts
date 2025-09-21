@@ -15,7 +15,7 @@ export async function isInitialized(): Promise<boolean> {
  * @param workspacePath 사용자가 선택한 경로
  */
 export async function initializeApp({ workspacePath }: { workspacePath: string }): Promise<void> {
-  await AppRepo.create({
+  await AppRepo.initialize({
     workspacePath,
     version: APP_VERSION,
   })
