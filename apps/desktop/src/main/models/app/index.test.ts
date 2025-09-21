@@ -1,28 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import fs from 'fs-extra'
-import { app } from 'electron'
-import {
-  getConfigPath,
-  getCachePath,
-  isInitialized,
-  loadAppConfig,
-  getAppConfig,
-  setAppConfig,
-  initializeApp,
-} from './index.js'
+import { isInitialized, initializeApp } from './index.js'
+import * as AppRepo from '../../repo/app/index.js'
 
-// Electron app mock
-vi.mock('electron', () => ({
-  app: {
-    getPath: vi.fn((key) => {
-      if (key === 'userData') return '/mock/userData'
-      if (key === 'cache') return '/mock/cache'
-      return '/mock/path'
-    }),
-  },
+vi.mock('../../repo/app/index.js', () => ({
+  exists: vi.fn(),
+  create: vi.fn(),
 }))
 
-vi.mock('fs-extra')
 vi.mock('./workspace/index.js', () => ({
   initializeWorkspace: vi.fn().mockResolvedValue(undefined),
 }))
@@ -30,91 +14,42 @@ vi.mock('./workspace/index.js', () => ({
 describe('App Model', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    setAppConfig(null)
   })
 
-  describe('getConfigPath', () => {
-    it('config 경로를 요청하면 userData 경로를 반환해야 함', () => {
-      const path = getConfigPath()
-      expect(path).toBe('/mock/userData/config.json')
-      expect(app.getPath).toHaveBeenCalledWith('userData')
-    })
-  })
-
-  describe('getCachePath', () => {
-    it('cache 경로를 요청하면 userData 경로를 반환해야 함', () => {
-      const path = getCachePath()
-      expect(path).toBe('/mock/userData/cache.db')
-      expect(app.getPath).toHaveBeenCalledWith('userData')
-    })
-  })
 
   describe('isInitialized', () => {
-    it('config 파일이 존재하면 true를 반환해야 함', async () => {
-      vi.mocked(fs.pathExists).mockImplementation(() => Promise.resolve(true))
+    it('AppRepo.exists가 true를 반환하면 true를 반환해야 함', async () => {
+      vi.mocked(AppRepo.exists).mockResolvedValue(true)
 
       const result = await isInitialized()
 
       expect(result).toBe(true)
-      expect(fs.pathExists).toHaveBeenCalledWith('/mock/userData/config.json')
+      expect(AppRepo.exists).toHaveBeenCalled()
     })
 
-    it('config 파일이 존재하지 않으면 false를 반환해야 함', async () => {
-      vi.mocked(fs.pathExists).mockImplementation(() => Promise.resolve(false))
+    it('AppRepo.exists가 false를 반환하면 false를 반환해야 함', async () => {
+      vi.mocked(AppRepo.exists).mockResolvedValue(false)
 
       const result = await isInitialized()
 
       expect(result).toBe(false)
+      expect(AppRepo.exists).toHaveBeenCalled()
     })
   })
 
-  describe('loadAppConfig', () => {
-    it('config 파일이 존재하면 로드하여 반환해야 함', async () => {
-      const mockConfig = { workspacePath: '/test/workspace' }
-      vi.mocked(fs.pathExists).mockImplementation(() => Promise.resolve(true))
-      vi.mocked(fs.readJson).mockResolvedValue(mockConfig)
-
-      const config = await loadAppConfig()
-
-      expect(config).toEqual(mockConfig)
-      expect(fs.readJson).toHaveBeenCalledWith('/mock/userData/config.json')
-      expect(getAppConfig()).toEqual(mockConfig)
-    })
-
-    it('config 파일이 존재하지 않으면 에러를 발생시켜야 함', async () => {
-      vi.mocked(fs.pathExists).mockImplementation(() => Promise.resolve(false))
-
-      await expect(loadAppConfig()).rejects.toThrow(
-        'App configuration not found. Initialization required.',
-      )
-    })
-
-    it('workspacePath가 누락되면 에러를 발생시켜야 함', async () => {
-      vi.mocked(fs.pathExists).mockImplementation(() => Promise.resolve(true))
-      vi.mocked(fs.readJson).mockResolvedValue({})
-
-      await expect(loadAppConfig()).rejects.toThrow('Workspace path not configured.')
-    })
-  })
 
   describe('initializeApp', () => {
     it('워크스페이스 경로가 주어지면 앱을 초기화해야 함', async () => {
       const mockWorkspacePath = '/test/workspace'
-      vi.mocked(fs.writeJson).mockResolvedValue(undefined)
+      vi.mocked(AppRepo.create).mockResolvedValue(undefined)
 
       await initializeApp({ workspacePath: mockWorkspacePath })
 
-      // 설정 파일이 저장되었는지 확인
-      expect(fs.writeJson).toHaveBeenCalledWith(
-        '/mock/userData/config.json',
-        expect.objectContaining({
-          version: '1.0.0',
-          workspacePath: mockWorkspacePath,
-          createdAt: expect.any(String),
-          lastUsed: expect.any(String),
-        }),
-        { spaces: 2 },
-      )
+      // AppRepo.create가 호출되었는지 확인
+      expect(AppRepo.create).toHaveBeenCalledWith({
+        workspacePath: mockWorkspacePath,
+        version: '1.0.0',
+      })
 
       // 워크스페이스 초기화가 호출되었는지 확인
       const { initializeWorkspace } = await import('./workspace/index.js')
@@ -122,14 +57,4 @@ describe('App Model', () => {
     })
   })
 
-  describe('memory management', () => {
-    it('config 설정과 조회 시 메모리에서 관리되어야 함', () => {
-      expect(getAppConfig()).toBeNull()
-
-      const testConfig = { workspacePath: '/test/path' }
-      setAppConfig(testConfig)
-
-      expect(getAppConfig()).toEqual(testConfig)
-    })
-  })
 })

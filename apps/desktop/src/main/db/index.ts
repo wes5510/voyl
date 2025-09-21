@@ -96,10 +96,10 @@ async function createSchemaRuntime(): Promise<void> {
     // Drizzle 공식 migrate 함수 사용
     const { migrate } = await import('drizzle-orm/better-sqlite3/migrator')
     const { join } = await import('path')
-    
+
     // __dirname 대체 (ES modules)
     const migrationsPath = join(process.cwd(), 'src/main/db/migrations')
-    
+
     await migrate(db, {
       migrationsFolder: migrationsPath,
     })
