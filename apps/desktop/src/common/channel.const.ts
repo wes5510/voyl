@@ -3,8 +3,7 @@ export const CHANNELS = {
   IS_INITIALIZED: '/app/is-initialized',
   SELECT_WORKSPACE_PATH: '/app/workspace/select-path',
   INITIALIZE_APP: '/app/initialize',
-  LOAD_APP: '/app/load',
-  
+
   // Node channels
   GET_NODE_TABLE: '/nodes/table/get',
   GET_NODE: '/tree/node/get',

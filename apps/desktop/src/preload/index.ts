@@ -7,7 +7,6 @@ const api = {
   isInitialized: () => ipcRenderer.invoke(CHANNELS.IS_INITIALIZED),
   selectWorkspacePath: () => ipcRenderer.invoke(CHANNELS.SELECT_WORKSPACE_PATH),
   initializeApp: (path: string) => ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
-  loadApp: () => ipcRenderer.invoke(CHANNELS.LOAD_APP),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
