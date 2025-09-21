@@ -76,7 +76,7 @@ describe('App IPC Handlers', () => {
       const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
       const result = await selectPathHandler(mockEvent)
 
-      expect(dialog.showOpenDialog).toHaveBeenCalledWith(undefined, {
+      expect(dialog.showOpenDialog).toHaveBeenCalledWith(null, {
         properties: ['openDirectory', 'createDirectory'],
         title: 'Select Workspace Location',
         buttonLabel: 'Select',

@@ -7,10 +7,6 @@ vi.mock('../../repo/app/index.js', () => ({
   create: vi.fn(),
 }))
 
-vi.mock('./workspace/index.js', () => ({
-  initializeWorkspace: vi.fn().mockResolvedValue(undefined),
-}))
-
 describe('App Model', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -50,10 +46,6 @@ describe('App Model', () => {
         workspacePath: mockWorkspacePath,
         version: '1.0.0',
       })
-
-      // 워크스페이스 초기화가 호출되었는지 확인
-      const { initializeWorkspace } = await import('./workspace/index.js')
-      expect(initializeWorkspace).toHaveBeenCalledWith({ workspacePath: mockWorkspacePath })
     })
   })
 

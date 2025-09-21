@@ -10,7 +10,7 @@ import { CHANNELS } from '../../common/channel.const.js'
 async function openDirectoryDialog(event: Electron.IpcMainInvokeEvent): Promise<string | null> {
   const window = BrowserWindow.fromWebContents(event.sender)
 
-  const result = await dialog.showOpenDialog(window || undefined, {
+  const result = await dialog.showOpenDialog(window!, {
     properties: ['openDirectory', 'createDirectory'],
     title: 'Select Workspace Location',
     buttonLabel: 'Select',
