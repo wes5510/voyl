@@ -31,7 +31,6 @@ vi.mock('os', () => ({
 vi.mock('../models/app/index.js', () => ({
   isInitialized: vi.fn(),
   initializeApp: vi.fn(),
-  loadApp: vi.fn(),
 }))
 
 describe('App IPC Handlers', () => {
@@ -60,7 +59,6 @@ describe('App IPC Handlers', () => {
         expect.any(Function),
       )
       expect(mockIpcMain.handle).toHaveBeenCalledWith(CHANNELS.INITIALIZE_APP, expect.any(Function))
-      expect(mockIpcMain.handle).toHaveBeenCalledWith(CHANNELS.LOAD_APP, expect.any(Function))
     })
   })
 
@@ -152,26 +150,4 @@ describe('App IPC Handlers', () => {
     })
   })
 
-  describe('handleLoadApp', () => {
-    it('앱 로드 요청 시 성공적으로 로드되어야 함', async () => {
-      const { loadApp } = await import('../models/app/index.js')
-      vi.mocked(loadApp).mockResolvedValue(undefined)
-
-      registerAppHandlers(mockIpcMain)
-      const handler = getHandler(CHANNELS.LOAD_APP)
-
-      await expect(handler({} as Electron.IpcMainInvokeEvent)).resolves.not.toThrow()
-      expect(loadApp).toHaveBeenCalled()
-    })
-
-    it('앱 로드 실패 시 에러를 던져야 함', async () => {
-      const { loadApp } = await import('../models/app/index.js')
-      vi.mocked(loadApp).mockRejectedValue(new Error('Load failed'))
-
-      registerAppHandlers(mockIpcMain)
-      const handler = getHandler(CHANNELS.LOAD_APP)
-
-      await expect(handler({} as Electron.IpcMainInvokeEvent)).rejects.toThrow('Load failed')
-    })
-  })
 })
