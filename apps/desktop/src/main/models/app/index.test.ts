@@ -4,7 +4,7 @@ import * as AppRepo from '../../repo/app/index.js'
 
 vi.mock('../../repo/app/index.js', () => ({
   exists: vi.fn(),
-  create: vi.fn(),
+  initialize: vi.fn(),
 }))
 
 describe('App Model', () => {
@@ -37,12 +37,12 @@ describe('App Model', () => {
   describe('initializeApp', () => {
     it('워크스페이스 경로가 주어지면 앱을 초기화해야 함', async () => {
       const mockWorkspacePath = '/test/workspace'
-      vi.mocked(AppRepo.create).mockResolvedValue(undefined)
+      vi.mocked(AppRepo.initialize).mockResolvedValue(undefined)
 
       await initializeApp({ workspacePath: mockWorkspacePath })
 
-      // AppRepo.create가 호출되었는지 확인
-      expect(AppRepo.create).toHaveBeenCalledWith({
+      // AppRepo.initialize가 호출되었는지 확인
+      expect(AppRepo.initialize).toHaveBeenCalledWith({
         workspacePath: mockWorkspacePath,
         version: '1.0.0',
       })
