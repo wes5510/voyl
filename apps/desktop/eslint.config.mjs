@@ -166,6 +166,7 @@ export default [
             '**/src/main/ipc/**',
             '**/src/main/models/**',
             '**/src/main/windows/**',
+            '**/src/main/repo/**',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
         },
@@ -198,6 +199,26 @@ export default [
         {
           patterns: [
             '**/src/main/db/**',
+            '**/src/main/common/*',
+            '**/src/main/common/shared/*',
+            '**/src/common/*',
+          ],
+          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/main/repo/**/*.{ts,tsx}'],
+    plugins: {
+      voyl: voylPlugin,
+    },
+    rules: {
+      'voyl/restrict-imports-to-pattern': [
+        'error',
+        {
+          patterns: [
+            '**/src/main/repo/**',
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
             '**/src/common/*',
@@ -243,6 +264,7 @@ export default [
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
             '**/src/main/db/*/*',
+            '**/src/main/repo/*/*',
             '**/src/main/db/index.js',
             '**/src/common/*',
           ],

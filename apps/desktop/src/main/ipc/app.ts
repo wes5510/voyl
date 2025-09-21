@@ -7,12 +7,10 @@ import { CHANNELS } from '../../common/channel.const.js'
 /**
  * 디렉터리 선택 다이얼로그 (Documents 초기 경로)
  */
-async function openDirectoryDialog(
-  event: Electron.IpcMainInvokeEvent,
-): Promise<string | null> {
+async function openDirectoryDialog(event: Electron.IpcMainInvokeEvent): Promise<string | null> {
   const window = BrowserWindow.fromWebContents(event.sender)
 
-  const result = await dialog.showOpenDialog(window ?? undefined, {
+  const result = await dialog.showOpenDialog(window || undefined, {
     properties: ['openDirectory', 'createDirectory'],
     title: 'Select Workspace Location',
     buttonLabel: 'Select',
@@ -56,20 +54,6 @@ async function handleInitializeApp(
 }
 
 /**
- * 앱 로드 (일반 실행)
- */
-async function handleLoadApp(): Promise<void> {
-  try {
-    await AppModel.loadApp()
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw error
-    }
-    throw new Error('Failed to load app')
-  }
-}
-
-/**
  * 앱 관련 IPC 핸들러 등록
  */
 export default function registerAppHandlers(ipcMain: Electron.IpcMain): void {
@@ -81,7 +65,4 @@ export default function registerAppHandlers(ipcMain: Electron.IpcMain): void {
 
   // 앱 초기화 (첫 실행)
   ipcMain.handle(CHANNELS.INITIALIZE_APP, handleInitializeApp)
-
-  // 앱 로드 (일반 실행)
-  ipcMain.handle(CHANNELS.LOAD_APP, handleLoadApp)
 }
