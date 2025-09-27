@@ -36,9 +36,7 @@ vi.mock('../models/app/index.js', () => ({
 describe('App IPC Handlers', () => {
   // 핸들러 찾기 유틸 함수
   function getHandler(channel: string) {
-    const result = vi.mocked(mockIpcMain.handle).mock.calls.find(
-      ([c]) => c === channel
-    )?.[1]
+    const result = vi.mocked(mockIpcMain.handle).mock.calls.find(([c]) => c === channel)?.[1]
     if (!result) {
       throw new Error(`Handler not found for channel: ${channel}`)
     }
@@ -149,5 +147,4 @@ describe('App IPC Handlers', () => {
       await expect(handler(mockEvent, '/test/path')).rejects.toThrow('Init failed')
     })
   })
-
 })
