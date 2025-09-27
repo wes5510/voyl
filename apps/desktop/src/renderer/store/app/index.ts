@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { selectWorkspacePath, initializeApp } from '@/renderer/repos/app.js'
+import { selectWorkspacePath, initializeApp } from '@/renderer/repo/app.js'
 import { QUERY_KEYS } from './const.js'
 import { getInitializationQueryOptions } from './queryOptions.js'
 

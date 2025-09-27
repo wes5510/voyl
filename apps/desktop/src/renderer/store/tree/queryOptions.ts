@@ -1,4 +1,4 @@
-import { fetchNode, fetchRootNodeId } from '@/renderer/repos/tree'
+import { fetchNode, fetchRootNodeId } from '@/renderer/repo/tree'
 import { QUERY_KEYS } from './queryKeys'
 
 export const getRootNodeIdQueryOptions = () => ({

@@ -1,4 +1,4 @@
-import { isInitialized } from '@/renderer/repos/app.js'
+import { isInitialized } from '@/renderer/repo/app.js'
 import { QUERY_KEYS } from './const.js'
 
 export const getInitializationQueryOptions = () => ({
