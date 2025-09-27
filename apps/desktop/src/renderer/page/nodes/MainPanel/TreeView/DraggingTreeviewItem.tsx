@@ -1,16 +1,10 @@
 import TreeViewItemWrapper from './shared/Wrapper'
 import CollapseIcon from './shared/CollapseIcon'
 import DotIcon from './shared/DotIcon'
-import useTreeStore, { getTitleByNodeId, NodeEntityId } from '@/renderer/models/tree/store'
-import useTreeViewStore, { getNodeDepth } from '@/renderer/models/treeView/store'
 
-export interface DraggingTreeviewItemProps {
-  nodeId: NodeEntityId
-}
-
-export default function DraggingTreeviewItem({ nodeId }: DraggingTreeviewItemProps) {
-  const title = useTreeStore((state) => getTitleByNodeId({ entity: state.entity, nodeId }))
-  const depth = useTreeViewStore((state) => getNodeDepth({ entity: state.entity, nodeId }))
+export default function DraggingTreeviewItem() {
+  const title = ''
+  const depth = 0
 
   return (
     <TreeViewItemWrapper depth={depth}>

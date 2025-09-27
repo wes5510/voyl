@@ -1,7 +1,7 @@
 import { dialog, BrowserWindow } from 'electron'
 import { homedir } from 'os'
 import { join } from 'path'
-import * as AppModel from '../models/app/index.js'
+import * as AppModel from '../model/app/index.js'
 import { CHANNELS } from '../../common/channel.const.js'
 
 /**

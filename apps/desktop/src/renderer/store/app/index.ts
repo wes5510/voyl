@@ -1,5 +1,9 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { selectWorkspacePath, initializeApp } from '@/renderer/repo/app.js'
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
+import { selectWorkspacePath, initializeApp } from '@/renderer/repo/app'
 import { QUERY_KEYS } from './const.js'
 import { getInitializationQueryOptions } from './queryOptions.js'
 
@@ -7,7 +11,9 @@ import { getInitializationQueryOptions } from './queryOptions.js'
  * 앱 초기화 상태 Hook
  */
 export function useAppInitialized() {
-  const { data: isInitialized } = useSuspenseQuery(getInitializationQueryOptions())
+  const { data: isInitialized } = useSuspenseQuery(
+    getInitializationQueryOptions(),
+  )
 
   return isInitialized ?? false
 }

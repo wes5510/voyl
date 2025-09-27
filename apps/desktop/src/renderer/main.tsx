@@ -3,7 +3,7 @@ import '@fontsource/roboto-mono/700.css'
 import { createRoot } from 'react-dom/client'
 import { StrictMode } from 'react'
 import { BrowserRouter } from 'react-router'
-import IndexPage from './pages'
+import IndexPage from './page'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Toaster from './common/Toaster'
 
