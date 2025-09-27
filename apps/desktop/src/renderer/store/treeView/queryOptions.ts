@@ -1,4 +1,4 @@
-import { fetchTreeViewNodes } from '@/renderer/repos/treeView'
+import { fetchTreeViewNodes } from '@/renderer/repo/treeView'
 import { TREE_VIEW_QUERY_KEYS } from './queryKeys'
 
 export const getTreeViewNodesQueryOptions = ({ topNodeId }: { topNodeId?: string }) => ({

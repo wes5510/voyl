@@ -1,4 +1,4 @@
-import { setTopNodeId, TreeViewEntity } from '@/renderer/models/treeView'
+import { setTopNodeId, TreeViewEntity } from '@/renderer/model/treeView'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
 import { useSuspenseQuery } from '@tanstack/react-query'

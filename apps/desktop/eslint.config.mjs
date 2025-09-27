@@ -68,9 +68,9 @@ export default [
         {
           patterns: [
             '**/src/renderer/common/**',
-            '**/src/renderer/pages/**',
-            '**/src/renderer/models/**',
-            '**/src/renderer/repos/**',
+            '**/src/renderer/page/**',
+            '**/src/renderer/model/**',
+            '**/src/renderer/repo/**',
             '**/src/renderer/store/**',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
@@ -94,13 +94,13 @@ export default [
     },
   },
   {
-    files: ['src/renderer/models/**/*.{ts,tsx}'],
+    files: ['src/renderer/model/**/*.{ts,tsx}'],
     rules: {
       'voyl/restrict-imports-to-pattern': [
         'error',
         {
           patterns: [
-            '**/src/renderer/models/*/**',
+            '**/src/renderer/model/*/**',
             '**/src/renderer/common/*',
             '**/src/renderer/common/shared/*',
             '**/src/common/*',
@@ -111,7 +111,7 @@ export default [
     },
   },
   {
-    files: ['src/renderer/pages/**/*.{ts,tsx}'],
+    files: ['src/renderer/page/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
@@ -120,7 +120,7 @@ export default [
         'error',
         {
           patterns: [
-            '**/src/renderer/pages/**',
+            '**/src/renderer/page/**',
             '**/src/renderer/store/*',
             '**/src/renderer/common/*',
             '**/src/renderer/common/shared/*',
@@ -143,8 +143,8 @@ export default [
           patterns: [
             '**/src/renderer/store/*/**',
             '**/src/renderer/common/*',
-            '**/src/renderer/models/*',
-            '**/src/renderer/repos/*',
+            '**/src/renderer/model/*',
+            '**/src/renderer/repo/*',
             '**/src/common/*',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
@@ -164,8 +164,8 @@ export default [
           patterns: [
             '**/src/main/common/**',
             '**/src/main/ipc/**',
-            '**/src/main/models/**',
-            '**/src/main/windows/**',
+            '**/src/main/model/**',
+            '**/src/main/window/**',
             '**/src/main/repo/**',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
@@ -241,8 +241,8 @@ export default [
             '**/src/main/ipc/*',
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
-            '**/src/main/models/*/index.js',
-            '**/src/main/windows/*/*',
+            '**/src/main/model/*/index.js',
+            '**/src/main/window/*/*',
             '**/src/common/*',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
@@ -251,7 +251,7 @@ export default [
     },
   },
   {
-    files: ['src/main/models/**/*.{ts,tsx}'],
+    files: ['src/main/model/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
@@ -260,7 +260,7 @@ export default [
         'error',
         {
           patterns: [
-            '**/src/main/models/*/**',
+            '**/src/main/model/*/**',
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
             '**/src/main/db/*/*',
@@ -274,7 +274,7 @@ export default [
     },
   },
   {
-    files: ['src/main/windows/**/*.{ts,tsx}'],
+    files: ['src/main/window/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
@@ -283,10 +283,10 @@ export default [
         'error',
         {
           patterns: [
-            '**/src/main/windows/*/**',
+            '**/src/main/window/*/**',
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
-            '**/src/main/models/*/index.js',
+            '**/src/main/model/*/index.js',
             '**/src/common/*',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
