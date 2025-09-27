@@ -28,7 +28,7 @@ vi.mock('os', () => ({
 }))
 
 // Mock models
-vi.mock('../models/app/index.js', () => ({
+vi.mock('../model/app/index.js', () => ({
   isInitialized: vi.fn(),
   initializeApp: vi.fn(),
 }))
@@ -100,7 +100,7 @@ describe('App IPC Handlers', () => {
 
   describe('checkIsInitialized', () => {
     it('앱 초기화 상태 확인 시 초기화되어 있으면 true를 반환해야 함', async () => {
-      const { isInitialized } = await import('../models/app/index.js')
+      const { isInitialized } = await import('../model/app/index.js')
       vi.mocked(isInitialized).mockResolvedValue(true)
 
       registerAppHandlers(mockIpcMain)
@@ -111,7 +111,7 @@ describe('App IPC Handlers', () => {
     })
 
     it('앱 초기화 상태 확인 중 에러 발생 시 false를 반환해야 함', async () => {
-      const { isInitialized } = await import('../models/app/index.js')
+      const { isInitialized } = await import('../model/app/index.js')
       vi.mocked(isInitialized).mockRejectedValue(new Error('Test error'))
 
       registerAppHandlers(mockIpcMain)
@@ -124,7 +124,7 @@ describe('App IPC Handlers', () => {
 
   describe('handleInitializeApp', () => {
     it('앱 초기화 요청 시 성공적으로 초기화되어야 함', async () => {
-      const { initializeApp } = await import('../models/app/index.js')
+      const { initializeApp } = await import('../model/app/index.js')
       vi.mocked(initializeApp).mockResolvedValue(undefined)
 
       registerAppHandlers(mockIpcMain)
@@ -137,7 +137,7 @@ describe('App IPC Handlers', () => {
     })
 
     it('앱 초기화 실패 시 에러를 던져야 함', async () => {
-      const { initializeApp } = await import('../models/app/index.js')
+      const { initializeApp } = await import('../model/app/index.js')
       vi.mocked(initializeApp).mockRejectedValue(new Error('Init failed'))
 
       registerAppHandlers(mockIpcMain)

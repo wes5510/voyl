@@ -16,7 +16,14 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/node_modules', '**/dist', '**/out', '**/.gitignore'],
+    ignores: [
+      '**/node_modules',
+      '**/dist',
+      '**/out',
+      '**/.gitignore',
+      '**/__pages',
+      '**/__models',
+    ],
   },
   ...pluginQuery.configs['flat/recommended'],
   ...fixupConfigRules(
