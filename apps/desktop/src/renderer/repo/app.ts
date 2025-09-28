@@ -41,3 +41,12 @@ export async function loadApp(): Promise<void> {
     throw new Error((error as Error).message || 'Failed to load app')
   }
 }
+
+export async function syncApp(): Promise<void> {
+  try {
+    await window.api.syncApp()
+  } catch (error) {
+    console.error('Failed to sync app:', error)
+    throw new Error((error as Error).message || 'Failed to sync app')
+  }
+}

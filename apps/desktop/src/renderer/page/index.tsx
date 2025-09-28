@@ -1,14 +1,14 @@
-import { Suspense } from 'react'
 import NodesPage from './nodes'
 import TopBar from './TopBar'
 import SideBar from './SideBar'
 import { Route, Routes } from 'react-router'
-import AppGuard from './AppGuard'
+import InitializationGuard from './InitializationGuard'
+import { Suspense } from 'react'
 
 export default function IndexPage() {
   return (
-    <Suspense fallback={null}>
-      <AppGuard>
+    <Suspense fallback={<div>Loading...</div>}>
+      <InitializationGuard>
         <div className="flex h-screen flex-col gap-0">
           <TopBar />
           <div className="flex w-full flex-1 flex-row gap-0">
@@ -20,7 +20,7 @@ export default function IndexPage() {
             </Routes>
           </div>
         </div>
-      </AppGuard>
+      </InitializationGuard>
     </Suspense>
   )
 }

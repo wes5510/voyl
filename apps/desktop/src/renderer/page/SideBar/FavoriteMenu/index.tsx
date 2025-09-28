@@ -1,7 +1,7 @@
 import CharButton from './CharButton'
 
 export default function FavoriteMenu() {
-  const favorites = []
+  const favorites: Array<{ id: string; text: string }> = []
 
   return (
     <>

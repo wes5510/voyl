@@ -7,7 +7,9 @@ import { CHANNELS } from '../../common/channel.const.js'
 /**
  * 디렉터리 선택 다이얼로그 (Documents 초기 경로)
  */
-async function openDirectoryDialog(event: Electron.IpcMainInvokeEvent): Promise<string | null> {
+async function openDirectoryDialog(
+  event: Electron.IpcMainInvokeEvent,
+): Promise<string | null> {
   const window = BrowserWindow.fromWebContents(event.sender)
 
   const result = await dialog.showOpenDialog(window!, {
@@ -49,7 +51,18 @@ async function handleInitializeApp(
     if (error instanceof Error) {
       throw error
     }
+
     throw new Error('Failed to initialize app')
+  }
+}
+
+async function handleSyncApp(
+  _event: Electron.IpcMainInvokeEvent,
+): Promise<void> {
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+  } catch (error) {
+    throw new Error((error as Error).message || 'Failed to sync app')
   }
 }
 
@@ -65,4 +78,7 @@ export default function registerAppHandlers(ipcMain: Electron.IpcMain): void {
 
   // 앱 초기화 (첫 실행)
   ipcMain.handle(CHANNELS.INITIALIZE_APP, handleInitializeApp)
+
+  // 앱 동기화
+  ipcMain.handle(CHANNELS.SYNC_APP, handleSyncApp)
 }

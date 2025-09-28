@@ -20,7 +20,9 @@ export default function CreateWorkspaceButton({
     try {
       await initialize.mutateAsync(selectedPath)
     } catch (error) {
-      toast.error(error.message ?? '워크스페이스 생성에 실패했습니다')
+      toast.error(
+        error instanceof Error ? error.message : '워크스페이스 생성에 실패했습니다'
+      )
     }
   }
   return (

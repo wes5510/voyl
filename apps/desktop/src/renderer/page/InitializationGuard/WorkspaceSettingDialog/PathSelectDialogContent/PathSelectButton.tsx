@@ -19,7 +19,9 @@ export default function PathSelectButton({
         onSelectPath(path)
       }
     } catch (error) {
-      toast.error(error.message ?? '경로 선택 중 오류가 발생했습니다.')
+      toast.error(
+        error instanceof Error ? error.message : '경로 선택 중 오류가 발생했습니다.'
+      )
     }
   }
 
