@@ -30,8 +30,6 @@ export async function initialize(cachePath: string): Promise<void> {
 
     // 5. 스키마 생성/마이그레이션
     await createSchema()
-
-    console.log('✅ Database cache initialized (empty, ready for lazy loading)')
   } catch (error) {
     console.error('Failed to initialize database:', error)
     throw error
@@ -74,8 +72,6 @@ async function createSchema(): Promise<void> {
     // 하지만 cache DB는 매번 재생성되므로 런타임 생성 필요
 
     await createSchemaRuntime()
-
-    console.log('✅ Database schema created successfully')
   } catch (error) {
     console.error('Failed to create schema:', error)
     throw error
@@ -103,8 +99,6 @@ async function createSchemaRuntime(): Promise<void> {
     await migrate(db, {
       migrationsFolder: migrationsPath,
     })
-
-    console.log('✅ Schema migrated successfully with Drizzle migrate')
   } catch (error) {
     console.error('Migration failed:', error)
     throw error

@@ -56,11 +56,9 @@ async function handleInitializeApp(
   }
 }
 
-async function handleSyncApp(
-  _event: Electron.IpcMainInvokeEvent,
-): Promise<void> {
+async function handleSyncApp(): Promise<void> {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 20000))
   } catch (error) {
     throw new Error((error as Error).message || 'Failed to sync app')
   }

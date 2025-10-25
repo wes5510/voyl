@@ -1,7 +1,9 @@
 import PointLink from './shared/PointLink'
+import { ElementType } from 'react'
 
 export default function MidPointLink() {
-  const point: { text: string; url: string; icon: string } | undefined = undefined
+  const point = undefined as { text: string; url: string; icon: ElementType } | undefined
 
-  return point ? <PointLink text={point.text} href={point.url} icon={point.icon} /> : null
+  if (!point) return null
+  return <PointLink text={point.text} href={point.url} icon={point.icon} />
 }

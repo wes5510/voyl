@@ -2,7 +2,7 @@ import * as db from './db.js'
 import * as fs from './fs/index.js'
 
 export const exists = async (): Promise<boolean> => {
-  return await db.exists()
+  return await db.existsTable()
 }
 
 export const initialize = async ({

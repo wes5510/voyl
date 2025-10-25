@@ -1,5 +1,5 @@
 import { useSyncApp } from '@/renderer/store/app'
-import { Loader2 } from 'lucide-react'
+import SyncSplash from './SyncSplash'
 
 interface SyncGuardProps {
   children: React.ReactNode
@@ -8,5 +8,7 @@ interface SyncGuardProps {
 export default function SyncGuard({ children }: SyncGuardProps) {
   const sync = useSyncApp()
 
-  return sync.isPending ? <Loader2 className="animate-spin" /> : <>{children}</>
+  console.log({ sync })
+
+  return sync.isPending ? <SyncSplash /> : <>{children}</>
 }
