@@ -9,9 +9,17 @@ export const initialize = async ({
 }: {
   workspaceDirPath: string
 }): Promise<void> => {
-  fs.initializePath({ workspaceDirPath })
+  initializePath({ workspaceDirPath })
   await fs.create()
   await db.createTable()
+}
+
+export const initializePath = ({
+  workspaceDirPath,
+}: {
+  workspaceDirPath: string
+}): void => {
+  fs.initializePath({ workspaceDirPath })
 }
 
 const syncSingle = async ({ id }: { id: string }): Promise<void> => {

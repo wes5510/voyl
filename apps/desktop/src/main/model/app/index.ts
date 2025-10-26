@@ -41,5 +41,7 @@ export async function sync(): Promise<void> {
 
   WorkspaceRepo.initializePath({ workspaceDirPath })
   await WorkspaceRepo.sync()
+
+  NodeRepo.initializePath({ workspaceDirPath })
   await NodeRepo.sync()
 }
