@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { isInitialized, initializeApp } from './index.js'
 import * as AppRepo from '../../repo/app/index.js'
+import * as SyncMetadataRepo from '../../repo/syncMetadata/index.js'
+import * as WorkspaceRepo from '../../repo/workspace/index.js'
 
 vi.mock('../../repo/app/index.js', () => ({
   exists: vi.fn(),
@@ -26,7 +28,6 @@ describe('App Model', () => {
     vi.clearAllMocks()
   })
 
-
   describe('isInitialized', () => {
     it('AppRepo.exists가 true를 반환하면 true를 반환해야 함', async () => {
       vi.mocked(AppRepo.exists).mockResolvedValue(true)
@@ -47,7 +48,6 @@ describe('App Model', () => {
     })
   })
 
-
   describe('initializeApp', () => {
     it('워크스페이스 경로가 주어지면 앱을 초기화해야 함', async () => {
       const mockWorkspacePath = '/test/workspace'
@@ -55,12 +55,12 @@ describe('App Model', () => {
 
       await initializeApp({ workspacePath: mockWorkspacePath })
 
-      // AppRepo.initialize가 호출되었는지 확인
+      expect(SyncMetadataRepo.initialize).toHaveBeenCalled()
       expect(AppRepo.initialize).toHaveBeenCalledWith({
         workspacePath: mockWorkspacePath,
         version: '1.0.0',
       })
+      expect(WorkspaceRepo.initialize).toHaveBeenCalled()
     })
   })
-
 })
