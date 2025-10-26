@@ -85,7 +85,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "@voyl/eslint-plugin-voyl": "workspace:*",
     "drizzle-kit": "^0.31.5",
-    "electron": "38.4.0",
+    "electron": "37.7.1",
     "electron-builder": "26.0.12",
     "electron-devtools-installer": "^4.0.0",
     "electron-vite": "4.0.1",
