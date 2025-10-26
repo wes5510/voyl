@@ -1,44 +1,52 @@
-import * as db from './db/index.js'
-import * as fs from './fs/index.js'
+import WorkspaceDb from './db/index.js'
+import WorkspaceFs from './fs/index.js'
 // eslint-disable-next-line voyl/same-level-import
-import * as SyncMetadataRepo from '../syncMetadata/index.js'
+import SyncMetadataRepo from '../syncMetadata/index.js'
 import { Workspace } from './type.js'
 
-export const initialize = async ({
+async function initialize({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
-}): Promise<void> => {
-  fs.initializePath({ workspaceDirPath })
-  await fs.create()
-  await db.createTable()
+}): Promise<void> {
+  WorkspaceFs.initializePath({ workspaceDirPath })
+  await WorkspaceFs.create()
+  await WorkspaceDb.createTable()
 }
 
-export const initializePath = ({
+function initializePath({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
-}) => {
-  fs.initializePath({ workspaceDirPath })
+}): void {
+  WorkspaceFs.initializePath({ workspaceDirPath })
 }
 
-export const sync = async (): Promise<void> => {
-  const mtimeMs = await fs.getMtimeMs()
+async function sync(): Promise<void> {
+  const mtimeMs = await WorkspaceFs.getMtimeMs()
 
   await SyncMetadataRepo.sync<Workspace>({
     fs: {
-      path: fs.getConfigPath(),
-      data: await fs.read(),
+      path: WorkspaceFs.getConfigPath(),
+      data: await WorkspaceFs.read(),
       mtimeMs: mtimeMs ?? 0,
     },
     db: {
-      tableName: db.TABLE_NAME,
-      isExists: await db.exists(),
+      tableName: WorkspaceDb.TABLE_NAME,
+      isExists: await WorkspaceDb.exists(),
       handler: {
-        update: db.update,
-        createTable: db.createTable,
-        add: db.add,
+        update: WorkspaceDb.update,
+        createTable: WorkspaceDb.createTable,
+        add: WorkspaceDb.add,
       },
     },
   })
 }
+
+const WorkspaceRepo = {
+  initialize,
+  initializePath,
+  sync,
+}
+
+export default WorkspaceRepo

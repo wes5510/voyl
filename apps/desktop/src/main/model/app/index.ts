@@ -1,14 +1,14 @@
-import * as AppRepo from '../../repo/app/index.js'
-import * as SyncMetadataRepo from '../../repo/syncMetadata/index.js'
+import AppRepo from '../../repo/app/index.js'
+import SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import { APP_VERSION } from './const.js'
-import * as WorkspaceRepo from '../../repo/workspace/index.js'
-import * as NodeRepo from '../../repo/node/index.js'
+import WorkspaceRepo from '../../repo/workspace/index.js'
+import NodeRepo from '../../repo/node/index.js'
 
 /**
  * 앱 초기화 상태 확인
  * 비동기로 통일하여 일관성 유지
  */
-export async function isInitialized(): Promise<boolean> {
+async function isInitialized(): Promise<boolean> {
   const exists = await AppRepo.exists()
   return exists
 }
@@ -17,7 +17,7 @@ export async function isInitialized(): Promise<boolean> {
  * 앱 초기화 (첫 실행 - 설정 생성만)
  * @param workspaceDirPath 사용자가 선택한 경로
  */
-export async function initializeApp({
+async function initializeApp({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
@@ -31,7 +31,7 @@ export async function initializeApp({
   await NodeRepo.initialize({ workspaceDirPath })
 }
 
-export async function sync(): Promise<void> {
+async function sync(): Promise<void> {
   await AppRepo.sync()
 
   const workspaceDirPath = await AppRepo.getWorkspaceDirPath()
@@ -45,3 +45,11 @@ export async function sync(): Promise<void> {
   NodeRepo.initializePath({ workspaceDirPath })
   await NodeRepo.sync()
 }
+
+const AppModel = {
+  isInitialized,
+  initializeApp,
+  sync,
+}
+
+export default AppModel

@@ -1,9 +1,9 @@
 import { syncMetadata, SyncMetadata } from './schema.js'
-import * as db from '../../shared/db.js'
+import Db from '../../shared/db.js'
 import { eq } from 'drizzle-orm'
 
-export const createTable = async (): Promise<void> => {
-  await db.sqlite.exec(`
+async function createTable(): Promise<void> {
+  await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS sync_metadata (
       path TEXT PRIMARY KEY,
       table_name TEXT NOT NULL,
@@ -12,12 +12,8 @@ export const createTable = async (): Promise<void> => {
   `)
 }
 
-export const get = async ({
-  path,
-}: {
-  path: string
-}): Promise<SyncMetadata | null> => {
-  const result = await db.connection
+async function get({ path }: { path: string }): Promise<SyncMetadata | null> {
+  const result = await Db.connection
     .select({
       path: syncMetadata.path,
       tableName: syncMetadata.tableName,
@@ -30,11 +26,11 @@ export const get = async ({
   return result[0] ?? null
 }
 
-export const remove = async ({ path }: { path: string }): Promise<void> => {
-  await db.connection.delete(syncMetadata).where(eq(syncMetadata.path, path))
+async function remove({ path }: { path: string }): Promise<void> {
+  await Db.connection.delete(syncMetadata).where(eq(syncMetadata.path, path))
 }
 
-export const add = async ({
+async function add({
   path,
   tableName,
   syncedAt,
@@ -42,11 +38,11 @@ export const add = async ({
   path: string
   tableName: string
   syncedAt: number
-}): Promise<void> => {
-  await db.connection.insert(syncMetadata).values({ path, tableName, syncedAt })
+}): Promise<void> {
+  await Db.connection.insert(syncMetadata).values({ path, tableName, syncedAt })
 }
 
-export const update = async ({
+async function update({
   path,
   tableName,
   syncedAt,
@@ -54,9 +50,19 @@ export const update = async ({
   path: string
   tableName: string
   syncedAt: number
-}): Promise<void> => {
-  await db.connection
+}): Promise<void> {
+  await Db.connection
     .update(syncMetadata)
     .set({ syncedAt, tableName })
     .where(eq(syncMetadata.path, path))
 }
+
+const SyncMetadataDb = {
+  createTable,
+  get,
+  remove,
+  add,
+  update,
+}
+
+export default SyncMetadataDb

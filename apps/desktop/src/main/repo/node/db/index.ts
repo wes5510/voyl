@@ -1,12 +1,11 @@
 import { count, eq } from 'drizzle-orm'
-import * as _db from '../../shared/db.js'
+import Db from '../../shared/db.js'
 import { nodes, Node, NewNode } from './schema.js'
+import { TABLE_NAME } from './const.js'
 
-export { TABLE_NAME } from './const.js'
-
-export const createTable = async (): Promise<void> => {
-  await _db.sqlite.exec(`
-    CREATE TABLE IF NOT EXISTS nodes (
+async function createTable(): Promise<void> {
+  await Db.sqlite.exec(`
+    CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
       id TEXT PRIMARY KEY NOT NULL,
       child_ids TEXT NOT NULL DEFAULT '[]',
       title TEXT NOT NULL DEFAULT '',
@@ -15,8 +14,8 @@ export const createTable = async (): Promise<void> => {
   `)
 }
 
-export const exists = async ({ id }): Promise<boolean> => {
-  const result = await _db.connection
+async function exists({ id }: { id: string }): Promise<boolean> {
+  const result = await Db.connection
     .select({ count: count() })
     .from(nodes)
     .where(eq(nodes.id, id))
@@ -24,8 +23,8 @@ export const exists = async ({ id }): Promise<boolean> => {
   return result[0].count > 0
 }
 
-export const update = async (data: Node): Promise<void> => {
-  await _db.connection
+async function update(data: Node): Promise<void> {
+  await Db.connection
     .update(nodes)
     .set({
       childIds: data.childIds,
@@ -35,6 +34,16 @@ export const update = async (data: Node): Promise<void> => {
     .where(eq(nodes.id, data.id))
 }
 
-export const add = async (newNode: NewNode): Promise<void> => {
-  await _db.connection.insert(nodes).values(newNode)
+async function add(newNode: NewNode): Promise<void> {
+  await Db.connection.insert(nodes).values(newNode)
 }
+
+const NodeDb = {
+  createTable,
+  exists,
+  update,
+  add,
+  TABLE_NAME,
+}
+
+export default NodeDb

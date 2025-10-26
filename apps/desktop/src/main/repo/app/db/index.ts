@@ -1,12 +1,11 @@
-import * as db from '../../shared/db.js'
+import Db from '../../shared/db.js'
 import { count, sql } from 'drizzle-orm'
 import { App, app } from './schema.js'
+import { TABLE_NAME } from './const.js'
 
-export { TABLE_NAME } from './const.js'
-
-export const existsTable = async (): Promise<boolean> => {
+async function existsTable(): Promise<boolean> {
   try {
-    const result = await db.connection.get<{ name: string }>(
+    const result = await Db.connection.get<{ name: string }>(
       sql`SELECT name FROM sqlite_master WHERE type='table' AND name='app'`,
     )
     return !!result
@@ -15,8 +14,8 @@ export const existsTable = async (): Promise<boolean> => {
   }
 }
 
-export const createTable = async (): Promise<void> => {
-  await db.sqlite.exec(`
+const createTable = async (): Promise<void> => {
+  await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS app (
       version TEXT NOT NULL DEFAULT '0.0.0',
       workspace_dir_path TEXT
@@ -24,32 +23,45 @@ export const createTable = async (): Promise<void> => {
   `)
 }
 
-export const exists = async (): Promise<boolean> => {
+const exists = async (): Promise<boolean> => {
   try {
-    const result = await db.connection.select({ count: count() }).from(app)
+    const result = await Db.connection.select({ count: count() }).from(app)
     return result[0].count > 0
   } catch {
     return false
   }
 }
 
-export const removeTable = async (): Promise<void> => {
-  await db.connection.delete(app)
+const removeTable = async (): Promise<void> => {
+  await Db.connection.delete(app)
 }
 
-export const add = async (data: App): Promise<void> => {
-  await db.connection.insert(app).values(data)
+const add = async (data: App): Promise<void> => {
+  await Db.connection.insert(app).values(data)
 }
 
-export const update = async (data: App): Promise<void> => {
-  await db.connection.update(app).set(data).run()
+const update = async (data: App): Promise<void> => {
+  await Db.connection.update(app).set(data).run()
 }
 
-export const getWorkspaceDirPath = async (): Promise<string | null> => {
-  const result = await db.connection
+const getWorkspaceDirPath = async (): Promise<string | null> => {
+  const result = await Db.connection
     .select({ workspaceDirPath: app.workspaceDirPath })
     .from(app)
     .limit(1)
 
   return result[0].workspaceDirPath ?? null
 }
+
+const AppDb = {
+  existsTable,
+  createTable,
+  exists,
+  removeTable,
+  add,
+  update,
+  getWorkspaceDirPath,
+  TABLE_NAME,
+}
+
+export default AppDb

@@ -1,37 +1,43 @@
 import * as db from '../../db/node/index.js'
-import * as attribute from './attribute/index.js'
+import AttributeModel from './attribute/index.js'
 
-export async function updateNodeTitle({ id, title }: { id: string; title: string }) {
+async function updateNodeTitle({ id, title }: { id: string; title: string }) {
   return db.updateNodeTitle({
     id,
     title,
   })
 }
 
-export async function getNodeTitleById({ id }: { id: string }) {
+async function getNodeTitleById({ id }: { id: string }) {
   return db.getNodeTitleById({ id })
 }
 
-export async function getNodeParentIdById({ id }: { id: string }) {
+async function getNodeParentIdById({ id }: { id: string }) {
   return db.getNodeParentIdById({ id })
 }
 
-export async function setNodeParent({ id, newParentId }: { id: string; newParentId?: string }) {
+async function setNodeParent({
+  id,
+  newParentId,
+}: {
+  id: string
+  newParentId?: string
+}) {
   return db.setNodeParentId({
     id,
     newParentId,
   })
 }
 
-export async function getNodeIndexById({ id }: { id: string }) {
+async function getNodeIndexById({ id }: { id: string }) {
   return db.getNodeIndexById({ id })
 }
 
-export async function setNodeIndex({ id, index }: { id: string; index: string }) {
+async function setNodeIndex({ id, index }: { id: string; index: string }) {
   return db.setNodeIndex({ id, index })
 }
 
-export async function linkAttributeToNode({
+async function linkAttributeToNode({
   id,
   attributeId,
 }: {
@@ -50,10 +56,13 @@ export async function linkAttributeToNode({
     return currentNode
   }
 
-  return db.updateNodeAttributeIds({ id, attributeIds: [...currentAttributeIds, attributeId] })
+  return db.updateNodeAttributeIds({
+    id,
+    attributeIds: [...currentAttributeIds, attributeId],
+  })
 }
 
-export async function unlinkAttributeFromNode({
+async function unlinkAttributeFromNode({
   id,
   attributeId,
 }: {
@@ -78,7 +87,7 @@ export async function unlinkAttributeFromNode({
   })
 }
 
-export async function updateAttributeValueForNode({
+async function updateAttributeValueForNode({
   id,
   attributeId,
   value,
@@ -93,11 +102,29 @@ export async function updateAttributeValueForNode({
     return undefined
   }
 
-  const updatedAttribute = await attribute.updateAttributeValue({ id: attributeId, value })
+  const updatedAttribute = await AttributeModel.updateAttributeValue({
+    id: attributeId,
+    value,
+  })
 
   return updatedAttribute ? currentNode : undefined
 }
 
-export async function getNodeById({ id }: { id: string }) {
+async function getNodeById({ id }: { id: string }) {
   return db.getNodeById({ id })
 }
+
+const NodeModel = {
+  updateNodeTitle,
+  getNodeTitleById,
+  getNodeParentIdById,
+  setNodeParent,
+  getNodeIndexById,
+  setNodeIndex,
+  linkAttributeToNode,
+  unlinkAttributeFromNode,
+  updateAttributeValueForNode,
+  getNodeById,
+}
+
+export default NodeModel

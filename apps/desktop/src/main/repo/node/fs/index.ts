@@ -5,46 +5,55 @@ import { Node } from '../type.js'
 
 let _nodeDirPath: string | null = null
 
-const getNodeDirPath = (): string => {
+function getNodeDirPath(): string {
   if (!_nodeDirPath) {
     throw new Error('Node directory path not initialized')
   }
+
   return _nodeDirPath
 }
 
-export const initializePath = ({
+function initializePath({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
-}) => {
+}): void {
   _nodeDirPath = path.join(workspaceDirPath, NODE_DIR_NAME)
 }
 
-export const create = async (): Promise<void> => {
+async function create(): Promise<void> {
   await fse.ensureDir(getNodeDirPath())
 }
 
-export const getIds = async (): Promise<string[]> => {
+async function getIds(): Promise<string[]> {
   const files = await fse.readdir(getNodeDirPath())
   return files
     .filter((file) => file.endsWith(FILE_EXTENSION))
     .map((file) => file.replace(FILE_EXTENSION, ''))
 }
 
-export const getFilePath = ({ id }: { id: string }): string => {
+function getFilePath({ id }: { id: string }): string {
   return path.join(getNodeDirPath(), `${id}${FILE_EXTENSION}`)
 }
 
-export const getMtimeMs = async ({
-  id,
-}: {
-  id: string
-}): Promise<number | null> => {
+async function getMtimeMs({ id }: { id: string }): Promise<number | null> {
   const stat = await fse.stat(getFilePath({ id }))
   return stat.mtimeMs
 }
 
-export const read = async ({ id }: { id: string }): Promise<Node> => {
+async function read({ id }: { id: string }): Promise<Node> {
   const data = await fse.readJson(getFilePath({ id }))
   return data
 }
+
+const NodeFs = {
+  getNodeDirPath,
+  initializePath,
+  create,
+  getIds,
+  getFilePath,
+  getMtimeMs,
+  read,
+}
+
+export default NodeFs

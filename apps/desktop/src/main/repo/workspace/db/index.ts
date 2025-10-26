@@ -1,12 +1,10 @@
 import { count } from 'drizzle-orm'
-import * as _db from '../../shared/db.js'
+import Db from '../../shared/db.js'
 import { TABLE_NAME } from './const.js'
 import { NewWorkspace, workspace, Workspace } from './schema.js'
 
-export { TABLE_NAME } from './const.js'
-
-export const createTable = async (): Promise<void> => {
-  await _db.sqlite.exec(`
+async function createTable(): Promise<void> {
+  await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
       node_types TEXT NOT NULL DEFAULT '[]',
       attributes TEXT NOT NULL DEFAULT '[]'
@@ -14,9 +12,9 @@ export const createTable = async (): Promise<void> => {
   `)
 }
 
-export const exists = async (): Promise<boolean> => {
+async function exists(): Promise<boolean> {
   try {
-    const result = await _db.connection
+    const result = await Db.connection
       .select({ count: count() })
       .from(workspace)
     return result[0].count > 0
@@ -25,14 +23,25 @@ export const exists = async (): Promise<boolean> => {
   }
 }
 
-export const update = async (data: Workspace): Promise<void> => {
-  await _db.connection.update(workspace).set(data).run()
+async function update(data: Workspace): Promise<void> {
+  await Db.connection.update(workspace).set(data).run()
 }
 
-export const removeTable = async (): Promise<void> => {
-  await _db.connection.delete(workspace)
+async function removeTable(): Promise<void> {
+  await Db.connection.delete(workspace)
 }
 
-export const add = async (data: NewWorkspace): Promise<void> => {
-  await _db.connection.insert(workspace).values(data)
+async function add(data: NewWorkspace): Promise<void> {
+  await Db.connection.insert(workspace).values(data)
 }
+
+const WorkspaceDb = {
+  createTable,
+  exists,
+  update,
+  removeTable,
+  add,
+  TABLE_NAME,
+}
+
+export default WorkspaceDb

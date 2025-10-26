@@ -1,50 +1,50 @@
-import * as fs from './fs/index.js'
-import * as db from './db/index.js'
+import NodeFs from './fs/index.js'
+import NodeDb from './db/index.js'
 // eslint-disable-next-line voyl/same-level-import
-import * as SyncMetadataRepo from '../syncMetadata/index.js'
+import SyncMetadataRepo from '../syncMetadata/index.js'
 import { Node } from './type.js'
 
-export const initialize = async ({
+async function initialize({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
-}): Promise<void> => {
+}): Promise<void> {
   initializePath({ workspaceDirPath })
-  await fs.create()
-  await db.createTable()
+  await NodeFs.create()
+  await NodeDb.createTable()
 }
 
-export const initializePath = ({
+function initializePath({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
-}): void => {
-  fs.initializePath({ workspaceDirPath })
+}): void {
+  NodeFs.initializePath({ workspaceDirPath })
 }
 
-const syncSingle = async ({ id }: { id: string }): Promise<void> => {
-  const mtimeMs = await fs.getMtimeMs({ id })
+async function syncSingle({ id }: { id: string }): Promise<void> {
+  const mtimeMs = await NodeFs.getMtimeMs({ id })
 
   await SyncMetadataRepo.sync<Node>({
     fs: {
-      path: fs.getFilePath({ id }),
-      data: await fs.read({ id }),
+      path: NodeFs.getFilePath({ id }),
+      data: await NodeFs.read({ id }),
       mtimeMs: mtimeMs ?? 0,
     },
     db: {
-      tableName: db.TABLE_NAME,
-      isExists: await db.exists({ id }),
+      tableName: NodeDb.TABLE_NAME,
+      isExists: await NodeDb.exists({ id }),
       handler: {
-        update: db.update,
-        createTable: db.createTable,
-        add: db.add,
+        update: NodeDb.update,
+        createTable: NodeDb.createTable,
+        add: NodeDb.add,
       },
     },
   })
 }
 
-export const sync = async (): Promise<void> => {
-  const ids = await fs.getIds()
+async function sync(): Promise<void> {
+  const ids = await NodeFs.getIds()
 
   await Promise.all(
     ids.map(async (id: string) => {
@@ -52,3 +52,12 @@ export const sync = async (): Promise<void> => {
     }),
   )
 }
+
+const NodeRepo = {
+  initialize,
+  initializePath,
+  syncSingle,
+  sync,
+}
+
+export default NodeRepo

@@ -1,11 +1,20 @@
 import { SYNC_STATE } from './const.js'
-import * as _db from './db/index.js'
+import SyncMetadataDb from './db/index.js'
+import { SyncMetadata } from './type.js'
 
-export const initialize = async (): Promise<void> => {
-  await _db.createTable()
+async function initialize(): Promise<void> {
+  await SyncMetadataDb.createTable()
 }
 
-const getSyncState = async ({ fsMtimeMs, isDbExists, metadata }) => {
+function getSyncState({
+  fsMtimeMs,
+  isDbExists,
+  metadata,
+}: {
+  fsMtimeMs: number
+  isDbExists: boolean
+  metadata: SyncMetadata | null
+}): (typeof SYNC_STATE)[keyof typeof SYNC_STATE] {
   if (!isDbExists) {
     return SYNC_STATE.FS_ONLY
   } else if (metadata === null || metadata.syncedAt < fsMtimeMs) {
@@ -15,9 +24,9 @@ const getSyncState = async ({ fsMtimeMs, isDbExists, metadata }) => {
   return SYNC_STATE.CONSISTENT
 }
 
-const handleConsistent = () => {}
+function handleConsistent() {}
 
-const handleFsOnly = async <T>({
+async function handleFsOnly<T>({
   fs,
   db,
 }: {
@@ -30,19 +39,32 @@ const handleFsOnly = async <T>({
       add: (data: T) => void
     }
   }
-}) => {
+}): Promise<void> {
   await db.handler.createTable()
   await db.handler.add(fs.data)
-  await _db.add({
+  await SyncMetadataDb.add({
     path: fs.path,
     tableName: db.tableName,
     syncedAt: fs.mtimeMs,
   })
 }
 
-const handleDbOutdated = async ({ fs, db }) => {
+async function handleDbOutdated<T>({
+  fs,
+  db,
+}: {
+  fs: { path: string; data: T; mtimeMs: number }
+  db: {
+    tableName: string
+    handler: {
+      update: (data: T) => void
+      createTable: () => void
+      add: (data: T) => void
+    }
+  }
+}): Promise<void> {
   await db.handler.update(fs.data)
-  await _db.update({
+  await SyncMetadataDb.update({
     path: fs.path,
     tableName: db.tableName,
     syncedAt: fs.mtimeMs,
@@ -55,7 +77,7 @@ const syncStateToHandler = {
   [SYNC_STATE.CONSISTENT]: handleConsistent,
 } as const
 
-export const sync = async <T>({
+async function sync<T>({
   fs,
   db,
 }: {
@@ -69,8 +91,8 @@ export const sync = async <T>({
       add: (data: T) => void
     }
   }
-}) => {
-  const metadata = await _db.get({
+}): Promise<void> {
+  const metadata = await SyncMetadataDb.get({
     path: fs.path,
   })
 
@@ -87,7 +109,13 @@ export const sync = async <T>({
   })
 }
 
-export const get = _db.get
-export const remove = _db.remove
-export const add = _db.add
-export const update = _db.update
+const SyncMetadataRepo = {
+  initialize,
+  getSyncState,
+  handleConsistent,
+  handleFsOnly,
+  handleDbOutdated,
+  sync,
+}
+
+export default SyncMetadataRepo
