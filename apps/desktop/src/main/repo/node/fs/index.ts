@@ -1,7 +1,8 @@
 import { FILE_EXTENSION, NODE_DIR_NAME } from './const.js'
 import path from 'path'
 import fse from 'fs-extra'
-import { Node } from '../type.js'
+// eslint-disable-next-line voyl/same-level-import
+import type { Node } from '../db/index.js'
 
 let _nodeDirPath: string | null = null
 

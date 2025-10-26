@@ -2,6 +2,8 @@ import { syncMetadata, SyncMetadata } from './schema.js'
 import Db from '../../shared/db.js'
 import { eq } from 'drizzle-orm'
 
+export type { SyncMetadata }
+
 async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS sync_metadata (

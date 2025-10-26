@@ -3,6 +3,8 @@ import { count, sql } from 'drizzle-orm'
 import { App, app } from './schema.js'
 import { TABLE_NAME } from './const.js'
 
+export type { App }
+
 async function existsTable(): Promise<boolean> {
   try {
     const result = await Db.connection.get<{ name: string }>(

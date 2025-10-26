@@ -1,6 +1,5 @@
 import { SYNC_STATE } from './const.js'
-import SyncMetadataDb from './db/index.js'
-import { SyncMetadata } from './type.js'
+import SyncMetadataDb, { type SyncMetadata } from './db/index.js'
 
 async function initialize(): Promise<void> {
   await SyncMetadataDb.createTable()

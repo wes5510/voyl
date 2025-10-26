@@ -1,7 +1,8 @@
 import fse from 'fs-extra'
 import { FILE_NAME } from './const.js'
 import path from 'path'
-import { Workspace } from '../type.js'
+// eslint-disable-next-line voyl/same-level-import
+import type { Workspace } from '../db/index.js'
 
 let _workspaceDirPath: string | null = null
 

@@ -1,8 +1,7 @@
 import NodeFs from './fs/index.js'
-import NodeDb from './db/index.js'
+import NodeDb, { type Node } from './db/index.js'
 // eslint-disable-next-line voyl/same-level-import
 import SyncMetadataRepo from '../syncMetadata/index.js'
-import { Node } from './type.js'
 
 async function initialize({
   workspaceDirPath,

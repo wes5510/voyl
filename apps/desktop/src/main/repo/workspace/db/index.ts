@@ -3,6 +3,8 @@ import Db from '../../shared/db.js'
 import { TABLE_NAME } from './const.js'
 import { NewWorkspace, workspace, Workspace } from './schema.js'
 
+export type { Workspace }
+
 async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
