@@ -4,7 +4,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import {
-  selectWorkspacePath,
+  selectWorkspaceDirPath,
   initializeApp,
   syncApp,
 } from '@/renderer/repo/app'
@@ -25,9 +25,9 @@ export function useAppInitialized() {
 /**
  * 워크스페이스 경로 선택 mutation
  */
-export function useSelectWorkspacePath() {
+export function useSelectWorkspaceDirPath() {
   return useMutation({
-    mutationFn: selectWorkspacePath,
+    mutationFn: selectWorkspaceDirPath,
   })
 }
 

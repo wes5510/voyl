@@ -9,14 +9,14 @@ export const exists = async (): Promise<boolean> => {
 }
 
 export const initialize = async ({
-  workspacePath,
+  workspaceDirPath,
   version,
 }: {
-  workspacePath: string
+  workspaceDirPath: string
   version: string
 }): Promise<void> => {
   await fs.create({
-    workspacePath,
+    workspaceDirPath,
     version,
   })
 
@@ -38,14 +38,12 @@ export const sync = async (): Promise<void> => {
       handler: {
         update: db.update,
         createTable: db.createTable,
-        removeTable: db.removeTable,
         add: db.add,
       },
     },
   })
 }
 
-export const getWorkspacePath = async (): Promise<string | null> => {
-  const workspacePath = await db.getWorkspacePath()
-  return workspacePath
+export const getWorkspaceDirPath = async (): Promise<string | null> => {
+  return await db.getWorkspaceDirPath()
 }

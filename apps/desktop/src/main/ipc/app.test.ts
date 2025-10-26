@@ -53,7 +53,7 @@ describe('App IPC Handlers', () => {
 
       expect(mockIpcMain.handle).toHaveBeenCalledWith(CHANNELS.IS_INITIALIZED, expect.any(Function))
       expect(mockIpcMain.handle).toHaveBeenCalledWith(
-        CHANNELS.SELECT_WORKSPACE_PATH,
+        CHANNELS.SELECT_WORKSPACE_DIR_PATH,
         expect.any(Function),
       )
       expect(mockIpcMain.handle).toHaveBeenCalledWith(CHANNELS.INITIALIZE_APP, expect.any(Function))
@@ -69,7 +69,7 @@ describe('App IPC Handlers', () => {
 
       // Register handlers and get the function
       registerAppHandlers(mockIpcMain)
-      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
+      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_DIR_PATH)
 
       const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
       const result = await selectPathHandler(mockEvent)
@@ -90,7 +90,7 @@ describe('App IPC Handlers', () => {
       })
 
       registerAppHandlers(mockIpcMain)
-      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
+      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_DIR_PATH)
 
       const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
       const result = await selectPathHandler(mockEvent)
@@ -133,7 +133,7 @@ describe('App IPC Handlers', () => {
       const mockEvent = {} as Electron.IpcMainInvokeEvent
       await expect(handler(mockEvent, '/test/path')).resolves.not.toThrow()
 
-      expect(initializeApp).toHaveBeenCalledWith({ workspacePath: '/test/path' })
+      expect(initializeApp).toHaveBeenCalledWith({ workspaceDirPath: '/test/path' })
     })
 
     it('앱 초기화 실패 시 에러를 던져야 함', async () => {

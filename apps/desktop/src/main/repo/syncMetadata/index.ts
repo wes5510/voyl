@@ -27,7 +27,6 @@ const handleFsOnly = async <T>({
     handler: {
       update: (data: T) => void
       createTable: () => void
-      removeTable: () => void
       add: (data: T) => void
     }
   }
@@ -67,7 +66,6 @@ export const sync = async <T>({
     handler: {
       update: (data: T) => void
       createTable: () => void
-      removeTable: () => void
       add: (data: T) => void
     }
   }

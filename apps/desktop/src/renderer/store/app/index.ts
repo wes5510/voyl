@@ -1,6 +1,6 @@
 export {
   useSyncApp,
   useAppInitialized,
-  useSelectWorkspacePath,
+  useSelectWorkspaceDirPath,
   useInitializeWorkspace,
 } from './hook'

@@ -1,4 +1,4 @@
 export interface App {
   version: string
-  workspacePath: string
+  workspaceDirPath: string
 }

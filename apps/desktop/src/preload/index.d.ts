@@ -2,7 +2,7 @@ import { ElectronAPI } from '@electron-toolkit/preload'
 
 interface ElectronIPC {
   isInitialized(): Promise<boolean>
-  selectWorkspacePath(): Promise<string | null>
+  selectWorkspaceDirPath(): Promise<string | null>
   initializeApp(path: string): Promise<void>
   loadApp(): Promise<void>
   syncApp(): Promise<void>

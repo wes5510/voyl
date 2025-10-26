@@ -3,36 +3,40 @@ import { FILE_NAME } from './const.js'
 import path from 'path'
 import { Workspace } from '../type.js'
 
-let filePath: string | null = null
+let _workspaceDirPath: string | null = null
 
 export const initializePath = ({
-  workspacePath,
+  workspaceDirPath,
 }: {
-  workspacePath: string
+  workspaceDirPath: string
 }) => {
-  filePath = path.join(workspacePath, FILE_NAME)
+  _workspaceDirPath = workspaceDirPath
 }
 
-export const getFilePath = () => {
-  if (!filePath) {
-    throw new Error('File path not initialized')
+export const getWorkspaceDirPath = () => {
+  if (!_workspaceDirPath) {
+    throw new Error('Workspace directory path not initialized')
   }
-  return filePath
+  return _workspaceDirPath
+}
+
+export const getConfigPath = () => {
+  return path.join(getWorkspaceDirPath(), FILE_NAME)
 }
 
 export const create = async (): Promise<void> => {
-  await fse.outputJson(getFilePath(), {
+  await fse.outputJson(getConfigPath(), {
     nodeTypes: [],
     attributes: [],
   })
 }
 
 export const getMtimeMs = async (): Promise<number | null> => {
-  const stats = await fse.stat(getFilePath())
+  const stats = await fse.stat(getConfigPath())
   return stats.mtimeMs
 }
 
 export const read = async (): Promise<Workspace> => {
-  const data = await fse.readJson(getFilePath())
+  const data = await fse.readJson(getConfigPath())
   return data
 }

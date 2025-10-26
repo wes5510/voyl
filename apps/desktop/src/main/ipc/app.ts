@@ -43,10 +43,10 @@ async function isInitialized(): Promise<boolean> {
  */
 async function handleInitializeApp(
   _event: Electron.IpcMainInvokeEvent,
-  workspacePath: string,
+  workspaceDirPath: string,
 ): Promise<void> {
   try {
-    await AppModel.initializeApp({ workspacePath })
+    await AppModel.initializeApp({ workspaceDirPath })
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw error
@@ -72,7 +72,7 @@ export default function registerAppHandlers(ipcMain: Electron.IpcMain): void {
   ipcMain.handle(CHANNELS.IS_INITIALIZED, isInitialized)
 
   // 워크스페이스 경로 선택
-  ipcMain.handle(CHANNELS.SELECT_WORKSPACE_PATH, openDirectoryDialog)
+  ipcMain.handle(CHANNELS.SELECT_WORKSPACE_DIR_PATH, openDirectoryDialog)
 
   // 앱 초기화 (첫 실행)
   ipcMain.handle(CHANNELS.INITIALIZE_APP, handleInitializeApp)

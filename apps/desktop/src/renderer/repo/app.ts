@@ -13,8 +13,8 @@ export async function isInitialized(): Promise<boolean> {
 /**
  * 워크스페이스 경로 선택 (Documents 초기 경로)
  */
-export async function selectWorkspacePath(): Promise<string | null> {
-  const ret = await window.api.selectWorkspacePath()
+export async function selectWorkspaceDirPath(): Promise<string | null> {
+  const ret = await window.api.selectWorkspaceDirPath()
   return ret
 }
 

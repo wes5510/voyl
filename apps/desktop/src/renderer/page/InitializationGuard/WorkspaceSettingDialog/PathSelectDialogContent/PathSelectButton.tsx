@@ -1,4 +1,4 @@
-import { useSelectWorkspacePath } from '@/renderer/store/app'
+import { useSelectWorkspaceDirPath } from '@/renderer/store/app'
 import { Button } from '@/renderer/common/Button'
 import { Loader2, FolderIcon } from 'lucide-react'
 import { toast } from 'sonner'
@@ -10,7 +10,7 @@ export interface PathSelectButtonProps {
 export default function PathSelectButton({
   onSelectPath,
 }: PathSelectButtonProps) {
-  const selectPath = useSelectWorkspacePath()
+  const selectPath = useSelectWorkspaceDirPath()
 
   const handleClick = async () => {
     try {
@@ -20,7 +20,9 @@ export default function PathSelectButton({
       }
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : '경로 선택 중 오류가 발생했습니다.'
+        error instanceof Error
+          ? error.message
+          : '경로 선택 중 오류가 발생했습니다.',
       )
     }
   }

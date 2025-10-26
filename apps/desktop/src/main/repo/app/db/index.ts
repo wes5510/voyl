@@ -19,7 +19,7 @@ export const createTable = async (): Promise<void> => {
   await db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS app (
       version TEXT NOT NULL DEFAULT '0.0.0',
-      workspace_path TEXT
+      workspace_dir_path TEXT
     )
   `)
 }
@@ -45,11 +45,11 @@ export const update = async (data: App): Promise<void> => {
   await db.connection.update(app).set(data).run()
 }
 
-export const getWorkspacePath = async (): Promise<string | null> => {
+export const getWorkspaceDirPath = async (): Promise<string | null> => {
   const result = await db.connection
-    .select({ workspacePath: app.workspacePath })
+    .select({ workspaceDirPath: app.workspaceDirPath })
     .from(app)
     .limit(1)
 
-  return result[0].workspacePath ?? null
+  return result[0].workspaceDirPath ?? null
 }

@@ -1,16 +1,16 @@
 import fse from 'fs-extra'
-import { PATH as _PATH } from './const.js'
+import { PATH } from './const.js'
 import { App } from '../type.js'
 
-export const PATH = _PATH
+export { PATH } from './const.js'
 
 export const create = async ({
   version,
-  workspacePath,
+  workspaceDirPath,
 }: App): Promise<void> => {
   await fse.writeJson(PATH, {
     version,
-    workspacePath,
+    workspaceDirPath,
   })
 }
 

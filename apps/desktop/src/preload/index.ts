@@ -6,7 +6,8 @@ import { CHANNELS } from '../common/channel.const.js'
 const api = {
   isInitialized: () => ipcRenderer.invoke(CHANNELS.IS_INITIALIZED),
   syncApp: () => ipcRenderer.invoke(CHANNELS.SYNC_APP),
-  selectWorkspacePath: () => ipcRenderer.invoke(CHANNELS.SELECT_WORKSPACE_PATH),
+  selectWorkspaceDirPath: () =>
+    ipcRenderer.invoke(CHANNELS.SELECT_WORKSPACE_DIR_PATH),
   initializeApp: (path: string) =>
     ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
 }

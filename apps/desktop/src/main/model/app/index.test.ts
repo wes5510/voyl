@@ -3,11 +3,13 @@ import { isInitialized, initializeApp } from './index.js'
 import * as AppRepo from '../../repo/app/index.js'
 import * as SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import * as WorkspaceRepo from '../../repo/workspace/index.js'
+import * as NodeRepo from '../../repo/node/index.js'
 
 vi.mock('../../repo/app/index.js', () => ({
   exists: vi.fn(),
   initialize: vi.fn(),
   sync: vi.fn(),
+  getWorkspaceDirPath: vi.fn(),
 }))
 
 vi.mock('../../repo/syncMetadata/index.js', () => ({
@@ -21,6 +23,13 @@ vi.mock('../../repo/syncMetadata/index.js', () => ({
 
 vi.mock('../../repo/workspace/index.js', () => ({
   initialize: vi.fn(),
+  initializePath: vi.fn(),
+  sync: vi.fn(),
+}))
+
+vi.mock('../../repo/node/index.js', () => ({
+  initialize: vi.fn(),
+  sync: vi.fn(),
 }))
 
 describe('App Model', () => {
@@ -50,17 +59,18 @@ describe('App Model', () => {
 
   describe('initializeApp', () => {
     it('워크스페이스 경로가 주어지면 앱을 초기화해야 함', async () => {
-      const mockWorkspacePath = '/test/workspace'
+      const mockWorkspaceDirPath = '/test/workspace'
       vi.mocked(AppRepo.initialize).mockResolvedValue(undefined)
 
-      await initializeApp({ workspacePath: mockWorkspacePath })
+      await initializeApp({ workspaceDirPath: mockWorkspaceDirPath })
 
       expect(SyncMetadataRepo.initialize).toHaveBeenCalled()
       expect(AppRepo.initialize).toHaveBeenCalledWith({
-        workspacePath: mockWorkspacePath,
+        workspaceDirPath: mockWorkspaceDirPath,
         version: '1.0.0',
       })
       expect(WorkspaceRepo.initialize).toHaveBeenCalled()
+      expect(NodeRepo.initialize).toHaveBeenCalled()
     })
   })
 })
