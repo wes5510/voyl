@@ -58,7 +58,7 @@ async function handleInitializeApp(
 
 async function handleSyncApp(): Promise<void> {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 20000))
+    await AppModel.sync()
   } catch (error) {
     throw new Error((error as Error).message || 'Failed to sync app')
   }

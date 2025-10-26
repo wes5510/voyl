@@ -5,8 +5,10 @@ import { CHANNELS } from '../common/channel.const.js'
 // Custom APIs for renderer
 const api = {
   isInitialized: () => ipcRenderer.invoke(CHANNELS.IS_INITIALIZED),
+  syncApp: () => ipcRenderer.invoke(CHANNELS.SYNC_APP),
   selectWorkspacePath: () => ipcRenderer.invoke(CHANNELS.SELECT_WORKSPACE_PATH),
-  initializeApp: (path: string) => ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
+  initializeApp: (path: string) =>
+    ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

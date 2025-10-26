@@ -5,6 +5,20 @@ import * as AppRepo from '../../repo/app/index.js'
 vi.mock('../../repo/app/index.js', () => ({
   exists: vi.fn(),
   initialize: vi.fn(),
+  sync: vi.fn(),
+}))
+
+vi.mock('../../repo/syncMetadata/index.js', () => ({
+  initialize: vi.fn(),
+  get: vi.fn(),
+  add: vi.fn(),
+  update: vi.fn(),
+  remove: vi.fn(),
+  sync: vi.fn(),
+}))
+
+vi.mock('../../repo/workspace/index.js', () => ({
+  initialize: vi.fn(),
 }))
 
 describe('App Model', () => {

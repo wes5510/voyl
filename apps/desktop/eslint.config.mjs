@@ -196,26 +196,6 @@ export default [
     },
   },
   {
-    files: ['src/main/db/**/*.{ts,tsx}'],
-    plugins: {
-      voyl: voylPlugin,
-    },
-    rules: {
-      'voyl/restrict-imports-to-pattern': [
-        'error',
-        {
-          patterns: [
-            '**/src/main/db/**',
-            '**/src/main/common/*',
-            '**/src/main/common/shared/*',
-            '**/src/common/*',
-          ],
-          tsconfigPath: path.resolve(__dirname, './tsconfig.node.json'),
-        },
-      ],
-    },
-  },
-  {
     files: ['src/main/repo/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,

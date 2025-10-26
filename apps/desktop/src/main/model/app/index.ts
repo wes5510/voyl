@@ -1,5 +1,7 @@
 import * as AppRepo from '../../repo/app/index.js'
+import * as SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import { APP_VERSION } from './const.js'
+import * as WorkspaceRepo from '../../repo/workspace/index.js'
 
 /**
  * 앱 초기화 상태 확인
@@ -19,8 +21,14 @@ export async function initializeApp({
 }: {
   workspacePath: string
 }): Promise<void> {
+  await SyncMetadataRepo.initialize()
   await AppRepo.initialize({
     workspacePath,
     version: APP_VERSION,
   })
+  await WorkspaceRepo.initialize()
+}
+
+export async function sync(): Promise<void> {
+  await AppRepo.sync()
 }
