@@ -8,7 +8,5 @@ interface SyncGuardProps {
 export default function SyncGuard({ children }: SyncGuardProps) {
   const sync = useSyncApp()
 
-  console.log({ sync })
-
   return sync.isPending ? <SyncSplash /> : <>{children}</>
 }
