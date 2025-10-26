@@ -26,9 +26,18 @@ export async function initializeApp({
     workspacePath,
     version: APP_VERSION,
   })
-  await WorkspaceRepo.initialize()
+  await WorkspaceRepo.initialize({ workspacePath })
 }
 
 export async function sync(): Promise<void> {
   await AppRepo.sync()
+
+  const workspacePath = await AppRepo.getWorkspacePath()
+  if (!workspacePath) {
+    throw new Error('Workspace path not found')
+  }
+
+  await WorkspaceRepo.sync({
+    workspacePath,
+  })
 }

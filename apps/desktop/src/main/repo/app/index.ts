@@ -34,6 +34,7 @@ export const sync = async (): Promise<void> => {
     },
     db: {
       tableName: db.TABLE_NAME,
+      isExists: await db.exists(),
       handler: {
         update: db.update,
         createTable: db.createTable,
@@ -42,4 +43,9 @@ export const sync = async (): Promise<void> => {
       },
     },
   })
+}
+
+export const getWorkspacePath = async (): Promise<string | null> => {
+  const workspacePath = await db.getWorkspacePath()
+  return workspacePath
 }

@@ -5,21 +5,10 @@ export const initialize = async (): Promise<void> => {
   await _db.createTable()
 }
 
-const getSyncState = async ({
-  fsMtimeMs,
-  isFsExists,
-  isDbExists,
-  metadata,
-}) => {
-  if (isFsExists && !isDbExists) {
+const getSyncState = async ({ fsMtimeMs, isDbExists, metadata }) => {
+  if (!isDbExists) {
     return SYNC_STATE.FS_ONLY
-  } else if (!isFsExists && isDbExists) {
-    return SYNC_STATE.DB_ONLY
-  } else if (
-    isFsExists &&
-    isDbExists &&
-    (metadata === null || metadata.syncedAt < fsMtimeMs)
-  ) {
+  } else if (metadata === null || metadata.syncedAt < fsMtimeMs) {
     return SYNC_STATE.DB_OUTDATED
   }
 
@@ -27,27 +16,6 @@ const getSyncState = async ({
 }
 
 const handleConsistent = () => {}
-
-const handleDbOnly = async <T>({
-  fs,
-  db,
-}: {
-  fs: { path: string; data: T; mtimeMs: number }
-  db: {
-    tableName: string
-    handler: {
-      update: (data: T) => void
-      createTable: () => void
-      removeTable: () => void
-      add: (data: T) => void
-    }
-  }
-}) => {
-  await db.handler.removeTable()
-  await _db.remove({
-    path: fs.path,
-  })
-}
 
 const handleFsOnly = async <T>({
   fs,
@@ -83,7 +51,6 @@ const handleDbOutdated = async ({ fs, db }) => {
 }
 
 const syncStateToHandler = {
-  [SYNC_STATE.DB_ONLY]: handleDbOnly,
   [SYNC_STATE.FS_ONLY]: handleFsOnly,
   [SYNC_STATE.DB_OUTDATED]: handleDbOutdated,
   [SYNC_STATE.CONSISTENT]: handleConsistent,
@@ -96,6 +63,7 @@ export const sync = async <T>({
   fs: { path: string; data: T; mtimeMs: number }
   db: {
     tableName: string
+    isExists: boolean
     handler: {
       update: (data: T) => void
       createTable: () => void
@@ -110,8 +78,7 @@ export const sync = async <T>({
 
   const syncState = await getSyncState({
     fsMtimeMs: fs?.mtimeMs ?? 0,
-    isFsExists: fs !== null,
-    isDbExists: db !== null,
+    isDbExists: db.isExists,
     metadata,
   })
 

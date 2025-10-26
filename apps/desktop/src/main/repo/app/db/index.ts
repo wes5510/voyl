@@ -1,5 +1,5 @@
 import * as db from '../../shared/db.js'
-import { count, eq, sql } from 'drizzle-orm'
+import { count, sql } from 'drizzle-orm'
 import { App, app } from './schema.js'
 
 export { TABLE_NAME } from './const.js'
@@ -42,5 +42,14 @@ export const add = async (data: App): Promise<void> => {
 }
 
 export const update = async (data: App): Promise<void> => {
-  await db.connection.update(app).set(data).where(eq(app.version, data.version))
+  await db.connection.update(app).set(data).run()
+}
+
+export const getWorkspacePath = async (): Promise<string | null> => {
+  const result = await db.connection
+    .select({ workspacePath: app.workspacePath })
+    .from(app)
+    .limit(1)
+
+  return result[0].workspacePath ?? null
 }
