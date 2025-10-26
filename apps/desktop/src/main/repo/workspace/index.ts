@@ -14,13 +14,15 @@ export const initialize = async ({
   await db.createTable()
 }
 
-export const sync = async ({
+export const initializePath = ({
   workspacePath,
 }: {
   workspacePath: string
-}): Promise<void> => {
+}) => {
   fs.initializePath({ workspacePath })
+}
 
+export const sync = async (): Promise<void> => {
   const mtimeMs = await fs.getMtimeMs()
 
   await SyncMetadataRepo.sync<Workspace>({

@@ -37,7 +37,6 @@ export async function sync(): Promise<void> {
     throw new Error('Workspace path not found')
   }
 
-  await WorkspaceRepo.sync({
-    workspacePath,
-  })
+  WorkspaceRepo.initializePath({ workspacePath })
+  await WorkspaceRepo.sync()
 }
