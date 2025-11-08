@@ -84,6 +84,7 @@
     "@typescript-eslint/rule-tester": "^8.46.2",
     "@vitejs/plugin-react": "^5.1.0",
     "@voyl/eslint-plugin-voyl": "workspace:*",
+    "babel-plugin-react-compiler": "^1.0.0",
     "drizzle-kit": "^0.31.5",
     "electron": "37.7.1",
     "electron-builder": "26.0.12",

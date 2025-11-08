@@ -11,6 +11,14 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
   },
   renderer: {
-    plugins: [react(), tsconfigPaths(), tailwindcss()],
+    plugins: [
+      react({
+        babel: {
+          plugins: ['babel-plugin-react-compiler'],
+        },
+      }),
+      tsconfigPaths(),
+      tailwindcss(),
+    ],
   },
 })
