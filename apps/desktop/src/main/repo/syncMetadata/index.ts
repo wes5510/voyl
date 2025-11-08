@@ -85,9 +85,9 @@ async function sync<T>({
     tableName: string
     isExists: boolean
     handler: {
-      update: (data: T) => void
-      createTable: () => void
-      add: (data: T) => void
+      update: (data: T) => Promise<void>
+      createTable: () => Promise<void>
+      add: (data: T) => Promise<void>
     }
   }
 }): Promise<void> {
