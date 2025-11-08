@@ -1,0 +1,6 @@
+export const SYNC_STATE = {
+  DB_ONLY: 'DB_ONLY',
+  FS_ONLY: 'FS_ONLY',
+  DB_OUTDATED: 'DB_OUTDATED',
+  CONSISTENT: 'CONSISTENT',
+} as const

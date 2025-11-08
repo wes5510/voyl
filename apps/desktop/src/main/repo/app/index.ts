@@ -1,21 +1,58 @@
-import * as db from './db.js'
-import * as fs from './fs/index.js'
+import AppDb from './db/index.js'
+import AppFs from './fs/index.js'
+// eslint-disable-next-line voyl/same-level-import
+import SyncMetadataRepo from '../syncMetadata/index.js'
+import type { App } from './db/index.js'
 
-export const exists = async (): Promise<boolean> => {
-  return await db.exists()
+async function exists(): Promise<boolean> {
+  return await AppDb.existsTable()
 }
 
-export const initialize = async ({
-  workspacePath,
+async function initialize({
+  workspaceDirPath,
   version,
 }: {
-  workspacePath: string
+  workspaceDirPath: string
   version: string
-}): Promise<void> => {
-  await fs.create({
-    workspacePath,
+}): Promise<void> {
+  await AppFs.create({
+    workspaceDirPath,
     version,
   })
 
-  await db.createTable()
+  await AppDb.createTable()
 }
+
+async function sync(): Promise<void> {
+  const mtimeMs = await AppFs.getMtimeMs()
+
+  await SyncMetadataRepo.sync<App>({
+    fs: {
+      path: AppFs.PATH,
+      data: await AppFs.read(),
+      mtimeMs: mtimeMs ?? 0,
+    },
+    db: {
+      tableName: AppDb.TABLE_NAME,
+      isExists: await AppDb.exists(),
+      handler: {
+        update: AppDb.update,
+        createTable: AppDb.createTable,
+        add: AppDb.add,
+      },
+    },
+  })
+}
+
+async function getWorkspaceDirPath(): Promise<string | null> {
+  return await AppDb.getWorkspaceDirPath()
+}
+
+const AppRepo = {
+  exists,
+  initialize,
+  sync,
+  getWorkspaceDirPath,
+}
+
+export default AppRepo

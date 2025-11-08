@@ -1,15 +1,16 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
 
-interface IElectronAPI {
+interface ElectronIPC {
   isInitialized(): Promise<boolean>
-  selectWorkspacePath(): Promise<string | null>
+  selectWorkspaceDirPath(): Promise<string | null>
   initializeApp(path: string): Promise<void>
   loadApp(): Promise<void>
+  syncApp(): Promise<void>
 }
 
 declare global {
   interface Window {
     electron: ElectronAPI
-    api: IElectronAPI
+    api: ElectronIPC
   }
 }

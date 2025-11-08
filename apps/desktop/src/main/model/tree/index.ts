@@ -1,6 +1,6 @@
 import * as db from '../../db/node/index.js'
 
-export async function getRootNodeId() {
+async function getRootNodeId() {
   const rootNodeId = await db.getRootNodeId()
 
   if (!rootNodeId) {
@@ -10,7 +10,7 @@ export async function getRootNodeId() {
   return rootNodeId
 }
 
-export async function getNode({ nodeId }: { nodeId: string }): Promise<{
+async function getNode({ nodeId }: { nodeId: string }): Promise<{
   id: string
   parentId?: string
   childIds: string[]
@@ -34,7 +34,11 @@ export async function getNode({ nodeId }: { nodeId: string }): Promise<{
   }
 }
 
-export async function getChildNodeIds({ parentId }: { parentId: string }): Promise<string[]> {
+async function getChildNodeIds({
+  parentId,
+}: {
+  parentId: string
+}): Promise<string[]> {
   if (parentId === '') {
     throw new Error('Parent ID cannot be empty string')
   }
@@ -43,7 +47,11 @@ export async function getChildNodeIds({ parentId }: { parentId: string }): Promi
   return childIds
 }
 
-export async function getNodeIndex({ nodeId }: { nodeId: string }): Promise<string | undefined> {
+async function getNodeIndex({
+  nodeId,
+}: {
+  nodeId: string
+}): Promise<string | undefined> {
   if (nodeId === '') {
     throw new Error('Node ID cannot be empty string')
   }
@@ -51,3 +59,11 @@ export async function getNodeIndex({ nodeId }: { nodeId: string }): Promise<stri
   const index = await db.getNodeIndexById({ id: nodeId })
   return index
 }
+
+const TreeModel = {
+  getRootNodeId,
+  getNode,
+  getChildNodeIds,
+  getNodeIndex,
+}
+export default TreeModel

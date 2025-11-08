@@ -29,8 +29,10 @@ vi.mock('os', () => ({
 
 // Mock models
 vi.mock('../model/app/index.js', () => ({
-  isInitialized: vi.fn(),
-  initializeApp: vi.fn(),
+  default: {
+    isInitialized: vi.fn(),
+    initializeApp: vi.fn(),
+  },
 }))
 
 describe('App IPC Handlers', () => {
@@ -53,7 +55,7 @@ describe('App IPC Handlers', () => {
 
       expect(mockIpcMain.handle).toHaveBeenCalledWith(CHANNELS.IS_INITIALIZED, expect.any(Function))
       expect(mockIpcMain.handle).toHaveBeenCalledWith(
-        CHANNELS.SELECT_WORKSPACE_PATH,
+        CHANNELS.SELECT_WORKSPACE_DIR_PATH,
         expect.any(Function),
       )
       expect(mockIpcMain.handle).toHaveBeenCalledWith(CHANNELS.INITIALIZE_APP, expect.any(Function))
@@ -69,7 +71,7 @@ describe('App IPC Handlers', () => {
 
       // Register handlers and get the function
       registerAppHandlers(mockIpcMain)
-      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
+      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_DIR_PATH)
 
       const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
       const result = await selectPathHandler(mockEvent)
@@ -90,7 +92,7 @@ describe('App IPC Handlers', () => {
       })
 
       registerAppHandlers(mockIpcMain)
-      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_PATH)
+      const selectPathHandler = getHandler(CHANNELS.SELECT_WORKSPACE_DIR_PATH)
 
       const mockEvent = { sender: {} } as Electron.IpcMainInvokeEvent
       const result = await selectPathHandler(mockEvent)
@@ -100,8 +102,8 @@ describe('App IPC Handlers', () => {
 
   describe('checkIsInitialized', () => {
     it('앱 초기화 상태 확인 시 초기화되어 있으면 true를 반환해야 함', async () => {
-      const { isInitialized } = await import('../model/app/index.js')
-      vi.mocked(isInitialized).mockResolvedValue(true)
+      const AppModel = (await import('../model/app/index.js')).default
+      vi.mocked(AppModel.isInitialized).mockResolvedValue(true)
 
       registerAppHandlers(mockIpcMain)
       const handler = getHandler(CHANNELS.IS_INITIALIZED)
@@ -111,8 +113,8 @@ describe('App IPC Handlers', () => {
     })
 
     it('앱 초기화 상태 확인 중 에러 발생 시 false를 반환해야 함', async () => {
-      const { isInitialized } = await import('../model/app/index.js')
-      vi.mocked(isInitialized).mockRejectedValue(new Error('Test error'))
+      const AppModel = (await import('../model/app/index.js')).default
+      vi.mocked(AppModel.isInitialized).mockRejectedValue(new Error('Test error'))
 
       registerAppHandlers(mockIpcMain)
       const handler = getHandler(CHANNELS.IS_INITIALIZED)
@@ -124,8 +126,8 @@ describe('App IPC Handlers', () => {
 
   describe('handleInitializeApp', () => {
     it('앱 초기화 요청 시 성공적으로 초기화되어야 함', async () => {
-      const { initializeApp } = await import('../model/app/index.js')
-      vi.mocked(initializeApp).mockResolvedValue(undefined)
+      const AppModel = (await import('../model/app/index.js')).default
+      vi.mocked(AppModel.initializeApp).mockResolvedValue(undefined)
 
       registerAppHandlers(mockIpcMain)
       const handler = getHandler(CHANNELS.INITIALIZE_APP)
@@ -133,12 +135,12 @@ describe('App IPC Handlers', () => {
       const mockEvent = {} as Electron.IpcMainInvokeEvent
       await expect(handler(mockEvent, '/test/path')).resolves.not.toThrow()
 
-      expect(initializeApp).toHaveBeenCalledWith({ workspacePath: '/test/path' })
+      expect(AppModel.initializeApp).toHaveBeenCalledWith({ workspaceDirPath: '/test/path' })
     })
 
     it('앱 초기화 실패 시 에러를 던져야 함', async () => {
-      const { initializeApp } = await import('../model/app/index.js')
-      vi.mocked(initializeApp).mockRejectedValue(new Error('Init failed'))
+      const AppModel = (await import('../model/app/index.js')).default
+      vi.mocked(AppModel.initializeApp).mockRejectedValue(new Error('Init failed'))
 
       registerAppHandlers(mockIpcMain)
       const handler = getHandler(CHANNELS.INITIALIZE_APP)

@@ -13,8 +13,8 @@ export async function isInitialized(): Promise<boolean> {
 /**
  * 워크스페이스 경로 선택 (Documents 초기 경로)
  */
-export async function selectWorkspacePath(): Promise<string | null> {
-  const ret = await window.api.selectWorkspacePath()
+export async function selectWorkspaceDirPath(): Promise<string | null> {
+  const ret = await window.api.selectWorkspaceDirPath()
   return ret
 }
 
@@ -39,5 +39,14 @@ export async function loadApp(): Promise<void> {
   } catch (error) {
     console.error('Failed to load app:', error)
     throw new Error((error as Error).message || 'Failed to load app')
+  }
+}
+
+export async function syncApp(): Promise<void> {
+  try {
+    await window.api.syncApp()
+  } catch (error) {
+    console.error('Failed to sync app:', error)
+    throw new Error((error as Error).message || 'Failed to sync app')
   }
 }
