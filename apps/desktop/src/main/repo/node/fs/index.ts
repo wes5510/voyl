@@ -1,7 +1,6 @@
 import { FILE_EXTENSION, NODE_DIR_NAME } from './const.js'
 import path from 'path'
 import fse from 'fs-extra'
-// eslint-disable-next-line voyl/same-level-import
 import type { Node } from '../db/index.js'
 
 let _nodeDirPath: string | null = null
@@ -14,11 +13,7 @@ function getNodeDirPath(): string {
   return _nodeDirPath
 }
 
-function initializePath({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): void {
+function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
   _nodeDirPath = path.join(workspaceDirPath, NODE_DIR_NAME)
 }
 
@@ -49,7 +44,7 @@ async function read({ id }: { id: string }): Promise<Node> {
 
 const NodeFs = {
   getNodeDirPath,
-  initializePath,
+  setPath,
   create,
   getIds,
   getFilePath,

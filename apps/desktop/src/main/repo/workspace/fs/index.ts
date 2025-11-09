@@ -1,16 +1,11 @@
 import fse from 'fs-extra'
 import { FILE_NAME } from './const.js'
 import path from 'path'
-// eslint-disable-next-line voyl/same-level-import
 import type { Workspace } from '../db/index.js'
 
 let _workspaceDirPath: string | null = null
 
-function initializePath({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): void {
+function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
   _workspaceDirPath = workspaceDirPath
 }
 
@@ -43,7 +38,7 @@ async function read(): Promise<Workspace> {
 }
 
 const WorkspaceFs = {
-  initializePath,
+  setPath,
   getWorkspaceDirPath,
   getConfigPath,
   create,

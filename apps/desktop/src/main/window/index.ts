@@ -90,6 +90,11 @@ export function createWindow(): BrowserWindow {
       mainWindow.maximize()
     }
     mainWindow.show()
+
+    // Open DevTools in development
+    if (is.dev) {
+      mainWindow.webContents.openDevTools()
+    }
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

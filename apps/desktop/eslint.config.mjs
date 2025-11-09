@@ -251,7 +251,7 @@ export default [
             '**/src/main/common/*',
             '**/src/main/common/shared/*',
             '**/src/main/db/*/*',
-            '**/src/main/repo/*/*',
+            '**/src/main/repo/*/index.js',
             '**/src/main/db/index.js',
             '**/src/common/*',
           ],
