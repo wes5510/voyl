@@ -11,7 +11,11 @@ export default function TreeView() {
   return (
     <div className="items-normal flex flex-col gap-3">
       {treeViewNodes.map((node) => (
-        <MemoizedTreeViewItem key={node.nodeId} nodeId={node.nodeId} depth={node.depth} />
+        <MemoizedTreeViewItem
+          key={node.nodeId}
+          nodeId={node.nodeId}
+          depth={node.depth}
+        />
       ))}
     </div>
   )

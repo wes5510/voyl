@@ -57,12 +57,26 @@ async function addNode(node: NewNode): Promise<void> {
   await syncSingle({ id })
 }
 
+async function getChildIds({
+  parentId,
+}: {
+  parentId: string
+}): Promise<string[]> {
+  return await NodeDb.getChildIds({ parentId })
+}
+
+async function getNodeById({ id }: { id: string }): Promise<Node | null> {
+  return await NodeDb.getNodeById({ id })
+}
+
 const NodeRepo = {
   initialize,
   setPath,
   syncSingle,
   sync,
   addNode,
+  getChildIds,
+  getNodeById,
 }
 
 export default NodeRepo

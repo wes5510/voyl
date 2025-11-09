@@ -40,12 +40,41 @@ async function add(newNode: NewNode): Promise<void> {
   await Db.connection.insert(nodes).values(newNode)
 }
 
+async function getChildIds({
+  parentId,
+}: {
+  parentId: string
+}): Promise<string[]> {
+  const result = await Db.connection
+    .select({ id: nodes.id })
+    .from(nodes)
+    .where(eq(nodes.id, parentId))
+
+  return result.map((r) => r.id)
+}
+
+async function getNodeById({ id }: { id: string }): Promise<Node | null> {
+  const result = await Db.connection
+    .select({
+      id: nodes.id,
+      childIds: nodes.childIds,
+      title: nodes.title,
+      content: nodes.content,
+    })
+    .from(nodes)
+    .where(eq(nodes.id, id))
+
+  return result[0] ?? null
+}
+
 const NodeDb = {
   createTable,
   exists,
   update,
   add,
+  getChildIds,
   TABLE_NAME,
+  getNodeById,
 }
 
 export default NodeDb
