@@ -1,13 +1,18 @@
 import * as db from '../../db/node/index.js'
+import NodeModel from '../node/index.js'
+import { ROOT_NODE } from './const.js'
 
-async function getRootNodeId() {
-  const rootNodeId = await db.getRootNodeId()
+async function initialize({
+  workspaceDirPath,
+}: {
+  workspaceDirPath: string
+}): Promise<void> {
+  await NodeModel.initialize({ workspaceDirPath })
+  await NodeModel.addNode(ROOT_NODE)
+}
 
-  if (!rootNodeId) {
-    throw new Error('Root node not found')
-  }
-
-  return rootNodeId
+function getRootNodeId() {
+  return ROOT_NODE.id
 }
 
 async function getNode({ nodeId }: { nodeId: string }): Promise<{
@@ -61,6 +66,7 @@ async function getNodeIndex({
 }
 
 const TreeModel = {
+  initialize,
   getRootNodeId,
   getNode,
   getChildNodeIds,

@@ -3,7 +3,7 @@ import Db from '../../shared/db.js'
 import { nodes, Node, NewNode } from './schema.js'
 import { TABLE_NAME } from './const.js'
 
-export type { Node }
+export type { Node, NewNode }
 
 async function createTable(): Promise<void> {
   await Db.sqlite.exec(`

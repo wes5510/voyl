@@ -3,6 +3,7 @@ import SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import { APP_VERSION } from './const.js'
 import WorkspaceModel from './workspace/index.js'
 import NodeModel from '../node/index.js'
+import TreeModel from '../tree/index.js'
 
 /**
  * 앱 초기화 상태 확인
@@ -28,7 +29,7 @@ async function initializeApp({
     version: APP_VERSION,
   })
   await WorkspaceModel.initialize({ workspaceDirPath })
-  await NodeModel.initialize({ workspaceDirPath })
+  await TreeModel.initialize({ workspaceDirPath })
 }
 
 async function sync(): Promise<void> {

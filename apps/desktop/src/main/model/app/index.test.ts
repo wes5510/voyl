@@ -4,7 +4,7 @@ import AppRepo from '../../repo/app/index.js'
 import SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import WorkspaceModel from './workspace/index.js'
 // eslint-disable-next-line voyl/same-level-import
-import NodeModel from '../node/index.js'
+import TreeModel from '../tree/index.js'
 
 vi.mock('../../repo/app/index.js', () => ({
   default: {
@@ -34,6 +34,13 @@ vi.mock('./workspace/index.js', () => ({
 }))
 
 vi.mock('../node/index.js', () => ({
+  default: {
+    initialize: vi.fn(),
+    sync: vi.fn(),
+  },
+}))
+
+vi.mock('../tree/index.js', () => ({
   default: {
     initialize: vi.fn(),
     sync: vi.fn(),
@@ -80,7 +87,7 @@ describe('App Model', () => {
       expect(WorkspaceModel.initialize).toHaveBeenCalledWith({
         workspaceDirPath: mockWorkspaceDirPath,
       })
-      expect(NodeModel.initialize).toHaveBeenCalledWith({
+      expect(TreeModel.initialize).toHaveBeenCalledWith({
         workspaceDirPath: mockWorkspaceDirPath,
       })
     })

@@ -1,6 +1,9 @@
+import { v4 as uuidv4 } from 'uuid'
 import NodeFs from './fs/index.js'
-import NodeDb, { type Node } from './db/index.js'
+import NodeDb, { type Node, type NewNode } from './db/index.js'
 import SyncMetadataRepo from '../syncMetadata/index.js'
+
+export type { Node, NewNode }
 
 async function initialize(): Promise<void> {
   await NodeFs.create()
@@ -42,11 +45,24 @@ async function sync(): Promise<void> {
   )
 }
 
+async function addNode(node: NewNode): Promise<void> {
+  const id = node.id ?? uuidv4()
+  const fullNode: Node = {
+    id,
+    childIds: node.childIds ?? [],
+    title: node.title ?? '',
+    content: node.content ?? '',
+  }
+  await NodeFs.write({ id, data: fullNode })
+  await syncSingle({ id })
+}
+
 const NodeRepo = {
   initialize,
   setPath,
   syncSingle,
   sync,
+  addNode,
 }
 
 export default NodeRepo

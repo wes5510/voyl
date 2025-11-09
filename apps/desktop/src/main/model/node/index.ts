@@ -1,4 +1,4 @@
-import NodeRepo from '../../repo/node/index.js'
+import NodeRepo, { NewNode } from '../../repo/node/index.js'
 import * as db from '../../db/node/index.js'
 import AttributeModel from './attribute/index.js'
 
@@ -18,6 +18,10 @@ async function sync({
 }): Promise<void> {
   NodeRepo.setPath({ workspaceDirPath })
   await NodeRepo.sync()
+}
+
+async function addNode(node: NewNode): Promise<void> {
+  await NodeRepo.addNode(node)
 }
 
 async function updateNodeTitle({ id, title }: { id: string; title: string }) {
@@ -134,6 +138,7 @@ async function getNodeById({ id }: { id: string }) {
 }
 
 const NodeModel = {
+  addNode,
   updateNodeTitle,
   getNodeTitleById,
   getNodeParentIdById,

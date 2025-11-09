@@ -42,6 +42,10 @@ async function read({ id }: { id: string }): Promise<Node> {
   return data
 }
 
+async function write({ id, data }: { id: string; data: Node }): Promise<void> {
+  await fse.writeJson(getFilePath({ id }), data)
+}
+
 const NodeFs = {
   getNodeDirPath,
   setPath,
@@ -50,6 +54,7 @@ const NodeFs = {
   getFilePath,
   getMtimeMs,
   read,
+  write,
 }
 
 export default NodeFs
