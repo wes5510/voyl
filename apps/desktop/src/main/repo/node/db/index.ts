@@ -9,6 +9,7 @@ async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
       id TEXT PRIMARY KEY NOT NULL,
+      parent_id TEXT,
       child_ids TEXT NOT NULL DEFAULT '[]',
       title TEXT NOT NULL DEFAULT '',
       content TEXT NOT NULL DEFAULT ''
@@ -29,6 +30,7 @@ async function update(data: Node): Promise<void> {
   await Db.connection
     .update(nodes)
     .set({
+      parentId: data.parentId,
       childIds: data.childIds,
       title: data.title,
       content: data.content,
@@ -40,15 +42,11 @@ async function add(newNode: NewNode): Promise<void> {
   await Db.connection.insert(nodes).values(newNode)
 }
 
-async function getChildIds({
-  parentId,
-}: {
-  parentId: string
-}): Promise<string[]> {
+async function getChildIds({ id }: { id: string }): Promise<string[]> {
   const result = await Db.connection
     .select({ childIds: nodes.childIds })
     .from(nodes)
-    .where(eq(nodes.id, parentId))
+    .where(eq(nodes.id, id))
 
   return result[0]?.childIds ?? []
 }
@@ -57,6 +55,7 @@ async function getNodeById({ id }: { id: string }): Promise<Node | null> {
   const result = await Db.connection
     .select({
       id: nodes.id,
+      parentId: nodes.parentId,
       childIds: nodes.childIds,
       title: nodes.title,
       content: nodes.content,
@@ -67,6 +66,15 @@ async function getNodeById({ id }: { id: string }): Promise<Node | null> {
   return result[0] ?? null
 }
 
+async function getParentId({ id }: { id: string }): Promise<string | null> {
+  const result = await Db.connection
+    .select({ parentId: nodes.parentId })
+    .from(nodes)
+    .where(eq(nodes.id, id))
+
+  return result[0]?.parentId ?? null
+}
+
 const NodeDb = {
   createTable,
   exists,
@@ -75,6 +83,7 @@ const NodeDb = {
   getChildIds,
   TABLE_NAME,
   getNodeById,
+  getParentId,
 }
 
 export default NodeDb

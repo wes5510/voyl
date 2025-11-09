@@ -45,28 +45,71 @@ async function sync(): Promise<void> {
   )
 }
 
-async function addNode(node: NewNode): Promise<void> {
+async function addNode(node: NewNode): Promise<Node> {
   const id = node.id ?? uuidv4()
   const fullNode: Node = {
     id,
+    parentId: node.parentId ?? null,
     childIds: node.childIds ?? [],
     title: node.title ?? '',
     content: node.content ?? '',
   }
   await NodeFs.write({ id, data: fullNode })
   await syncSingle({ id })
+
+  return fullNode
 }
 
-async function getChildIds({
-  parentId,
-}: {
-  parentId: string
-}): Promise<string[]> {
-  return await NodeDb.getChildIds({ parentId })
+async function getChildIds({ id }: { id: string }): Promise<string[]> {
+  return await NodeDb.getChildIds({ id })
 }
 
 async function getNodeById({ id }: { id: string }): Promise<Node | null> {
   return await NodeDb.getNodeById({ id })
+}
+
+async function updateNodeTitle({
+  id,
+  title,
+}: {
+  id: string
+  title: string
+}): Promise<Node> {
+  const updatedData = await NodeFs.update({ id, updates: { title } })
+  await syncSingle({ id })
+  return updatedData
+}
+
+async function updateChildIds({
+  id,
+  childIds,
+}: {
+  id: string
+  childIds: string[]
+}): Promise<Node> {
+  const updatedData = await NodeFs.update({ id, updates: { childIds } })
+  await syncSingle({ id })
+  return updatedData
+}
+
+async function isNodeExist({ id }: { id: string }) {
+  return await NodeDb.exists({ id })
+}
+
+async function getParentId({ id }: { id: string }): Promise<string | null> {
+  return await NodeDb.getParentId({ id })
+}
+
+async function updateParentId({
+  id,
+  parentId,
+}: {
+  id: string
+  parentId: string
+}): Promise<Node> {
+  const updatedData = await NodeFs.update({ id, updates: { parentId } })
+  await syncSingle({ id })
+  return updatedData
 }
 
 const NodeRepo = {
@@ -77,6 +120,11 @@ const NodeRepo = {
   addNode,
   getChildIds,
   getNodeById,
+  updateNodeTitle,
+  isNodeExist,
+  getParentId,
+  updateChildIds,
+  updateParentId,
 }
 
 export default NodeRepo

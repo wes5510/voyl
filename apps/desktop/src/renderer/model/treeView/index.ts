@@ -19,3 +19,16 @@ export const setTopNodeId = ({
     topNodeId,
   }
 }
+
+export const setFocusedNodeId = ({
+  entity,
+  nodeId,
+}: {
+  entity: TreeViewEntity
+  nodeId: string
+}): TreeViewEntity => {
+  return {
+    ...entity,
+    focusedNodeId: nodeId,
+  }
+}

@@ -46,6 +46,23 @@ async function write({ id, data }: { id: string; data: Node }): Promise<void> {
   await fse.writeJson(getFilePath({ id }), data)
 }
 
+async function update({
+  id,
+  updates,
+}: {
+  id: string
+  updates: Partial<Omit<Node, 'id'>>
+}): Promise<Node> {
+  const currentData = await read({ id })
+  const updatedData: Node = {
+    ...currentData,
+    ...updates,
+  }
+  await write({ id, data: updatedData })
+
+  return updatedData
+}
+
 const NodeFs = {
   getNodeDirPath,
   setPath,
@@ -55,6 +72,7 @@ const NodeFs = {
   getMtimeMs,
   read,
   write,
+  update,
 }
 
 export default NodeFs

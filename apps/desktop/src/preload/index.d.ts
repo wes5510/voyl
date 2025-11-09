@@ -6,6 +6,13 @@ interface ElectronIPC {
   initializeApp(path: string): Promise<void>
   loadApp(): Promise<void>
   syncApp(): Promise<void>
+  addNewNodeAfter({
+    nodeId,
+    title,
+  }: {
+    nodeId: string
+    title: string
+  }): Promise<NodeDTO>
 }
 
 declare global {

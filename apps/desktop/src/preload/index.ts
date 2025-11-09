@@ -10,6 +10,8 @@ const api = {
     ipcRenderer.invoke(CHANNELS.SELECT_WORKSPACE_DIR_PATH),
   initializeApp: (path: string) =>
     ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
+  addNewNodeAfter: ({ nodeId, title }: { nodeId: string; title: string }) =>
+    ipcRenderer.invoke(CHANNELS.ADD_NEW_NODE_AFTER, { nodeId, title }),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -24,4 +24,14 @@ export default function treeHandlers(ipcMain: IpcMain) {
       return TreeViewModel.getTreeViewNodes({ topNodeId, expandedNodeIds })
     },
   )
+
+  ipcMain.handle(
+    CHANNELS.UPDATE_NODE_TITLE,
+    (
+      _event: IpcMainInvokeEvent,
+      { nodeId, title }: { nodeId: string; title: string },
+    ) => {
+      return NodeModel.updateNodeTitle({ id: nodeId, title })
+    },
+  )
 }

@@ -7,6 +7,7 @@ export const nodes = sqliteTable(TABLE_NAME, {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => uuidv4()),
+  parentId: text('parent_id'),
   childIds: text('child_ids', { mode: 'json' })
     .notNull()
     .$type<string[]>()

@@ -10,6 +10,7 @@ export const CHANNELS = {
   GET_NODE: '/tree/node/get',
   GET_NODE_TITLE: '/nodes/title/get',
   UPDATE_NODE_TITLE: '/nodes/title/update',
+  ADD_NEW_NODE_AFTER: '/view/tree/nodes/new/add-after',
   GET_ROOT_NODE_ID: '/tree/root-node-id/get',
   GET_FAVORITES: '/favorites/get',
   GET_VIEW_TREE_NODES: '/view/tree/nodes/get',

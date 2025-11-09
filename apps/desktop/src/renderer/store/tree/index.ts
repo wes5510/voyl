@@ -1,5 +1,14 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { getRootNodeIdQueryOptions, getTreeNodeQueryOptions } from './queryOptions'
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
+import {
+  getRootNodeIdQueryOptions,
+  getTreeNodeQueryOptions,
+} from './queryOptions'
+import { updateNodeTitle } from '@/renderer/repo/node'
+import { QUERY_KEYS } from './queryKeys'
 
 export const useRootNodeId = () => {
   const { data } = useSuspenseQuery(getRootNodeIdQueryOptions())
@@ -28,4 +37,19 @@ export const useIsRootNodeId = ({ nodeId }: { nodeId?: string }) => {
   })
 
   return data
+}
+
+export const useUpdateNodeTitle = () => {
+  const queryClient = useQueryClient()
+
+  const { mutateAsync } = useMutation({
+    mutationFn: updateNodeTitle,
+    onSuccess: (_data, { nodeId }: { nodeId: string; title: string }) => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.node({ nodeId }),
+      })
+    },
+  })
+
+  return mutateAsync
 }

@@ -6,18 +6,28 @@ export const fetchRootNodeId = (): Promise<string> => {
 
 export interface NodeDTO {
   id: string
-  parentId?: string
+  parentId: string | null
   childIds: string[]
   title: string
   content: string
 }
 
-export const fetchNode = async ({ nodeId }: { nodeId: string }): Promise<NodeDTO> => {
-  const ret = await window.electron.ipcRenderer.invoke(CHANNELS.GET_NODE, { nodeId })
+export const fetchNode = async ({
+  nodeId,
+}: {
+  nodeId: string
+}): Promise<NodeDTO> => {
+  const ret = await window.electron.ipcRenderer.invoke(CHANNELS.GET_NODE, {
+    nodeId,
+  })
   return ret
 }
 
-export const updateNode = async ({ node }: { node: NodeDTO }): Promise<NodeDTO> => {
+export const updateNode = async ({
+  node,
+}: {
+  node: NodeDTO
+}): Promise<NodeDTO> => {
   /*
   const ret = await window.electron.ipcRenderer.invoke('/tree/node/update', { node })
   return ret
