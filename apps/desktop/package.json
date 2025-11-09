@@ -46,6 +46,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "electron-store": "^11.0.2",
     "electron-updater": "^6.6.2",
     "es-toolkit": "^1.41.0",
     "fs-extra": "^11.3.2",

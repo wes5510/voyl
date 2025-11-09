@@ -1,30 +1,80 @@
-import { BrowserWindow, screen, shell } from 'electron'
+import { BrowserWindow, shell, screen } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
+import Store from 'electron-store'
 
-function getExternalDisplayPosition(): { x: number; y: number } | undefined {
-  const displays = screen.getAllDisplays()
-  const externalDisplay = displays.find(
-    (display) => display.bounds.x !== 0 || display.bounds.y !== 0,
-  )
+interface WindowState {
+  x?: number
+  y?: number
+  width: number
+  height: number
+  isMaximized: boolean
+}
 
-  if (!externalDisplay) {
-    return undefined
+const DEFAULT_WINDOW_STATE: WindowState = {
+  width: 900,
+  height: 670,
+  isMaximized: false,
+}
+
+const store = new Store<{ windowState: WindowState }>()
+
+function isPositionOnDisplay(x: number, y: number): boolean {
+  return screen.getAllDisplays().some((display) => {
+    const { x: dx, y: dy, width, height } = display.bounds
+    return x >= dx && x < dx + width && y >= dy && y < dy + height
+  })
+}
+
+function getValidatedWindowState(): WindowState {
+  const savedState = store.get('windowState', DEFAULT_WINDOW_STATE)
+
+  // Reset position if display configuration changed
+  if (
+    savedState.x !== undefined &&
+    savedState.y !== undefined &&
+    !isPositionOnDisplay(savedState.x, savedState.y)
+  ) {
+    return { ...savedState, x: undefined, y: undefined }
   }
 
-  return {
-    x: externalDisplay.bounds.x + 50,
-    y: externalDisplay.bounds.y + 50,
+  return savedState
+}
+
+function setupWindowStateTracking(window: BrowserWindow): void {
+  const saveState = (): void => {
+    const bounds = window.getBounds()
+    store.set('windowState', {
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+      isMaximized: window.isMaximized(),
+    })
+  }
+
+  window.on('resize', saveState)
+  window.on('move', saveState)
+  window.on('maximize', saveState)
+  window.on('unmaximize', saveState)
+}
+
+function loadWindowContent(window: BrowserWindow): void {
+  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    window.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  } else {
+    window.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
 
 export function createWindow(): BrowserWindow {
-  const position = getExternalDisplayPosition()
+  const { x, y, width, height, isMaximized } = getValidatedWindowState()
 
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    ...position,
+    x,
+    y,
+    width,
+    height,
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
@@ -33,8 +83,12 @@ export function createWindow(): BrowserWindow {
     },
   })
 
+  setupWindowStateTracking(mainWindow)
+
   mainWindow.on('ready-to-show', () => {
-    mainWindow.maximize()
+    if (isMaximized) {
+      mainWindow.maximize()
+    }
     mainWindow.show()
   })
 
@@ -43,13 +97,7 @@ export function createWindow(): BrowserWindow {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
-  } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
-  }
+  loadWindowContent(mainWindow)
 
   return mainWindow
 }
