@@ -3,22 +3,13 @@ import WorkspaceFs from './fs/index.js'
 // eslint-disable-next-line voyl/same-level-import
 import SyncMetadataRepo from '../syncMetadata/index.js'
 
-async function initialize({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): Promise<void> {
-  WorkspaceFs.initializePath({ workspaceDirPath })
+async function initialize(): Promise<void> {
   await WorkspaceFs.create()
   await WorkspaceDb.createTable()
 }
 
-function initializePath({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): void {
-  WorkspaceFs.initializePath({ workspaceDirPath })
+function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
+  WorkspaceFs.setPath({ workspaceDirPath })
 }
 
 async function sync(): Promise<void> {
@@ -44,7 +35,7 @@ async function sync(): Promise<void> {
 
 const WorkspaceRepo = {
   initialize,
-  initializePath,
+  setPath,
   sync,
 }
 

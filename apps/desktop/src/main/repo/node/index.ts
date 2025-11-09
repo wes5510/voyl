@@ -3,22 +3,13 @@ import NodeDb, { type Node } from './db/index.js'
 // eslint-disable-next-line voyl/same-level-import
 import SyncMetadataRepo from '../syncMetadata/index.js'
 
-async function initialize({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): Promise<void> {
-  initializePath({ workspaceDirPath })
+async function initialize(): Promise<void> {
   await NodeFs.create()
   await NodeDb.createTable()
 }
 
-function initializePath({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): void {
-  NodeFs.initializePath({ workspaceDirPath })
+function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
+  NodeFs.setPath({ workspaceDirPath })
 }
 
 async function syncSingle({ id }: { id: string }): Promise<void> {
@@ -54,7 +45,7 @@ async function sync(): Promise<void> {
 
 const NodeRepo = {
   initialize,
-  initializePath,
+  setPath,
   syncSingle,
   sync,
 }

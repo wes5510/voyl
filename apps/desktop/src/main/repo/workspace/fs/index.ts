@@ -6,11 +6,7 @@ import type { Workspace } from '../db/index.js'
 
 let _workspaceDirPath: string | null = null
 
-function initializePath({
-  workspaceDirPath,
-}: {
-  workspaceDirPath: string
-}): void {
+function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
   _workspaceDirPath = workspaceDirPath
 }
 
@@ -43,7 +39,7 @@ async function read(): Promise<Workspace> {
 }
 
 const WorkspaceFs = {
-  initializePath,
+  setPath,
   getWorkspaceDirPath,
   getConfigPath,
   create,

@@ -2,8 +2,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import AppModel from './index.js'
 import AppRepo from '../../repo/app/index.js'
 import SyncMetadataRepo from '../../repo/syncMetadata/index.js'
-import WorkspaceRepo from '../../repo/workspace/index.js'
-import NodeRepo from '../../repo/node/index.js'
+import WorkspaceModel from './workspace/index.js'
+// eslint-disable-next-line voyl/same-level-import
+import NodeModel from '../node/index.js'
 
 vi.mock('../../repo/app/index.js', () => ({
   default: {
@@ -25,15 +26,14 @@ vi.mock('../../repo/syncMetadata/index.js', () => ({
   },
 }))
 
-vi.mock('../../repo/workspace/index.js', () => ({
+vi.mock('./workspace/index.js', () => ({
   default: {
     initialize: vi.fn(),
-    initializePath: vi.fn(),
     sync: vi.fn(),
   },
 }))
 
-vi.mock('../../repo/node/index.js', () => ({
+vi.mock('../node/index.js', () => ({
   default: {
     initialize: vi.fn(),
     sync: vi.fn(),
@@ -77,8 +77,12 @@ describe('App Model', () => {
         workspaceDirPath: mockWorkspaceDirPath,
         version: '1.0.0',
       })
-      expect(WorkspaceRepo.initialize).toHaveBeenCalled()
-      expect(NodeRepo.initialize).toHaveBeenCalled()
+      expect(WorkspaceModel.initialize).toHaveBeenCalledWith({
+        workspaceDirPath: mockWorkspaceDirPath,
+      })
+      expect(NodeModel.initialize).toHaveBeenCalledWith({
+        workspaceDirPath: mockWorkspaceDirPath,
+      })
     })
   })
 })
