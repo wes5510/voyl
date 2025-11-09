@@ -13,14 +13,12 @@ async function installDevTools(): Promise<void> {
       'electron-devtools-installer'
     )
 
-    const extensionName = await installExtension.default(
-      REACT_DEVELOPER_TOOLS,
-      {
-        loadExtensionOptions: {
-          allowFileAccess: true,
-        },
+    // @ts-expect-error electron-devtools-installer is not typed
+    const extensionName = await installExtension(REACT_DEVELOPER_TOOLS, {
+      loadExtensionOptions: {
+        allowFileAccess: true,
       },
-    )
+    })
 
     console.log(`Added Extension: ${extensionName}`)
   } catch (err) {

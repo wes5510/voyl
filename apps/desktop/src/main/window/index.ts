@@ -89,11 +89,13 @@ export function createWindow(): BrowserWindow {
     if (isMaximized) {
       mainWindow.maximize()
     }
-    mainWindow.show()
 
-    // Open DevTools in development
+    // Show without focusing in development to avoid interrupting workflow during reload
     if (is.dev) {
+      mainWindow.showInactive()
       mainWindow.webContents.openDevTools()
+    } else {
+      mainWindow.show()
     }
   })
 
