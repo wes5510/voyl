@@ -46,11 +46,11 @@ async function getChildIds({
   parentId: string
 }): Promise<string[]> {
   const result = await Db.connection
-    .select({ id: nodes.id })
+    .select({ childIds: nodes.childIds })
     .from(nodes)
     .where(eq(nodes.id, parentId))
 
-  return result.map((r) => r.id)
+  return result[0]?.childIds ?? []
 }
 
 async function getNodeById({ id }: { id: string }): Promise<Node | null> {

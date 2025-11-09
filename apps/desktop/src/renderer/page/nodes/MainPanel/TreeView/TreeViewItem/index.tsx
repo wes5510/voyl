@@ -15,7 +15,14 @@ export interface TreeViewItemProps {
 }
 
 export default function TreeViewItem({ nodeId, depth }: TreeViewItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
     id: nodeId,
   })
 
