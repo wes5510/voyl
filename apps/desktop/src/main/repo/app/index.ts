@@ -1,6 +1,5 @@
 import AppDb from './db/index.js'
 import AppFs from './fs/index.js'
-// eslint-disable-next-line voyl/same-level-import
 import SyncMetadataRepo from '../syncMetadata/index.js'
 import type { App } from './db/index.js'
 

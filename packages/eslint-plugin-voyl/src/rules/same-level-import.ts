@@ -112,7 +112,16 @@ const rule: Rule.RuleModule = {
             absolutePath2: getPathWithoutIndexFile({
               absolutePath: absoluteImportPath,
             }),
-          })
+          }) ||
+          (isIndexFile({ absolutePath: absoluteImportPath }) &&
+            isSameDirectory({
+              absolutePath1: getPathWithoutIndexFile({
+                absolutePath: absoluteFilePath,
+              }),
+              absolutePath2: getPathWithoutIndexFile({
+                absolutePath: absoluteImportPath,
+              }),
+            }))
         )
       }
 

@@ -1,5 +1,24 @@
+import NodeRepo from '../../repo/node/index.js'
 import * as db from '../../db/node/index.js'
 import AttributeModel from './attribute/index.js'
+
+async function initialize({
+  workspaceDirPath,
+}: {
+  workspaceDirPath: string
+}): Promise<void> {
+  NodeRepo.setPath({ workspaceDirPath })
+  await NodeRepo.initialize()
+}
+
+async function sync({
+  workspaceDirPath,
+}: {
+  workspaceDirPath: string
+}): Promise<void> {
+  NodeRepo.setPath({ workspaceDirPath })
+  await NodeRepo.sync()
+}
 
 async function updateNodeTitle({ id, title }: { id: string; title: string }) {
   return db.updateNodeTitle({
@@ -125,6 +144,8 @@ const NodeModel = {
   unlinkAttributeFromNode,
   updateAttributeValueForNode,
   getNodeById,
+  initialize,
+  sync,
 }
 
 export default NodeModel

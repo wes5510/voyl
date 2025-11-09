@@ -34,6 +34,11 @@ ruleTester.run('same-level-import', rule, {
       filename: '/project/src/pages/A/index.ts',
       options: [{ patterns: ['**/src/pages/**'] }],
     },
+    {
+      code: 'import { Something } from "../b/index.js"',
+      filename: '/project/src/pages/A/index.ts',
+      options: [{ patterns: ['**/src/pages/**'] }],
+    },
 
     // 2. Import from shared directory
     {
