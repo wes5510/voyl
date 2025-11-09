@@ -8,7 +8,10 @@ export interface TreeViewItemInputProps {
   className?: string
 }
 
-export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInputProps) {
+export default function TreeViewItemInput({
+  nodeId,
+  className,
+}: TreeViewItemInputProps) {
   const elemRef = useRef<HTMLTextAreaElement>(null)
   const title = useTreeNodeTitle({ nodeId })
 
@@ -19,7 +22,10 @@ export default function TreeViewItemInput({ nodeId, className }: TreeViewItemInp
       ref={elemRef}
       value={title}
       rows={1}
-      className={cn('word-break-break-word resize-none outline-none', className)}
+      className={cn(
+        'word-break-break-word resize-none outline-none',
+        className,
+      )}
     />
   )
 }

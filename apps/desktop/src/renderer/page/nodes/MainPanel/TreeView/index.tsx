@@ -1,8 +1,5 @@
-import { memo } from 'react'
 import { useTreeViewNodes, useTopNodeId } from '@/renderer/store/treeView'
 import TreeViewItem from './TreeViewItem'
-
-const MemoizedTreeViewItem = memo(TreeViewItem)
 
 export default function TreeView() {
   const topNodeId = useTopNodeId()
@@ -11,7 +8,7 @@ export default function TreeView() {
   return (
     <div className="items-normal flex flex-col gap-3">
       {treeViewNodes.map((node) => (
-        <MemoizedTreeViewItem
+        <TreeViewItem
           key={node.nodeId}
           nodeId={node.nodeId}
           depth={node.depth}
