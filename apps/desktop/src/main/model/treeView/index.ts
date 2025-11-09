@@ -1,4 +1,3 @@
-// eslint-disable-next-line voyl/same-level-import
 import TreeModel from '../tree/index.js'
 
 export type TreeViewItem = {

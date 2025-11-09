@@ -1,6 +1,5 @@
 import fse from 'fs-extra'
 import { PATH } from './const.js'
-// eslint-disable-next-line voyl/same-level-import
 import type { App } from '../db/index.js'
 
 async function create({ version, workspaceDirPath }: App): Promise<void> {

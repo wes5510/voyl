@@ -1,6 +1,5 @@
 import NodeFs from './fs/index.js'
 import NodeDb, { type Node } from './db/index.js'
-// eslint-disable-next-line voyl/same-level-import
 import SyncMetadataRepo from '../syncMetadata/index.js'
 
 async function initialize(): Promise<void> {

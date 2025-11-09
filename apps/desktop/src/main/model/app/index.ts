@@ -2,7 +2,6 @@ import AppRepo from '../../repo/app/index.js'
 import SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import { APP_VERSION } from './const.js'
 import WorkspaceModel from './workspace/index.js'
-// eslint-disable-next-line voyl/same-level-import
 import NodeModel from '../node/index.js'
 
 /**
