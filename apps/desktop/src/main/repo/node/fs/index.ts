@@ -33,8 +33,12 @@ function getFilePath({ id }: { id: string }): string {
 }
 
 async function getMtimeMs({ id }: { id: string }): Promise<number | null> {
-  const stat = await fse.stat(getFilePath({ id }))
-  return stat.mtimeMs
+  try {
+    const stat = await fse.stat(getFilePath({ id }))
+    return stat.mtimeMs
+  } catch {
+    return null
+  }
 }
 
 async function read({ id }: { id: string }): Promise<Node> {
@@ -63,6 +67,16 @@ async function update({
   return updatedData
 }
 
+async function remove({ id }: { id: string }): Promise<string> {
+  const filePath = getFilePath({ id })
+  await fse.remove(filePath)
+  return filePath
+}
+
+async function removeNodes({ ids }: { ids: string[] }): Promise<string[]> {
+  return await Promise.all(ids.map((id) => remove({ id })))
+}
+
 const NodeFs = {
   getNodeDirPath,
   setPath,
@@ -73,6 +87,8 @@ const NodeFs = {
   read,
   write,
   update,
+  remove,
+  removeNodes,
 }
 
 export default NodeFs
