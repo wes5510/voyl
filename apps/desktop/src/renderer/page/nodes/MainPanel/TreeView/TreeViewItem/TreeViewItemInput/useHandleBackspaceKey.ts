@@ -14,6 +14,7 @@ export default function useHandleBackspaceKey({
       return
     }
 
+    e.preventDefault()
     await removeNode({ nodeId })
   }
 }

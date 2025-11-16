@@ -27,6 +27,7 @@ async function sync(): Promise<void> {
         update: WorkspaceDb.update,
         createTable: WorkspaceDb.createTable,
         add: WorkspaceDb.add,
+        remove: () => WorkspaceDb.remove(),
       },
     },
   })

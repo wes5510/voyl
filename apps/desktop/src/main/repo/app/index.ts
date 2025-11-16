@@ -38,6 +38,7 @@ async function sync(): Promise<void> {
         update: AppDb.update,
         createTable: AppDb.createTable,
         add: AppDb.add,
+        remove: () => AppDb.remove(),
       },
     },
   })

@@ -10,13 +10,22 @@ function getSyncState({
   isDbExists,
   metadata,
 }: {
-  fsMtimeMs: number
+  fsMtimeMs: number | null
   isDbExists: boolean
   metadata: SyncMetadata | null
 }): (typeof SYNC_STATE)[keyof typeof SYNC_STATE] {
+  // 파일은 없지만 DB에는 있는 경우 (파일 삭제됨)
+  if (fsMtimeMs === null && isDbExists) {
+    return SYNC_STATE.DB_ONLY
+  }
+
+  // 파일만 있고 DB에는 없는 경우
   if (!isDbExists) {
     return SYNC_STATE.FS_ONLY
-  } else if (metadata === null || metadata.syncedAt < fsMtimeMs) {
+  }
+
+  // DB가 오래된 경우
+  if (metadata === null || (fsMtimeMs !== null && metadata.syncedAt < fsMtimeMs)) {
     return SYNC_STATE.DB_OUTDATED
   }
 
@@ -25,11 +34,26 @@ function getSyncState({
 
 function handleConsistent() {}
 
+async function handleDbOnly({
+  fs,
+  db,
+}: {
+  fs: { path: string }
+  db: {
+    handler: {
+      remove: () => Promise<void>
+    }
+  }
+}): Promise<void> {
+  await db.handler.remove()
+  await SyncMetadataDb.remove({ path: fs.path })
+}
+
 async function handleFsOnly<T>({
   fs,
   db,
 }: {
-  fs: { path: string; data: T; mtimeMs: number }
+  fs: { path: string; data: T | null; mtimeMs: number | null }
   db: {
     tableName: string
     handler: {
@@ -39,6 +63,10 @@ async function handleFsOnly<T>({
     }
   }
 }): Promise<void> {
+  if (fs.data === null || fs.mtimeMs === null) {
+    return
+  }
+
   await db.handler.createTable()
   await db.handler.add(fs.data)
   await SyncMetadataDb.add({
@@ -52,7 +80,7 @@ async function handleDbOutdated<T>({
   fs,
   db,
 }: {
-  fs: { path: string; data: T; mtimeMs: number }
+  fs: { path: string; data: T | null; mtimeMs: number | null }
   db: {
     tableName: string
     handler: {
@@ -62,6 +90,10 @@ async function handleDbOutdated<T>({
     }
   }
 }): Promise<void> {
+  if (fs.data === null || fs.mtimeMs === null) {
+    return
+  }
+
   await db.handler.update(fs.data)
   await SyncMetadataDb.update({
     path: fs.path,
@@ -71,6 +103,7 @@ async function handleDbOutdated<T>({
 }
 
 const syncStateToHandler = {
+  [SYNC_STATE.DB_ONLY]: handleDbOnly,
   [SYNC_STATE.FS_ONLY]: handleFsOnly,
   [SYNC_STATE.DB_OUTDATED]: handleDbOutdated,
   [SYNC_STATE.CONSISTENT]: handleConsistent,
@@ -80,7 +113,7 @@ async function sync<T>({
   fs,
   db,
 }: {
-  fs: { path: string; data: T | null; mtimeMs: number }
+  fs: { path: string; data: T | null; mtimeMs: number | null }
   db: {
     tableName: string
     isExists: boolean
@@ -88,6 +121,7 @@ async function sync<T>({
       update: (data: T) => Promise<void>
       createTable: () => Promise<void>
       add: (data: T) => Promise<void>
+      remove: () => Promise<void>
     }
   }
 }): Promise<void> {
@@ -95,8 +129,8 @@ async function sync<T>({
     path: fs.path,
   })
 
-  const syncState = await getSyncState({
-    fsMtimeMs: fs?.mtimeMs ?? 0,
+  const syncState = getSyncState({
+    fsMtimeMs: fs.mtimeMs,
     isDbExists: db.isExists,
     metadata,
   })
@@ -116,6 +150,7 @@ const SyncMetadataRepo = {
   initialize,
   getSyncState,
   handleConsistent,
+  handleDbOnly,
   handleFsOnly,
   handleDbOutdated,
   sync,
