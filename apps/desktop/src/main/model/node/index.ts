@@ -107,6 +107,15 @@ async function updateParentId({
   return NodeRepo.updateParentId({ id, parentId })
 }
 
+async function removeNode({ id }: { id: string }) {
+  return NodeRepo.removeNode({ id })
+}
+
+async function removeChildNodes({ id }: { id: string }) {
+  const childIds = await NodeRepo.getChildIds({ id })
+  return await NodeRepo.removeNodes({ ids: childIds })
+}
+
 const NodeModel = {
   addNode,
   getNodeById,
@@ -119,6 +128,8 @@ const NodeModel = {
   removeChildIdFromParentNode,
   insertChildId,
   updateParentId,
+  removeNode,
+  removeChildNodes,
 }
 
 export default NodeModel

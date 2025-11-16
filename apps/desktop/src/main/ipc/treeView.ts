@@ -15,4 +15,11 @@ export default function treeViewHandlers(ipcMain: IpcMain) {
       })
     },
   )
+
+  ipcMain.handle(
+    CHANNELS.REMOVE_NODE,
+    (_event: IpcMainInvokeEvent, { nodeId }: { nodeId: string }) => {
+      return TreeViewModel.removeNode({ nodeId })
+    },
+  )
 }
