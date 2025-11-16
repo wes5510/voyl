@@ -80,7 +80,7 @@ async function sync<T>({
   fs,
   db,
 }: {
-  fs: { path: string; data: T; mtimeMs: number }
+  fs: { path: string; data: T | null; mtimeMs: number }
   db: {
     tableName: string
     isExists: boolean
@@ -108,6 +108,10 @@ async function sync<T>({
   })
 }
 
+async function removePaths({ paths }: { paths: string[] }): Promise<void> {
+  await SyncMetadataDb.removePaths({ paths })
+}
+
 const SyncMetadataRepo = {
   initialize,
   getSyncState,
@@ -115,6 +119,7 @@ const SyncMetadataRepo = {
   handleFsOnly,
   handleDbOutdated,
   sync,
+  removePaths,
 }
 
 export default SyncMetadataRepo
