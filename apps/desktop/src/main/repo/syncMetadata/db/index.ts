@@ -1,6 +1,6 @@
 import { syncMetadata, SyncMetadata } from './schema.js'
 import Db from '../../shared/db.js'
-import { eq } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 
 export type { SyncMetadata }
 
@@ -59,12 +59,19 @@ async function update({
     .where(eq(syncMetadata.path, path))
 }
 
+async function removePaths({ paths }: { paths: string[] }): Promise<void> {
+  await Db.connection
+    .delete(syncMetadata)
+    .where(inArray(syncMetadata.path, paths))
+}
+
 const SyncMetadataDb = {
   createTable,
   get,
   remove,
   add,
   update,
+  removePaths,
 }
 
 export default SyncMetadataDb
