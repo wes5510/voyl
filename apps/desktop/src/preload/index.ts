@@ -12,6 +12,8 @@ const api = {
     ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
   addNewNodeAfter: ({ nodeId, title }: { nodeId: string; title: string }) =>
     ipcRenderer.invoke(CHANNELS.ADD_NEW_NODE_AFTER, { nodeId, title }),
+  removeNode: ({ nodeId }: { nodeId: string }) =>
+    ipcRenderer.invoke(CHANNELS.REMOVE_NODE, { nodeId }),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

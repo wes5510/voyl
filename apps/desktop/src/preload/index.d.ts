@@ -13,6 +13,7 @@ interface ElectronIPC {
     nodeId: string
     title: string
   }): Promise<NodeDTO>
+  removeNode({ nodeId }: { nodeId: string }): Promise<NodeDTO>
 }
 
 declare global {

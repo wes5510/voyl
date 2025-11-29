@@ -11,7 +11,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import { getTreeViewNodesQueryOptions } from './queryOptions'
-import { addNewNodeAfter } from '@/renderer/repo/treeView'
+import { addNewNodeAfter, removeNode } from '@/renderer/repo/treeView'
 // eslint-disable-next-line voyl/same-level-import
 import { QUERY_KEYS } from '../tree/queryKeys'
 import { NodeDTO } from '@/renderer/repo/tree'
@@ -68,7 +68,6 @@ export const useAddNewNodeAfter = () => {
   const { mutateAsync } = useMutation({
     mutationFn: addNewNodeAfter,
     onSuccess: (newNode: NodeDTO) => {
-      console.log({ newNode })
       if (newNode.parentId) {
         queryClient.invalidateQueries({
           queryKey: TREE_VIEW_QUERY_KEYS.nodes({ topNodeId: newNode.parentId }),
@@ -79,6 +78,32 @@ export const useAddNewNodeAfter = () => {
       }
 
       queryClient.setQueryData(QUERY_KEYS.node({ nodeId: newNode.id }), newNode)
+    },
+  })
+  return mutateAsync
+}
+
+export const useRemoveNode = () => {
+  const queryClient = useQueryClient()
+
+  const { mutateAsync } = useMutation({
+    mutationFn: removeNode,
+    onSuccess: (removedNode: NodeDTO) => {
+      if (removedNode.parentId) {
+        queryClient.invalidateQueries({
+          queryKey: TREE_VIEW_QUERY_KEYS.nodes({
+            topNodeId: removedNode.parentId,
+          }),
+        })
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.node({ nodeId: removedNode.parentId }),
+        })
+      }
+
+      queryClient.setQueryData(
+        QUERY_KEYS.node({ nodeId: removedNode.id }),
+        null,
+      )
     },
   })
   return mutateAsync

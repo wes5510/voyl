@@ -55,6 +55,10 @@ const getWorkspaceDirPath = async (): Promise<string | null> => {
   return result[0].workspaceDirPath ?? null
 }
 
+const remove = async (): Promise<void> => {
+  await Db.connection.delete(app)
+}
+
 const AppDb = {
   existsTable,
   createTable,
@@ -64,6 +68,7 @@ const AppDb = {
   update,
   getWorkspaceDirPath,
   TABLE_NAME,
+  remove,
 }
 
 export default AppDb

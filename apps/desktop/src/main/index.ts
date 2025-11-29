@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import './ipc/index.js'
 import { createWindow } from './window/index.js'
+import { logger } from './common/logger.js'
 
 async function installDevTools(): Promise<void> {
   if (!is.dev) {
@@ -20,9 +21,9 @@ async function installDevTools(): Promise<void> {
       },
     })
 
-    console.log(`Added Extension: ${extensionName}`)
+    logger.debug({ extensionName }, 'Added Extension')
   } catch (err) {
-    console.error('Failed to install React DevTools:', err)
+    logger.error({ err }, 'Failed to install React DevTools')
   }
 }
 
@@ -35,7 +36,7 @@ app.whenReady().then(async () => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on('ping', () => logger.debug('pong'))
 
   createWindow()
 

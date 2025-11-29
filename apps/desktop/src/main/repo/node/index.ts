@@ -16,12 +16,19 @@ function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
 
 async function syncSingle({ id }: { id: string }): Promise<void> {
   const mtimeMs = await NodeFs.getMtimeMs({ id })
+  let data: Node | null = null
+
+  try {
+    data = await NodeFs.read({ id })
+  } catch {
+    /* empty */
+  }
 
   await SyncMetadataRepo.sync<Node>({
     fs: {
       path: NodeFs.getFilePath({ id }),
-      data: await NodeFs.read({ id }),
-      mtimeMs: mtimeMs ?? 0,
+      data,
+      mtimeMs: mtimeMs,
     },
     db: {
       tableName: NodeDb.TABLE_NAME,
@@ -30,19 +37,24 @@ async function syncSingle({ id }: { id: string }): Promise<void> {
         update: NodeDb.update,
         createTable: NodeDb.createTable,
         add: NodeDb.add,
+        remove: () => NodeDb.remove({ id }),
       },
     },
   })
 }
 
+async function syncNodes({ ids }: { ids: string[] }) {
+  return await Promise.all(
+    ids.map(async (id: string) => {
+      return await syncSingle({ id })
+    }),
+  )
+}
+
 async function sync(): Promise<void> {
   const ids = await NodeFs.getIds()
 
-  await Promise.all(
-    ids.map(async (id: string) => {
-      await syncSingle({ id })
-    }),
-  )
+  await syncNodes({ ids })
 }
 
 async function addNode(node: NewNode): Promise<Node> {
@@ -112,6 +124,17 @@ async function updateParentId({
   return updatedData
 }
 
+async function removeNode({ id }: { id: string }) {
+  await NodeFs.remove({ id })
+  await syncSingle({ id })
+}
+
+async function removeNodes({ ids }: { ids: string[] }) {
+  const removedFilePaths = await NodeFs.removeNodes({ ids })
+  await SyncMetadataRepo.removePaths({ paths: removedFilePaths })
+  await syncNodes({ ids })
+}
+
 const NodeRepo = {
   initialize,
   setPath,
@@ -125,6 +148,8 @@ const NodeRepo = {
   getParentId,
   updateChildIds,
   updateParentId,
+  removeNode,
+  removeNodes,
 }
 
 export default NodeRepo

@@ -1,3 +1,4 @@
+import { logger } from '../../common/logger.js'
 import NodeRepo, { type Node } from '../../repo/node/index.js'
 import NodeModel from '../node/index.js'
 
@@ -75,8 +76,6 @@ async function appendSiblingNode({
 }): Promise<Node> {
   const parentId = await NodeModel.getParentId({ id: sourceId })
 
-  console.log({ sourceId, parentId })
-
   if (!parentId) {
     throw new Error('Parent node not found')
   }
@@ -132,9 +131,25 @@ async function moveToChildNode({
   return newNode
 }
 
+async function removeNode({ nodeId }: { nodeId: string }): Promise<Node> {
+  logger.debug({ nodeId }, 'Remove Node')
+  const node = await NodeModel.getNodeById({ id: nodeId })
+
+  if (!node) {
+    throw new Error('Node not found')
+  }
+
+  await NodeModel.removeChildIdFromParentNode({ id: nodeId })
+  await NodeModel.removeChildNodes({ id: nodeId })
+  await NodeModel.removeNode({ id: nodeId })
+
+  return node
+}
+
 const TreeViewModel = {
   getTreeViewNodes,
   addNewNodeAfter,
+  removeNode,
 }
 
 export default TreeViewModel

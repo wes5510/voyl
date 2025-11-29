@@ -75,6 +75,10 @@ async function getParentId({ id }: { id: string }): Promise<string | null> {
   return result[0]?.parentId ?? null
 }
 
+async function remove({ id }: { id: string }): Promise<void> {
+  await Db.connection.delete(nodes).where(eq(nodes.id, id))
+}
+
 const NodeDb = {
   createTable,
   exists,
@@ -84,6 +88,7 @@ const NodeDb = {
   TABLE_NAME,
   getNodeById,
   getParentId,
+  remove,
 }
 
 export default NodeDb

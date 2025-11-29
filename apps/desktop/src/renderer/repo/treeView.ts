@@ -28,3 +28,13 @@ export const addNewNodeAfter = async ({
     title,
   })
 }
+
+export const removeNode = async ({
+  nodeId,
+}: {
+  nodeId: string
+}): Promise<NodeDTO> => {
+  return window.api.removeNode({
+    nodeId,
+  })
+}

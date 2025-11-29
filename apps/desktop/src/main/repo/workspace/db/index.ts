@@ -37,12 +37,17 @@ async function add(data: NewWorkspace): Promise<void> {
   await Db.connection.insert(workspace).values(data)
 }
 
+async function remove(): Promise<void> {
+  await Db.connection.delete(workspace)
+}
+
 const WorkspaceDb = {
   createTable,
   exists,
   update,
   removeTable,
   add,
+  remove,
   TABLE_NAME,
 }
 

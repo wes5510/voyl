@@ -14,6 +14,7 @@ export const CHANNELS = {
   GET_ROOT_NODE_ID: '/tree/root-node-id/get',
   GET_FAVORITES: '/favorites/get',
   GET_VIEW_TREE_NODES: '/view/tree/nodes/get',
+  REMOVE_NODE: '/view/tree/nodes/remove',
 } as const
 
 export type Channel = keyof typeof CHANNELS
