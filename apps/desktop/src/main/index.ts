@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import './ipc/index.js'
+import { registerHandlers } from './ipc/index.js'
 import { createWindow } from './window/index.js'
 import { logger } from './common/logger.util.js'
 
@@ -37,6 +37,8 @@ app.whenReady().then(async () => {
   })
 
   ipcMain.on('ping', () => logger.debug('pong'))
+
+  registerHandlers()
 
   createWindow()
 
