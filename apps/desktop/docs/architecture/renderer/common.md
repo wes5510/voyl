@@ -1,4 +1,4 @@
-# Common 구조
+# renderer/common 구조
 
 ## 개요
 

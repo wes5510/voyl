@@ -1,4 +1,4 @@
-# Common 구조
+# main/common 구조
 
 ## 개요
 

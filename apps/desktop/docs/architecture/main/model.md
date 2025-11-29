@@ -1,4 +1,4 @@
-# Models 구조
+# main/model 구조
 
 ## 개요
 

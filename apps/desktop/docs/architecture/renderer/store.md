@@ -1,4 +1,4 @@
-# Models 구조
+# renderer/store 구조
 
 ## 개요
 

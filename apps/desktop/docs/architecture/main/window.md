@@ -1,4 +1,4 @@
-# Windows 구조
+# main/windows 구조
 
 ## 개요
 

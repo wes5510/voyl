@@ -1,4 +1,4 @@
-# Renderer/Repo 레이어
+# renderer/repo 레이어
 
 React Query를 사용한 데이터 페칭.
 

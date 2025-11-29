@@ -1,4 +1,4 @@
-# Pages 구조
+# renderer/page 구조
 
 _다른 언어로 읽기: [English](README.md)_
 
