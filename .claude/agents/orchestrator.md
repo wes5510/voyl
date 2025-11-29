@@ -63,11 +63,21 @@ tools: Read,Write,Glob,Grep,LS,Bash
 - "Use {agent-name} agent to {specific task}"
 - Whiteboard 경로 안내
 
-### 5. Git 작업 위임
-모든 코드 작업 완료 후:
+### 5. 검증 (Tester)
+코드 작업 완료 후:
+- "Use tester agent to verify changes"
+- 실패 시 해당 generator에 수정 요청
+
+### 6. 리팩토링 (선택)
+필요 시:
+- "Use refactor agent to clean up code"
+- 재검증 필요
+
+### 7. Git 작업 위임
+모든 검증 통과 후:
 - "Use git-agent to create branch, commits, and PR"
 
-### 6. 결과 통합
+### 8. 결과 통합
 - 각 Agent 산출물 확인
 - Whiteboard 정리
 - 최종 검증
@@ -87,6 +97,8 @@ tools: Read,Write,Glob,Grep,LS,Bash
 ### 공통
 - **common-generator**: 타입 정의, 유틸리티, 상수
 - **git-agent**: 브랜치, 커밋, PR 생성
+- **tester**: 타입체크, 린트, 테스트 실행
+- **refactor**: 코드 정리, 패턴 일관성
 
 ### Frontend (renderer)
 - **fe-page-generator**: Page 레이어
