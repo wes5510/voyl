@@ -68,6 +68,15 @@ Voyl은 누구나 자유롭게 일할 수 있는 유연한 도구로, 개인의 
 - `planning/` - 계획 및 할 일
 - `whiteboard/` - 논의 및 맥락
 
+## 문서 컨벤션
+
+### 폴더명
+- 단수형 네임스페이스 (architecture, guide, spec, planning, whiteboard)
+
+### 파일명
+- 소문자 케밥 스타일 (`kebab-case.md`)
+- 폴더 대표 문서는 폴더명과 동일 (`spec/spec.md`, `guide/guide.md`)
+
 ## 참고 자료
 
 - [Figma 디자인](https://www.figma.com/design/0vsrLsYI2ufbFsx6iroDyo/voyl?node-id=2-24&p=f&t=MMurVeifAPcxkDr7-0)
