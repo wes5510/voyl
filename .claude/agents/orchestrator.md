@@ -100,6 +100,9 @@ tools: Read,Write,Glob,Grep,LS,Bash
 - **tester**: 타입체크, 린트, 테스트 실행
 - **refactor**: 코드 정리, 패턴 일관성
 
+### 메타
+- **system-improver**: Agent 추가/수정, 워크플로우 개선
+
 ### Frontend (renderer)
 - **fe-page-generator**: Page 레이어
 - **fe-state-generator**: State 레이어
