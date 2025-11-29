@@ -2,7 +2,7 @@
 
 ## 문서 구조
 
-- `architecture/` - 아키텍처 문서
+- `architecture/` - 도메인 아키텍처
 - `guide/` - 개발, 설계 등 관련 가이드
 - `spec/` - 기술 명세 (일회성)
 - `planning/` - 계획 및 할 일

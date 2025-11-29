@@ -4,6 +4,6 @@
 
 ## 구조
 
-- `main/` - Main process 가이드
-- `renderer/` - Renderer process 가이드
+- `layer/` - 레이어 구조 가이드
+- `react/` - React 가이드
 - `general/` - 공통 가이드
