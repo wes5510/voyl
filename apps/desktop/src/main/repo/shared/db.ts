@@ -3,7 +3,7 @@ import type { Database as DatabaseType } from 'better-sqlite3'
 import { app } from 'electron'
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 import path from 'path'
-import { logger } from '../../common/logger.js'
+import { logger } from '../../common/logger.util.js'
 
 const DB_NAME = 'database.sqlite'
 const DB_PATH = path.join(app.getPath('userData'), DB_NAME)

@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import './ipc/index.js'
 import { createWindow } from './window/index.js'
-import { logger } from './common/logger.js'
+import { logger } from './common/logger.util.js'
 
 async function installDevTools(): Promise<void> {
   if (!is.dev) {
