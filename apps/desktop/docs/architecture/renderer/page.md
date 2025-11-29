@@ -35,15 +35,6 @@ page/
 - 공유되는 컴포넌트, 타입, 유틸리티 함수, 상수들이 위치
 - 동일 및 상위 계층에서만 접근 가능
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import 가능
-- shared 폴더는 상위/동일 계층에서 import 가능
-
-#### voyl/restrict-imports-to-pattern
-
-- model 모듈과 common 모듈만 import 가능
+- state, common만 import 가능

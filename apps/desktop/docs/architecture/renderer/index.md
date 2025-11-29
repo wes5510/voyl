@@ -2,33 +2,42 @@
 
 ## 개요
 
-프로젝트는 pages, models, common 세 개의 핵심 모듈로 구성되어 있습니다.
+renderer는 page, model, state, repo, common 모듈로 구성되어 있습니다.
 각 모듈은 명확한 책임과 규칙을 가지고 있어 코드의 응집도를 높이고 결합도를 낮춥니다.
 
 ## 구조
 
-### 기본 구조
-
 ```
 src/renderer/
-├── pages/          # 페이지 컴포넌트
-├── models/         # 도메인 모델의 데이터 구조 & 비즈니스 로직
+├── page/           # 페이지 컴포넌트
+├── model/          # 도메인 모델 & 비즈니스 로직
+├── state/          # 상태 관리 (React Query + Zustand)
+├── repo/           # 데이터 페칭 (IPC 통신)
 └── common/         # 공통 코드
 ```
 
 ### 모듈
 
-#### pages
+#### page
 
 - 페이지 단위의 컴포넌트들
-- models를 조합하여 페이지를 구성
-- models와 common을 import하여 사용 가능
+- model, state, common을 import하여 사용 가능
 
-#### models
+#### model
 
 - 도메인 모델의 데이터 구조와 비즈니스 로직이 위치
-- 각 model는 독립적인 도메인 단위
-- 다른 model와의 의존성을 가질 수 없음
+- 각 model은 독립적인 도메인 단위
+- common을 import하여 사용 가능
+
+#### state
+
+- 상태 관리 레이어 (React Query + Zustand)
+- repo, common, model을 import하여 사용 가능
+
+#### repo
+
+- Main process와 IPC 통신
+- 데이터 페칭 및 캐싱
 - common을 import하여 사용 가능
 
 #### common
@@ -39,12 +48,4 @@ src/renderer/
 
 ## 규칙
 
-각 모듈은 특정 규칙과 제약 사항을 따라야 합니다. 자세한 내용은 각 모듈별 README를 참고하세요.
-
-## 관련 문서
-
-아래 문서에서 각 모듈에 대한 상세 정보를 확인할 수 있습니다:
-
-- [Models 구조](./models/README.ko.md)
-- [Pages 구조](./pages/README.ko.md)
-- [Common 구조](./common/README.ko.md)
+각 모듈은 특정 규칙과 제약 사항을 따라야 합니다. 자세한 내용은 각 모듈별 문서를 참고하세요.

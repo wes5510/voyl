@@ -22,15 +22,6 @@ common/
 - 특정 도메인에 종속되지 않는 순수한 공통 코드
 - 컴포넌트는 단일 파일(.tsx) 또는 폴더(index.tsx)로 구성 가능
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import 가능
-- shared 폴더는 상위/동일 계층에서 import 가능
-
-#### voyl/restrict-imports-to-pattern
-
-- 다른 모듈(model, page 등)의 코드를 import할 수 없음
+- 다른 모듈 import 불가

@@ -16,14 +16,6 @@ state/
     └── index.ts       # Barrel file
 ```
 
-## 규칙
-
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import 가능
-
-#### voyl/restrict-imports-to-pattern
+## Import 규칙
 
 - repo, common, model만 import 가능

@@ -19,15 +19,6 @@ ipc/
 - IPC 통신의 타입 안전성과 에러 처리를 담당
 - 도메인별로 핸들러를 분리하여 관리
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import할 수 있습니다.
-
-#### voyl/restrict-imports-to-pattern
-
-- model과 common만 import 가능합니다.
-- 다른 IPC 핸들러와의 의존성을 금지합니다.
+- model, common만 import 가능

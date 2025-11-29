@@ -21,14 +21,6 @@ model/
 - repo 레이어를 추상화하여 복잡한 비즈니스 규칙 구현
 - 순수 함수와 명확한 인터페이스로 구성
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import할 수 있습니다.
-
-#### voyl/restrict-imports-to-pattern
-
-- repo와 common만 import 가능합니다.
+- repo, common만 import 가능

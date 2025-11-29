@@ -20,16 +20,7 @@ common/
 - 특정 도메인에 종속되지 않는 순수한 공통 코드
 - 외부 라이브러리만 의존하며 내부 모듈과 독립적으로 동작
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import할 수 있습니다.
-
-#### voyl/restrict-imports-to-pattern
-
-- 다른 모듈의 코드를 import할 수 없습니다.
-- 외부 라이브러리는 허용됩니다.
+- 다른 모듈 import 불가
 

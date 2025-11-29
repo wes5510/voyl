@@ -35,14 +35,6 @@ repo/
 - `db/`: SQLite 캐시 레이어
 - `fs/`: 파일시스템 레이어 (JSON 파일)
 
-## 규칙
+## Import 규칙
 
-### Import 규칙
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import할 수 있습니다.
-
-#### voyl/restrict-imports-to-pattern
-
-- common과 동일 repo 내 파일만 import 가능합니다.
+- common만 import 가능

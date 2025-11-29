@@ -17,14 +17,6 @@ window/
 - 멀티 윈도우 지원을 위한 윈도우 상태 관리
 - Electron BrowserWindow API를 추상화하여 제공
 
-## 규칙
-
-### Import 규칙
-
-#### voyl/restrict-imports-to-pattern
+## Import 규칙
 
 - common만 import 가능
-
-#### voyl/same-hierarchy-import
-
-- 동일 계층 내의 파일만 import 가능
