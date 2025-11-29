@@ -4,8 +4,9 @@ import { App, app } from './schema.js'
 import { TABLE_NAME } from './const.js'
 
 export type { App }
+export { TABLE_NAME }
 
-async function existsTable(): Promise<boolean> {
+export async function existsTable(): Promise<boolean> {
   try {
     const result = await Db.connection.get<{ name: string }>(
       sql`SELECT name FROM sqlite_master WHERE type='table' AND name='app'`,
@@ -16,7 +17,7 @@ async function existsTable(): Promise<boolean> {
   }
 }
 
-const createTable = async (): Promise<void> => {
+export async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS app (
       version TEXT NOT NULL DEFAULT '0.0.0',
@@ -25,7 +26,7 @@ const createTable = async (): Promise<void> => {
   `)
 }
 
-const exists = async (): Promise<boolean> => {
+export async function exists(): Promise<boolean> {
   try {
     const result = await Db.connection.select({ count: count() }).from(app)
     return result[0].count > 0
@@ -34,19 +35,19 @@ const exists = async (): Promise<boolean> => {
   }
 }
 
-const removeTable = async (): Promise<void> => {
+export async function removeTable(): Promise<void> {
   await Db.connection.delete(app)
 }
 
-const add = async (data: App): Promise<void> => {
+export async function add(data: App): Promise<void> {
   await Db.connection.insert(app).values(data)
 }
 
-const update = async (data: App): Promise<void> => {
+export async function update(data: App): Promise<void> {
   await Db.connection.update(app).set(data).run()
 }
 
-const getWorkspaceDirPath = async (): Promise<string | null> => {
+export async function getWorkspaceDirPath(): Promise<string | null> {
   const result = await Db.connection
     .select({ workspaceDirPath: app.workspaceDirPath })
     .from(app)
@@ -55,20 +56,6 @@ const getWorkspaceDirPath = async (): Promise<string | null> => {
   return result[0].workspaceDirPath ?? null
 }
 
-const remove = async (): Promise<void> => {
+export async function remove(): Promise<void> {
   await Db.connection.delete(app)
 }
-
-const AppDb = {
-  existsTable,
-  createTable,
-  exists,
-  removeTable,
-  add,
-  update,
-  getWorkspaceDirPath,
-  TABLE_NAME,
-  remove,
-}
-
-export default AppDb

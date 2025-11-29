@@ -4,8 +4,9 @@ import { TABLE_NAME } from './const.js'
 import { NewWorkspace, workspace, Workspace } from './schema.js'
 
 export type { Workspace }
+export { TABLE_NAME }
 
-async function createTable(): Promise<void> {
+export async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
       node_types TEXT NOT NULL DEFAULT '[]',
@@ -14,7 +15,7 @@ async function createTable(): Promise<void> {
   `)
 }
 
-async function exists(): Promise<boolean> {
+export async function exists(): Promise<boolean> {
   try {
     const result = await Db.connection
       .select({ count: count() })
@@ -25,30 +26,18 @@ async function exists(): Promise<boolean> {
   }
 }
 
-async function update(data: Workspace): Promise<void> {
+export async function update(data: Workspace): Promise<void> {
   await Db.connection.update(workspace).set(data).run()
 }
 
-async function removeTable(): Promise<void> {
+export async function removeTable(): Promise<void> {
   await Db.connection.delete(workspace)
 }
 
-async function add(data: NewWorkspace): Promise<void> {
+export async function add(data: NewWorkspace): Promise<void> {
   await Db.connection.insert(workspace).values(data)
 }
 
-async function remove(): Promise<void> {
+export async function remove(): Promise<void> {
   await Db.connection.delete(workspace)
 }
-
-const WorkspaceDb = {
-  createTable,
-  exists,
-  update,
-  removeTable,
-  add,
-  remove,
-  TABLE_NAME,
-}
-
-export default WorkspaceDb

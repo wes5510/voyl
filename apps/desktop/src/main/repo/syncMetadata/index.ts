@@ -1,11 +1,12 @@
 import { SYNC_STATE } from './const.js'
-import SyncMetadataDb, { type SyncMetadata } from './db/index.js'
+import * as SyncMetadataDb from './db/index.js'
+import type { SyncMetadata } from './db/index.js'
 
-async function initialize(): Promise<void> {
+export async function initialize(): Promise<void> {
   await SyncMetadataDb.createTable()
 }
 
-function getSyncState({
+export function getSyncState({
   fsMtimeMs,
   isDbExists,
   metadata,
@@ -32,9 +33,9 @@ function getSyncState({
   return SYNC_STATE.CONSISTENT
 }
 
-function handleConsistent() {}
+export function handleConsistent() {}
 
-async function handleDbOnly({
+export async function handleDbOnly({
   fs,
   db,
 }: {
@@ -49,7 +50,7 @@ async function handleDbOnly({
   await SyncMetadataDb.remove({ path: fs.path })
 }
 
-async function handleFsOnly<T>({
+export async function handleFsOnly<T>({
   fs,
   db,
 }: {
@@ -76,7 +77,7 @@ async function handleFsOnly<T>({
   })
 }
 
-async function handleDbOutdated<T>({
+export async function handleDbOutdated<T>({
   fs,
   db,
 }: {
@@ -109,7 +110,7 @@ const syncStateToHandler = {
   [SYNC_STATE.CONSISTENT]: handleConsistent,
 } as const
 
-async function sync<T>({
+export async function sync<T>({
   fs,
   db,
 }: {
@@ -142,19 +143,6 @@ async function sync<T>({
   })
 }
 
-async function removePaths({ paths }: { paths: string[] }): Promise<void> {
+export async function removePaths({ paths }: { paths: string[] }): Promise<void> {
   await SyncMetadataDb.removePaths({ paths })
 }
-
-const SyncMetadataRepo = {
-  initialize,
-  getSyncState,
-  handleConsistent,
-  handleDbOnly,
-  handleFsOnly,
-  handleDbOutdated,
-  sync,
-  removePaths,
-}
-
-export default SyncMetadataRepo

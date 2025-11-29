@@ -1,17 +1,18 @@
-import WorkspaceDb, { type Workspace } from './db/index.js'
-import WorkspaceFs from './fs/index.js'
-import SyncMetadataRepo from '../syncMetadata/index.js'
+import * as WorkspaceDb from './db/index.js'
+import * as WorkspaceFs from './fs/index.js'
+import * as SyncMetadataRepo from '../syncMetadata/index.js'
+import type { Workspace } from './db/index.js'
 
-async function initialize(): Promise<void> {
+export async function initialize(): Promise<void> {
   await WorkspaceFs.create()
   await WorkspaceDb.createTable()
 }
 
-function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
+export function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
   WorkspaceFs.setPath({ workspaceDirPath })
 }
 
-async function sync(): Promise<void> {
+export async function sync(): Promise<void> {
   const mtimeMs = await WorkspaceFs.getMtimeMs()
 
   await SyncMetadataRepo.sync<Workspace>({
@@ -32,11 +33,3 @@ async function sync(): Promise<void> {
     },
   })
 }
-
-const WorkspaceRepo = {
-  initialize,
-  setPath,
-  sync,
-}
-
-export default WorkspaceRepo

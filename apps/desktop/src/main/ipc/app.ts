@@ -1,7 +1,7 @@
 import { dialog, BrowserWindow } from 'electron'
 import { homedir } from 'os'
 import { join } from 'path'
-import AppModel from '../model/app/index.js'
+import * as AppModel from '../model/app/index.js'
 import { CHANNELS } from '../../common/channel.const.js'
 
 export default function registerAppHandlers(ipcMain: Electron.IpcMain): void {

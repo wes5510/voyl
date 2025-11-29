@@ -1,6 +1,6 @@
-import WorkspaceRepo from '../../../repo/workspace/index.js'
+import * as WorkspaceRepo from '../../../repo/workspace/index.js'
 
-async function initialize({
+export async function initialize({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
@@ -9,7 +9,7 @@ async function initialize({
   await WorkspaceRepo.initialize()
 }
 
-async function sync({
+export async function sync({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
@@ -17,10 +17,3 @@ async function sync({
   WorkspaceRepo.setPath({ workspaceDirPath })
   await WorkspaceRepo.sync()
 }
-
-const WorkspaceModel = {
-  initialize,
-  sync,
-}
-
-export default WorkspaceModel

@@ -4,8 +4,9 @@ import { nodes, Node, NewNode } from './schema.js'
 import { TABLE_NAME } from './const.js'
 
 export type { Node, NewNode }
+export { TABLE_NAME }
 
-async function createTable(): Promise<void> {
+export async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
       id TEXT PRIMARY KEY NOT NULL,
@@ -17,7 +18,7 @@ async function createTable(): Promise<void> {
   `)
 }
 
-async function exists({ id }: { id: string }): Promise<boolean> {
+export async function exists({ id }: { id: string }): Promise<boolean> {
   const result = await Db.connection
     .select({ count: count() })
     .from(nodes)
@@ -26,7 +27,7 @@ async function exists({ id }: { id: string }): Promise<boolean> {
   return result[0].count > 0
 }
 
-async function update(data: Node): Promise<void> {
+export async function update(data: Node): Promise<void> {
   await Db.connection
     .update(nodes)
     .set({
@@ -38,11 +39,11 @@ async function update(data: Node): Promise<void> {
     .where(eq(nodes.id, data.id))
 }
 
-async function add(newNode: NewNode): Promise<void> {
+export async function add(newNode: NewNode): Promise<void> {
   await Db.connection.insert(nodes).values(newNode)
 }
 
-async function getChildIds({ id }: { id: string }): Promise<string[]> {
+export async function getChildIds({ id }: { id: string }): Promise<string[]> {
   const result = await Db.connection
     .select({ childIds: nodes.childIds })
     .from(nodes)
@@ -51,7 +52,7 @@ async function getChildIds({ id }: { id: string }): Promise<string[]> {
   return result[0]?.childIds ?? []
 }
 
-async function getNodeById({ id }: { id: string }): Promise<Node | null> {
+export async function getNodeById({ id }: { id: string }): Promise<Node | null> {
   const result = await Db.connection
     .select({
       id: nodes.id,
@@ -66,7 +67,7 @@ async function getNodeById({ id }: { id: string }): Promise<Node | null> {
   return result[0] ?? null
 }
 
-async function getParentId({ id }: { id: string }): Promise<string | null> {
+export async function getParentId({ id }: { id: string }): Promise<string | null> {
   const result = await Db.connection
     .select({ parentId: nodes.parentId })
     .from(nodes)
@@ -75,20 +76,6 @@ async function getParentId({ id }: { id: string }): Promise<string | null> {
   return result[0]?.parentId ?? null
 }
 
-async function remove({ id }: { id: string }): Promise<void> {
+export async function remove({ id }: { id: string }): Promise<void> {
   await Db.connection.delete(nodes).where(eq(nodes.id, id))
 }
-
-const NodeDb = {
-  createTable,
-  exists,
-  update,
-  add,
-  getChildIds,
-  TABLE_NAME,
-  getNodeById,
-  getParentId,
-  remove,
-}
-
-export default NodeDb

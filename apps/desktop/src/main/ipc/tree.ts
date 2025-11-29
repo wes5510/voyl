@@ -1,8 +1,8 @@
 import { IpcMain, IpcMainInvokeEvent } from 'electron'
 import { CHANNELS } from '../../common/channel.const.js'
-import TreeModel from '../model/tree/index.js'
-import TreeViewModel from '../model/treeView/index.js'
-import NodeModel from '../model/node/index.js'
+import * as TreeModel from '../model/tree/index.js'
+import * as TreeViewModel from '../model/treeView/index.js'
+import * as NodeModel from '../model/node/index.js'
 
 export default function treeHandlers(ipcMain: IpcMain) {
   ipcMain.handle(CHANNELS.GET_ROOT_NODE_ID, () => {

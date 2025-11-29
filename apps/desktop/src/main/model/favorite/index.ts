@@ -1,12 +1,6 @@
-async function getFavorites() {
+export async function getFavorites() {
   return [
     { id: 'a', text: 'a' },
     { id: 'b', text: 'b' },
   ]
 }
-
-const FavoriteModel = {
-  getFavorites,
-}
-
-export default FavoriteModel

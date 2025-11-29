@@ -5,45 +5,34 @@ import type { Workspace } from '../db/index.js'
 
 let _workspaceDirPath: string | null = null
 
-function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
+export function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
   _workspaceDirPath = workspaceDirPath
 }
 
-function getWorkspaceDirPath(): string {
+export function getWorkspaceDirPath(): string {
   if (!_workspaceDirPath) {
     throw new Error('Workspace directory path not initialized')
   }
   return _workspaceDirPath
 }
 
-function getConfigPath(): string {
+export function getConfigPath(): string {
   return path.join(getWorkspaceDirPath(), FILE_NAME)
 }
 
-async function create(): Promise<void> {
+export async function create(): Promise<void> {
   await fse.outputJson(getConfigPath(), {
     nodeTypes: [],
     attributes: [],
   })
 }
 
-async function getMtimeMs(): Promise<number | null> {
+export async function getMtimeMs(): Promise<number | null> {
   const stats = await fse.stat(getConfigPath())
   return stats.mtimeMs
 }
 
-async function read(): Promise<Workspace> {
+export async function read(): Promise<Workspace> {
   const data = await fse.readJson(getConfigPath())
   return data
 }
-
-const WorkspaceFs = {
-  setPath,
-  getWorkspaceDirPath,
-  getConfigPath,
-  create,
-  getMtimeMs,
-  read,
-}
-
-export default WorkspaceFs

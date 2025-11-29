@@ -4,7 +4,7 @@ import { eq, inArray } from 'drizzle-orm'
 
 export type { SyncMetadata }
 
-async function createTable(): Promise<void> {
+export async function createTable(): Promise<void> {
   await Db.sqlite.exec(`
     CREATE TABLE IF NOT EXISTS sync_metadata (
       path TEXT PRIMARY KEY,
@@ -14,7 +14,7 @@ async function createTable(): Promise<void> {
   `)
 }
 
-async function get({ path }: { path: string }): Promise<SyncMetadata | null> {
+export async function get({ path }: { path: string }): Promise<SyncMetadata | null> {
   const result = await Db.connection
     .select({
       path: syncMetadata.path,
@@ -28,11 +28,11 @@ async function get({ path }: { path: string }): Promise<SyncMetadata | null> {
   return result[0] ?? null
 }
 
-async function remove({ path }: { path: string }): Promise<void> {
+export async function remove({ path }: { path: string }): Promise<void> {
   await Db.connection.delete(syncMetadata).where(eq(syncMetadata.path, path))
 }
 
-async function add({
+export async function add({
   path,
   tableName,
   syncedAt,
@@ -44,7 +44,7 @@ async function add({
   await Db.connection.insert(syncMetadata).values({ path, tableName, syncedAt })
 }
 
-async function update({
+export async function update({
   path,
   tableName,
   syncedAt,
@@ -59,19 +59,8 @@ async function update({
     .where(eq(syncMetadata.path, path))
 }
 
-async function removePaths({ paths }: { paths: string[] }): Promise<void> {
+export async function removePaths({ paths }: { paths: string[] }): Promise<void> {
   await Db.connection
     .delete(syncMetadata)
     .where(inArray(syncMetadata.path, paths))
 }
-
-const SyncMetadataDb = {
-  createTable,
-  get,
-  remove,
-  add,
-  update,
-  removePaths,
-}
-
-export default SyncMetadataDb

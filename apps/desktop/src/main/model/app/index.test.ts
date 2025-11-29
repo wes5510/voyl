@@ -1,50 +1,40 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import AppModel from './index.js'
-import AppRepo from '../../repo/app/index.js'
-import SyncMetadataRepo from '../../repo/syncMetadata/index.js'
-import WorkspaceModel from './workspace/index.js'
+import * as AppModel from './index.js'
+import * as AppRepo from '../../repo/app/index.js'
+import * as SyncMetadataRepo from '../../repo/syncMetadata/index.js'
+import * as WorkspaceModel from './workspace/index.js'
 // eslint-disable-next-line voyl/same-level-import
-import TreeModel from '../tree/index.js'
+import * as TreeModel from '../tree/index.js'
 
 vi.mock('../../repo/app/index.js', () => ({
-  default: {
-    exists: vi.fn(),
-    initialize: vi.fn(),
-    sync: vi.fn(),
-    getWorkspaceDirPath: vi.fn(),
-  },
+  exists: vi.fn(),
+  initialize: vi.fn(),
+  sync: vi.fn(),
+  getWorkspaceDirPath: vi.fn(),
 }))
 
 vi.mock('../../repo/syncMetadata/index.js', () => ({
-  default: {
-    initialize: vi.fn(),
-    get: vi.fn(),
-    add: vi.fn(),
-    update: vi.fn(),
-    remove: vi.fn(),
-    sync: vi.fn(),
-  },
+  initialize: vi.fn(),
+  get: vi.fn(),
+  add: vi.fn(),
+  update: vi.fn(),
+  remove: vi.fn(),
+  sync: vi.fn(),
 }))
 
 vi.mock('./workspace/index.js', () => ({
-  default: {
-    initialize: vi.fn(),
-    sync: vi.fn(),
-  },
+  initialize: vi.fn(),
+  sync: vi.fn(),
 }))
 
 vi.mock('../node/index.js', () => ({
-  default: {
-    initialize: vi.fn(),
-    sync: vi.fn(),
-  },
+  initialize: vi.fn(),
+  sync: vi.fn(),
 }))
 
 vi.mock('../tree/index.js', () => ({
-  default: {
-    initialize: vi.fn(),
-    sync: vi.fn(),
-  },
+  initialize: vi.fn(),
+  sync: vi.fn(),
 }))
 
 describe('App Model', () => {

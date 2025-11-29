@@ -1,6 +1,7 @@
-import NodeRepo, { type NewNode, type Node } from '../../repo/node/index.js'
+import * as NodeRepo from '../../repo/node/index.js'
+import type { NewNode, Node } from '../../repo/node/index.js'
 
-async function initialize({
+export async function initialize({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
@@ -9,7 +10,7 @@ async function initialize({
   await NodeRepo.initialize()
 }
 
-async function sync({
+export async function sync({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
@@ -18,27 +19,27 @@ async function sync({
   await NodeRepo.sync()
 }
 
-function addNode(node: NewNode): Promise<Node> {
+export function addNode(node: NewNode): Promise<Node> {
   return NodeRepo.addNode(node)
 }
 
-async function getNodeById({ id }: { id: string }) {
+export async function getNodeById({ id }: { id: string }) {
   return NodeRepo.getNodeById({ id })
 }
 
-async function updateNodeTitle({ id, title }: { id: string; title: string }) {
+export async function updateNodeTitle({ id, title }: { id: string; title: string }) {
   return NodeRepo.updateNodeTitle({ id, title })
 }
 
-async function isExist({ id }: { id: string }) {
+export async function isExist({ id }: { id: string }) {
   return NodeRepo.isNodeExist({ id })
 }
 
-async function getParentId({ id }: { id: string }) {
+export async function getParentId({ id }: { id: string }) {
   return NodeRepo.getParentId({ id })
 }
 
-async function getChildIndex({ id, childId }: { id: string; childId: string }) {
+export async function getChildIndex({ id, childId }: { id: string; childId: string }) {
   const isExist = await NodeRepo.isNodeExist({ id })
 
   if (!isExist) {
@@ -49,7 +50,7 @@ async function getChildIndex({ id, childId }: { id: string; childId: string }) {
   return childIds.indexOf(childId) + 1
 }
 
-async function removeChildIdFromParentNode({ id }: { id: string }) {
+export async function removeChildIdFromParentNode({ id }: { id: string }) {
   const isExist = await NodeRepo.isNodeExist({ id })
 
   if (!isExist) {
@@ -66,7 +67,7 @@ async function removeChildIdFromParentNode({ id }: { id: string }) {
   await NodeRepo.updateChildIds({ id: parentId, childIds: newChildIds })
 }
 
-async function insertChildId({
+export async function insertChildId({
   parentId,
   id,
   index,
@@ -97,7 +98,7 @@ async function insertChildId({
   await NodeRepo.updateChildIds({ id: parentId, childIds: newChildIds })
 }
 
-async function updateParentId({
+export async function updateParentId({
   id,
   parentId,
 }: {
@@ -107,29 +108,11 @@ async function updateParentId({
   return NodeRepo.updateParentId({ id, parentId })
 }
 
-async function removeNode({ id }: { id: string }) {
+export async function removeNode({ id }: { id: string }) {
   return NodeRepo.removeNode({ id })
 }
 
-async function removeChildNodes({ id }: { id: string }) {
+export async function removeChildNodes({ id }: { id: string }) {
   const childIds = await NodeRepo.getChildIds({ id })
   return await NodeRepo.removeNodes({ ids: childIds })
 }
-
-const NodeModel = {
-  addNode,
-  getNodeById,
-  initialize,
-  sync,
-  updateNodeTitle,
-  isExist,
-  getParentId,
-  getChildIndex,
-  removeChildIdFromParentNode,
-  insertChildId,
-  updateParentId,
-  removeNode,
-  removeChildNodes,
-}
-
-export default NodeModel

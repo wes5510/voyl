@@ -1,20 +1,21 @@
 import { v4 as uuidv4 } from 'uuid'
-import NodeFs from './fs/index.js'
-import NodeDb, { type Node, type NewNode } from './db/index.js'
-import SyncMetadataRepo from '../syncMetadata/index.js'
+import * as NodeFs from './fs/index.js'
+import * as NodeDb from './db/index.js'
+import * as SyncMetadataRepo from '../syncMetadata/index.js'
 
-export type { Node, NewNode }
+export type { Node, NewNode } from './db/index.js'
+import type { Node, NewNode } from './db/index.js'
 
-async function initialize(): Promise<void> {
+export async function initialize(): Promise<void> {
   await NodeFs.create()
   await NodeDb.createTable()
 }
 
-function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
+export function setPath({ workspaceDirPath }: { workspaceDirPath: string }): void {
   NodeFs.setPath({ workspaceDirPath })
 }
 
-async function syncSingle({ id }: { id: string }): Promise<void> {
+export async function syncSingle({ id }: { id: string }): Promise<void> {
   const mtimeMs = await NodeFs.getMtimeMs({ id })
   let data: Node | null = null
 
@@ -51,13 +52,13 @@ async function syncNodes({ ids }: { ids: string[] }) {
   )
 }
 
-async function sync(): Promise<void> {
+export async function sync(): Promise<void> {
   const ids = await NodeFs.getIds()
 
   await syncNodes({ ids })
 }
 
-async function addNode(node: NewNode): Promise<Node> {
+export async function addNode(node: NewNode): Promise<Node> {
   const id = node.id ?? uuidv4()
   const fullNode: Node = {
     id,
@@ -72,15 +73,15 @@ async function addNode(node: NewNode): Promise<Node> {
   return fullNode
 }
 
-async function getChildIds({ id }: { id: string }): Promise<string[]> {
+export async function getChildIds({ id }: { id: string }): Promise<string[]> {
   return await NodeDb.getChildIds({ id })
 }
 
-async function getNodeById({ id }: { id: string }): Promise<Node | null> {
+export async function getNodeById({ id }: { id: string }): Promise<Node | null> {
   return await NodeDb.getNodeById({ id })
 }
 
-async function updateNodeTitle({
+export async function updateNodeTitle({
   id,
   title,
 }: {
@@ -92,7 +93,7 @@ async function updateNodeTitle({
   return updatedData
 }
 
-async function updateChildIds({
+export async function updateChildIds({
   id,
   childIds,
 }: {
@@ -104,15 +105,15 @@ async function updateChildIds({
   return updatedData
 }
 
-async function isNodeExist({ id }: { id: string }) {
+export async function isNodeExist({ id }: { id: string }) {
   return await NodeDb.exists({ id })
 }
 
-async function getParentId({ id }: { id: string }): Promise<string | null> {
+export async function getParentId({ id }: { id: string }): Promise<string | null> {
   return await NodeDb.getParentId({ id })
 }
 
-async function updateParentId({
+export async function updateParentId({
   id,
   parentId,
 }: {
@@ -124,32 +125,13 @@ async function updateParentId({
   return updatedData
 }
 
-async function removeNode({ id }: { id: string }) {
+export async function removeNode({ id }: { id: string }) {
   await NodeFs.remove({ id })
   await syncSingle({ id })
 }
 
-async function removeNodes({ ids }: { ids: string[] }) {
+export async function removeNodes({ ids }: { ids: string[] }) {
   const removedFilePaths = await NodeFs.removeNodes({ ids })
   await SyncMetadataRepo.removePaths({ paths: removedFilePaths })
   await syncNodes({ ids })
 }
-
-const NodeRepo = {
-  initialize,
-  setPath,
-  syncSingle,
-  sync,
-  addNode,
-  getChildIds,
-  getNodeById,
-  updateNodeTitle,
-  isNodeExist,
-  getParentId,
-  updateChildIds,
-  updateParentId,
-  removeNode,
-  removeNodes,
-}
-
-export default NodeRepo

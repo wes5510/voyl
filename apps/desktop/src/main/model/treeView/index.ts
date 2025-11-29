@@ -1,13 +1,14 @@
 import { logger } from '../../common/logger.util.js'
-import NodeRepo, { type Node } from '../../repo/node/index.js'
-import NodeModel from '../node/index.js'
+import * as NodeRepo from '../../repo/node/index.js'
+import type { Node } from '../../repo/node/index.js'
+import * as NodeModel from '../node/index.js'
 
 export type TreeViewItem = {
   nodeId: string
   depth: number
 }
 
-async function getTreeViewNodes({
+export async function getTreeViewNodes({
   topNodeId,
   expandedNodeIds = [],
 }: {
@@ -38,7 +39,7 @@ async function getTreeViewNodes({
   return result
 }
 
-async function addNewNodeAfter({
+export async function addNewNodeAfter({
   nodeId,
   title,
 }: {
@@ -131,7 +132,7 @@ async function moveToChildNode({
   return newNode
 }
 
-async function removeNode({ nodeId }: { nodeId: string }): Promise<Node> {
+export async function removeNode({ nodeId }: { nodeId: string }): Promise<Node> {
   logger.debug({ nodeId }, 'Remove Node')
   const node = await NodeModel.getNodeById({ id: nodeId })
 
@@ -145,11 +146,3 @@ async function removeNode({ nodeId }: { nodeId: string }): Promise<Node> {
 
   return node
 }
-
-const TreeViewModel = {
-  getTreeViewNodes,
-  addNewNodeAfter,
-  removeNode,
-}
-
-export default TreeViewModel

@@ -1,6 +1,6 @@
 import { IpcMain, IpcMainInvokeEvent } from 'electron'
 import { CHANNELS } from '../../common/channel.const.js'
-import TreeViewModel from '../model/treeView/index.js'
+import * as TreeViewModel from '../model/treeView/index.js'
 
 export default function treeViewHandlers(ipcMain: IpcMain) {
   ipcMain.handle(
