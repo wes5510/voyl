@@ -5,6 +5,7 @@ import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
 import voylPlugin from '@voyl/eslint-plugin-voyl'
 import pluginQuery from '@tanstack/eslint-plugin-query'
+import reactCompiler from 'eslint-plugin-react-compiler'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -67,9 +68,11 @@ export default [
     files: ['src/renderer/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
+      'react-compiler': reactCompiler,
     },
     rules: {
       'react-hooks/rules-of-hooks': 'error',
+      'react-compiler/react-compiler': 'error',
       'voyl/same-level-import': [
         'error',
         {

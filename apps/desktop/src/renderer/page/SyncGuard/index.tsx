@@ -7,12 +7,11 @@ interface SyncGuardProps {
 }
 
 export default function SyncGuard({ children }: SyncGuardProps) {
-  const sync = useSyncApp()
+  const { mutate, isPending } = useSyncApp()
 
   useEffect(() => {
-    sync.mutate()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    mutate()
+  }, [mutate])
 
-  return sync.isPending ? <SyncSplash /> : <>{children}</>
+  return isPending ? <SyncSplash /> : <>{children}</>
 }
