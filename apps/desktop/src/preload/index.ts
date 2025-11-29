@@ -1,20 +1,13 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { CHANNELS } from '../common/channel.const.js'
+import type { ChannelApi } from '../common/channel.type.js'
 
-// Custom APIs for renderer
-const api = {
-  isInitialized: () => ipcRenderer.invoke(CHANNELS.IS_INITIALIZED),
-  syncApp: () => ipcRenderer.invoke(CHANNELS.SYNC_APP),
-  selectWorkspaceDirPath: () =>
-    ipcRenderer.invoke(CHANNELS.SELECT_WORKSPACE_DIR_PATH),
-  initializeApp: (path: string) =>
-    ipcRenderer.invoke(CHANNELS.INITIALIZE_APP, path),
-  addNewNodeAfter: ({ nodeId, title }: { nodeId: string; title: string }) =>
-    ipcRenderer.invoke(CHANNELS.ADD_NEW_NODE_AFTER, { nodeId, title }),
-  removeNode: ({ nodeId }: { nodeId: string }) =>
-    ipcRenderer.invoke(CHANNELS.REMOVE_NODE, { nodeId }),
-}
+// Proxy 기반 API 자동 생성
+const api = new Proxy({} as ChannelApi, {
+  get(_, channel: string) {
+    return (params: unknown) => ipcRenderer.invoke(channel, params)
+  },
+})
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
