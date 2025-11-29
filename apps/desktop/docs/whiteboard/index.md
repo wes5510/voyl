@@ -8,7 +8,27 @@
 - `spec/` - 기술 명세
 - `planning/` - 실행 계획
 
-## 파일명 컨벤션
+## 폴더명 컨벤션
 
-- 형식: `YYYYMMDDTHHMM-kebab-case-name.md`
-- 예시: `20251129T1245-discussion-topic.md`
+- 형식: `YYYYMMDDTHHMM-kebab-case-name/`
+- 예시: `20251129T1245-user-auth/`
+
+## 폴더 구조
+
+```
+whiteboard/
+├── 20251129T1245-user-auth/
+│   ├── context.md
+│   └── agent-notes/
+│       ├── architect.md
+│       └── spec-writer.md
+```
+
+### context.md
+- 전체 맥락 요약
+- 각 Agent가 알아야 할 정보
+- 참조할 기존 문서 경로
+
+### agent-notes/
+- 각 Agent가 작성한 노트
+- Agent 이름으로 파일 생성 (예: `architect.md`, `spec-writer.md`)

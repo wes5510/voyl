@@ -8,6 +8,10 @@ tools: Read,Glob,Grep,LS,Bash
 
 코드 분석 전문가.
 
+## 실행 전 참고
+
+- `**/docs/guide/**/index.md` 파일들을 찾아 레이어 구조 파악
+
 ## 분석 항목
 
 1. **구조 파악**
@@ -39,6 +43,6 @@ tools: Read,Glob,Grep,LS,Bash
 
 ## 완료 후
 
-`docs/whiteboard/{task}/agent-notes/code-analyzer.md` 작성:
+`apps/desktop/docs/whiteboard/{task-name}/agent-notes/code-analyzer.md` 작성:
 - 분석 결과 요약
 - 다른 Agent 참고용 정보

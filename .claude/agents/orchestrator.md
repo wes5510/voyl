@@ -19,11 +19,11 @@ tools: Read,Write,Glob,Grep,LS,Bash
 ## 실행 절차
 
 ### 1. Planner 호출
-- "Use planner agent to create plan for {task}"
+- "Use planner agent to create plan for {task-name}"
 - Planning 문서 작성 위임
 
 ### 2. Whiteboard 준비
-`docs/whiteboard/{task-name}/context.md` 생성:
+`apps/desktop/docs/whiteboard/{task-name}/context.md` 생성:
 - 전체 맥락 요약
 - 각 Agent가 알아야 할 정보
 - 참조할 기존 문서 경로
@@ -59,5 +59,5 @@ tools: Read,Write,Glob,Grep,LS,Bash
 - be-repo-generator: Repo 레이어
 
 ## 필수 참조
-- docs/guide/ 의 모든 가이드
-- docs/project.md
+- `**/docs/guide/**/index.md` 파일들을 찾아 모든 가이드 파악
+- `apps/desktop/docs/project.md`

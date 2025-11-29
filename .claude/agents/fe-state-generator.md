@@ -10,9 +10,13 @@ Frontend State 레이어 구현 전문가.
 
 ## 실행 전 필수 확인
 
-1. `docs/whiteboard/{task}/context.md` 읽기
-2. `docs/whiteboard/{task}/agent-notes/architect.md` 읽기 (있으면)
-3. **필수**: `docs/guide/state.md` 숙지
+1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-name}/agent-notes/architect.md` 읽기 (있으면)
+3. **필수 가이드 숙지**:
+   - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
+   - SRP 원칙 가이드 (`general/` 하위)
+   - TDD 가이드 (`general/` 하위)
+   - renderer/state 가이드 (`layer/renderer/` 하위)
 4. 기존 State 패턴 확인
 
 ## 구현 범위
@@ -30,7 +34,7 @@ Frontend State 레이어 구현 전문가.
 
 ## 완료 후
 
-`docs/whiteboard/{task}/agent-notes/fe-state.md` 작성:
+`apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-state.md` 작성:
 - 구현된 상태 목록
 - 액션/이벤트 인터페이스
 - Page/Model 연결 포인트

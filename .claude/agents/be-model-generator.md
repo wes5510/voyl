@@ -10,11 +10,14 @@ Backend Model 레이어 구현 전문가.
 
 ## 실행 전 필수 확인
 
-1. `docs/whiteboard/{task}/context.md` 읽기
-2. `docs/whiteboard/{task}/agent-notes/architect.md` 읽기 (있으면)
-3. **필수**: `docs/guide/model.md` 숙지
-4. **필수**: `docs/guide/srp.md` 숙지
-5. 기존 Backend Model 패턴 확인
+1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-name}/agent-notes/architect.md` 읽기 (있으면)
+3. **필수 가이드 숙지**:
+   - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
+   - SRP 원칙 가이드 (`general/` 하위)
+   - TDD 가이드 (`general/` 하위)
+   - main/model 가이드 (`layer/main/` 하위)
+4. 기존 Backend Model 패턴 확인
 
 ## 구현 범위
 
@@ -32,7 +35,7 @@ Backend Model 레이어 구현 전문가.
 
 ## 완료 후
 
-`docs/whiteboard/{task}/agent-notes/be-model.md` 작성:
+`apps/desktop/docs/whiteboard/{task-name}/agent-notes/be-model.md` 작성:
 - 구현된 엔티티/함수 목록
 - 외부 인터페이스
 - IPC/Repo 연결 포인트

@@ -10,9 +10,10 @@ tools: Read,Write,Glob,Grep,LS
 
 ## 실행 전 필수 확인
 
-1. `docs/whiteboard/{task}/context.md` 읽기 (있으면)
-2. `docs/guide/` 전체 구조 파악
-3. 기존 `docs/planning/` 참고 (유사 작업 패턴)
+1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기 (있으면)
+2. **가이드 구조 파악**:
+   - `**/docs/guide/**/index.md` 파일들을 찾아 전체 구조 파악
+3. 기존 `apps/desktop/docs/planning/` 참고 (유사 작업 패턴)
 
 ## 분석 항목
 
@@ -24,7 +25,7 @@ tools: Read,Write,Glob,Grep,LS
 
 ## 산출물
 
-`docs/planning/{task-name}-plan.md`:
+`apps/desktop/docs/planning/{task-name}-plan.md`:
 - 작업 목표
 - 영향 범위
 - Agent 할당
