@@ -1,6 +1,8 @@
 import * as NodeRepo from '../../repo/node/index.js'
 import type { NewNode, Node } from '../../repo/node/index.js'
 
+export type { Node, NewNode }
+
 export async function initialize({
   workspaceDirPath,
 }: {

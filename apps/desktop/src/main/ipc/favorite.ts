@@ -1,9 +1,7 @@
-import { IpcMain } from 'electron'
-import { CHANNELS } from '../../common/channel.const.js'
 import * as FavoriteModel from '../model/favorite/index.js'
 
-export default function favoriteHandlers(ipcMain: IpcMain) {
-  ipcMain.handle(CHANNELS.GET_FAVORITES, () => {
+export const favoriteHandlers = {
+  'favorite.getAll': async (): Promise<{ id: string; text: string }[]> => {
     return FavoriteModel.getFavorites()
-  })
+  },
 }
