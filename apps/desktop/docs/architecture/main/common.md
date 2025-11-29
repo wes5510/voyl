@@ -25,14 +25,11 @@ common/
 ### Import 규칙
 
 #### voyl/same-hierarchy-import
+
 - 동일 계층 내의 파일만 import할 수 있습니다.
 
 #### voyl/restrict-imports-to-pattern
+
 - 다른 모듈의 코드를 import할 수 없습니다.
 - 외부 라이브러리는 허용됩니다.
 
-## 관련 문서
-
-- [main 구조](./main.md)
-- [main/model 구조](./model.md)
-- [main/db 구조](./db.md)
