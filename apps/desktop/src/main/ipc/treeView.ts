@@ -1,25 +1,25 @@
-import { IpcMain, IpcMainInvokeEvent } from 'electron'
-import { CHANNELS } from '../../common/channel.const.js'
 import * as TreeViewModel from '../model/treeView/index.js'
+import type { Node } from '../model/node/index.js'
 
-export default function treeViewHandlers(ipcMain: IpcMain) {
-  ipcMain.handle(
-    CHANNELS.ADD_NEW_NODE_AFTER,
-    (
-      _event: IpcMainInvokeEvent,
-      { nodeId, title }: { nodeId: string; title: string },
-    ) => {
-      return TreeViewModel.addNewNodeAfter({
-        nodeId,
-        title,
-      })
-    },
-  )
+export const treeViewHandlers = {
+  'treeView.addNewNodeAfter': async ({
+    nodeId,
+    title,
+  }: {
+    nodeId: string
+    title: string
+  }): Promise<Node> => {
+    return TreeViewModel.addNewNodeAfter({
+      nodeId,
+      title,
+    })
+  },
 
-  ipcMain.handle(
-    CHANNELS.REMOVE_NODE,
-    (_event: IpcMainInvokeEvent, { nodeId }: { nodeId: string }) => {
-      return TreeViewModel.removeNode({ nodeId })
-    },
-  )
+  'treeView.removeNode': async ({
+    nodeId,
+  }: {
+    nodeId: string
+  }): Promise<Node> => {
+    return TreeViewModel.removeNode({ nodeId })
+  },
 }
