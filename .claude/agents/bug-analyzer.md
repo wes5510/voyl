@@ -12,6 +12,12 @@ tools: Read,Glob,Grep,LS,Bash
 
 - `**/docs/guide/**/index.md` 파일들을 찾아 레이어 구조 파악
 
+## Serena MCP 활용
+
+- `mcp__serena__find_symbol` - 버그 관련 심볼 찾기
+- `mcp__serena__find_referencing_symbols` - 호출 체인 추적
+- `mcp__serena__get_symbols_overview` - 파일 구조 파악
+
 ## 분석 절차
 
 1. 버그 재현 조건 파악

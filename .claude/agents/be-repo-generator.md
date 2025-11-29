@@ -26,6 +26,12 @@ Backend Repo 레이어 구현 전문가.
 - 외부 서비스 통신
 - 데이터 영속화
 
+## Serena MCP 활용
+
+- `mcp__serena__replace_symbol_body` - 기존 함수 수정
+- `mcp__serena__insert_after_symbol` - 새 함수 추가
+- `mcp__serena__get_symbols_overview` - 기존 구조 파악
+
 ## 구현 원칙
 
 - Repo 레이어 규칙 준수

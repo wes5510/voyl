@@ -12,6 +12,12 @@ tools: Read,Glob,Grep,LS,Bash
 
 - `**/docs/guide/**/index.md` 파일들을 찾아 레이어 구조 파악
 
+## Serena MCP 활용
+
+- `mcp__serena__get_symbols_overview` - 파일 심볼 개요 파악
+- `mcp__serena__find_symbol` - 클래스/함수/메서드 찾기
+- `mcp__serena__find_referencing_symbols` - 참조 추적, 영향 범위 분석
+
 ## 분석 항목
 
 1. **구조 파악**

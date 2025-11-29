@@ -85,6 +85,11 @@ git diff --name-only {base-branch}...HEAD
 - 파일별 변경 내역
 - 추가 개선 제안 (다음 작업으로)
 
+## Serena MCP 활용
+
+- `mcp__serena__rename_symbol` - 심볼 이름 변경 (전체 코드베이스 반영)
+- `mcp__serena__find_referencing_symbols` - 변경 전 참조 확인
+
 ## 주의사항
 
 - 동작 변경 없이 구조만 개선
