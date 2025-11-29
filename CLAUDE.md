@@ -54,29 +54,27 @@ Voyl is an Electron-based desktop productivity tool for hierarchical node manage
 
 ### Key Directories
 
-#### `/apps/desktop/src/main/` - Electron Main Process
-- **db/**: Database schemas using Drizzle ORM + better-sqlite3
-- **models/**: Domain models and business logic
-- **ipc/**: Inter-process communication handlers
-- **windows/**: Application window management
-- **common/**: Shared utilities (no external dependencies)
+자세한 레이어 구조 및 의존성 규칙은 [Layer Guide](apps/desktop/docs/guide/layer/index.md) 참조.
 
-**Dependency Rules**:
-- `common` → no imports from other modules
-- `db` → can import `common`
-- `models` → can import `db`, `common`
-- `ipc` → can import `models`, `common`
-- `windows` → can import `models`, `common`
+#### `/apps/desktop/src/main/` - Electron Main Process
+- **repo/**: Repository 레이어 (파일시스템 + SQLite 캐시, Drizzle ORM)
+- **model/**: 도메인 모델 및 비즈니스 로직
+- **ipc/**: IPC 핸들러
+- **window/**: 애플리케이션 윈도우 관리
+- **common/**: 공유 유틸리티
 
 #### `/apps/desktop/src/renderer/` - React Frontend
-- **pages/**: UI page components
-- **models/**: Frontend domain models and business logic
-- **common/**: Shared UI components and utilities
+- **page/**: UI 페이지 컴포넌트
+- **store/**: 상태 관리 (React Query + Zustand)
+- **repo/**: 데이터 페칭 (IPC 통신)
+- **model/**: 도메인 모델 및 비즈니스 로직
+- **common/**: 공유 UI 컴포넌트
 
-**Dependency Rules**:
-- `common` → no imports from other modules
-- `models` → can import `common` (each model is independent)
-- `pages` → can import `models`, `common`
+### Agent System
+
+프로젝트는 Claude Code Agent 시스템을 사용합니다.
+- Agent 정의: `.claude/agents/`
+- 워크플로우: [orchestrator.md](.claude/agents/orchestrator.md) 참조
 
 ### Technology Stack
 - **UI**: React 19, Tailwind CSS, Shadcn UI, Lucide icons
