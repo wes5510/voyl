@@ -1,4 +1,3 @@
-import { CHANNELS } from '@/common/channel.const'
 import { NodeDTO } from './tree'
 
 export type TreeViewItem = {
@@ -11,9 +10,7 @@ export const fetchTreeViewNodes = async ({
 }: {
   topNodeId: string
 }): Promise<TreeViewItem[]> => {
-  return window.electron.ipcRenderer.invoke(CHANNELS.GET_VIEW_TREE_NODES, {
-    topNodeId,
-  })
+  return window.api['tree.getViewNodes']({ topNodeId })
 }
 
 export const addNewNodeAfter = async ({
@@ -23,7 +20,7 @@ export const addNewNodeAfter = async ({
   nodeId: string
   title: string
 }): Promise<NodeDTO> => {
-  return window.api.addNewNodeAfter({
+  return window.api['treeView.addNewNodeAfter']({
     nodeId,
     title,
   })
@@ -34,7 +31,7 @@ export const removeNode = async ({
 }: {
   nodeId: string
 }): Promise<NodeDTO> => {
-  return window.api.removeNode({
+  return window.api['treeView.removeNode']({
     nodeId,
   })
 }
