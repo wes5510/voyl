@@ -11,7 +11,7 @@ renderer는 page, model, state, repo, common 모듈로 구성되어 있습니다
 src/renderer/
 ├── page/           # 페이지 컴포넌트
 ├── model/          # 도메인 모델 & 비즈니스 로직
-├── state/          # 상태 관리 (React Query + Zustand)
+├── state/          # 상태 관리 (React Query + Valtio)
 ├── repo/           # 데이터 페칭 (IPC 통신)
 └── common/         # 공통 코드
 ```
@@ -31,7 +31,7 @@ src/renderer/
 
 #### state
 
-- 상태 관리 레이어 (React Query + Zustand)
+- 상태 관리 레이어 (React Query + Valtio)
 - repo, common, model을 import하여 사용 가능
 
 #### repo

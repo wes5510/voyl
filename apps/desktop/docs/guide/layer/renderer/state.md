@@ -2,17 +2,18 @@
 
 ## 개요
 
-state는 상태 관리 레이어입니다. (React Query + Zustand)
+state는 상태 관리 레이어입니다. (React Query + Valtio)
 
 ## 구조
 
 ```
 state/
 └── [domain]/
-    ├── hook.ts        # Hooks (React Query + Zustand 파생)
-    ├── queryKey.ts    # Query keys
-    ├── queryOption.ts # Query options
-    ├── store.ts       # Zustand store
+    ├── state.ts       # Valtio proxy state
+    ├── actions.ts     # State 변경 함수
+    ├── hooks.ts       # Hooks (React Query + Valtio useSnapshot)
+    ├── queryKeys.ts   # Query keys
+    ├── queryOptions.ts # Query options
     └── index.ts       # Barrel file
 ```
 

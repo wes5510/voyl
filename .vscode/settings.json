@@ -22,7 +22,7 @@
     "uuidv",
     "voyl",
     "vstack",
-    "zustand"
+    "valtio"
   ],
   "codeQL.githubDatabase.update": "never"
 }

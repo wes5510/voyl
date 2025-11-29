@@ -11,7 +11,7 @@
 
 ### Renderer Process (프론트엔드)
 - `renderer/page.md` - UI 페이지 컴포넌트
-- `renderer/state.md` - 상태 관리 (React Query + Zustand)
+- `renderer/state.md` - 상태 관리 (React Query + Valtio)
 - `renderer/repo.md` - 데이터 페칭 (IPC 통신)
 - `renderer/model.md` - 도메인 모델 및 비즈니스 로직
 - `renderer/common.md` - 공유 UI 컴포넌트

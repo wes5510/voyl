@@ -4,7 +4,7 @@ import { getNewNodeTitle, getSourceNodeTitle } from './util'
 import { useUpdateNodeTitle } from '@/renderer/store/tree'
 import {
   useAddNewNodeAfter,
-  useSetFocusedNodeId,
+  setTreeViewFocusedNodeId,
 } from '@/renderer/store/treeView'
 
 export default function useHandleEnterKey({
@@ -14,7 +14,6 @@ export default function useHandleEnterKey({
 }): HotkeyCallback {
   const updateTitleByNodeId = useUpdateNodeTitle()
   const addNewNodeAfter = useAddNewNodeAfter()
-  const setFocusedNodeId = useSetFocusedNodeId()
 
   return async (e: KeyboardEvent) => {
     if (!isHTMLTextAreaElement(e.target)) {
@@ -38,6 +37,6 @@ export default function useHandleEnterKey({
       }),
     })
 
-    setFocusedNodeId({ nodeId: newNode.id })
+    setTreeViewFocusedNodeId({ nodeId: newNode.id })
   }
 }

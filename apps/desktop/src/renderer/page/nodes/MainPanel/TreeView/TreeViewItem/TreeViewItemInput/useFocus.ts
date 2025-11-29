@@ -1,7 +1,7 @@
 import { RefObject, useEffect } from 'react'
 import {
   useFocusedNodeId,
-  useSetFocusedNodeId,
+  setTreeViewFocusedNodeId,
 } from '@/renderer/store/treeView'
 
 export default function useFocus<T extends HTMLElement = HTMLElement>({
@@ -12,7 +12,6 @@ export default function useFocus<T extends HTMLElement = HTMLElement>({
   ref: RefObject<T | null>
 }): () => void {
   const focused = useFocusedNodeId() === nodeId
-  const setFocusedNodeId = useSetFocusedNodeId()
 
   useEffect(() => {
     if (focused) {
@@ -21,6 +20,6 @@ export default function useFocus<T extends HTMLElement = HTMLElement>({
   }, [focused, nodeId, ref])
 
   return () => {
-    setFocusedNodeId({ nodeId })
+    setTreeViewFocusedNodeId({ nodeId })
   }
 }

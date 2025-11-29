@@ -7,7 +7,7 @@
 | 상태 종류 | 도구 | 예시 |
 |-----------|------|------|
 | 서버 상태 | React Query | 노드 목록, 워크스페이스 데이터, IPC 호출 결과 |
-| UI 상태 | Zustand | 사이드바 열림/닫힘, 선택된 노드, 모달 상태 |
+| UI 상태 | Valtio | 사이드바 열림/닫힘, 선택된 노드, 모달 상태 |
 
 ## 왜 구분하는가?
 
@@ -17,7 +17,7 @@
 
 **UI 상태**
 - 단순히 값을 저장하고 변경
-- Zustand가 간단하고 빠름
+- Valtio가 간단하고 자동 추적 (proxy 기반)
 
 ## 예시
 
@@ -30,26 +30,39 @@ const useNodes = () => {
   })
 }
 
-// UI 상태: Zustand
-const useUIStore = create<UIState>((set) => ({
+// UI 상태: Valtio
+import { proxy, useSnapshot } from 'valtio'
+
+const uiState = proxy({
   sidebarOpen: true,
-  selectedNodeId: null,
-  toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
-  selectNode: (id) => set({ selectedNodeId: id })
-}))
+  selectedNodeId: null as string | null,
+})
+
+// Actions (별도 함수)
+export const toggleSidebar = () => {
+  uiState.sidebarOpen = !uiState.sidebarOpen
+}
+
+export const selectNode = (id: string) => {
+  uiState.selectedNodeId = id
+}
+
+// Hook
+export const useSidebarOpen = () => {
+  const snap = useSnapshot(uiState)
+  return snap.sidebarOpen
+}
 ```
 
 ## 안티패턴
 
 ```tsx
-// Bad: 서버 데이터를 Zustand에 저장
-const useStore = create((set) => ({
-  nodes: [],
-  fetchNodes: async () => {
-    const nodes = await window.api.getNodes()
-    set({ nodes }) // 캐시 불일치 발생
-  }
-}))
+// Bad: 서버 데이터를 Valtio에 저장
+const state = proxy({ nodes: [] })
+const fetchNodes = async () => {
+  const nodes = await window.api.getNodes()
+  state.nodes = nodes // 캐시 불일치 발생
+}
 
 // Bad: UI 상태를 React Query로 관리
 const useSidebarState = () => {
