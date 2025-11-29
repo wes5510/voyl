@@ -2,7 +2,7 @@
 
 ## 개요
 
-repo 모듈은 데이터 영속성을 관리하는 Repository 패턴을 구현합니다.
+Repo 모듈은 데이터 영속성을 관리하는 Repository 패턴을 구현합니다.
 각 엔티티별로 파일시스템(fs)과 데이터베이스(db) 레이어를 통합하여 제공합니다.
 
 ## 구조
@@ -25,10 +25,12 @@ repo/
 ### 구성요소
 
 #### shared/db.ts
+
 - better-sqlite3 + drizzle 기반 DB 연결
 - WAL 모드 활성화
 
 #### 각 엔티티 Repository ([entity]/)
+
 - `index.ts`: Repository 공개 API (fs + db 통합)
 - `db/`: SQLite 캐시 레이어
 - `fs/`: 파일시스템 레이어 (JSON 파일)
