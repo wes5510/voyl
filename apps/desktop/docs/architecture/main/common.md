@@ -7,13 +7,11 @@ Common 모듈은 프로젝트 전반에서 재사용되는 도메인 독립적�
 
 ## 구조
 
-### 기본 구조
-
 ```
 common/
-├── [utility].util.ts      # 유틸리티 함수
-├── [constant].const.ts # 상수 정의
-└── [type].type.ts    # 타입 정의
+├── logger.util.ts      # 유틸리티 함수
+├── app.const.ts        # 상수 정의
+└── node.type.ts        # 타입 정의
 ```
 
 ### 구성요소
@@ -27,31 +25,14 @@ common/
 ### Import 규칙
 
 #### voyl/same-hierarchy-import
-
 - 동일 계층 내의 파일만 import할 수 있습니다.
 
-  ```typescript
-  // common/helper.ts
-  import { ProductList } from './ProductList' // ✅ 동일 계층 파일
-  import { types } from './types' // ✅ 같은 디렉토리 내 파일
-
-  import { Something } from '../other/Something' // ❌ 다른 계층
-  import { Deep } from './deep/nested/Component' // ❌ 깊은 중첩 경로
-  ```
-
 #### voyl/restrict-imports-to-pattern
-
 - 다른 모듈의 코드를 import할 수 없습니다.
-
-  ```typescript
-  import { v4 as uuidv4 } from 'uuid' // ✅ 외부 라이브러리
-
-  import { getNodeById } from '../models/node/index.js' // ❌ 다른 모듈
-  import { db } from '../db/connect.js' // ❌ 다른 모듈
-  ```
+- 외부 라이브러리는 허용됩니다.
 
 ## 관련 문서
 
-- [메인 프로세스 구조](../README.md)
-- [Models 구조](../models/README.md)
-- [데이터베이스 구조](../db/README.md)
+- [main 구조](./main.md)
+- [main/model 구조](./model.md)
+- [main/db 구조](./db.md)
