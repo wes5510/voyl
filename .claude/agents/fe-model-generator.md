@@ -26,6 +26,12 @@ Frontend Model 레이어 구현 전문가.
 - 도메인 규칙
 - 데이터 변환
 
+## Serena MCP 활용
+
+- `mcp__serena__replace_symbol_body` - 기존 함수/클래스 수정
+- `mcp__serena__insert_after_symbol` - 새 함수/메서드 추가
+- `mcp__serena__get_symbols_overview` - 기존 구조 파악
+
 ## 구현 원칙
 
 - 단일 책임 원칙 준수

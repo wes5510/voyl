@@ -1,24 +1,38 @@
 # main/ipc 구조
 
-## 개요
-
-IPC 모듈은 메인 프로세스와 렌더러 프로세스 간의 통신을 관리합니다.
-각 핸들러는 독립적인 기능 단위로 구성되어 있습니다.
+## 핵심
+핸들러 정의에서 타입 자동 추론. **1곳만 수정**하면 타입+등록 자동 반영.
 
 ## 구조
-
 ```
 ipc/
-├── index.ts        # 모든 IPC 핸들러 등록
-└── [handler].ts    # 도메인별 IPC 핸들러
+├── index.ts      # 통합 + 타입 추출 + 등록
+├── app.ts        # 앱 핸들러
+├── tree.ts       # 트리 핸들러
+└── [domain].ts   # 도메인별 핸들러
 ```
 
-### 구성요소
+## 핸들러 추가하기
 
-- 렌더러 프로세스 요청을 적절한 model 함수로 라우팅
-- IPC 통신의 타입 안전성과 에러 처리를 담당
-- 도메인별로 핸들러를 분리하여 관리
+**1. 핸들러 정의 (새 파일 또는 기존 파일)**
+```typescript
+// ipc/workspace.ts
+export const workspaceHandlers = {
+  'workspace.getSettings': async (): Promise<Settings> => {
+    return WorkspaceModel.getSettings()
+  },
+}
+```
 
-## Import 규칙
+**2. index.ts에 import 추가**
+```typescript
+import { workspaceHandlers } from './workspace.js'
+const handlers = { ...appHandlers, ...workspaceHandlers }
+```
 
-- model, common만 import 가능
+끝. 타입 추론 + 핸들러 등록 자동.
+
+## 규칙
+
+- **채널명**: `domain.action` (예: `app.sync`, `tree.getNode`)
+- **Import**: `model`, `common`만 가능

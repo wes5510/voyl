@@ -25,6 +25,12 @@ Backend IPC 레이어 구현 전문가.
 - 요청/응답 처리
 - Frontend ↔ Backend 인터페이스
 
+## Serena MCP 활용
+
+- `mcp__serena__replace_symbol_body` - 기존 핸들러 수정
+- `mcp__serena__insert_after_symbol` - 새 핸들러 추가
+- `mcp__serena__get_symbols_overview` - 기존 구조 파악
+
 ## 구현 원칙
 
 - IPC 레이어 규칙 준수

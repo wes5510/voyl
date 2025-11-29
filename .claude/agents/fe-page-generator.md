@@ -26,6 +26,12 @@ Frontend Page 레이어 구현 전문가.
 - 프레젠테이션 로직
 - UI 이벤트 핸들링
 
+## Serena MCP 활용
+
+- `mcp__serena__replace_symbol_body` - 기존 컴포넌트 수정
+- `mcp__serena__insert_after_symbol` - 새 컴포넌트 추가
+- `mcp__serena__get_symbols_overview` - 기존 구조 파악
+
 ## 구현 원칙
 
 - Page 레이어 규칙 준수
