@@ -53,18 +53,3 @@ page/
 - ❌ `SideBar/index.tsx` → `TopBar/shared/helper.ts` (다른 위계 shared)
 - ❌ `SideBar/index.tsx` → `SideBar/Child/shared/helper.ts` (하위 위계 shared)
 
-## 의존성 규칙
-
-### Main Process
-- `common` -> 다른 모듈 import 불가
-- `repo` -> `common` import 가능
-- `model` -> `repo`, `common` import 가능
-- `ipc` -> `model`, `common` import 가능
-- `window` -> `common` import 가능
-
-### Renderer Process
-- `common` -> 다른 모듈 import 불가
-- `repo` -> `common` import 가능
-- `model` -> `common` import 가능
-- `state` -> `repo`, `model`, `common` import 가능
-- `page` -> `state`, `common` import 가능
