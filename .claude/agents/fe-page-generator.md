@@ -38,10 +38,22 @@ Frontend Page 레이어 구현 전문가.
 - React ref 사용 원칙 준수
 - 기존 컴포넌트 패턴 따르기
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 Page 패턴 및 React 가이드 확인
+
+### 2. 컴포넌트 구현
+- React 컴포넌트 작성
+- 페이지 구성 및 UI 이벤트 핸들링
+- State 레이어 연결
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-page.md` 작성:
-
 - 구현된 컴포넌트 목록
 - Props/Events 인터페이스
 - State 레이어 연결 포인트
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**

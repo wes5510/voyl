@@ -38,9 +38,22 @@ Frontend Repo 레이어 구현 전문가.
 - 에러 핸들링
 - 기존 Repo 패턴 따르기
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 Repo 패턴 분석
+
+### 2. Repo 구현
+- 데이터 접근 로직 작성
+- IPC 통신 또는 로컬 스토리지 접근
+- 에러 핸들링 추가
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-repo.md` 작성:
 - 구현된 Repo 목록
 - 외부 인터페이스
 - Model/Backend 연결 포인트
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**

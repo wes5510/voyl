@@ -38,9 +38,22 @@ Backend IPC 레이어 구현 전문가.
 - 에러 핸들링
 - 기존 IPC 패턴 따르기
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 IPC 패턴 분석
+
+### 2. IPC 핸들러 구현
+- 채널 정의 및 핸들러 구현
+- 타입 안전성 확보
+- 에러 핸들링 추가
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/be-ipc.md` 작성:
 - 구현된 핸들러 목록
 - 채널/이벤트 인터페이스
 - Frontend Repo 연결 포인트
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**

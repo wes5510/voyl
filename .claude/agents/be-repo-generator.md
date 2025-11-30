@@ -40,9 +40,22 @@ Backend Repo 레이어 구현 전문가.
 - 트랜잭션 관리
 - 기존 Repo 패턴 따르기
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 Backend Repo 패턴 분석
+
+### 2. Repo 구현
+- 파일 시스템/DB 접근 코드 작성
+- 인터페이스 추상화
+- 에러 핸들링 및 트랜잭션 관리
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/be-repo.md` 작성:
 - 구현된 Repo 목록
 - 외부 인터페이스
 - Model 연결 포인트
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**

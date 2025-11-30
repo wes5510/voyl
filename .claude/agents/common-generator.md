@@ -73,9 +73,21 @@ export function {utilName}(): {ReturnType} {
 - 다른 레이어에서 common을 import (역방향 금지)
 - common 내부 순환 참조 금지
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 common 패턴 분석
+
+### 2. 공통 코드 구현
+- 타입/상수/유틸리티 작성
+- 의존성 규칙 준수 확인
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/common.md` 작성:
 - 생성/수정된 파일 목록
 - 타입/상수/유틸리티 목록
 - 사용처 안내
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**
