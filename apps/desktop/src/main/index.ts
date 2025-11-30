@@ -4,6 +4,14 @@ import { registerHandlers } from './ipc/index.js'
 import { createWindow } from './window/index.js'
 import { logger } from './common/logger.util.js'
 
+process.on('uncaughtException', (error) => {
+  logger.fatal({ error }, 'Uncaught Exception')
+})
+
+process.on('unhandledRejection', (reason) => {
+  logger.error({ reason }, 'Unhandled Promise Rejection')
+})
+
 async function installDevTools(): Promise<void> {
   if (!is.dev) {
     return
