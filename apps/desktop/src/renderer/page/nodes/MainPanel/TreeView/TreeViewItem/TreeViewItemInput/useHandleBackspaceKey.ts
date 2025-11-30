@@ -1,6 +1,6 @@
 import { isHTMLTextAreaElement } from './shared/util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import { useRemoveNode } from '@/renderer/store/treeView'
+import { useRemoveNode } from '@/renderer/state/treeView'
 
 export default function useHandleBackspaceKey({
   nodeId,

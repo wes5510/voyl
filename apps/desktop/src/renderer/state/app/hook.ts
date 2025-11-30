@@ -8,8 +8,8 @@ import {
   initializeApp,
   syncApp,
 } from '@/renderer/repo/app'
-import { QUERY_KEYS } from './const.js'
-import { getInitializationQueryOptions } from './queryOptions.js'
+import { QUERY_KEYS } from './queryKey'
+import { getInitializationQueryOptions } from './queryOption'
 
 /**
  * 앱 초기화 상태 Hook

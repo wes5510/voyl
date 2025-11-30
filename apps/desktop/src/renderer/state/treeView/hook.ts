@@ -4,19 +4,19 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import { useSnapshot } from 'valtio'
-import { getTreeViewNodesQueryOptions } from './queryOptions'
+import { getTreeViewNodesQueryOptions } from './queryOption'
 import { addNewNodeAfter, removeNode } from '@/renderer/repo/treeView'
 import { NodeDTO } from '@/renderer/repo/tree'
-import { TREE_VIEW_QUERY_KEYS } from './queryKeys'
+import { TREE_VIEW_QUERY_KEYS } from './queryKey'
 // eslint-disable-next-line voyl/same-level-import
-import { QUERY_KEYS } from '../tree/queryKeys'
-import { treeViewState } from './state'
+import { QUERY_KEYS } from '../tree/queryKey'
+import { treeViewStore } from './store'
 
 /**
  * Top Node ID 조회
  */
 export const useTopNodeId = () => {
-  const snap = useSnapshot(treeViewState)
+  const snap = useSnapshot(treeViewStore)
   return snap.topNodeId
 }
 
@@ -24,7 +24,7 @@ export const useTopNodeId = () => {
  * Focused Node ID 조회
  */
 export const useFocusedNodeId = () => {
-  const snap = useSnapshot(treeViewState)
+  const snap = useSnapshot(treeViewStore)
   return snap.focusedNodeId
 }
 

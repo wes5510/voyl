@@ -1,4 +1,4 @@
-import { useSelectWorkspaceDirPath } from '@/renderer/store/app'
+import { useSelectWorkspaceDirPath } from '@/renderer/state/app'
 import { Button } from '@/renderer/common/Button'
 import { Loader2, FolderIcon } from 'lucide-react'
 import { toast } from 'sonner'

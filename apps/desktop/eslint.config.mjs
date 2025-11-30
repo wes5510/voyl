@@ -81,7 +81,7 @@ export default [
             '**/src/renderer/page/**',
             '**/src/renderer/model/**',
             '**/src/renderer/repo/**',
-            '**/src/renderer/store/**',
+            '**/src/renderer/state/**',
           ],
           tsconfigPath: path.resolve(__dirname, './tsconfig.web.json'),
         },
@@ -131,7 +131,7 @@ export default [
         {
           patterns: [
             '**/src/renderer/page/**',
-            '**/src/renderer/store/*',
+            '**/src/renderer/state/*',
             '**/src/renderer/common/*',
             '**/src/renderer/common/shared/*',
             '**/src/common/*',
@@ -142,7 +142,7 @@ export default [
     },
   },
   {
-    files: ['src/renderer/store/**/*.{ts,tsx}'],
+    files: ['src/renderer/state/**/*.{ts,tsx}'],
     plugins: {
       voyl: voylPlugin,
     },
@@ -151,7 +151,7 @@ export default [
         'error',
         {
           patterns: [
-            '**/src/renderer/store/*/**',
+            '**/src/renderer/state/*/**',
             '**/src/renderer/common/*',
             '**/src/renderer/model/*',
             '**/src/renderer/repo/*',

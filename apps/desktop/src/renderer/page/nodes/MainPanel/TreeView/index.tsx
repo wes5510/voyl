@@ -1,4 +1,4 @@
-import { useTreeViewNodes, useTopNodeId } from '@/renderer/store/treeView'
+import { useTreeViewNodes, useTopNodeId } from '@/renderer/state/treeView'
 import TreeViewItem from './TreeViewItem'
 
 export default function TreeView() {

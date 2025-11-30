@@ -1,5 +1,5 @@
-import { useTreeNodeTitle } from '@/renderer/store/tree'
-import { useTopNodeId } from '@/renderer/store/treeView'
+import { useTreeNodeTitle } from '@/renderer/state/tree'
+import { useTopNodeId } from '@/renderer/state/treeView'
 
 export default function Title() {
   const topNodeId = useTopNodeId()

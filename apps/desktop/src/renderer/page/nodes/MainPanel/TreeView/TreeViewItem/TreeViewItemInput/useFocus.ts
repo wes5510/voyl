@@ -2,7 +2,7 @@ import { RefObject, useEffect } from 'react'
 import {
   useFocusedNodeId,
   setTreeViewFocusedNodeId,
-} from '@/renderer/store/treeView'
+} from '@/renderer/state/treeView'
 
 export default function useFocus<T extends HTMLElement = HTMLElement>({
   nodeId,

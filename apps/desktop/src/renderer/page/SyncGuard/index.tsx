@@ -1,4 +1,4 @@
-import { useSyncApp } from '@/renderer/store/app'
+import { useSyncApp } from '@/renderer/state/app'
 import SyncSplash from './SyncSplash'
 import { useEffect } from 'react'
 
