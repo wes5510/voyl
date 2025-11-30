@@ -39,7 +39,7 @@ pnpm pre-commit   # 커밋 전 검사
 
 #### `/apps/desktop/src/renderer/` - Renderer Process
 - **page/**: UI 페이지
-- **store/**: 상태 관리 (React Query + Valtio)
+- **state/**: 상태 관리 (React Query + Valtio)
 - **repo/**: 데이터 페칭 (IPC 통신)
 - **model/**: 도메인 모델, 비즈니스 로직
 - **common/**: 공유 UI 컴포넌트
@@ -62,6 +62,7 @@ pnpm pre-commit   # 커밋 전 검사
 3. **bug-fix**: 버그 수정
 4. **refactoring**: 구조 개선, 코드 정리
 5. **feature-modification**: 기존 기능 수정/삭제
+6. **documentation**: 문서 정리, 인덱싱
 
 ### 워크플로우별 Agent 호출 순서
 
@@ -107,6 +108,12 @@ pnpm pre-commit   # 커밋 전 검사
 3. tester         → 검증
 ```
 
+#### 문서 작업
+```
+1. doc-updater   → 코드 변경 후 용어/참조 동기화
+2. doc-compiler  → 인덱스 갱신 + 문서 정리
+```
+
 ### 사용 가능한 Agent
 
 | 분류 | Agent | 역할 |
@@ -120,7 +127,8 @@ pnpm pre-commit   # 커밋 전 검사
 | **공통** | common-generator | 타입, 유틸, 상수 |
 | | tester | 타입체크, 린트, 테스트 |
 | | refactor | 코드 정리, 패턴 일관성 |
-| | doc-updater | 코드 변경 후 문서 동기화 |
+| | doc-updater | 코드 변경 후 용어/참조 동기화 |
+| | doc-compiler | 인덱스 갱신, 문서 정리 |
 | | git-agent | 브랜치, 커밋, PR |
 | **Frontend** | fe-page-generator | Page 레이어 |
 | | fe-state-generator | State 레이어 |
