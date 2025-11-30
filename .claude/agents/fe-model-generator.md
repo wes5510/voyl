@@ -39,9 +39,22 @@ Frontend Model 레이어 구현 전문가.
 - 불변성 유지
 - 기존 모델 패턴 따르기
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 Model 패턴 분석
+
+### 2. 모델 구현
+- 엔티티 정의
+- 비즈니스 로직 구현
+- 도메인 규칙 및 데이터 변환 로직 추가
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-model.md` 작성:
 - 구현된 엔티티/함수 목록
 - 외부 인터페이스
 - State/Repo 연결 포인트
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**

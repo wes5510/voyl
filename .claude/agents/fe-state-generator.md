@@ -38,9 +38,22 @@ Frontend State 레이어 구현 전문가.
 - 단방향 데이터 흐름
 - 기존 상태 관리 패턴 따르기
 
-## 완료 후 (필수)
+## 실행 절차
+
+### 1. 컨텍스트 파악
+- whiteboard context.md 및 architect.md 확인
+- 기존 State 패턴 분석
+
+### 2. 상태 관리 구현
+- 상태 정의 및 변경 로직 작성
+- Page ↔ State, State ↔ Model 연결
+- 단방향 데이터 흐름 확보
+
+### 3. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-state.md` 작성:
 - 구현된 상태 목록
 - 액션/이벤트 인터페이스
 - Page/Model 연결 포인트
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**

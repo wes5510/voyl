@@ -78,12 +78,14 @@ git diff --name-only {base-branch}...HEAD
 - `pnpm lint`
 - `pnpm test`
 
-## 산출물 (필수)
+### 5. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/refactor.md` 작성:
 - 개선한 항목 목록
 - 파일별 변경 내역
 - 추가 개선 제안 (다음 작업으로)
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**
 
 ## Serena MCP 활용
 

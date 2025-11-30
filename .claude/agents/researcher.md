@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: "결정/판단 요청 전에 대안 탐색에 사용. 오픈소스, 베스트 프랙티스 검색 및 비교 분석을 담당함."
-tools: Read,Glob,Grep,LS,WebSearch,WebFetch
+tools: Read,Write,Glob,Grep,LS,WebSearch,WebFetch
 ---
 
 # Researcher Agent
@@ -14,6 +14,10 @@ tools: Read,Glob,Grep,LS,WebSearch,WebFetch
 - 여러 구현 방식 중 선택이 필요할 때
 - 기존 해결책(오픈소스, 라이브러리)이 있을 수 있을 때
 - 베스트 프랙티스 확인이 필요할 때
+
+## 실행 전 참고
+
+- `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
 
 ## 실행 절차
 
@@ -53,13 +57,23 @@ tools: Read,Glob,Grep,LS,WebSearch,WebFetch
 - {option}: {이유}
 ```
 
-## 산출물 (필수)
+### 5. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/research.md` 작성:
+`apps/desktop/docs/whiteboard/{task-name}/agent-notes/researcher.md` 작성:
 - 탐색한 대안 목록
 - 비교 분석 표
 - 추천 및 근거
 - 참고 링크
+
+**사용자 판단이 필요한 경우** `## Needs User Decision` 섹션 추가:
+```markdown
+## Needs User Decision
+- **결정 필요**: {무엇을 결정해야 하는지}
+- **옵션**: {가능한 선택지들}
+- **권장**: {있다면 권장 옵션과 이유}
+```
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**
 
 ## 검색 팁
 

@@ -76,12 +76,14 @@ pnpm typecheck && pnpm lint && pnpm test
 - 수정 필요: fe-repo-generator
 ```
 
-## 산출물 (필수)
+### 4. Whiteboard 기록 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/test-result.md` 작성:
 - 검증 항목별 결과
 - 실패 시 상세 내역
 - 수정 필요한 agent 명시
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**
 
 ## 재검증
 
