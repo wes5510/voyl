@@ -86,7 +86,9 @@ pnpm pre-commit   # 커밋 전 검사
 5. fe-* generators   → Frontend (repo → model → state → page)
 6. tester            → 검증
 7. refactor          → 코드 정리 (선택)
-8. retrospector      → 회고 기록
+8. doc-updater       → 문서 동기화 (용어/참조 업데이트)
+9. doc-compiler      → 인덱스 갱신 + 문서 정리
+10. retrospector     → 회고 기록
 ```
 
 #### 버그 수정
@@ -94,7 +96,9 @@ pnpm pre-commit   # 커밋 전 검사
 1. bug-analyzer   → 근본 원인 분석
 2. 해당 generator → 수정 구현
 3. tester         → 검증
-4. retrospector   → 회고 기록
+4. doc-updater    → 문서 동기화 (용어/참조 업데이트)
+5. doc-compiler   → 인덱스 갱신 + 문서 정리
+6. retrospector   → 회고 기록
 ```
 
 #### 리팩토링
@@ -102,7 +106,9 @@ pnpm pre-commit   # 커밋 전 검사
 1. code-analyzer → 현재 상태 분석
 2. refactor      → 리팩토링 실행
 3. tester        → 검증
-4. retrospector  → 회고 기록
+4. doc-updater   → 문서 동기화 (용어/참조 업데이트)
+5. doc-compiler  → 인덱스 갱신 + 문서 정리
+6. retrospector  → 회고 기록
 ```
 
 #### 기능 수정/삭제
@@ -110,7 +116,9 @@ pnpm pre-commit   # 커밋 전 검사
 1. code-analyzer  → 영향 범위 분석
 2. 해당 generator → 구현
 3. tester         → 검증
-4. retrospector   → 회고 기록
+4. doc-updater    → 문서 동기화 (용어/참조 업데이트)
+5. doc-compiler   → 인덱스 갱신 + 문서 정리
+6. retrospector   → 회고 기록
 ```
 
 #### 문서 작업

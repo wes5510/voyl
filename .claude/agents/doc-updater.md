@@ -42,9 +42,8 @@ find . -name "*.md" -not -path "*/node_modules/*" -not -path "*/whiteboard/*"
 주요 대상:
 - `CLAUDE.md`
 - `apps/desktop/docs/project.md`
+- `apps/desktop/docs/architecture/**/*.md`
 - `apps/desktop/docs/guide/**/*.md`
-- `README.md`
-- 각 패키지 README
 
 ### 3. 용어 사용처 검색
 ```bash
