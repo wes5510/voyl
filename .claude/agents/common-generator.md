@@ -73,7 +73,7 @@ export function {utilName}(): {ReturnType} {
 - 다른 레이어에서 common을 import (역방향 금지)
 - common 내부 순환 참조 금지
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/common.md` 작성:
 - 생성/수정된 파일 목록

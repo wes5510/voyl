@@ -27,7 +27,7 @@ tools: Read,Write,Glob,Grep,LS,Bash
 - 의존성 관계
 - 레이어별 책임 분배
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/architect.md` 작성:
 - 설계 결정 근거

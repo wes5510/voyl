@@ -14,9 +14,16 @@ tools: Read,Write,Edit,Glob,Grep,LS
 - tester 검증 완료 후
 - 작업 완료 시점
 
+## 실행 전 필수 확인
+
+1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-name}/agent-notes/*.md` 전체 읽기
+
 ## 실행 절차
 
 ### 1. 작업 컨텍스트 파악
+- whiteboard의 context.md에서 작업 목표 확인
+- agent-notes/*.md에서 각 Agent 작업 내역 확인
 - 어떤 워크플로우였는지 (new-feature, bug-fix 등)
 - 어떤 Agent들이 호출되었는지
 - 최종 결과 (성공/실패)

@@ -78,7 +78,7 @@ git diff --name-only {base-branch}...HEAD
 - `pnpm lint`
 - `pnpm test`
 
-## 산출물
+## 산출물 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/refactor.md` 작성:
 - 개선한 항목 목록
