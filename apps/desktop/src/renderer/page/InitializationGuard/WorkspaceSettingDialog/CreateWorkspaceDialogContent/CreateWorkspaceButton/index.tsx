@@ -1,6 +1,6 @@
 import { Button } from '@/renderer/common/Button'
 import { isPathEmpty } from './util'
-import { useInitializeWorkspace } from '@/renderer/store/app'
+import { useInitializeWorkspace } from '@/renderer/state/app'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 

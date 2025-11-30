@@ -1,7 +1,7 @@
 import { useHotkeys } from 'react-hotkeys-hook'
 import mergeRefs from 'merge-refs'
 import { useRef } from 'react'
-import { useTreeNodeTitle } from '@/renderer/store/tree'
+import { useTreeNodeTitle } from '@/renderer/state/tree'
 import useAutoResize from './useAutoResize'
 import cn from '@/renderer/common/shared/cn'
 import useHandleKey from './useHandleKey'

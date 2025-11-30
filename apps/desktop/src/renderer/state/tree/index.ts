@@ -6,9 +6,9 @@ import {
 import {
   getRootNodeIdQueryOptions,
   getTreeNodeQueryOptions,
-} from './queryOptions'
+} from './queryOption'
 import { updateNodeTitle } from '@/renderer/repo/node'
-import { QUERY_KEYS } from './queryKeys'
+import { QUERY_KEYS } from './queryKey'
 
 export const useRootNodeId = () => {
   const { data } = useSuspenseQuery(getRootNodeIdQueryOptions())

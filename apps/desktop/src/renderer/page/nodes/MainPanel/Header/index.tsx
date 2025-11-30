@@ -1,7 +1,7 @@
-import { useTopNodeId } from '@/renderer/store/treeView'
+import { useTopNodeId } from '@/renderer/state/treeView'
 import NodeHeader from './NodeHeader'
 import RootHeader from './RootHeader'
-import { useIsRootNodeId } from '@/renderer/store/tree'
+import { useIsRootNodeId } from '@/renderer/state/tree'
 
 export default function Header() {
   const topNodeId = useTopNodeId()

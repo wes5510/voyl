@@ -1,11 +1,11 @@
 import { HotkeyCallback } from 'react-hotkeys-hook'
 import { isHTMLTextAreaElement } from '../shared/util'
 import { getNewNodeTitle, getSourceNodeTitle } from './util'
-import { useUpdateNodeTitle } from '@/renderer/store/tree'
+import { useUpdateNodeTitle } from '@/renderer/state/tree'
 import {
   useAddNewNodeAfter,
   setTreeViewFocusedNodeId,
-} from '@/renderer/store/treeView'
+} from '@/renderer/state/treeView'
 
 export default function useHandleEnterKey({
   nodeId,

@@ -1,4 +1,4 @@
-import { useAppInitialized } from '@/renderer/store/app'
+import { useAppInitialized } from '@/renderer/state/app'
 import WorkspaceSettingDialog from './WorkspaceSettingDialog'
 
 interface InitializationGuardProps {

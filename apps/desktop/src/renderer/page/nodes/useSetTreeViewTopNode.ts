@@ -1,5 +1,5 @@
-import { useRootNodeId } from '@/renderer/store/tree'
-import { setTreeViewTopNodeId } from '@/renderer/store/treeView'
+import { useRootNodeId } from '@/renderer/state/tree'
+import { setTreeViewTopNodeId } from '@/renderer/state/treeView'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
