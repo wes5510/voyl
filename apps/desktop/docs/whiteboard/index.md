@@ -10,14 +10,15 @@
 
 ## 폴더명 컨벤션
 
-- 형식: `YYYYMMDDTHHMM-kebab-case-name/`
+- 형식: `{task-dir}` = `YYYYMMDDTHHMM-kebab-case-name/`
 - 예시: `20251129T1245-user-auth/`
+- Agent 파일들에서 `{task-dir}`로 참조
 
 ## 폴더 구조
 
 ```
 whiteboard/
-├── 20251129T1245-user-auth/
+├── {task-dir}/                    # 예: 20251129T1245-user-auth/
 │   ├── context.md
 │   └── agent-notes/
 │       ├── architect.md

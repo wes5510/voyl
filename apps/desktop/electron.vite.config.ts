@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
+    build: {
+      sourcemap: true,
+    },
   },
   preload: {
     plugins: [externalizeDepsPlugin()],

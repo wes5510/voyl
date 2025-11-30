@@ -16,7 +16,7 @@ tools: Read,Write,Edit,MultiEdit,Glob,Grep,LS,Bash
 
 ## 실행 전 필수 확인
 
-1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
 2. 각 `agent-notes/*.md` 읽어 변경 내역 파악
 3. **필수 가이드 숙지**:
    - `**/docs/guide/**/index.md` 파일들
@@ -80,7 +80,7 @@ git diff --name-only {base-branch}...HEAD
 
 ### 5. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/refactor.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/refactor.md` 작성:
 - 개선한 항목 목록
 - 파일별 변경 내역
 - 추가 개선 제안 (다음 작업으로)

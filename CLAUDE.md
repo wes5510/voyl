@@ -113,10 +113,10 @@ pnpm pre-commit   # 커밋 전 검사
 
 ### Whiteboard
 
-`apps/desktop/docs/whiteboard/{task-name}/` 구조:
+`apps/desktop/docs/whiteboard/{task-dir}/` - 진행 중인 논의, 아이디어, 맥락
 
-- `context.md`: 작업명, 목표
-- `agent-notes/`: 각 Agent가 남기는 기록
+- `{task-dir}`: `YYYYMMDDTHHMM-task-name` 형식 (예: `20251130T1530-logger-source-location`)
+- 상세 구조: [whiteboard/index.md](apps/desktop/docs/whiteboard/index.md) 참조
 
 ### 사용 가능한 Agent
 

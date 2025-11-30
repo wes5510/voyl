@@ -10,8 +10,8 @@ tools: Read,Write,Edit,MultiEdit,Glob,Grep,LS,Bash
 
 ## 실행 전 필수 확인
 
-1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
-2. `apps/desktop/docs/whiteboard/{task-name}/agent-notes/architect.md` 읽기 (있으면)
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/architect.md` 읽기 (있으면)
 3. **필수 가이드 숙지**:
    - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
    - SRP 원칙 가이드 (`general/` 하위)
@@ -85,7 +85,7 @@ export function {utilName}(): {ReturnType} {
 
 ### 3. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/common.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/common.md` 작성:
 - 생성/수정된 파일 목록
 - 타입/상수/유틸리티 목록
 - 사용처 안내

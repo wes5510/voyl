@@ -10,8 +10,8 @@ Backend Repo 레이어 구현 전문가.
 
 ## 실행 전 필수 확인
 
-1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
-2. `apps/desktop/docs/whiteboard/{task-name}/agent-notes/architect.md` 읽기 (있으면)
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/architect.md` 읽기 (있으면)
 3. **필수 가이드 숙지**:
    - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
    - SRP 원칙 가이드 (`general/` 하위)
@@ -53,7 +53,7 @@ Backend Repo 레이어 구현 전문가.
 
 ### 3. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/be-repo.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/be-repo.md` 작성:
 - 구현된 Repo 목록
 - 외부 인터페이스
 - Model 연결 포인트

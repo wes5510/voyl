@@ -11,9 +11,9 @@ tools: Read,Write,Glob,Grep,LS,Bash
 ## 실행 전 참고
 
 1. **컨텍스트 파악**
-   - `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
-   - `apps/desktop/docs/whiteboard/{task-name}/agent-notes/spec-writer.md` 읽기 (있으면)
-   - `apps/desktop/docs/whiteboard/{task-name}/agent-notes/code-analyzer.md` 읽기 (있으면)
+   - `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+   - `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/spec-writer.md` 읽기 (있으면)
+   - `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/code-analyzer.md` 읽기 (있으면)
 
 2. **필수 가이드 숙지**
    - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
@@ -38,7 +38,7 @@ tools: Read,Write,Glob,Grep,LS,Bash
 
 ### 3. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/architect.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/architect.md` 작성:
 - 설계 결정 근거
 - 구현 시 주의사항
 - 레이어별 구현 포인트
