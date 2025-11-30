@@ -47,7 +47,7 @@ tools: Read,Glob,Grep,LS,Bash
 - 발견된 패턴
 - 주의사항/개선점
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/code-analyzer.md` 작성:
 - 분석 결과 요약

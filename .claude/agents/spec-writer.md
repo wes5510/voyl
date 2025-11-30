@@ -27,7 +27,7 @@ tools: Read,Write,Glob,Grep,LS
 - 비기능 요구사항
 - 제약사항
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/spec-writer.md` 작성:
 - 주요 결정사항

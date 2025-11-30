@@ -39,7 +39,7 @@ Backend Model 레이어 구현 전문가.
 - 불변성 유지
 - 기존 모델 패턴 따르기
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/be-model.md` 작성:
 - 구현된 엔티티/함수 목록

@@ -40,7 +40,7 @@ Backend Repo 레이어 구현 전문가.
 - 트랜잭션 관리
 - 기존 Repo 패턴 따르기
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/be-repo.md` 작성:
 - 구현된 Repo 목록

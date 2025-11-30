@@ -53,7 +53,7 @@ tools: Read,Glob,Grep,LS,WebSearch,WebFetch
 - {option}: {이유}
 ```
 
-## 산출물
+## 산출물 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/research.md` 작성:
 - 탐색한 대안 목록

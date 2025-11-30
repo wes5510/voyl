@@ -76,7 +76,7 @@ pnpm typecheck && pnpm lint && pnpm test
 - 수정 필요: fe-repo-generator
 ```
 
-## 산출물
+## 산출물 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/test-result.md` 작성:
 - 검증 항목별 결과

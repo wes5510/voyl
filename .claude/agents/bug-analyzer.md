@@ -35,7 +35,7 @@ tools: Read,Glob,Grep,LS,Bash
 - 수정 전략 (설계 문제 vs 구현 버그)
 - 권장 수정 Agent 및 레이어
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/bug-analyzer.md` 작성:
 - 분석 결과 요약

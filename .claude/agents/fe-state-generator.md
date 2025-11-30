@@ -38,7 +38,7 @@ Frontend State 레이어 구현 전문가.
 - 단방향 데이터 흐름
 - 기존 상태 관리 패턴 따르기
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-state.md` 작성:
 - 구현된 상태 목록

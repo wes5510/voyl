@@ -38,7 +38,7 @@ Frontend Page 레이어 구현 전문가.
 - React ref 사용 원칙 준수
 - 기존 컴포넌트 패턴 따르기
 
-## 완료 후
+## 완료 후 (필수)
 
 `apps/desktop/docs/whiteboard/{task-name}/agent-notes/fe-page.md` 작성:
 
