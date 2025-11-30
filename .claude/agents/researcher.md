@@ -17,7 +17,7 @@ tools: Read,Write,Glob,Grep,LS,WebSearch,WebFetch
 
 ## 실행 전 참고
 
-- `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+- `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
 
 ## 실행 절차
 
@@ -59,7 +59,7 @@ tools: Read,Write,Glob,Grep,LS,WebSearch,WebFetch
 
 ### 5. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/researcher.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/researcher.md` 작성:
 - 탐색한 대안 목록
 - 비교 분석 표
 - 추천 및 근거

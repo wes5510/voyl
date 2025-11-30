@@ -6,5 +6,6 @@
 
 ## 파일명 컨벤션
 
-- 형식: `YYYYMMDDTHHMM-kebab-case-name.md`
+- 형식: `{task-dir}.md` = `YYYYMMDDTHHMM-kebab-case-name.md`
 - 예시: `20251129T1245-feature-planning.md`
+- Agent 파일들에서 `{task-dir}`로 참조

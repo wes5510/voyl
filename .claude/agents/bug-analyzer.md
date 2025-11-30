@@ -29,7 +29,7 @@ tools: Read,Write,Glob,Grep,LS,Bash
 
 ### 2. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/bug-analyzer.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/bug-analyzer.md` 작성:
 - 증상 요약
 - 근본 원인
 - 영향 받는 코드/기능

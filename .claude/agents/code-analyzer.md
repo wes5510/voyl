@@ -47,7 +47,7 @@ tools: Read,Write,Glob,Grep,LS,Bash
 
 ### 2. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/code-analyzer.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/code-analyzer.md` 작성:
 - 분석 결과 요약
 - 구조/의존성 다이어그램 (텍스트)
 - 발견된 패턴

@@ -11,7 +11,7 @@ tools: Read,Write,Glob,Grep,LS
 ## 실행 전 참고
 
 1. **컨텍스트 파악**
-   - `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+   - `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
 
 2. **명세 작성 가이드**
    - `apps/desktop/docs/spec/index.md` 참고
@@ -36,7 +36,7 @@ tools: Read,Write,Glob,Grep,LS
 
 ### 3. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-name}/agent-notes/spec-writer.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/spec-writer.md` 작성:
 - 주요 결정사항
 - 다음 Agent를 위한 핵심 포인트
 - 명확히 해야 할 부분

@@ -16,8 +16,8 @@ tools: Read,Write,Edit,Glob,Grep,LS
 
 ## 실행 전 필수 확인
 
-1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
-2. `apps/desktop/docs/whiteboard/{task-name}/agent-notes/*.md` 전체 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/*.md` 전체 읽기
 
 ## 실행 절차
 

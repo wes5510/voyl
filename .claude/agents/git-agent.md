@@ -10,7 +10,7 @@ Git 작업 전문가. 브랜치 관리, 커밋, PR 생성을 담당.
 
 ## 실행 전 필수 확인
 
-1. `apps/desktop/docs/whiteboard/{task-name}/context.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
 2. 변경된 파일 목록 확인 (`git status`, `git diff --stat`)
 3. 각 agent-notes 확인하여 변경 내역 파악
 
