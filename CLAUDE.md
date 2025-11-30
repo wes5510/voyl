@@ -73,6 +73,7 @@ pnpm pre-commit   # 커밋 전 검사
 4. tester         → 검증 (typecheck, lint, build)
 5. doc-updater    → 문서 동기화 (용어/기술 스택 업데이트)
 6. refactor       → 코드 정리 (선택)
+7. retrospector   → 회고 기록
 ```
 
 #### 새 기능 개발
@@ -84,6 +85,7 @@ pnpm pre-commit   # 커밋 전 검사
 5. fe-* generators   → Frontend (repo → model → state → page)
 6. tester            → 검증
 7. refactor          → 코드 정리 (선택)
+8. retrospector      → 회고 기록
 ```
 
 #### 버그 수정
@@ -91,6 +93,7 @@ pnpm pre-commit   # 커밋 전 검사
 1. bug-analyzer   → 근본 원인 분석
 2. 해당 generator → 수정 구현
 3. tester         → 검증
+4. retrospector   → 회고 기록
 ```
 
 #### 리팩토링
@@ -98,6 +101,7 @@ pnpm pre-commit   # 커밋 전 검사
 1. code-analyzer → 현재 상태 분석
 2. refactor      → 리팩토링 실행
 3. tester        → 검증
+4. retrospector  → 회고 기록
 ```
 
 #### 기능 수정/삭제
@@ -105,6 +109,7 @@ pnpm pre-commit   # 커밋 전 검사
 1. code-analyzer  → 영향 범위 분석
 2. 해당 generator → 구현
 3. tester         → 검증
+4. retrospector   → 회고 기록
 ```
 
 ### 사용 가능한 Agent
@@ -129,7 +134,8 @@ pnpm pre-commit   # 커밋 전 검사
 | **Backend** | be-ipc-generator | IPC 레이어 |
 | | be-model-generator | Model 레이어 |
 | | be-repo-generator | Repo 레이어 |
-| **메타** | system-improver | Agent 시스템 개선 |
+| **메타** | retrospector | 워크플로우 완료 후 회고 기록 |
+| | system-improver | 회고 분석, Agent 시스템 개선 |
 
 ### 검증 실패 시
 
