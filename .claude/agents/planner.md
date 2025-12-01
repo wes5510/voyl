@@ -38,13 +38,10 @@ tools: Read,Write,Glob,Grep,LS
 
 ### 2. 계획 문서 작성
 
-`apps/desktop/docs/planning/{task-dir}.md` 작성 (컨벤션은 `planning/index.md` 참고):
-- 작업 목표
-- 영향 범위
-- Agent 할당 (순차/병렬 실행 순서)
-- 각 Agent별 구체적 작업 내용
-- 예상 산출물 목록
-- 검증 기준
+`apps/desktop/docs/planning/{task-dir}.md` 작성
+
+- 템플릿 및 컨벤션: [planning/index.md](../../apps/desktop/docs/planning/index.md) 참고
+- **핵심**: Phase별로 병렬/직렬을 명시하여 오케스트레이터가 실행 방식을 판단할 수 있게 함
 
 ### 3. Orchestrator에게 보고
 - Planning 문서 경로

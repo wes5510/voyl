@@ -4,6 +4,7 @@ export {
   useTreeViewNodes,
   useAddNewNodeAfter,
   useRemoveNode,
+  getPreviousFocusableNodeId,
 } from './hook'
 
 export {

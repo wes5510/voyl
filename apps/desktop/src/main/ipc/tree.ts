@@ -36,4 +36,12 @@ export const treeHandlers = {
   }): Promise<Node | null> => {
     return NodeModel.updateNodeTitle({ id: nodeId, title })
   },
+
+  'node.getPreviousFocusableNodeId': async ({
+    id,
+  }: {
+    id: string
+  }): Promise<string | null> => {
+    return NodeModel.getPreviousFocusableNodeId({ id })
+  },
 }

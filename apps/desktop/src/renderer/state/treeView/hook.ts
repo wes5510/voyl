@@ -6,6 +6,7 @@ import {
 import { useSnapshot } from 'valtio'
 import { getTreeViewNodesQueryOptions } from './queryOption'
 import { addNewNodeAfter, removeNode } from '@/renderer/repo/treeView'
+import { getPreviousFocusableNodeId } from '@/renderer/repo/node'
 import { NodeDTO } from '@/renderer/repo/tree'
 import { TREE_VIEW_QUERY_KEYS } from './queryKey'
 // eslint-disable-next-line voyl/same-level-import
@@ -88,3 +89,9 @@ export const useRemoveNode = () => {
   })
   return mutateAsync
 }
+
+/**
+ * 이전 포커스 가능한 노드 ID 조회
+ * (삭제 직전 호출용, 직접 repo 함수를 re-export)
+ */
+export { getPreviousFocusableNodeId }
