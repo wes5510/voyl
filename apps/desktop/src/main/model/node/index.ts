@@ -118,3 +118,24 @@ export async function removeChildNodes({ id }: { id: string }) {
   const childIds = await NodeRepo.getChildIds({ id })
   return await NodeRepo.removeNodes({ ids: childIds })
 }
+
+export async function getPreviousFocusableNodeId({
+  id,
+}: {
+  id: string
+}): Promise<string | null> {
+  const parentId = await NodeRepo.getParentId({ id })
+
+  if (!parentId) {
+    return null
+  }
+
+  const childIds = await NodeRepo.getChildIds({ id: parentId })
+  const currentIndex = childIds.indexOf(id)
+
+  if (currentIndex === 0) {
+    return parentId
+  }
+
+  return childIds[currentIndex - 1]
+}

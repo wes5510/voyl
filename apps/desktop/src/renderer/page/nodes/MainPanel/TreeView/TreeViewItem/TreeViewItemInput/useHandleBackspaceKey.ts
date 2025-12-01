@@ -1,6 +1,10 @@
 import { isHTMLTextAreaElement } from './shared/util'
 import { HotkeyCallback } from 'react-hotkeys-hook'
-import { useRemoveNode } from '@/renderer/state/treeView'
+import {
+  getPreviousFocusableNodeId,
+  useRemoveNode,
+  setTreeViewFocusedNodeId,
+} from '@/renderer/state/treeView'
 
 export default function useHandleBackspaceKey({
   nodeId,
@@ -15,6 +19,12 @@ export default function useHandleBackspaceKey({
     }
 
     e.preventDefault()
+
+    const previousNodeId = await getPreviousFocusableNodeId({ id: nodeId })
     await removeNode({ nodeId })
+
+    if (previousNodeId) {
+      setTreeViewFocusedNodeId({ nodeId: previousNodeId })
+    }
   }
 }
