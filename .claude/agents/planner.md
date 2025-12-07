@@ -17,8 +17,7 @@ tools: Read,Write,Glob,Grep,LS
    - `**/docs/guide/**/index.md` 파일들을 찾아 전체 구조 파악
 
 3. **기존 패턴 참고**
-   - `apps/desktop/docs/planning/index.md` 참고 (파일명 컨벤션)
-   - `apps/desktop/docs/planning/` 참고 (유사 작업 패턴)
+   - `apps/desktop/docs/whiteboard/` 하위 `agent-notes/planner.md` 참고 (유사 작업 패턴)
 
 ## 분석 항목
 
@@ -36,12 +35,41 @@ tools: Read,Write,Glob,Grep,LS
 - 필요한 Agent 목록 작성
 - 의존성 및 실행 순서 결정
 
-### 2. 계획 문서 작성
+### 2. 계획 문서 작성 (필수)
 
-`apps/desktop/docs/planning/{task-dir}.md` 작성
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/planner.md` 작성
 
-- 템플릿 및 컨벤션: [planning/index.md](../../apps/desktop/docs/planning/index.md) 참고
-- **핵심**: Phase별로 병렬/직렬을 명시하여 오케스트레이터가 실행 방식을 판단할 수 있게 함
+**핵심**: Phase별로 병렬/직렬을 명시하여 오케스트레이터가 실행 방식을 판단할 수 있게 함
+
+**템플릿:**
+```markdown
+# {작업명} - 실행 계획
+
+## 작업 목표
+{달성하려는 것}
+
+## 영향 범위
+- Main: {파일/모듈}
+- Renderer: {파일/모듈}
+- Common: {파일/모듈}
+
+## 실행 계획
+
+### Phase 1 (병렬/직렬)
+| Agent | 작업 | 산출물 |
+|-------|------|--------|
+| {agent} | {작업 내용} | {파일} |
+
+### Phase 2 (병렬/직렬)
+...
+
+## 검증 기준
+- [ ] 타입체크 통과
+- [ ] 린트 통과
+- [ ] {기능별 검증 항목}
+```
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**
 
 ### 3. Orchestrator에게 보고
 - Planning 문서 경로

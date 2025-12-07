@@ -4,10 +4,6 @@
 
 모든 Agent가 협업에 사용.
 
-아이디어가 성숙하면 이동:
-- `spec/` - 기술 명세
-- `planning/` - 실행 계획
-
 ## 폴더명 컨벤션
 
 - 형식: `{task-dir}` = `YYYYMMDDTHHMM-kebab-case-name/`
@@ -18,10 +14,14 @@
 
 ```
 whiteboard/
-├── {task-dir}/                    # 예: 20251129T1245-user-auth/
-│   ├── context.md
+├── {task-dir}/
+│   ├── context.md           # 오케스트레이터가 생성
 │   └── agent-notes/
-│       └── architect.md
+│       ├── planner.md       # 실행 계획
+│       ├── architect.md     # 설계 문서
+│       ├── feature-analyzer.md
+│       └── ...
+├── archive/                  # 과거 문서 보관
 ```
 
 ### context.md
@@ -47,8 +47,16 @@ whiteboard/
 ```
 
 ### agent-notes/
-- 각 Agent가 작성한 노트
-- Agent 이름으로 파일 생성 (예: `architect.md`, `planner.md`)
+
+각 Agent가 작성한 노트. Agent 이름으로 파일 생성.
+
+| 파일 | 작성 Agent | 내용 |
+|------|------------|------|
+| `planner.md` | planner | 실행 계획 |
+| `architect.md` | architect | 설계 문서 |
+| `feature-analyzer.md` | feature-analyzer | 기능 분석 |
+| `bug-analyzer.md` | bug-analyzer | 버그 분석 |
+| `tester.md` | tester | 검증 결과 |
 
 ## 작업 목록
 
@@ -57,3 +65,5 @@ whiteboard/
 - [20251130T0201-zustand-to-valtio-migration](./20251130T0201-zustand-to-valtio-migration/) - Zustand에서 Valtio로 마이그레이션
 - [20251130T1630-logger-source-location](./20251130T1630-logger-source-location/) - 로거에 소스 위치 추가
 - [20251201T2120-focus-previous-node-on-delete](./20251201T2120-focus-previous-node-on-delete/) - 노드 삭제 시 이전 노드로 포커스 이동
+- [20251207T1200-fix-save-location-error-toast](./20251207T1200-fix-save-location-error-toast/) - 저장 위치 에러 수정
+- [20251207T1200-ipc-boilerplate-reduction](./20251207T1200-ipc-boilerplate-reduction/) - IPC 보일러플레이트 최소화
