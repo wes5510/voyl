@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import type { ChannelApi } from '../common/channel.type'
+import type { ChannelApi } from '../main/ipc/index'
 
 declare global {
   interface Window {
