@@ -72,6 +72,7 @@ pnpm pre-commit   # 커밋 전 검사
 2. **planner 필수 호출**: 계획 수립 단계에서 반드시 planner Agent 호출
    - 오케스트레이터가 직접 계획 세우지 말 것
    - 단순한 작업이어도 planner가 구조화된 계획 생성
+   - **planner 호출 없이 generator 호출 금지** (버그 수정 핫픽스 제외)
 
 3. **병렬 실행 우선**: 의존성 없는 generator들은 동시에 호출
    - 예: Backend 완료 후 Frontend 3개 generator 병렬 호출
