@@ -13,7 +13,7 @@
     "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "pnpm typecheck:node && pnpm typecheck:web",
     "start": "electron-vite preview",
-    "dev": "NODE_OPTIONS='--enable-source-maps' electron-vite dev --watch",
+    "dev": "NODE_OPTIONS='--enable-source-maps' electron-vite dev --watch --remote-debugging-port=9222",
     "build": "pnpm typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "pnpm build && electron-builder --dir",

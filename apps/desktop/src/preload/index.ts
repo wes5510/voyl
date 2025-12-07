@@ -1,27 +1,30 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
 import type { ChannelApi } from '../common/channel.type.js'
 
-// Proxy 기반 API 자동 생성
-const api = new Proxy({} as ChannelApi, {
-  get(_, channel: string) {
-    return (params: unknown) => ipcRenderer.invoke(channel, params)
-  },
-})
+// 명시적 함수 객체 생성 (Proxy는 structured clone 불가)
+const api: ChannelApi = {
+  'app.isInitialized': () => ipcRenderer.invoke('app.isInitialized'),
+  'app.selectWorkspaceDirPath': () =>
+    ipcRenderer.invoke('app.selectWorkspaceDirPath'),
+  'app.initialize': (workspaceDirPath) =>
+    ipcRenderer.invoke('app.initialize', workspaceDirPath),
+  'app.sync': () => ipcRenderer.invoke('app.sync'),
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
-if (process.contextIsolated) {
-  try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-  } catch (error) {
-    console.error(error)
-  }
-} else {
-  // @ts-expect-error (define in dts)
-  window.electron = electronAPI
-  // @ts-expect-error (define in dts)
-  window.api = api
+  'tree.getRootNodeId': () => ipcRenderer.invoke('tree.getRootNodeId'),
+  'tree.getNode': (params) => ipcRenderer.invoke('tree.getNode', params),
+  'tree.getViewNodes': (params) =>
+    ipcRenderer.invoke('tree.getViewNodes', params),
+  'tree.updateNodeTitle': (params) =>
+    ipcRenderer.invoke('tree.updateNodeTitle', params),
+  'node.getPreviousFocusableNodeId': (params) =>
+    ipcRenderer.invoke('node.getPreviousFocusableNodeId', params),
+
+  'favorite.getAll': () => ipcRenderer.invoke('favorite.getAll'),
+
+  'treeView.addNewNodeAfter': (params) =>
+    ipcRenderer.invoke('treeView.addNewNodeAfter', params),
+  'treeView.removeNode': (params) =>
+    ipcRenderer.invoke('treeView.removeNode', params),
 }
+
+contextBridge.exposeInMainWorld('api', api)
