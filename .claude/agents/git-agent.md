@@ -81,6 +81,14 @@ EOF
 - force push 금지 (사용자 명시적 요청 제외)
 - main/master 직접 push 금지
 
+## Whiteboard 기록 (필수)
+
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/git.md` 작성:
+- 생성된 브랜치/커밋/PR 목록
+- 주요 변경사항 요약
+
+**이 단계를 완료하지 않으면 작업이 완료된 것으로 간주하지 않음**
+
 ## 산출물
 
 작업 완료 후 보고:

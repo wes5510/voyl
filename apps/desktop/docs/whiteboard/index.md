@@ -21,8 +21,7 @@ whiteboard/
 ├── {task-dir}/                    # 예: 20251129T1245-user-auth/
 │   ├── context.md
 │   └── agent-notes/
-│       ├── architect.md
-│       └── spec-writer.md
+│       └── architect.md
 ```
 
 ### context.md
@@ -49,7 +48,7 @@ whiteboard/
 
 ### agent-notes/
 - 각 Agent가 작성한 노트
-- Agent 이름으로 파일 생성 (예: `architect.md`, `spec-writer.md`)
+- Agent 이름으로 파일 생성 (예: `architect.md`, `planner.md`)
 
 ## 작업 목록
 

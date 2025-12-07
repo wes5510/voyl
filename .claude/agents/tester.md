@@ -78,7 +78,7 @@ pnpm typecheck && pnpm lint && pnpm test
 
 ### 4. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/test-result.md` 작성:
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/tester.md` 작성:
 - 검증 항목별 결과
 - 실패 시 상세 내역
 - 수정 필요한 agent 명시

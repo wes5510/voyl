@@ -65,9 +65,9 @@ pnpm pre-commit   # 커밋 전 검사
 
 #### 필수 규칙
 
-1. **Whiteboard 초기화**: analyzer 호출 전에 오케스트레이터가 직접 `context.md` 생성
+1. **Whiteboard 초기화**: research-planner 호출 전에 오케스트레이터가 직접 `context.md` 생성
    - 작업 배경, 목표, 제약사항 명시
-   - analyzer는 context.md를 생성하지 않음
+   - Agent들은 context.md를 생성하지 않음
 
 2. **planner 필수 호출**: 계획 수립 단계에서 반드시 planner Agent 호출
    - 오케스트레이터가 직접 계획 세우지 말 것
@@ -78,59 +78,64 @@ pnpm pre-commit   # 커밋 전 검사
    - 직렬로만 하면 느려짐
 
 4. **마무리 자동 실행**: 작업 완료 후 사용자 요청 없이 자동으로 마무리 단계 진행
-   - doc-updater → doc-compiler → retrospector 순서로 **직렬** 호출
-   - 병렬 불가 (doc-updater가 문서 수정 → doc-compiler가 인덱스 갱신 순서 필요)
+   - doc-updater → doc-compiler: 직렬 (문서 수정 → 인덱스 갱신)
+   - retrospector: doc-updater와 병렬 가능 (워크플로우 회고는 문서 변경과 무관)
 
 ### 워크플로우
 
+**핵심 원칙**: 실행 전에 모호함을 모두 제거해야 함
+
 ```
-1. 정보 수집
+1. 정보 수집 & 분석
    [오케스트레이터] Whiteboard 초기화
      → apps/desktop/docs/whiteboard/{task-dir}/context.md 생성
-     → 내용: 작업 배경, 목표, 제약사항, 의사결정 등
 
-   [오케스트레이터] 사용자와 요구사항 상세화
+   [Task] research-planner 호출 (필수)
+     → 사용자 요구사항 상세화 포함
+     → 계획에 따라 리서처들 호출
 
-   [Task] analyzer 호출 (code-analyzer 또는 bug-analyzer)
-   [Task] researcher 호출 (선택)
+   [Task] bug-analyzer / feature-analyzer
+     → Needs More Research → research-planner 재호출
+     → Needs User Decision → 오케스트레이터가 질문
+     → 실행 준비 완료 → 다음 단계
 
-2. 전략 수립
-   [오케스트레이터] 수집된 정보 기반 접근 방식 결정
+2. 전략 검토
+   [오케스트레이터] analyzer가 제안한 전략 검토
    [오케스트레이터] 사용자 확인 필요시 질문
+   [오케스트레이터] architect 필요 여부 판단
+     → 추가 정보 필요 시 1단계로 복귀 (research-planner 재호출)
 
 3. 설계 (복잡한 경우)
    [Task] architect 호출
-   → 아키텍처 문서 생성
+     → Needs More Research → research-planner 재호출
+     → Needs User Decision → 오케스트레이터가 질문
+     → 실행 준비 완료 → 다음 단계
 
 4. 계획 수립 (필수)
    [Task] planner 호출
-   → 구체적 할일 목록 생성 (어떤 generator가 무엇을 할지)
+     → Needs More Research → research-planner 재호출
+     → Needs User Decision → 오케스트레이터가 질문
+     → 실행 준비 완료 → 다음 단계
 
-5. 작업 (병렬 실행 우선)
+5. 작업 (모호함 제거 후에만 진입)
    [Task] planner 계획에 따라 generator 호출
      → 의존성 없는 generator들은 병렬로 호출
-     → 예: be-model-generator 완료 후
-         be-ipc-generator, fe-model-generator 병렬
 
    [Task] tester로 검증
-   → 실패 시 해당 generator 재호출 (최대 3회)
+     → 실패 시 해당 generator 재호출 (최대 3회)
 
-6. 마무리 (자동 실행, 직렬)
-   [Task] doc-updater → 문서 동기화
-   [Task] doc-compiler → 인덱스 갱신
-   [Task] retrospector → 회고 기록
+6. 마무리 (자동 실행)
+   [Task] doc-updater → doc-compiler (직렬)
+   [Task] retrospector (doc-updater와 병렬)
 ```
 
 ### 작업 유형별 참고
 
-| 유형                    | analyzer      | researcher | architect   |
-| ----------------------- | ------------- | ---------- | ----------- |
-| 새 기능 개발            | code-analyzer | 권장       | 복잡한 경우 |
-| 버그 수정               | bug-analyzer  | 권장       | -           |
-| 리팩토링                | code-analyzer | 선택       | -           |
-| 기능 수정/삭제          | code-analyzer | 선택       | -           |
-| 라이브러리 마이그레이션 | code-analyzer | 권장       | -           |
-| 문서 작업               | -             | -          | -           |
+| 작업 유형 | analyzer | 비고 |
+|-----------|----------|------|
+| 버그 수정 | bug-analyzer | - |
+| 기능 추가/수정/삭제 | feature-analyzer | 복잡하면 architect 추가 |
+| 리팩토링 | feature-analyzer | - |
 
 ### Whiteboard
 
@@ -145,15 +150,18 @@ pnpm pre-commit   # 커밋 전 검사
 
 | 분류         | Agent              | 역할                            |
 | ------------ | ------------------ | ------------------------------- |
-| **분석**     | code-analyzer      | 코드 분석, 의존성 추적          |
-|              | bug-analyzer       | 버그 원인 분석                  |
-|              | researcher         | 대안 탐색, 베스트 프랙티스 조사 |
+| **리서치**   | research-planner   | **리서치 전문가** (단일 진입점)  |
+|              | code-researcher    | 코드 분석, 다층 분석            |
+|              | web-researcher     | 웹 검색, 공식 문서              |
+|              | doc-researcher     | 프로젝트 문서, 과거 의사결정     |
+|              | git-researcher     | git 히스토리, 변경 맥락          |
+|              | runtime-researcher | DevTools MCP, 런타임 상태       |
+| **분석**     | bug-analyzer       | 리서처 결과 종합, 근본 원인 도출 |
+|              | feature-analyzer   | 리서처 결과 종합, 구현 전략 제시 |
 | **설계**     | architect          | 아키텍처 설계                   |
 |              | planner            | 작업 계획 수립                  |
-|              | spec-writer        | 기술 명세 작성                  |
 | **공통**     | common-generator   | 타입, 유틸, 상수                |
 |              | tester             | 타입체크, 린트, 테스트          |
-|              | refactor           | 코드 정리, 패턴 일관성          |
 |              | doc-updater        | 코드 변경 후 용어/참조 동기화   |
 |              | doc-compiler       | 인덱스 갱신, 문서 정리          |
 |              | git-agent          | 브랜치, 커밋, PR                |

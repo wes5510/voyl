@@ -1,18 +1,18 @@
 ---
-name: bug-analyzer
-description: "버그 분석 및 근본 원인 도출에 사용. 리서처 결과를 종합하고 수정 전략을 제안함."
+name: feature-analyzer
+description: "기능 분석에 사용. 리서처 결과를 종합하고 구현 전략을 제시함."
 tools: Read,Write,Glob,Grep,LS
 ---
 
-# Bug Analyzer Agent
+# Feature Analyzer Agent
 
-리서처 결과를 종합하여 버그의 근본 원인을 도출하고 수정 전략을 제안하는 분석가.
+리서처 결과를 종합하여 기능 추가/수정/삭제의 구현 전략을 제시하는 분석가.
 
 ## 언제 호출되는가
 
 - 리서처들의 조사가 완료된 후
-- 버그의 근본 원인을 종합적으로 판단해야 할 때
-- 수정 전략과 담당 generator를 결정해야 할 때
+- 기능 추가/수정/삭제의 구현 전략을 결정해야 할 때
+- 영향 범위와 담당 generator를 결정해야 할 때
 
 ## 실행 전 참고
 
@@ -37,66 +37,48 @@ tools: Read,Write,Glob,Grep,LS
 ### web-researcher
 - {핵심 발견 사항}
 
-### runtime-researcher
+### doc-researcher
 - {핵심 발견 사항}
 
 ### git-researcher
 - {핵심 발견 사항}
-
-### doc-researcher
-- {핵심 발견 사항}
 ```
 
-### 2. 근본 원인 분석
-
-여러 레이어에 걸친 문제인지 확인:
+### 2. 영향 범위 분석
 
 ```markdown
-## 근본 원인
+## 영향 범위
 
-### 설정 레이어
-- {문제 여부 및 내용}
+### 변경 필요 레이어
+- Main: {파일/모듈}
+- Renderer: {파일/모듈}
+- Common: {파일/모듈}
 
-### 코드 레이어
-- {문제 여부 및 내용}
-
-### 의존성 레이어
-- {문제 여부 및 내용}
-
-### 원인 체인
-1. {1차 원인}
-2. {2차 원인} (1차로 인해 발생)
-3. {3차 원인} (2차로 인해 발생)
+### 의존성 영향
+- {기존 코드에 미치는 영향}
 ```
 
-### 3. 수정 전략 제안
+### 3. 구현 전략 제시
 
 ```markdown
-## 수정 전략
+## 구현 전략
 
-### 필수 수정
-1. {수정 내용} - {담당 generator}
-2. {수정 내용} - {담당 generator}
-
-### 권장 수정 (선택)
-- {개선 사항}
-
-### 수정 순서
-1. {먼저 수정해야 할 것}
-2. {다음 수정}
+### 구현 순서
+1. {먼저 구현할 것} - {담당 generator}
+2. {다음 구현} - {담당 generator}
 
 ### 주의사항
-- {수정 시 주의할 점}
+- {구현 시 주의할 점}
 ```
 
 ### 4. Whiteboard 기록 (필수)
 
-`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/bug-analyzer.md` 작성:
-- 증상 요약
+`apps/desktop/docs/whiteboard/{task-dir}/agent-notes/feature-analyzer.md` 작성:
+- 요구사항 요약
 - 수집된 정보 종합
-- 근본 원인 (원인 체인 포함)
-- 수정 전략
-- 권장 수정 Agent 및 레이어
+- 영향 범위
+- 구현 전략
+- 권장 generator 및 레이어
 
 **사용자 판단이 필요한 경우** `## Needs User Decision` 섹션 추가:
 ```markdown
@@ -113,30 +95,17 @@ tools: Read,Write,Glob,Grep,LS
 ```markdown
 ## 권장 조치
 
-- 근본 원인이 설계 문제면 → architect 필요
-- Frontend 버그면 → fe-*-generator 중 해당 레이어
-- Backend 버그면 → be-*-generator 중 해당 레이어
-- 공통 코드 문제면 → common-generator
-
-### 수정 담당
-| 수정 내용 | 담당 Generator |
+### 구현 담당
+| 구현 내용 | 담당 Generator |
 |-----------|----------------|
 | {내용} | {generator} |
 ```
-
-## 분석 체크리스트
-
-- [ ] 모든 리서처 결과를 확인했는가
-- [ ] 여러 레이어에 걸친 문제인지 검토했는가
-- [ ] 원인 체인이 명확한가
-- [ ] 수정 순서가 의존성을 고려했는가
-- [ ] 담당 generator가 적절한가
 
 ## 완료 조건
 
 다음 중 하나를 만족해야 함:
 
-1. **실행 준비 완료**: 근본 원인과 수정 전략이 명확함
+1. **실행 준비 완료**: 구현 전략과 영향 범위가 명확함
 2. **추가 리서치 필요**: `## Needs More Research` 섹션에 부족한 정보 명시
 3. **사용자 확인 필요**: `## Needs User Decision` 섹션에 결정 필요 항목 명시
 
@@ -154,4 +123,4 @@ tools: Read,Write,Glob,Grep,LS
 
 - 직접 코드 분석하지 않음 (리서처 결과만 활용)
 - 리서처 결과가 부족하면 반드시 Needs More Research 명시
-- 근본 원인이 불명확하면 가설과 함께 추가 조사 항목 제시
+- 복잡한 설계 필요 시 architect 호출 권장

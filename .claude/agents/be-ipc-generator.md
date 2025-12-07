@@ -15,6 +15,7 @@ Backend IPC 레이어 구현 전문가.
 3. **필수 가이드 숙지**:
    - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
    - SRP 원칙 가이드 (`general/` 하위)
+   - TDD 가이드 (`general/` 하위)
    - main/ipc 가이드 (`layer/main/` 하위)
 4. 기존 IPC 패턴 확인: `apps/desktop/src/main/`
 
