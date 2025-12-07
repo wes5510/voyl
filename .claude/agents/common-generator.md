@@ -15,6 +15,7 @@ tools: Read,Write,Edit,MultiEdit,Glob,Grep,LS,Bash
 3. **필수 가이드 숙지**:
    - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
    - SRP 원칙 가이드 (`general/` 하위)
+   - TDD 가이드 (`general/` 하위)
 4. 기존 common 패턴 확인:
    - `apps/desktop/src/common/`
    - `apps/desktop/src/main/common/`

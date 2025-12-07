@@ -15,6 +15,7 @@ Frontend Page 레이어 구현 전문가.
 3. **필수 가이드 숙지**:
    - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
    - SRP 원칙 가이드 (`general/` 하위)
+   - TDD 가이드 (`general/` 하위)
    - renderer/page 가이드 (`layer/renderer/` 하위)
    - React 가이드 (`react/` 하위 전체)
 4. 기존 Page 패턴 확인: `apps/desktop/src/renderer/`
