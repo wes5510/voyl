@@ -4,15 +4,13 @@
 
 - `architecture/` - 도메인 아키텍처
 - `guide/` - 개발, 설계 등 관련 가이드
-- `spec/` - 기술 명세 (일회성)
-- `planning/` - 계획 및 할 일
 - `whiteboard/` - 논의 및 맥락
 
 ## 문서 컨벤션
 
 ### 폴더명
 
-- 단수형 네임스페이스 (architecture, guide, spec, planning, whiteboard)
+- 단수형 네임스페이스 (architecture, guide, whiteboard)
 
 ### 파일명
 

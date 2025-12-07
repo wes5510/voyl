@@ -32,10 +32,8 @@ tools: Read,Glob,Grep,LS
 
 1. **가이드**: `apps/desktop/docs/guide/**/*.md`
 2. **아키텍처**: `apps/desktop/docs/architecture/**/*.md`
-3. **명세서**: `apps/desktop/docs/spec/**/*.md`
-4. **계획서**: `apps/desktop/docs/planning/**/*.md`
-5. **Whiteboard**: `apps/desktop/docs/whiteboard/**/*.md`
-6. **회고**: `.claude/retrospectives/**/*.md`
+3. **Whiteboard**: `apps/desktop/docs/whiteboard/**/*.md`
+4. **회고**: `.claude/retrospectives/**/*.md`
 
 ## Serena MCP 활용
 

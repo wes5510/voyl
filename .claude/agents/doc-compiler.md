@@ -40,8 +40,6 @@ apps/desktop/docs/
 │   └── layer/index.md    # 레이어 가이드
 │       ├── main/index.md
 │       └── renderer/index.md
-├── spec/index.md         # 기술 명세
-├── planning/index.md     # 계획
 └── whiteboard/index.md   # 논의/맥락
 ```
 
@@ -93,7 +91,6 @@ apps/desktop/docs/
 - `.git/`
 
 ### 신중히 판단
-- `spec/` - 명세는 수정보다 보존 우선
 - `CHANGELOG` - 기존 항목 보존
 
 ## 문서 컨벤션
@@ -105,7 +102,7 @@ apps/desktop/docs/
 - 소문자 케밥 케이스 (`kebab-case.md`)
 - 폴더 대표 문서는 `index.md`
 
-### 타임스탬프 (spec, planning, whiteboard)
+### 타임스탬프 (whiteboard)
 - `YYYYMMDDTHHMM-kebab-case`
 
 ## 산출물
