@@ -3,13 +3,30 @@
 import * as NodeModel from '../node/index.js'
 import { ROOT_NODE } from './const.js'
 
+export { ROOT_NODE }
+
 export async function initialize({
   workspaceDirPath,
 }: {
   workspaceDirPath: string
 }): Promise<void> {
   await NodeModel.initialize({ workspaceDirPath })
-  await NodeModel.addNode(ROOT_NODE)
+}
+
+export async function sync({
+  workspaceDirPath,
+}: {
+  workspaceDirPath: string
+}): Promise<void> {
+  await NodeModel.sync({ workspaceDirPath })
+  await ensureRootNode()
+}
+
+async function ensureRootNode(): Promise<void> {
+  const rootExists = await NodeModel.isExist({ id: ROOT_NODE.id })
+  if (!rootExists) {
+    await NodeModel.addNode(ROOT_NODE)
+  }
 }
 
 export function getRootNodeId() {

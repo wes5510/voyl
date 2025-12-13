@@ -2,7 +2,6 @@ import * as AppRepo from '../../repo/app/index.js'
 import * as SyncMetadataRepo from '../../repo/syncMetadata/index.js'
 import { APP_VERSION } from './const.js'
 import * as WorkspaceModel from './workspace/index.js'
-import * as NodeModel from '../node/index.js'
 import * as TreeModel from '../tree/index.js'
 
 /**
@@ -41,5 +40,5 @@ export async function sync(): Promise<void> {
   }
 
   await WorkspaceModel.sync({ workspaceDirPath })
-  await NodeModel.sync({ workspaceDirPath })
+  await TreeModel.sync({ workspaceDirPath })
 }

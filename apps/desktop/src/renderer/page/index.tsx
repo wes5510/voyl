@@ -10,7 +10,13 @@ import SyncGuard from './SyncGuard'
 export default function IndexPage() {
   return (
     <div className="flex h-screen flex-col gap-0">
-      <Suspense fallback={<Spinner />}>
+      <Suspense
+        fallback={
+          <div className="flex h-full w-full items-center justify-center">
+            <Spinner />
+          </div>
+        }
+      >
         <InitializationGuard>
           <SyncGuard>
             <TopBar />
