@@ -1,5 +1,4 @@
 import { useSyncApp } from '@/renderer/state/app'
-import SyncSplash from './SyncSplash'
 import { useEffect } from 'react'
 
 interface SyncGuardProps {
@@ -7,11 +6,11 @@ interface SyncGuardProps {
 }
 
 export default function SyncGuard({ children }: SyncGuardProps) {
-  const { mutate, isPending } = useSyncApp()
+  const { mutateAsync, isPending } = useSyncApp()
 
   useEffect(() => {
-    mutate()
-  }, [mutate])
+    mutateAsync()
+  }, [mutateAsync])
 
-  return isPending ? <SyncSplash /> : <>{children}</>
+  return isPending ? null : <>{children}</>
 }
