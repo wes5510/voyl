@@ -11,17 +11,17 @@ model: opus
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/analyzer.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/analyzer.md` 읽기
 3. **필수 가이드 숙지**:
-   - `**/docs/guide/**/index.md` 파일들을 찾아 구조 파악
+   - `apps/desktop/docs/guide/**/index.md` 파일들을 찾아 구조 파악
    - SRP 원칙 가이드
    - 레이어별 가이드
 4. 구현 계획 수립:
    - 아키텍처 설계 (복잡한 경우)
    - 실행 순서 정의
    - 병렬/직렬 구분
-5. `agent-notes/planner.md` 작성
+5. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/planner.md` 작성
 
 ### 출력 형식
 
@@ -71,7 +71,7 @@ model: opus
 - [ ] 실행 순서 명확 (How)
 - [ ] 담당 coder 지정됨
 - [ ] 모호한 부분 0개
-- [ ] agent-notes/planner.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/planner.md 작성 완료
 
 ## 실패 시
 
@@ -89,9 +89,22 @@ model: opus
   - **권장**: {있다면 권장 옵션과 이유}
   ```
 
+## 계획 검증 (필수)
+
+각 계획 항목에 대해 스스로 "어떻게?"를 반복 + 꼬리 질문:
+- 어떻게 구현하는가? → 답변 → 그건 어떻게? → ...
+- 최종 답변까지 도달 → 계획 확정
+- 답변 불가 → 추가 조사 또는 사용자 결정 요청
+
+## DB 설계 (사용자 결정 필요)
+
+DB 스키마 변경이 필요한 경우 "Needs User Decision"으로 분류:
+- 옵션 A: 기존 테이블 확장
+- 옵션 B: 새 테이블 생성
+
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - 가이드 문서 반드시 숙지 후 계획 수립
 - 모호한 상태로 완료 금지

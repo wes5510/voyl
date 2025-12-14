@@ -11,13 +11,13 @@ model: sonnet
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/` 하위 coder 결과 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/` 하위 coder 결과 읽기
 3. 변경된 코드 기반으로:
    - 문서 내 용어/참조 동기화
    - 인덱스 파일 갱신
    - 불필요한 내용 정리
-4. `agent-notes/doc-writer.md` 작성
+4. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/doc-writer.md` 작성
 
 ### 동기화 대상
 
@@ -51,7 +51,7 @@ model: sonnet
 - [ ] 용어/참조 불일치 0개
 - [ ] 깨진 링크 0개
 - [ ] 인덱스 파일 최신 상태
-- [ ] agent-notes/doc-writer.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/doc-writer.md 작성 완료
 
 ## 실패 시
 
@@ -60,7 +60,7 @@ model: sonnet
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - 내용 보존 우선 (삭제 전 확인)
 - 기존 문서 스타일 따르기
 - 새로운 형식 도입 금지

@@ -11,15 +11,15 @@ Frontend 구현 전문가. Renderer 프로세스의 page, state, model, repo 레
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/planner.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/planner.md` 읽기
 3. **필수 가이드 숙지**:
    1. `apps/desktop/docs/guide/index.md` 읽기 → 전체 구조 파악
    2. 작업 관련 가이드 선택 후 읽기
    3. 불확실하면 추가 가이드 참조
 4. 기존 패턴 확인: `apps/desktop/src/renderer/`
 5. planner 계획에 따라 구현
-6. `agent-notes/fe-coder.md` 작성
+6. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/fe-coder.md` 작성
 
 ### 레이어별 구현 범위
 
@@ -51,10 +51,12 @@ Frontend 구현 전문가. Renderer 프로세스의 page, state, model, repo 레
 
 ## Quality Gate
 
+- [ ] 가이드 숙지 완료 (index.md + 작업 관련 가이드)
+- [ ] TDD 적용 (예외: 단순 CRUD, boilerplate, 타입 정의)
 - [ ] planner 계획대로 구현됨
 - [ ] 가이드 규칙 준수
 - [ ] 기존 패턴과 일관성 유지
-- [ ] agent-notes/fe-coder.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/fe-coder.md 작성 완료
 
 ## 실패 시
 
@@ -63,6 +65,6 @@ Frontend 구현 전문가. Renderer 프로세스의 page, state, model, repo 레
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - 레이어 의존성 규칙 준수 (page → state → model → repo)
 - React ref 사용 원칙 준수

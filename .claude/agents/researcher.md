@@ -11,7 +11,7 @@ model: sonnet
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
 2. 요청된 조사 항목 파악
 3. 소스별 정보 수집:
    - **코드**: 구조, 의존성, 호출 체인, 다층 분석
@@ -19,7 +19,7 @@ model: sonnet
    - **문서**: 프로젝트 가이드, 과거 의사결정
    - **git**: 커밋/PR 기반 변경 맥락, 버그 도입 시점
    - **런타임**: DevTools MCP, 실행 중 상태 (MCP 있을 때)
-4. `agent-notes/researcher.md` 작성
+4. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/researcher.md` 작성
 
 ### 소스별 도구
 
@@ -66,7 +66,7 @@ model: sonnet
 - [ ] 요청된 조사 항목 모두 수행
 - [ ] 각 조사 결과 구체적으로 기록
 - [ ] 불명확한 부분 "추가 조사 필요" 또는 "사용자 확인 필요"로 명시
-- [ ] agent-notes/researcher.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/researcher.md 작성 완료
 
 ## 실패 시
 
@@ -76,7 +76,7 @@ model: sonnet
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - 웹 검색 시 연도 명시 (오래된 정보 필터링)
 - 공식 문서 우선 참조
 - git 명령어는 읽기 전용만 사용 (checkout, reset 금지)

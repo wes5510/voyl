@@ -11,8 +11,8 @@ model: sonnet
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/planner.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/planner.md` 읽기
 3. **필수 가이드 숙지**:
    1. `apps/desktop/docs/guide/index.md` 읽기 → 전체 구조 파악
    2. 작업 관련 가이드 선택 후 읽기
@@ -22,7 +22,7 @@ model: sonnet
    - `apps/desktop/src/main/common/`
    - `apps/desktop/src/renderer/common/`
 5. planner 계획에 따라 구현
-6. `agent-notes/common-coder.md` 작성
+6. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/common-coder.md` 작성
 
 ### 구현 범위
 
@@ -62,10 +62,12 @@ model: sonnet
 
 ## Quality Gate
 
+- [ ] 가이드 숙지 완료 (index.md + 작업 관련 가이드)
+- [ ] TDD 적용 (예외: 단순 CRUD, boilerplate, 타입 정의)
 - [ ] planner 계획대로 구현됨
 - [ ] 의존성 규칙 준수 (common은 외부에 의존 안 함)
 - [ ] 순환 참조 없음
-- [ ] agent-notes/common-coder.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/common-coder.md 작성 완료
 
 ## 실패 시
 
@@ -74,6 +76,6 @@ model: sonnet
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - common은 외부 모듈에 의존하지 않음
 - 다른 레이어에서 common을 import (역방향 금지)

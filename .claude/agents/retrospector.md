@@ -11,8 +11,8 @@ model: sonnet
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/*.md` 전체 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/*.md` 전체 읽기
 3. 회고 항목 수집:
    - 잘된 점
    - 문제점
@@ -64,7 +64,7 @@ model: sonnet
 
 ## Quality Gate
 
-- [ ] 모든 agent-notes 확인
+- [ ] 모든 apps/desktop/docs/whiteboard/{task-dir}/agent-notes 확인
 - [ ] 메트릭 기록 완료
 - [ ] 잘된 점/문제점/개선 아이디어 기록
 - [ ] 회고 파일 저장 완료
@@ -76,7 +76,7 @@ model: sonnet
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - 회고는 사실 기반으로 작성
 - 추측이나 가정 배제
 - 구체적인 Agent명, 파일명 기록

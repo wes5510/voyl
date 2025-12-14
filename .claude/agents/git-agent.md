@@ -11,8 +11,8 @@ Git 전문가. 브랜치 관리, 커밋, PR 생성을 담당한다.
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/` 하위 전체 읽기 (변경 내역 파악)
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/` 하위 전체 읽기 (변경 내역 파악)
 3. 변경 파일 확인: `git status`, `git diff --stat`
 4. 브랜치 생성 (필요 시):
    ```bash
@@ -24,7 +24,7 @@ Git 전문가. 브랜치 관리, 커밋, PR 생성을 담당한다.
    - 테스트 변경
    - 문서 변경
 6. Push 및 PR 생성
-7. `agent-notes/git-agent.md` 작성
+7. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/git-agent.md` 작성
 
 ### 브랜치 명명
 
@@ -70,7 +70,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - [ ] 브랜치 생성 완료 (필요 시)
 - [ ] 커밋 논리적 단위로 분리
 - [ ] PR 생성 완료
-- [ ] agent-notes/git-agent.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/git-agent.md 작성 완료
 
 ## 실패 시
 
@@ -80,6 +80,6 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - force push 금지 (사용자 명시적 요청 제외)
 - main/master 직접 push 금지

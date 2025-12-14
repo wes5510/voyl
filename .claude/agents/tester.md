@@ -11,8 +11,8 @@ model: sonnet
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/` 하위 coder 결과 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/` 하위 coder 결과 읽기
 3. 검증 실행:
    ```bash
    pnpm typecheck && pnpm lint && pnpm test
@@ -21,7 +21,7 @@ model: sonnet
    ```bash
    pnpm build
    ```
-5. `agent-notes/tester.md` 작성
+5. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/tester.md` 작성
 
 ### 출력 형식
 
@@ -58,7 +58,7 @@ model: sonnet
 - [ ] lint 에러 0개
 - [ ] 기존 테스트 100% 통과
 - [ ] 빌드 성공 (필요 시)
-- [ ] agent-notes/tester.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/tester.md 작성 완료
 
 ## 실패 시
 
@@ -70,5 +70,5 @@ model: sonnet
 ## 주의사항
 
 - 컨텍스트 재로드 금지 (whiteboard 파일 참조)
-- 이전 Agent 결과는 agent-notes/에서 확인
+- 이전 Agent 결과는 apps/desktop/docs/whiteboard/{task-dir}/agent-notes/에서 확인
 - 재검증 시 이전 실패 항목 우선 확인

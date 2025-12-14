@@ -25,13 +25,14 @@ Commit:  doc-writer, git-agent, retrospector
 ### 흐름
 
 1. [오케스트레이터] Whiteboard 초기화 (context.md 생성)
-2. [Task] researcher 호출
-3. [Task] analyzer 호출
+2. [Task] researcher 호출 (정보 수집)
+3. [Task] analyzer 호출 (researcher 결과 기반 분석)
 4. [Explore Gate]
 
 ### Explore Gate
 
 통과 조건:
+- [ ] apps/desktop/whiteboard/{task-dir}/context.md 생성됨
 - [ ] 문제/요구사항 명확히 정의됨 (What)
 - [ ] Needs More Research 없음
 - [ ] Needs User Decision 해결됨

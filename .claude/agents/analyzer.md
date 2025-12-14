@@ -11,13 +11,13 @@ model: opus
 
 ## 실행
 
-1. `whiteboard/{task-dir}/context.md` 읽기
-2. `agent-notes/researcher.md` 읽기
+1. `apps/desktop/docs/whiteboard/{task-dir}/context.md` 읽기
+2. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/researcher.md` 읽기
 3. 문제/요구사항 분석:
    - **버그**: 근본 원인 도출, 원인 체인 분석
    - **기능**: 요구사항 정의, 영향 범위 파악
 4. What 정의 (무엇을 수정/구현해야 하는지)
-5. `agent-notes/analyzer.md` 작성
+5. `apps/desktop/docs/whiteboard/{task-dir}/agent-notes/analyzer.md` 작성
 
 ### 출력 형식 (버그)
 
@@ -74,7 +74,7 @@ model: opus
 - [ ] Needs More Research 없음
 - [ ] Needs User Decision 해결됨
 - [ ] 담당 coder 지정됨
-- [ ] agent-notes/analyzer.md 작성 완료
+- [ ] apps/desktop/docs/whiteboard/{task-dir}/agent-notes/analyzer.md 작성 완료
 
 ## 실패 시
 
@@ -91,6 +91,15 @@ model: opus
   - **옵션**: {가능한 선택지들}
   - **권장**: {있다면 권장 옵션과 이유}
   ```
+
+## 모호함 판단 기준
+
+스스로에게 "왜?"를 반복해서 물어보고, 답변에 대해 꼬리 질문:
+- 왜 이것이 필요한가? → 답변 → 왜 그런가? → ...
+- 최종 답변까지 도달 → 모호하지 않음
+- 답변 불가 또는 여러 답이 가능 → 모호함 (Needs User Decision)
+
+모호한 경우 옵션과 각 옵션의 근거를 명시
 
 ## 주의사항
 
