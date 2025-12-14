@@ -1,9 +1,5 @@
 {
   "mcpServers": {
-    "ts-introspect": {
-      "command": "npx",
-      "args": ["-y", "ts-introspect-mcp-server"]
-    },
     "chrome-devtools": {
       "command": "npx",
       "args": [
@@ -11,7 +7,7 @@
         "--browser-url=http://127.0.0.1:9222"
       ]
     },
-    "serena": {
+       "serena": {
       "command": "uvx",
       "args": [
         "--from",
@@ -20,9 +16,10 @@
         "start-mcp-server",
         "--context",
         "claude-code",
-        "--no-dashboard"
+        "--enable-web-dashboard",
+        "false"
       ]
-    },
+    }, 
     "github": {
       "command": "docker",
       "args": [

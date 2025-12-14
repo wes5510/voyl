@@ -16,12 +16,12 @@
 whiteboard/
 ├── {task-dir}/
 │   ├── context.md           # 오케스트레이터가 생성
+│   ├── decisions.md         # 설계 결정 기록 (ADR)
 │   └── agent-notes/
+│       ├── researcher.md    # 정보 수집 결과
+│       ├── analyzer.md      # 분석 결과
 │       ├── planner.md       # 실행 계획
-│       ├── architect.md     # 설계 문서
-│       ├── feature-analyzer.md
 │       └── ...
-├── archive/                  # 과거 문서 보관
 ```
 
 ### context.md
@@ -46,16 +46,50 @@ whiteboard/
 {설계 옵션과 선택 근거 - analyzer 결과 반영}
 ```
 
+### decisions.md
+
+설계 결정 기록 (ADR 패턴).
+
+**템플릿:**
+```markdown
+# Decisions: {작업명}
+
+설계 결정과 근거를 기록합니다.
+
+## ADR-001: {결정 제목}
+
+### 상태
+Accepted | Proposed | Deprecated
+
+### 맥락
+{왜 이 결정이 필요한지}
+
+### 결정
+{무엇을 결정했는지}
+
+### 근거
+- {이유 1}
+- {이유 2}
+
+### 대안
+| 대안 | 장점 | 단점 | 선택 |
+|------|------|------|------|
+| {대안 1} | {장점} | {단점} | ❌ |
+| {대안 2} | {장점} | {단점} | ✅ |
+
+### 결과
+{이 결정으로 인한 영향}
+```
+
 ### agent-notes/
 
 각 Agent가 작성한 노트. Agent 이름으로 파일 생성.
 
 | 파일 | 작성 Agent | 내용 |
 |------|------------|------|
+| `researcher.md` | researcher | 정보 수집 결과 |
+| `analyzer.md` | analyzer | 분석 결과 |
 | `planner.md` | planner | 실행 계획 |
-| `architect.md` | architect | 설계 문서 |
-| `feature-analyzer.md` | feature-analyzer | 기능 분석 |
-| `bug-analyzer.md` | bug-analyzer | 버그 분석 |
 | `tester.md` | tester | 검증 결과 |
 
 ## 작업 목록

@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '## Gate 확인 후 다음 단계 진행'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "test -f apps/desktop/docs/whiteboard/*/context.md || echo 'WARNING: context.md 없음'"
+          }
+        ]
+      }
+    ]
+  }
+}
