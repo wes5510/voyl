@@ -2,7 +2,6 @@
 
 ## 문서 구조
 
-- `tech-specs/` - Tech Spec (작성 가이드 + 실제 문서)
 - `designs/` - Design Doc (작성 가이드 + 실제 문서)
 - `guide/` - 개발, 설계 등 관련 가이드
 - `whiteboard/` - 논의 및 맥락
